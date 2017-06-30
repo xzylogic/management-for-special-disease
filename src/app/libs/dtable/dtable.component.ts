@@ -2,29 +2,29 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TableOption, ControlType } from './dtable.entity';
 
 @Component({
-  moduleId: module.id,
-  selector: 'lib-table',
-  templateUrl: 'dtable.component.html',
-  styleUrls: ['dtable.component.css']
+  selector: 'app-lib-table',
+  templateUrl: './dtable.component.html',
+  styleUrls: ['./dtable.component.scss']
 })
 export class DTableComponent implements OnInit {
   @Input() table: TableOption;
   @Output() handleEmmit = new EventEmitter();
   @Output() pageEmitter = new EventEmitter();
 
-  pageList: Array <any> = [];
+  pageList: Array<any> = [];
   controlType = ControlType;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
-    if(this.table.ifPage) {
+    if (this.table.ifPage) {
       this.getPageList(this.table.totalPage, this.table.currentPage);
     }
   }
 
   gotoHandle(key, value) {
-    this.handleEmmit.emit({ key: key, value: value });
+    this.handleEmmit.emit({key: key, value: value});
   }
 
   getPageList(total, current) {

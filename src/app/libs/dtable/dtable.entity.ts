@@ -1,4 +1,4 @@
-export enum ControlType { text, image, button, date };
+export enum ControlType { text, image, button, date }
 
 export class TableTitle {
   name: string; // 表头标题
@@ -26,26 +26,108 @@ export class TableTitle {
 }
 
 export class TableOption {
-  titles: TableTitle[]; // 表头列表
-  lists: Array <any> ; // 数据列表
-  totalPage: number; // 总页数
-  currentPage: number; // 当前页
-  size: number; // 查询每页显示个数
-  errorMessage: string; // 错误信息
-  loading: boolean; // 是否加载中
-  queryKey: string; // 查询键
-  ifPage: boolean; // 是否分页
+  private _titles: TableTitle[]; // 表头列表
+  private _lists: Array<any>; // 数据列表
+  private _totalPage: number; // 总页数
+  private _currentPage: number; // 当前页
+  private _size: number; // 查询每页显示个数
+  private _errorMessage: string; // 错误信息
+  private _loading: boolean; // 是否加载中
+  private _queryKey: any; // 查询键
+  private _ifPage: boolean; // 是否分页
 
-  constructor(obj ? ) {
-    this.titles = obj && obj.titles || null;
-    this.lists = obj && obj.lists || [];
-    this.totalPage = obj && obj.totalPage || null;
-    this.currentPage = obj && obj.currentPage || null;
-    this.size = obj && obj.size || 10;
-    this.errorMessage = obj && obj.errorMessage || '';
-    this.queryKey = obj && obj.queryKey || '';
-    this.loading = obj && obj.loading || true;
-    this.ifPage = obj && obj.ifPage || false;
+  constructor(obj: {
+    titles: TableTitle[],
+    size?: number,
+    ifPage?: boolean,
+  }) {
+    this._titles = obj.titles || null;
+    this._size = obj.size || 20;
+    this._ifPage = obj.ifPage || false;
+    this._lists = null;
+    this._totalPage = 0;
+    this._currentPage = 0;
+    this._errorMessage = '';
+    this._queryKey = '';
+    this._loading = true;
   }
 
+  reset(page): void {
+    this._lists = null;
+    this._loading = true;
+    this._errorMessage = '';
+    this._currentPage = page;
+  }
+
+  get titles(): TableTitle[] {
+    return this._titles;
+  }
+
+  set titles(value: TableTitle[]) {
+    this._titles = value;
+  }
+
+  get lists(): Array<any> {
+    return this._lists;
+  }
+
+  set lists(value: Array<any>) {
+    this._lists = value;
+  }
+
+  get totalPage(): number {
+    return this._totalPage;
+  }
+
+  set totalPage(value: number) {
+    this._totalPage = value;
+  }
+
+  get currentPage(): number {
+    return this._currentPage;
+  }
+
+  set currentPage(value: number) {
+    this._currentPage = value;
+  }
+
+  get size(): number {
+    return this._size;
+  }
+
+  set size(value: number) {
+    this._size = value;
+  }
+
+  get errorMessage(): string {
+    return this._errorMessage;
+  }
+
+  set errorMessage(value: string) {
+    this._errorMessage = value;
+  }
+
+  get loading(): boolean {
+    return this._loading;
+  }
+
+  set loading(value: boolean) {
+    this._loading = value;
+  }
+
+  get queryKey(): any {
+    return this._queryKey;
+  }
+
+  set queryKey(value: any) {
+    this._queryKey = value;
+  }
+
+  get ifPage(): boolean {
+    return this._ifPage;
+  }
+
+  set ifPage(value: boolean) {
+    this._ifPage = value;
+  }
 }

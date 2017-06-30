@@ -1,1 +1,5 @@
 <h1>Doctor Component</h1>
+<div *ngIf="!auditedTable.lists&&auditedTable.loading">Loading...</div>
+<div *ngIf="auditedTable.lists">
+  <app-lib-table [table]="auditedTable"></app-lib-table>
+</div>
