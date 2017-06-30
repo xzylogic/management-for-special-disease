@@ -1,9 +1,14 @@
-$primary-color: #29b6f6;
-$primary-light: rgba(178, 235, 242, 0.3);
-$shadow-color: rgba(0, 0, 0, .4);
-$shadow-color-light: rgba(230, 230, 230, .7);
-$grey: rgba(0, 0, 0, .54);
-$grey-bg: rgba(0, 0, 0, .32);
-$grey-border: rgba(0, 0, 0, .06);
-$grey-hover: #fafafa;
+$primary-color: #607d8b;
+$primary-color-light: #cfd8dc;
+$primary-color-dark: #455a64;
+
+$text-color-primary: rgb(51, 51, 51);
+$text-color-secondary: rgb(77, 76, 76);
+$text-color-third: rgb(110, 110, 110);
+
 $white: #fff;
+
+$shadow-color: rgba(0, 0, 0, .3);
+$shadow-color-light: rgba(0, 0, 0, .2);
+
+$border-color: #f2f2f2;

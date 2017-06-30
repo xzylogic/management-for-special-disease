@@ -11,6 +11,11 @@ import { AuthGuardService } from './_service/auth-guard.service';
       component: PciMainComponent,
       canActivate: [AuthGuardService],
       children: [
+        {
+          path: '',
+          redirectTo: '/doctor',
+          pathMatch: 'full'
+        },
         ...doctorRoutes,
       ]
     }]

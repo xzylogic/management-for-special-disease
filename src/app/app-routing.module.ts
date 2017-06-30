@@ -3,10 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [{
   path: '',
-  redirectTo: '/pci/doctor',
-  pathMatch: 'full'
-}, {
-  path: 'pci',
   loadChildren: 'app/pci/main.module#PciMainModule'
 }];
 

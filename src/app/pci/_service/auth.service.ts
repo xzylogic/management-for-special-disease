@@ -34,7 +34,7 @@ export class AuthService {
 
   logout() {
     window.sessionStorage.removeItem(this.JWT_KEY);
-    this.router.navigate(['', 'login']);
+    this.router.navigate(['/login']);
     this.redirectUrl = '';
   }
 

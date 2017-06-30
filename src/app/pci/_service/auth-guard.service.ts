@@ -25,7 +25,7 @@ export class AuthGuardService implements CanActivate {
     this._loginService.redirectUrl = url;
 
     // Navigate to the login page with extras
-    this.router.navigate(['/pci/login']);
+    this.router.navigate(['/login']);
 
     return false;
   }

@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-pci',
   template: `
-    <h1>PCI Management</h1>
-    <router-outlet></router-outlet>
+    <app-nav>
+      <router-outlet></router-outlet>
+    </app-nav>
   `
 })
 export class PciMainComponent {

@@ -17,7 +17,10 @@
     "testTsconfig": "tsconfig.spec.json",
     "prefix": "app",
     "styles": [
-      "styles.sass"
+      "styles.scss",
+      "../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.css",
+      "../node_modules/wangeditor/dist/css/wangEditor.css",
+      "../node_modules/flatpickr/dist/flatpickr.css"
     ],
     "scripts": [],
     "environmentSource": "environments/environment.ts",
