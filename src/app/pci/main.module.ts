@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 
 import { LoginModule } from './app-login/login.module';
 import { PciRoutingModule } from './main-routing.module';
@@ -14,6 +14,7 @@ import { MainStore } from './_store/main.store';
 import { app } from '../../environments/environment';
 import { NavigationService } from './_service/navigation.service';
 import { MdButtonModule, MdChipsModule, MdIconModule, MdSidenavModule, MdToolbarModule } from '@angular/material';
+import { AdminActions } from './_store/admin.action';
 
 @NgModule({
   imports: [
@@ -37,7 +38,9 @@ import { MdButtonModule, MdChipsModule, MdIconModule, MdSidenavModule, MdToolbar
     AuthService,
     AuthGuardService,
     NavigationService,
-    {provide: 'app', useValue: app}
+    AdminActions,
+    {provide: 'app', useValue: app},
+    {provide: 'state', useValue: MainStore}
   ]
 })
 export class PciMainModule {

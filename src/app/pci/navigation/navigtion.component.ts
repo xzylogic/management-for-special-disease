@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { NavigationService } from '../_service/navigation.service';
@@ -19,7 +19,9 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public sidebarService: NavigationService,
     public authService: AuthService,
+    @Inject('state') private state
   ) {
+    console.log(state);
   }
 
   ngOnInit() {

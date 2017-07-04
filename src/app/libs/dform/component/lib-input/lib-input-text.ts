@@ -16,6 +16,7 @@ export class InputTextEntity {
         <input mdInput type="{{data.type}}"
                placeholder="{{data.label}}"
                [formControlName]="data.controlName" [(ngModel)]="value">
+        <!--<md-error>{{data.label}} is required!</md-error>-->
       </md-input-container>
       <md-input-container *ngIf="data.maxlength">
         <input mdInput type="{{data.type}}" maxlength="{{data.maxlength}}"

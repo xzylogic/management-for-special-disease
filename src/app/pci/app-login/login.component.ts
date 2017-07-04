@@ -6,8 +6,9 @@ import { MdDialog } from '@angular/material';
 import { MainState } from '../_store/main.store';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../_service/auth.service';
-import { SetAdminAction } from '../_store/admin.action';
+// import { SetAdminAction } from '../_store/admin.action';
 import { HintDialog } from '../../libs/dmodal/dialog/dialog.component';
+import { ERRMSG } from '../_store/static';
 
 @Component({
   selector: 'app-login',
@@ -51,15 +52,15 @@ export class LoginComponent {
         .subscribe(res => {
           if (res && res.code === 0 && res.data) {
             this._authService.setJwt(JSON.stringify(res.data));
-            this.store$.dispatch(new SetAdminAction({id: res.data.id, name: res.data.name}));
+            // this.store$.dispatch(new SetAdminAction({id: res.data.id, name: res.data.name}));
             this.router.navigate(['']);
           } else {
-            this.errorMsg = res.msg || '登陆错误';
+            this.errorMsg = res.msg || ERRMSG.loginErr;
             HintDialog(this.errorMsg, this.dialog);
           }
         }, err => {
           console.log(err);
-          this.errorMsg = '连接服务器出错';
+          this.errorMsg = ERRMSG.netErrMsg;
           HintDialog(this.errorMsg, this.dialog);
         });
     }

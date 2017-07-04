@@ -5,7 +5,7 @@ export interface NavState {
 export class TagPayload {
   key: string;
   group: string;
-  tag: number
+  tag: number;
 }
 
 export class InitPayload {

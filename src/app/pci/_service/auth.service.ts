@@ -4,7 +4,8 @@ import { Store } from '@ngrx/store';
 
 import { HttpService } from '../../libs/_service/http.service';
 import { MainState } from '../_store/main.store';
-import { SetAdminAction } from '../_store/admin.action';
+import { AdminActions } from '../_store/admin.action';
+// import { SetAdminAction } from '../_store/admin.action';
 
 const PATH = {
   login: 'api/login', // 登陆
@@ -21,6 +22,7 @@ export class AuthService {
     @Inject('app') public app,
     private httpService: HttpService,
     private store$: Store<MainState>,
+    private adminAction: AdminActions
   ) {
   }
 
@@ -41,7 +43,9 @@ export class AuthService {
   isAuthorized(): boolean {
     const admin = window.sessionStorage.getItem(this.JWT_KEY);
     if (admin) {
-      this.store$.dispatch(new SetAdminAction({id: JSON.parse(admin).id, name: JSON.parse(admin).name}));
+      console.log(admin);
+      this.adminAction.set({id: JSON.parse(admin).id, name: JSON.parse(admin).name});
+      // this.store$.dispatch(new SetAdminAction({id: JSON.parse(admin).id, name: JSON.parse(admin).name}));
     }
     return Boolean(admin);
   }

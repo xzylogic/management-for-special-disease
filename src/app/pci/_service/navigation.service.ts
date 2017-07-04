@@ -6,6 +6,7 @@ import { HttpService } from '../../libs/_service/http.service';
 import { Sidebar, TagPayload } from '../_store/navigation.state';
 import { InitNavAction, UpdateTagAction } from '../_store/navigation.action';
 import { MainState } from '../_store/main.store';
+import { AdminActions } from '../_store/admin.action';
 
 @Injectable()
 export class NavigationService {
@@ -14,15 +15,16 @@ export class NavigationService {
     @Inject('app') private app,
     private httpService: HttpService,
     private store$: Store<MainState>,
+    private adminAction: AdminActions
   ) {
   }
 
   getUserName(): Observable<string> {
-    return this.store$.select(state => state.AdminReducer.admin.name);
+    return this.store$.select(state => state.AdminReducer && state.AdminReducer.admin && state.AdminReducer.admin.name || '');
   }
 
   getSidebars(): Observable<Sidebar[]> {
-    return this.store$.select(state => state.NavReducer.navigation);
+    return this.store$.select(state => state.NavReducer && state.NavReducer.navigation);
   }
 
   initSidebars(path) {

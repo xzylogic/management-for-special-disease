@@ -1,26 +1,28 @@
 import { Admin, AdminState } from './admin.state';
 import { Action } from '@ngrx/store';
-import { DEL_ADMIN, DelAdminAction, SET_ADMIN, SetAdminAction } from './admin.action';
+import { AdminActions } from './admin.action';
+// import { DEL_ADMIN, SET_ADMIN } from './admin.action';
 
 export function AdminReducer(state: AdminState = {admin: new Admin()}, action: Action): AdminState {
   switch (action.type) {
-    case SET_ADMIN:
-      return handleSetAdminAction(state, <any>action);
-    case DEL_ADMIN:
-      return handleDelAdminAction(state, <any>action);
+    case AdminActions.SET_ADMIN:
+      console.log('setadmin');
+      return handleSetAdminAction(state, action);
+    case AdminActions.DEL_ADMIN:
+      return handleDelAdminAction(state, action);
     default:
       return state;
   }
 }
 
-function handleSetAdminAction(state: AdminState, action: SetAdminAction): AdminState {
-  let admin = state.admin;
+function handleSetAdminAction(state: AdminState, action): AdminState {
+  const admin = state.admin;
   admin.id = action.payload.id;
   admin.name = action.payload.name;
   return {admin: admin};
 }
 
-function handleDelAdminAction(state: AdminState, action: DelAdminAction): AdminState {
+function handleDelAdminAction(state: AdminState, action): AdminState {
   let admin = state.admin;
   admin = new Admin();
   return {admin: admin};

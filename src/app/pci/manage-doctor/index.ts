@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [{
-  path: 'doctor',
+  path: '',
   loadChildren: 'app/pci/manage-doctor/doctor/doctor.module#DoctorModule'
 }];
