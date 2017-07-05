@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { NavigationService } from '../_service/navigation.service';
 import { AuthService } from '../_service/auth.service';
 import { Sidebar } from '../_store/navigation.state';
+import { select } from '@angular-redux/store';
 // import * as Ps from 'perfect-scrollbar';
 // const Ps = require('perfect-scrollbar');
 
@@ -14,7 +15,8 @@ import { Sidebar } from '../_store/navigation.state';
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   sidebars: Observable<Sidebar[]>;
-  username: Observable<string>;
+  // username: Observable<string>;
+  @select('admin')  readonly username: Observable<string>;
 
   constructor(
     public sidebarService: NavigationService,
@@ -29,7 +31,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initSidebars();
     this.sidebarService.setCount(100, 'doctorgroup', 'doctor');
     this.sidebarService.setCount(80, 'doctorgroup', 'doctoraccount');
-    this.username = this.sidebarService.getUserName();
+    // this.username = this.sidebarService.getUserName();
     this.sidebars = this.sidebarService.getSidebars();
   }
 

@@ -1,5 +1,5 @@
 import { Admin, AdminState } from './admin.state';
-import { Action } from '@ngrx/store';
+import { Action } from 'redux';
 import { AdminActions } from './admin.action';
 // import { DEL_ADMIN, SET_ADMIN } from './admin.action';
 

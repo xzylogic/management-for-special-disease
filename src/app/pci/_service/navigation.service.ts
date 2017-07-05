@@ -19,9 +19,9 @@ export class NavigationService {
   ) {
   }
 
-  getUserName(): Observable<string> {
-    return this.store$.select(state => state.AdminReducer && state.AdminReducer.admin && state.AdminReducer.admin.name || '');
-  }
+  // getUserName(): Observable<string> {
+    // return this.store$.select(state => state.AdminReducer && state.AdminReducer.admin && state.AdminReducer.admin.name || '');
+  // }
 
   getSidebars(): Observable<Sidebar[]> {
     return this.store$.select(state => state.NavReducer && state.NavReducer.navigation);

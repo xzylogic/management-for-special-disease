@@ -7,12 +7,12 @@ import { DoctorState } from '../manage-doctor/doctor/_store/doctor.state';
 
 export const MainStore = {
   NavReducer,
-  AdminReducer,
+  // AdminReducer,
   // DoctorReducer
 };
 
 export class MainState {
   NavReducer: NavState;
-  AdminReducer: AdminState;
+  // AdminReducer: AdminState;
   // DoctorReducer: DoctorState;
 }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
+import { NgReduxModule, NgRedux } from '@angular-redux/store';
+import { createLogger } from 'redux-logger';
 import { Store, StoreModule } from '@ngrx/store';
 
 import { LoginModule } from './app-login/login.module';
@@ -15,6 +17,8 @@ import { app } from '../../environments/environment';
 import { NavigationService } from './_service/navigation.service';
 import { MdButtonModule, MdChipsModule, MdIconModule, MdSidenavModule, MdToolbarModule } from '@angular/material';
 import { AdminActions } from './_store/admin.action';
+import { AdminReducer } from './_store/admin.reducer';
+import { Admin, AdminState } from './_store/admin.state';
 
 @NgModule({
   imports: [
@@ -27,6 +31,7 @@ import { AdminActions } from './_store/admin.action';
     MdChipsModule,
     LoginModule,
     PciRoutingModule,
+    NgReduxModule,
     StoreModule.provideStore(MainStore)
   ],
   declarations: [
@@ -40,8 +45,11 @@ import { AdminActions } from './_store/admin.action';
     NavigationService,
     AdminActions,
     {provide: 'app', useValue: app},
-    {provide: 'state', useValue: MainStore}
+    // {provide: 'state', useValue: MainStore}
   ]
 })
 export class PciMainModule {
+  constructor(ngRedux: NgRedux<AdminState>) {
+    ngRedux.configureStore(AdminReducer, {admin: new Admin()}, [createLogger()]);
+  }
 }

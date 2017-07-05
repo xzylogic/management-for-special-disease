@@ -1,8 +1,10 @@
 import { Action, Store } from '@ngrx/store';
 import { Admin, AdminState } from './admin.state';
-import { Inject, Injectable } from '@angular/core';
-export const SET_ADMIN = 'SET_ADMIN';
-export const DEL_ADMIN = 'DEL_ADMIN';
+import { Injectable } from '@angular/core';
+
+import { NgRedux } from '@angular-redux/store';
+// export const SET_ADMIN = 'SET_ADMIN';
+// export const DEL_ADMIN = 'DEL_ADMIN';
 
 export function createAction(type, payload?): Action {
   return {type, payload};
@@ -13,16 +15,19 @@ export class AdminActions {
   static SET_ADMIN = 'SET_ADMIN';
   static DEL_ADMIN = 'DEL_ADMIN';
 
-  constructor(private store: Store<AdminState>) {
+  // constructor(private store: Store<AdminState>) {
+  constructor(private ngRedux: NgRedux<AdminState>) {
 
   }
 
   set(data) {
-    this.store.dispatch(createAction(AdminActions.SET_ADMIN, data));
+    this.ngRedux.dispatch({ type: AdminActions.SET_ADMIN, payload: data });
+    // this.store.dispatch(createAction(AdminActions.SET_ADMIN, data));
   }
 
   get() {
-    this.store.dispatch(createAction(AdminActions.DEL_ADMIN));
+    this.ngRedux.dispatch({ type: AdminActions.DEL_ADMIN });
+    // this.store.dispatch(createAction(AdminActions.DEL_ADMIN));
   }
 
 }
