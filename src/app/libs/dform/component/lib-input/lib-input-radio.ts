@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormText } from '../../_entity/form-text';
 
 @Component({
-  selector: 'app-input-text',
+  selector: 'app-input-radio',
   template: `
     <div [formGroup]="form">
       <md-input-container *ngIf="!data.maxlength" style="width: 100%">
@@ -28,7 +28,7 @@ import { FormText } from '../../_entity/form-text';
     </div>
   `
 })
-export class LibInputTextComponent implements OnInit {
+export class LibInputRadioComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() data: FormText;
   @Input() value: any;
@@ -38,8 +38,8 @@ export class LibInputTextComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.form);
-    // console.log(this.data);
-    // console.log(this.value);
+    console.log(this.form);
+    console.log(this.data);
+    console.log(this.value);
   }
 }

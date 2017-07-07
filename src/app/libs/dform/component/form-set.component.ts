@@ -47,7 +47,7 @@ export class DynamicFormSet implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log(this.formdata);
+    // console.log(this.formdata);
     this.formValue = this.formdata.value;
     if (this.formdata.controlType === this.formControl.checkbox && this.formdata.options) {
       this.formValue = [];
@@ -90,6 +90,10 @@ export class DynamicFormSet implements OnInit, AfterViewInit {
     if (this.formdata.controlType === this.formControl.editor) {
       this.newEditor(this.formValue);
     }
+  }
+
+  changeValue(value) {
+    console.log(value);
   }
 
   isValid() {

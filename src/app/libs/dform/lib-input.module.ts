@@ -11,6 +11,15 @@ import {
 
 import { DFormControlService, UploadService } from './_service';
 import { LibInputTextComponent } from './component/lib-input/lib-input-text';
+import { LibInputCheckboxComponent } from './component/lib-input/lib-input-checkbox';
+import { LibInputDateComponent } from './component/lib-input/lib-input-date';
+import { LibInputDatetimeComponent } from './component/lib-input/lib-input-datetime';
+import { LibInputDropdownComponent } from './component/lib-input/lib-input-dropdown';
+import { LibInputEditorComponent } from './component/lib-input/lib-input-editor';
+import { LibInputFileComponent } from './component/lib-input/lib-input-file';
+import { LibInputRadioComponent } from './component/lib-input/lib-input-radio';
+import { LibInputTimeComponent } from './component/lib-input/lib-input-time';
+import { LibInputTextareaComponent } from './component/lib-input/lib-input-textarea';
 
 export * from './_entity';
 
@@ -27,7 +36,16 @@ export * from './_entity';
     MdGridListModule
   ],
   declarations: [
-    LibInputTextComponent
+    LibInputTextComponent,
+    LibInputCheckboxComponent,
+    LibInputDateComponent,
+    LibInputDatetimeComponent,
+    LibInputDropdownComponent,
+    LibInputEditorComponent,
+    LibInputFileComponent,
+    LibInputRadioComponent,
+    LibInputTimeComponent,
+    LibInputTextareaComponent
   ],
   providers: [
     DFormControlService,
@@ -42,7 +60,16 @@ export * from './_entity';
     MdRadioModule,
     MdCheckboxModule,
     MdSelectModule,
-    LibInputTextComponent
+    LibInputTextComponent,
+    LibInputCheckboxComponent,
+    LibInputDateComponent,
+    LibInputDatetimeComponent,
+    LibInputDropdownComponent,
+    LibInputEditorComponent,
+    LibInputFileComponent,
+    LibInputRadioComponent,
+    LibInputTimeComponent,
+    LibInputTextareaComponent
   ]
 })
 export class LibInputModule {

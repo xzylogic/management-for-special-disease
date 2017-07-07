@@ -24,7 +24,7 @@ export class DoctorFormService {
           value: data && data.tel || '',
           readonly: true,
           required: true,
-          order: 1
+          order: 0
         })
       )
     } else {
@@ -34,13 +34,12 @@ export class DoctorFormService {
           label: '手机号',
           value: data && data.tel || '',
           required: true,
-          order: 1
+          order: 0
         }),
         new FormText({
           key: 'auditor',
           label: '添加人',
           value: '',
-          readonly: true,
           required: true,
           order: 0
         })
@@ -54,7 +53,7 @@ export class DoctorFormService {
         value: data && data.name || '',
         required: true,
         validated: true,
-        order: 2
+        order: 1
       }),
       new FormDropdown({
         key: 'hospitalId',
@@ -62,7 +61,7 @@ export class DoctorFormService {
         value: data && data.hospitalId || '',
         required: true,
         options: hospitals,
-        order: 4
+        order: 3
       }),
       new FormDropdown({
         key: 'departmentId',
@@ -70,7 +69,7 @@ export class DoctorFormService {
         value: data && data.departmentId || '',
         required: true,
         options: departments,
-        order: 5
+        order: 4
       }),
       new FormDropdown({
         key: 'titleId',
@@ -78,28 +77,28 @@ export class DoctorFormService {
         value: data && data.doctorTitleId || '',
         required: true,
         options: doctorTitles,
-        order: 6
+        order: 5
       }),
       new FormFile({
         key: 'avatarUrl',
         label: '头像',
         value: data && data.avatarUrl || '',
         required: false,
-        order: 3
+        order: 2
       }),
       new FormFile({
         key: 'certificationUrl',
         label: '职称证明或医院工牌',
         value: data && data.certificationUrl || '',
         required: true,
-        order: 7
+        order: 6
       }),
       new FormTextarea({
         key: 'description',
         label: '医生简介',
         value: data && data.description || '',
         required: false,
-        order: 8
+        order: 7
       })
     );
 

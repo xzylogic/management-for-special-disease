@@ -51,24 +51,24 @@ export class DoctorComponent implements OnInit {
     private doctorAction: DoctorAction,
     private router: Router
   ) {
-    this.doctorAction.doctorReset();
-    this.doctor.subscribe(data => console.log(data));
-    this.containerConfig = doctorService.doctorConfig();
-    this.auditedTable = new TableOption({
-      titles: doctorTableService.setDoctorAuditedTitles(),
-      ifPage: true
-    });
-    this.auditingTable = new TableOption({
-      titles: doctorTableService.setDoctorAuditingTitles(),
-      ifPage: true
-    });
-    this.failureTable = new TableOption({
-      titles: doctorTableService.setDoctorFailureTitles(),
-      ifPage: true
-    });
   }
 
   ngOnInit() {
+    this.doctorAction.doctorReset();
+    this.doctor.subscribe(data => console.log(data));
+    this.containerConfig = this.doctorService.doctorConfig();
+    this.auditedTable = new TableOption({
+      titles: this.doctorTableService.setDoctorAuditedTitles(),
+      ifPage: true
+    });
+    this.auditingTable = new TableOption({
+      titles: this.doctorTableService.setDoctorAuditingTitles(),
+      ifPage: true
+    });
+    this.failureTable = new TableOption({
+      titles: this.doctorTableService.setDoctorFailureTitles(),
+      ifPage: true
+    });
     this.reset0();
     this.reset1();
     this.reset2();

@@ -25,10 +25,19 @@ export class DoctorEditComponent implements OnInit {
     this.doctor.subscribe(data => {
       if (data.id === 0) {
         this.containerConfig = this.doctorService.doctorEditConfig(true);
-        this.form = this.doctorFormService.setForm([], [], []);
+        this.form = this.doctorFormService.setForm(
+          [{id: 1, name: '111'}],
+          [{id: 1, name: '111'}],
+          [{id: 1, name: '111'}]
+        );
       } else {
         this.containerConfig = this.doctorService.doctorEditConfig(false);
-        this.form = this.doctorFormService.setForm([], [], [], data);
+        this.form = this.doctorFormService.setForm(
+          [{id: 1, name: '111'}],
+          [{id: 1, name: '111'}],
+          [{id: 1, name: '111'}],
+          data
+        );
       }
     });
     console.log(this.form);

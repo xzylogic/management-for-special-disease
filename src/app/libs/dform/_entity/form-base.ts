@@ -11,6 +11,7 @@
  * dropdown - 文本下拉框
  * file - 文件上传
  */
+import { ERRMSG } from '../../../pci/_store/static';
 export enum FormType { text, date, time, datetime, textarea, editor, radio, checkbox, dropdown, file }
 
 export class FormBase<T> {
@@ -24,6 +25,7 @@ export class FormBase<T> {
   readonly: boolean; // 是否只读
   placeholder: string; // 默认值
   controlType: FormType; // Form类型
+  errMsg: string; // 错误提示
   order: number; // 排序
 
   constructor(options: {
@@ -37,6 +39,7 @@ export class FormBase<T> {
     readonly?: boolean,
     placeholder?: string,
     controlType?: FormType,
+    errMsg: string,
     order?: number
   }) {
     this.value = options.value;
@@ -49,6 +52,7 @@ export class FormBase<T> {
     this.readonly = !!options.readonly;
     this.placeholder = options.placeholder || '';
     this.controlType = options.controlType || FormType.text;
+    this.errMsg = options.errMsg || ERRMSG.inputErr;
     this.order = options.order || 1;
   }
 }

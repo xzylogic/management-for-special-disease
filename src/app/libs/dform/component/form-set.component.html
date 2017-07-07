@@ -2,18 +2,7 @@
   <div [ngSwitch]="formdata.controlType" class="lib-form-set">
     <div *ngSwitchCase="formControl.text">
       <div class="lib-input">
-        <!--<md-input-container *ngIf="!formdata.maxlength">-->
-        <!--<input mdInput type="{{formdata.type}}" placeholder="{{formdata.label}}" [formControlName]="formdata.key"-->
-        <!--[(ngModel)]="formValue">-->
-        <!--</md-input-container>-->
-        <!--<md-input-container *ngIf="formdata.maxlength">-->
-        <!--<input mdInput type="{{formdata.type}}" maxlength="{{formdata.maxlength}}"-->
-        <!--placeholder="{{formdata.label}}"-->
-        <!--[formControlName]="formdata.key" [(ngModel)]="formValue">-->
-        <!--<md-hint align="end">{{formValue.length}} / {{formdata.maxlength}}</md-hint>-->
-        <!--</md-input-container>-->
-        <!--<app-input-text [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-text>-->
-        <app-input-text  [form]="form" [data]="formdata"></app-input-text>
+        <app-input-text [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-text>
       </div>
     </div>
     <div *ngSwitchCase="formControl.date">
