@@ -12,10 +12,8 @@ import { DFormControlService } from '../_service';
   styleUrls: ['form.component.css']
 })
 export class DynamicForm implements OnInit {
-
   @Input() button: string;
   @Input() reset: boolean;
-
   @Input() formDatas: FormBase<any>[] = [];
   @Output() formValues = new EventEmitter();
 

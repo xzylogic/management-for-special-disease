@@ -1,36 +1,34 @@
 import { NgModule } from '@angular/core';
-import { DoctorComponent, DoctorOutletComponent } from './doctor.component';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+
+import { DTableModule } from '../../../libs/dtable/dtable.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { LibModule } from '../../../libs/common/lib.module';
+
+import { DoctorComponent } from './doctor.component';
+import { DoctorEditComponent } from './doctor-edit/doctor-edit.component';
+import { SendMessageComponent } from './send-message/send-message.component';
+
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { DoctorService } from './_service/doctor.service';
 import { DoctorFormService } from './_service/doctor-form.service';
 import { DoctorTableService } from './_service/doctor-table.service';
-import { DoctorEditComponent } from './doctor-edit/doctor-edit.component';
-import { SendMessageComponent } from './send-message/send-message.component';
-import { DTableModule } from '../../../libs/dtable/dtable.module';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
-import { DFormModule } from '../../../libs/dform/dform.module';
-import { LibModule } from '../../../libs/common/lib.module';
-import { FormsModule } from '@angular/forms';
-import { provideStore, StoreModule } from '@ngrx/store';
-import { DoctorReducer } from './_store/doctor.reducer';
+import { DoctorAction } from './_store/doctor.action';
 
 const routes: Routes = [{
-  path: 'doctor',
-  component: DoctorOutletComponent,
-  children: [{
-    path: '',
-    component: DoctorComponent,
-    canActivate: [AuthGuardService],
-  }, {
-    path: 'edit',
-    component: DoctorEditComponent,
-    canActivate: [AuthGuardService],
-  }, {
-    path: 'message',
-    component: SendMessageComponent,
-    canActivate: [AuthGuardService],
-  }]
+  path: '',
+  component: DoctorComponent,
+  canActivate: [AuthGuardService],
+}, {
+  path: 'edit',
+  component: DoctorEditComponent,
+  canActivate: [AuthGuardService],
+}, {
+  path: 'message',
+  component: SendMessageComponent,
+  canActivate: [AuthGuardService],
 }];
 
 @NgModule({
@@ -41,13 +39,9 @@ const routes: Routes = [{
     MdTabsModule,
     MdChipsModule,
     FormsModule,
-    RouterModule.forChild(routes),
-    StoreModule.provideStore({
-      DoctorReducer
-    })
+    RouterModule.forChild(routes)
   ],
   declarations: [
-    DoctorOutletComponent,
     DoctorComponent,
     DoctorEditComponent,
     SendMessageComponent
@@ -56,7 +50,7 @@ const routes: Routes = [{
     DoctorService,
     DoctorTableService,
     DoctorFormService,
-    // provideStore({DoctorReducer})
+    DoctorAction
   ]
 })
 export class DoctorModule {

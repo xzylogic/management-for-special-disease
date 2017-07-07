@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
+
 import { HttpService } from '../../../../libs/_service/http.service';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
-import { DoctorState } from '../_store/doctor.state';
-import { Store } from '@ngrx/store';
-import { TabChangeAction } from '../_store/doctor.action';
+
 const PATH = {
   doctorQuery: 'api/doctor/query', // 查询选项列表
   sendMessage: 'doctor/sendMsg', // 编辑短信提醒医生
@@ -13,12 +12,11 @@ const PATH = {
 export class DoctorService {
   constructor(
     @Inject('app') private app,
-    private store$: Store<DoctorState>,
     private httpService: HttpService,
   ) {
   }
 
-  doctorConfig() {
+  doctorConfig(): ContainerConfig {
     return new ContainerConfig({
       title: '医生信息管理',
       subTitle: '医生信息列表',
@@ -28,16 +26,14 @@ export class DoctorService {
     });
   }
 
-  getTab() {
-    return this.store$.select(state => state.tab);
-  }
-
-  setTab(tab: number) {
-    return this.store$.dispatch(new TabChangeAction(tab));
-  }
-
-  getPage0() {
-    return this.store$.select(state => state.tabPage0);
+  doctorEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生信息管理',
+      subTitle: tag ? '新增医生' : '编辑医生信息',
+      ifHome: false,
+      homeRouter: '/doctor',
+      currentRouter: '/doctor/edit'
+    });
   }
 
   getDoctors(key: string, page: number, size: number, index: number) {

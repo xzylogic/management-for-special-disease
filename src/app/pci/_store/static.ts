@@ -1,68 +1,68 @@
-import { Sidebar } from './navigation.state';
+import { Navbar } from './main.state';
 
-export let SIDEBARS = [
-  new Sidebar({
+export let NAVBARS = [
+  new Navbar({
     key: 'statistics',
     title: '数据统计',
     ifSub: true,
     subBars: [
-      new Sidebar({
+      new Navbar({
         key: 'registerstatistics',
         title: '注册量统计',
         link: '/register-statistics'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'activenessstatistics',
         title: '日活跃度统计',
         link: '/activeness-statistics'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'periodstatistics',
         title: '活跃度统计',
         link: '/period-statistics'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'businessstatistics',
         title: '业务数据统计',
         link: '/business-statistics'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'downloadtatistics',
         title: '渠道来源统计',
         link: '/download-statistics'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'fatherstatistics',
         title: '父亲节统计',
         link: '/father-statistics'
       })
     ]
   }),
-  new Sidebar({
+  new Navbar({
     key: 'doctorgroup',
     title: '医生管理',
     ifSub: true,
     tag: 0,
     subBars: [
-      new Sidebar({
+      new Navbar({
         key: 'doctor',
         title: '医生信息管理',
         link: '/doctor',
         tag: 0
       }),
-      new Sidebar({
+      new Navbar({
         key: 'doctorgroup',
         title: '医生小组管理',
         link: '/doctor-group',
         tag: 0
       }),
-      new Sidebar({
+      new Navbar({
         key: 'doctoraccount',
         title: '医生账户管理',
         link: '/doctor-account',
         tag: 0
       }),
-      new Sidebar({
+      new Navbar({
         key: 'relationship',
         title: '医患关联管理',
         link: '/relationship',
@@ -70,30 +70,30 @@ export let SIDEBARS = [
       })
     ]
   }),
-  new Sidebar({
+  new Navbar({
     key: 'usergroup',
     title: '患者管理',
     ifSub: true,
     tag: 0,
     subBars: [
-      new Sidebar({
+      new Navbar({
         key: 'user',
         title: '患者信息管理',
         link: '/user'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'userorder',
         title: '患者订单管理',
         link: '/user-order',
         tag: 0
       }),
-      new Sidebar({
+      new Navbar({
         key: 'usercertification',
         title: '实名认证管理',
         link: '/user-certification',
         tag: 0
       }),
-      new Sidebar({
+      new Navbar({
         key: 'healthdata',
         title: '患者体征数据管理',
         link: '/health-data',
@@ -101,204 +101,204 @@ export let SIDEBARS = [
       })
     ]
   }),
-  new Sidebar({
+  new Navbar({
     key: 'integral',
     title: '积分管理',
     ifSub: true,
     tag: 0,
     subBars: [
-      new Sidebar({
+      new Navbar({
         key: 'integralDetail',
         title: '积分明细',
         link: '/integral-detail'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'integralOrder',
         title: '积分商品订单管理',
         link: '/integral-order',
         tag: 0
       }),
-      new Sidebar({
+      new Navbar({
         key: 'integralCommodity',
         title: '积分商品维护',
         link: '/integral-commodity'
       })
     ]
   }),
-  new Sidebar({
+  new Navbar({
     key: 'healthnews',
     title: '健康资讯',
     link: '/health-news'
   }),
-  new Sidebar({
+  new Navbar({
     key: 'commodity',
     title: '商品维护',
     link: '/commodity'
   }),
-  new Sidebar({
+  new Navbar({
     key: 'servicegroup',
     title: '服务维护',
     ifSub: true,
     subBars: [
-      new Sidebar({
+      new Navbar({
         key: 'basicservice',
         title: '基础服务维护',
         link: '/basic-service'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'healthservice',
         title: '第三方服务维护',
         link: '/health-service'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'packageservice',
         title: '套餐包服务维护',
         link: '/package-service'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'servicespec',
         title: '服务规格维护',
         link: '/service-spec'
       }),
     ]
   }),
-  new Sidebar({
+  new Navbar({
     key: 'basicgroup',
     title: '基础数据维护',
     ifSub: true,
     subBars: [
-      new Sidebar({
+      new Navbar({
         key: 'hospital',
         title: '医院数据维护',
         link: '/hospital'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'departmant',
         title: '科室数据维护',
         link: '/department'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'doctortitle',
         title: '职称数据维护',
         link: '/doctor-title'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'doctorsort',
         title: '医生排序',
         link: '/doctor-sort'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'newsclassify',
         title: '健康资讯分类数据维护',
         link: '/news-classify'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'discomfortsymptom',
         title: '不适症状数据维护',
         link: '/discomfort-symptom'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'followupplan',
         title: '随访计划模版数据维护',
         link: '/follow-up-plan'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'flowergrade',
         title: '鲜花等级数据维护',
         link: '/flower-grade'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'drug',
         title: '药品数据维护',
         link: '/drug'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'healthorganization',
         title: '第三方机构数据维护',
         link: '/health-organization'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'inspectioncategory',
         title: '检查类目维护',
         link: '/inspection-category'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'inspectionitem',
         title: '检查子项目维护',
         link: '/inspection-item'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'pushtime',
         title: '推送时间维护',
         link: '/push-time'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'downloadorigin',
         title: '下载渠道维护',
         link: '/download-origin'
       })
     ]
   }),
-  new Sidebar({
+  new Navbar({
     key: 'datacollection',
     title: '病史资料录入',
     link: '/data-collection'
   }),
-  new Sidebar({
+  new Navbar({
     key: 'versioncontrol',
     title: '版本控制',
     link: '/version-control'
   }),
-  new Sidebar({
+  new Navbar({
     key: 'subscribe',
     title: '服务号管理',
     ifSub: true,
     subBars: [
-      new Sidebar({
+      new Navbar({
         key: 'assessmentrisk',
         title: '风险评估管理',
         link: '/assessment-risk'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'familyaccount',
         title: '家庭账号维护',
         link: '/family-account'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'lecture',
         title: '讲座管理',
         link: '/lecture'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'custommenu',
         title: '自定义菜单',
         link: '/custom-menu'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'autoreply',
         title: '自动回复维护',
         link: '/auto-reply'
       })
     ]
   }),
-  new Sidebar({
+  new Navbar({
     key: 'adsmanagement',
     title: '广告位管理',
     ifSub: true,
     subBars: [
-      new Sidebar({
+      new Navbar({
         key: 'ad-doctor',
         title: '广告位管理-医生端',
         link: '/ad-doctor'
       }),
-      new Sidebar({
+      new Navbar({
         key: 'ad-patient',
         title: '广告位管理-患者端',
         link: '/ad-patient'
       })
     ]
   }),
-  new Sidebar({
+  new Navbar({
     key: 'operationpush',
     title: '运营推送',
     link: '/operation-push'

@@ -1,18 +1,18 @@
-export interface DoctorState {
+export interface IDoctorState {
   readonly tab: number;
-  readonly doctor: Doctor;
   readonly tabPage0: number;
   readonly tabPage1: number;
   readonly tabPage2: number;
+  readonly doctor: Doctor;
 }
 
 export class Doctor {
-  id?: number;
+  id: number;
   tel: string;
   name: string;
   hospitalId: number;
   departmentId: number;
-  titleId: number;
+  doctorTitleId: number;
   avatarUrl: string;
   certificationUrl: string;
   description: string;
@@ -23,7 +23,7 @@ export class Doctor {
     this.name = obj && obj.name || '';
     this.hospitalId = obj && obj.hospitalId || 1;
     this.departmentId = obj && obj.departmentId || 1;
-    this.titleId = obj && obj.titleId || 1;
+    this.doctorTitleId = obj && obj.doctorTitleId || 1;
     this.avatarUrl = obj && obj.avatarUrl || '';
     this.certificationUrl = obj && obj.certificationUrl || '';
     this.description = obj && obj.description || '';

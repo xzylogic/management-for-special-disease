@@ -24,7 +24,6 @@ declare var wangEditor;
 declare let $: any;
 
 @Component({
-  moduleId: module.id,
   selector: 'app-form-set',
   templateUrl: 'form-set.component.html',
   styleUrls: ['form.component.css']
@@ -48,6 +47,7 @@ export class DynamicFormSet implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log(this.formdata);
     this.formValue = this.formdata.value;
     if (this.formdata.controlType === this.formControl.checkbox && this.formdata.options) {
       this.formValue = [];
@@ -97,7 +97,7 @@ export class DynamicFormSet implements OnInit, AfterViewInit {
   }
 
   newEditor(editordata) {
-    let editor = new wangEditor(this.formdata.key);
+    const editor = new wangEditor(this.formdata.key);
     editor.config.menus = MENU;
     editor.onchange = () => {
       this.formValue = editor.$txt.html();
@@ -122,7 +122,7 @@ export class DynamicFormSet implements OnInit, AfterViewInit {
 
   // 上传图片操作
   uploadChange(files) {
-    let myForm = new FormData();
+    const myForm = new FormData();
     myForm.append('file', files.target.files[0]);
 
     this.uploadService.uploadFile(myForm, this.formdata.url, this);
@@ -174,7 +174,7 @@ export class DynamicFormSet implements OnInit, AfterViewInit {
   }
 
   openDialog(msg) {
-    let option: MdDialogConfig = <MdDialogConfig>{
+    const option: MdDialogConfig = <MdDialogConfig>{
       data: new DialogOptions(
         {
           title: '提示信息',
@@ -187,7 +187,7 @@ export class DynamicFormSet implements OnInit, AfterViewInit {
         }),
       width: '300px'
     };
-    let dialogRef = this.dialog.open(DialogComponent, option);
+    const dialogRef = this.dialog.open(DialogComponent, option);
   }
 
 }

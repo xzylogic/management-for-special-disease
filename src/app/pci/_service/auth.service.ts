@@ -1,11 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 
 import { HttpService } from '../../libs/_service/http.service';
-import { MainState } from '../_store/main.store';
-import { AdminActions } from '../_store/admin.action';
-// import { SetAdminAction } from '../_store/admin.action';
+import { MainAction } from '../_store/main.action';
 
 const PATH = {
   login: 'api/login', // 登陆
@@ -21,8 +18,7 @@ export class AuthService {
     private router: Router,
     @Inject('app') public app,
     private httpService: HttpService,
-    private store$: Store<MainState>,
-    private adminAction: AdminActions
+    private mainAction: MainAction
   ) {
   }
 
@@ -38,14 +34,14 @@ export class AuthService {
     window.sessionStorage.removeItem(this.JWT_KEY);
     this.router.navigate(['/login']);
     this.redirectUrl = '';
+    this.mainAction.delAdmin();
   }
 
   isAuthorized(): boolean {
     const admin = window.sessionStorage.getItem(this.JWT_KEY);
     if (admin) {
       console.log(admin);
-      this.adminAction.set({id: JSON.parse(admin).id, name: JSON.parse(admin).name});
-      // this.store$.dispatch(new SetAdminAction({id: JSON.parse(admin).id, name: JSON.parse(admin).name}));
+      this.mainAction.setAdmin({id: JSON.parse(admin).id, name: JSON.parse(admin).name});
     }
     return Boolean(admin);
   }

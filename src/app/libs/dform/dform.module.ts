@@ -12,6 +12,7 @@ import {
 import { DynamicForm, DynamicFormSet } from './component';
 import { DFormControlService, UploadService } from './_service';
 import { LibInputTextComponent } from './component/lib-input/lib-input-text';
+import { LibInputModule } from './lib-input.module';
 
 export * from './_entity';
 
@@ -25,7 +26,8 @@ export * from './_entity';
     MdRadioModule,
     MdCheckboxModule,
     MdSelectModule,
-    MdGridListModule
+    MdGridListModule,
+    LibInputModule
   ],
   declarations: [
     DynamicForm,

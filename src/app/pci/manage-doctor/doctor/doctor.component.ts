@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+
 import { TableOption } from '../../../libs/dtable/dtable.entity';
-import { DoctorService } from './_service/doctor.service';
-import { DoctorTableService } from './_service/doctor-table.service';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { ERRMSG } from '../../_store/static';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { DoctorService } from './_service/doctor.service';
+import { DoctorTableService } from './_service/doctor-table.service';
+import { DoctorAction } from './_store/doctor.action';
+import { Doctor } from './_store/doctor.state';
 
 @Component({
   selector: 'app-doctor',
@@ -38,17 +42,18 @@ export class DoctorComponent implements OnInit {
   auditedTable: TableOption;
   auditingTable: TableOption;
   failureTable: TableOption;
-  tab: Observable<number>;
+  @select(['doctor', 'tab']) tab: Observable<number>;
+  @select(['doctor', 'doctor', 'id']) doctor: Observable<number>;
 
   constructor(
     private doctorService: DoctorService,
     private doctorTableService: DoctorTableService,
+    private doctorAction: DoctorAction,
     private router: Router
   ) {
+    this.doctorAction.doctorReset();
+    this.doctor.subscribe(data => console.log(data));
     this.containerConfig = doctorService.doctorConfig();
-    console.log(this.containerConfig);
-    this.tab = doctorService.getTab();
-    console.log(this.tab);
     this.auditedTable = new TableOption({
       titles: doctorTableService.setDoctorAuditedTitles(),
       ifPage: true
@@ -146,20 +151,12 @@ export class DoctorComponent implements OnInit {
 
   gotoHandle(res) {
     console.log(res);
+    const doctor = <Doctor>res.value;
+    this.doctorAction.doctorChange(doctor);
     this.router.navigate(['/doctor/edit']);
   }
 
   change(index) {
-    this.doctorService.setTab(index);
+    this.doctorAction.tabChange(index);
   }
-
-}
-
-@Component({
-  selector: 'app-doctor-outlet',
-  template: `
-    <router-outlet></router-outlet>
-  `
-})
-export class DoctorOutletComponent {
 }

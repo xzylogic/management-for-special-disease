@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { InputTextEntity } from '../../libs/dform/component/lib-input/lib-input-text';
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
-import { MainState } from '../_store/main.store';
-import { Store } from '@ngrx/store';
 import { AuthService } from '../_service/auth.service';
-// import { SetAdminAction } from '../_store/admin.action';
 import { HintDialog } from '../../libs/dmodal/dialog/dialog.component';
 import { ERRMSG } from '../_store/static';
+import { MainAction } from '../_store/main.action';
+import { Admin } from '../_store/main.state';
+import { FormText } from '../../libs/dform/_entity/form-text';
 
 @Component({
   selector: 'app-login',
@@ -17,15 +16,15 @@ import { ERRMSG } from '../_store/static';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  loginLib: InputTextEntity[];
+  loginLib: FormText[];
   errorMsg = '';
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private dialog: MdDialog,
-    private store$: Store<MainState>,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private mainAction: MainAction
   ) {
     this.createForm();
   }
@@ -35,15 +34,15 @@ export class LoginComponent {
       name: new FormControl({value: ''}, Validators.required),
       password: new FormControl({value: ''}, Validators.required)
     });
-    this.loginLib = [{
+    this.loginLib = [new FormText({
       type: 'text',
       label: '用户名',
-      controlName: 'name'
-    }, {
+      key: 'name'
+    }), new FormText({
       type: 'password',
       label: '密码',
-      controlName: 'password'
-    }];
+      key: 'password'
+    })];
   }
 
   onSubmit(value) {
@@ -52,6 +51,7 @@ export class LoginComponent {
         .subscribe(res => {
           if (res && res.code === 0 && res.data) {
             this._authService.setJwt(JSON.stringify(res.data));
+            this.mainAction.setAdmin(new Admin({id: res.data.id, name: res.data.name}));
             // this.store$.dispatch(new SetAdminAction({id: res.data.id, name: res.data.name}));
             this.router.navigate(['']);
           } else {
