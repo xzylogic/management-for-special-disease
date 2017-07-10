@@ -6,27 +6,17 @@ import { FormText } from '../../_entity/form-text';
   selector: 'app-input-editor',
   template: `
     <div [formGroup]="form">
-      <md-input-container *ngIf="!data.maxlength" style="width: 100%">
-        <input mdInput [type]="data.type"
-               [placeholder]="data.label"
-               [formControlName]="data.key"
-               [(ngModel)]="value"
-               [readonly]="data.readonly"
-        >
-        <md-error>{{data.errMsg}}</md-error>
-      </md-input-container>
-      <md-input-container *ngIf="data.maxlength">
-        <input mdInput [type]="data.type"
-               [maxlength]="data.maxlength"
-               [placeholder]="data.label"
-               [formControlName]="data.key"
-               [(ngModel)]="value"
-               [readonly]="data.readonly"
-        >
-        <md-hint align="end">{{value.length}} / {{data.maxlength}}</md-hint>
-      </md-input-container>
+      <div class="input_container" style="padding-top: 2em">
+        <quill-editor calss="input_content"
+                      [formControlName]="data.key"
+                      [(ngModel)]="value"
+                      [options]="editorOptions"
+        ></quill-editor>
+        <span class="input_span">{{data.label}}</span>
+      </div> 
     </div>
-  `
+  `,
+  styleUrls: ['./lib-input.scss']
 })
 export class LibInputEditorComponent implements OnInit {
   @Input() form: FormGroup;
@@ -34,12 +24,38 @@ export class LibInputEditorComponent implements OnInit {
   @Input() value: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
+  editorOptions: Object;
+
   constructor() {
   }
 
   ngOnInit() {
-    console.log(this.form);
-    console.log(this.data);
-    console.log(this.value);
+    this.editorOptions = {
+      placeholder: this.data.placeholder || '',
+      modules: {
+        toolbar: ToolbarOptions
+      }
+    };
   }
 }
+
+const ToolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
+
+  [{'header': 1}, {'header': 2}, {'header': 3}, {'header': 4}],               // custom button values
+  [{'list': 'ordered'}, {'list': 'bullet'}],
+  [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+  [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+  [{'direction': 'rtl'}],                         // text direction
+
+  [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
+  [{'header': [1, 2, 3, 4, 5, 6, false]}],
+
+  [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+  [{'font': []}],
+  [{'align': []}],
+
+  ['clean']                                         // remove formatting button
+];
+

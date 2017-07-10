@@ -7,92 +7,47 @@
     </div>
     <div *ngSwitchCase="formControl.date">
       <div class="lib-input">
-        <div class="custom-input">
-          <input placeholder="{{formdata.placeholder}}" #date>
-        </div>
-        <input type="hidden" [formControlName]="formdata.key" [(ngModel)]="date.value">
+        <app-input-date [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-date>
       </div>
     </div>
     <div *ngSwitchCase="formControl.time">
       <div class="lib-input">
-        <div class="custom-input">
-          <input placeholder="{{formdata.placeholder}}" #time>
-        </div>
-        <input type="hidden" [formControlName]="formdata.key" [(ngModel)]="time.value">
+        <app-input-time [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-time>
       </div>
     </div>
     <div *ngSwitchCase="formControl.datetime">
       <div class="lib-input">
-        <div class="custom-input">
-          <input placeholder="{{formdata.placeholder}}" #datetime>
-        </div>
-        <input type="hidden" [formControlName]="formdata.key" [(ngModel)]="datetime.value">
+        <app-input-datetime [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-datetime>
       </div>
     </div>
     <div *ngSwitchCase="formControl.textarea">
       <div class="lib-input">
-        <md-input-container *ngIf="!formdata.maxlength">
-          <textarea mdInput [attr.row]="formdata.size" placeholder="{{formdata.label}}"
-                    [formControlName]="formdata.key"></textarea>
-        </md-input-container>
-        <md-input-container *ngIf="formdata.maxlength">
-          <textarea mdInput maxlength="{{formdata.maxlength}}" [attr.row]="formdata.size"
-                    placeholder="{{formdata.label}}" [formControlName]="formdata.key"
-                    [(ngModel)]="formValue"></textarea>
-          <md-hint align="end">{{formValue.length}} / {{formdata.maxlength}}</md-hint>
-        </md-input-container>
+        <app-input-textarea [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-textarea>
       </div>
     </div>
     <div *ngSwitchCase="formControl.editor">
       <div class="lib-input">
-        <textarea [id]="formdata.key" style="height:500px;">
-        </textarea>
-        <input type="hidden" [formControlName]="formdata.key" [(ngModel)]="formValue">
+        <app-input-editor [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-editor>
       </div>
     </div>
     <div *ngSwitchCase="formControl.checkbox">
       <div class="lib-input">
-        <section>
-          <md-checkbox *ngFor="let opt of formdata.options" [(checked)]="opt.checked"
-                       (change)="getChecked($event, opt.id)">{{opt.name}}
-          </md-checkbox>
-        </section>
+        <app-input-checkbox [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-checkbox>
       </div>
-      <input type="hidden" [formControlName]="formdata.key" [(ngModel)]="formValue">
     </div>
     <div *ngSwitchCase="formControl.radio">
       <div class="lib-input">
-        <md-radio-group [formControlName]="formdata.key" [(ngModel)]="formValue">
-          <md-radio-button *ngFor="let opt of formdata.options" [value]="opt.id.toString()">{{opt.name}}
-          </md-radio-button>
-        </md-radio-group>
+        <app-input-radio [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-radio>
       </div>
     </div>
     <div *ngSwitchCase="formControl.dropdown">
       <div class="lib-input">
-        <md-select placeholder="{{formdata.label}}" [formControlName]="formdata.key" [(ngModel)]="formValue">
-          <md-option *ngFor="let opt of formdata.options" [value]="opt.id.toString()">
-            {{opt.name}}
-          </md-option>
-        </md-select>
+        <app-input-dropdown [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-dropdown>
       </div>
     </div>
     <div *ngSwitchCase="formControl.file">
       <div class="lib-input">
-        <input [id]="formdata.key" type="file" (change)="uploadChange($event)">
-        <input type="hidden" [formControlName]="formdata.key" [(ngModel)]="formValue">
-        <div class="upload-content">
-          <div *ngIf="!formdata.multiple&&formValue">
-            <img class="image" [src]="formValue">
-            <md-icon (click)="fileDel()">close</md-icon>
-          </div>
-          <div *ngIf="formdata.multiple">
-            <div *ngFor="let item of formValue" class="upload-list">
-              <img class="image" [src]="item">
-              <md-icon (click)="fileDel(item)">close</md-icon>
-            </div>
-          </div>
-        </div>
+        <app-input-file [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-file>
       </div>
     </div>
   </div>

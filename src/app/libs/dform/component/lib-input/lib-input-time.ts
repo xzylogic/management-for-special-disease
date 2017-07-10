@@ -1,45 +1,46 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormText } from '../../_entity/form-text';
+
+declare var require;
+const Flatpickr = require('flatpickr');
 
 @Component({
   selector: 'app-input-time',
   template: `
     <div [formGroup]="form">
-      <md-input-container *ngIf="!data.maxlength" style="width: 100%">
-        <input mdInput [type]="data.type"
-               [placeholder]="data.label"
-               [formControlName]="data.key"
-               [(ngModel)]="value"
-               [readonly]="data.readonly"
+      <div class="input_container">
+        <input class="input_content" 
+               [placeholder]="data.placeholder" 
+               [formControlName]="data.key" 
+               [(ngModel)]="value" #time
         >
-        <md-error>{{data.errMsg}}</md-error>
-      </md-input-container>
-      <md-input-container *ngIf="data.maxlength">
-        <input mdInput [type]="data.type"
-               [maxlength]="data.maxlength"
-               [placeholder]="data.label"
-               [formControlName]="data.key"
-               [(ngModel)]="value"
-               [readonly]="data.readonly"
-        >
-        <md-hint align="end">{{value.length}} / {{data.maxlength}}</md-hint>
-      </md-input-container>
+        <span class="input_span">{{data.label}}</span>
+      </div>
     </div>
-  `
+  `,
+  styleUrls: ['./lib-input.scss']
 })
-export class LibInputTimeComponent implements OnInit {
+export class LibInputTimeComponent implements OnInit, AfterViewInit {
   @Input() form: FormGroup;
   @Input() data: FormText;
   @Input() value: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild('time') time: any;
+
   constructor() {
   }
 
   ngOnInit() {
-    console.log(this.form);
-    console.log(this.data);
-    console.log(this.value);
+  }
+
+  ngAfterViewInit() {
+    const date = new Flatpickr(this.time.nativeElement, {
+      'enableTime': true,
+      'time_24hr': true,
+      'noCalendar': true,
+      'defaultDate': this.value || ''
+    });
   }
 }

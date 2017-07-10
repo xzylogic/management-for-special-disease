@@ -1,45 +1,55 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormText } from '../../_entity/form-text';
+import { FormCheckbox } from '../../_entity/form-checkbox';
 
 @Component({
   selector: 'app-input-checkbox',
   template: `
     <div [formGroup]="form">
-      <md-input-container *ngIf="!data.maxlength" style="width: 100%">
-        <input mdInput [type]="data.type"
-               [placeholder]="data.label"
-               [formControlName]="data.key"
-               [(ngModel)]="value"
-               [readonly]="data.readonly"
-        >
-        <md-error>{{data.errMsg}}</md-error>
-      </md-input-container>
-      <md-input-container *ngIf="data.maxlength">
-        <input mdInput [type]="data.type"
-               [maxlength]="data.maxlength"
-               [placeholder]="data.label"
-               [formControlName]="data.key"
-               [(ngModel)]="value"
-               [readonly]="data.readonly"
-        >
-        <md-hint align="end">{{value.length}} / {{data.maxlength}}</md-hint>
-      </md-input-container>
+      <div class="input_container">
+        <section calss="input_content">
+          <md-checkbox class="check_content" 
+                       *ngFor="let opt of data.options" 
+                       [(checked)]="opt.checked"
+                       (change)="getChecked($event, opt.id)"
+          >{{opt.name}}</md-checkbox>
+        </section>
+        <span class="input_span">{{data.label}}</span>
+        <input type="hidden" [formControlName]="data.key" [(ngModel)]="value">
+      </div>
     </div>
-  `
+  `,
+  styleUrls: ['./lib-input.scss']
 })
 export class LibInputCheckboxComponent implements OnInit {
   @Input() form: FormGroup;
-  @Input() data: FormText;
+  @Input() data: FormCheckbox;
   @Input() value: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('date') date: any;
 
   constructor() {
   }
 
   ngOnInit() {
-    console.log(this.form);
-    console.log(this.data);
-    console.log(this.value);
+    this.data.options.forEach(obj => {
+      if (this.value.indexOf(obj.id) > -1) {
+        obj.checked = true;
+      }
+    });
+  }
+
+  getChecked(opt, id) {
+    let index = this.value.indexOf(id);
+    if (opt.checked) {
+      if (index = -1) {
+        this.value.push(id);
+      }
+    } else {
+      if (index > -1) {
+        this.value.splice(index, 1);
+      }
+    }
   }
 }

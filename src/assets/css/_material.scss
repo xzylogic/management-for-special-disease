@@ -19,8 +19,10 @@ $candy-app-warn:    mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
-
+$candy-app-theme-input: mat-light-theme($candy-app-primary, $candy-app-primary, $candy-app-warn);
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($candy-app-theme);
+@include mat-checkbox-theme($candy-app-theme-input);
+@include mat-radio-theme($candy-app-theme-input);

@@ -25,6 +25,7 @@ import { HintDialog } from '../../../dmodal/dialog/dialog.component';
       </div>
     </div>
   `,
+  styleUrls: ['./lib-input.scss'],
   styles: [`
     .lib-form-set__upload {
       width: 100%;
@@ -70,8 +71,13 @@ export class LibInputFileComponent implements OnInit {
     const myForm = new FormData();
     myForm.append('file', files.target.files[0]);
     console.log(myForm);
-    HintDialog('上传图片', this.dialog);
+    // HintDialog('上传图片', this.dialog);
     //
+    // console.log(myForm);
+    this.uploadService.upload(this.data.url, myForm)
+      .subscribe(res => {
+        console.log(res);
+      });
     // this.uploadService.uploadFile(myForm, this.data.url, this);
   }
 

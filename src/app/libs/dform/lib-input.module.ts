@@ -8,6 +8,7 @@ import {
   MdCheckboxModule, MdSelectModule,
   MdGridListModule
 } from '@angular/material';
+import { QuillEditorModule } from 'ngx-quill-editor';
 
 import { DFormControlService, UploadService } from './_service';
 import { LibInputTextComponent } from './component/lib-input/lib-input-text';
@@ -33,7 +34,8 @@ export * from './_entity';
     MdRadioModule,
     MdCheckboxModule,
     MdSelectModule,
-    MdGridListModule
+    MdGridListModule,
+    QuillEditorModule
   ],
   declarations: [
     LibInputTextComponent,
@@ -60,6 +62,7 @@ export * from './_entity';
     MdRadioModule,
     MdCheckboxModule,
     MdSelectModule,
+    QuillEditorModule,
     LibInputTextComponent,
     LibInputCheckboxComponent,
     LibInputDateComponent,

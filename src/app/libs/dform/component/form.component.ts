@@ -2,16 +2,14 @@ import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } fro
 import { FormGroup } from '@angular/forms';
 
 import { FormBase } from '../_entity';
-
 import { DFormControlService } from '../_service';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-form',
-  templateUrl: 'form.component.html',
-  styleUrls: ['form.component.css']
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss']
 })
-export class DynamicForm implements OnInit {
+export class DynamicFormComponent implements OnInit {
   @Input() button: string;
   @Input() reset: boolean;
   @Input() formDatas: FormBase<any>[] = [];
@@ -22,7 +20,8 @@ export class DynamicForm implements OnInit {
   constructor(
     private fcs: DFormControlService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.form = this.fcs.toFormGroup(this.formDatas);
@@ -32,5 +31,4 @@ export class DynamicForm implements OnInit {
   onSubmit() {
     this.formValues.emit(this.form.value);
   }
-
 }
