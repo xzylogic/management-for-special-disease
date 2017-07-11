@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
@@ -14,7 +14,7 @@ import { FormText } from '../../libs/dform/_entity/form-text';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginLib: FormText[];
   errorMsg = '';
@@ -24,9 +24,14 @@ export class LoginComponent {
     private router: Router,
     private dialog: MdDialog,
     private _authService: AuthService,
-    private mainAction: MainAction
+    private mainAction: MainAction,
+    private cdr: ChangeDetectorRef
   ) {
+  }
+
+  ngOnInit() {
     this.createForm();
+    this.cdr.detectChanges();
   }
 
   createForm() {
@@ -37,11 +42,13 @@ export class LoginComponent {
     this.loginLib = [new FormText({
       type: 'text',
       label: '用户名',
-      key: 'name'
+      key: 'name',
+      value: ''
     }), new FormText({
       type: 'password',
       label: '密码',
-      key: 'password'
+      key: 'password',
+      value: ''
     })];
   }
 

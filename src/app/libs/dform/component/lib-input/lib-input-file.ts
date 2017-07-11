@@ -1,50 +1,34 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormFile } from '../../_entity/form-file';
-import { UploadService } from '../../_service/upload.service';
 import { MdDialog } from '@angular/material';
 import { HintDialog } from '../../../dmodal/dialog/dialog.component';
+import { HttpService } from '../../../_service/http.service';
 
 @Component({
   selector: 'app-input-file',
   template: `
     <div [formGroup]="form">
-      <input #file type="file" (change)="uploadChange($event)">
-      <input type="hidden" [formControlName]="data.key" [(ngModel)]="value">
-      <div class="lib-form-set__upload">
-        <div *ngIf="!data.multiple&&value">
-          <img class="image" [src]="value">
-          <md-icon (click)="fileDel()">close</md-icon>
-        </div>
-        <div *ngIf="data.multiple">
-          <div *ngFor="let item of value" class="lib-form-set__upload">
-            <img class="image" [src]="item">
-            <md-icon (click)="fileDel(item)">close</md-icon>
+      <div class="input_container">
+        <input class="input_content" #file type="file" (change)="uploadChange($event)">
+        <span class="input_span">{{data.label}}</span>
+        <input type="hidden" [formControlName]="data.key" [(ngModel)]="value">
+        <div class="upload_container">
+          <div class="upload_content" *ngIf="!data.multiple&&value">
+            <img class="image" [src]="value">
+            <md-icon (click)="fileDel()">close</md-icon>
+          </div>
+          <div *ngIf="data.multiple">
+            <div class="upload_content" *ngFor="let item of value">
+              <img class="image" [src]="item">
+              <md-icon (click)="fileDel(item)">close</md-icon>
+            </div>
           </div>
         </div>
       </div>
     </div>
   `,
-  styleUrls: ['./lib-input.scss'],
-  styles: [`
-    .lib-form-set__upload {
-      width: 100%;
-      padding: 15px 0;
-      margin-bottom: 30px;
-    }
-
-    .lib-form-set__upload img {
-      width: 100px;
-      height: 100px;
-    }
-
-    .lib-form-set__upload img:before,
-    .lib-form-set__upload img:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-  `]
+  styleUrls: ['./lib-input.scss']
 })
 export class LibInputFileComponent implements OnInit {
   @Input() form: FormGroup;
@@ -55,15 +39,16 @@ export class LibInputFileComponent implements OnInit {
   @ViewChild('file') file: any;
 
   constructor(
-    private uploadService: UploadService,
-    private dialog: MdDialog
+    private uploadService: HttpService,
+    private dialog: MdDialog,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit() {
-    console.log(this.form);
-    console.log(this.data);
-    console.log(this.value);
+    if (this.data.multiple === true && this.value) {
+      this.value = typeof this.value === 'object' ? this.value : [this.value];
+    }
   }
 
   // 上传图片操作
@@ -71,60 +56,49 @@ export class LibInputFileComponent implements OnInit {
     const myForm = new FormData();
     myForm.append('file', files.target.files[0]);
     console.log(myForm);
-    // HintDialog('上传图片', this.dialog);
-    //
-    // console.log(myForm);
     this.uploadService.upload(this.data.url, myForm)
       .subscribe(res => {
         console.log(res);
+        if (res.code === 0) {
+          HintDialog('上传图片成功！', this.dialog);
+          if (this.data.multiple === false) {
+            this.value = res.data;
+          } else {
+            if (!this.value) {
+              this.value = [];
+            }
+            this.value.push(res.data);
+          }
+          this.cdr.detectChanges();
+          console.log(this.value);
+        } else {
+          HintDialog(res.msg || '上传图片失败！', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('上传图片失败！', this.dialog);
       });
-    // this.uploadService.uploadFile(myForm, this.data.url, this);
-  }
-
-  UploadSuccess(data) {
-    // if (data.code === 0) {
-    //   this.openDialog('上传图片成功！');
-    //
-    //   if (this.data.multiple === false) {
-    //     this.formValue = data.data;
-    //     this.cdr.detectChanges();
-    //   } else {
-    //     if (!this.datadata) {
-    //       this.formValue = [];
-    //     }
-    //     this.data.push(data.data);
-    //     this.cdr.detectChanges();
-    //   }
-    //
-    // } else {
-    //   this.openDialog('上传图片失败！');
-    // }
-  }
-
-  UploadFailure(data) {
-    // this.openDialog('上传图片失败！');
   }
 
   fileDel(file ?: any) {
-    console.log(file || '');
-    // if (!file) {
-    //   this.formValue = '';
-    //   $('#' + this.formdata.key).val('');
-    //   this.cdr.detectChanges();
-    //   this.openDialog('删除照片成功！');
-    // } else {
-    //   let i = this.formValue.indexOf(file);
-    //   if (i !== -1) {
-    //     this.formValue.splice(i, 1);
-    //     this.cdr.detectChanges();
-    //   }
-    //   if (this.formValue.length === 0) {
-    //     this.formValue = null;
-    //     $('#' + this.formdata.key).val('');
-    //     this.cdr.detectChanges();
-    //   }
-    //   this.openDialog('删除照片成功！');
-    // }
+    console.log(this.value);
+    if (!file) {
+      this.value = '';
+      this.file.nativeElement.value = '';
+      this.cdr.detectChanges();
+      HintDialog('删除照片成功！', this.dialog);
+    } else {
+      const i = this.value.indexOf(file);
+      if (i !== -1) {
+        this.value.splice(i, 1);
+        this.cdr.detectChanges();
+      }
+      if (this.value.length === 0) {
+        this.value = null;
+        this.file.nativeElement.value = '';
+        this.cdr.detectChanges();
+      }
+      HintDialog('删除照片成功！', this.dialog);
+    }
   }
-
 }

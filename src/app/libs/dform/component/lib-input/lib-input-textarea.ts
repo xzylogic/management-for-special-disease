@@ -31,8 +31,5 @@ export class LibInputTextareaComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.form);
-    console.log(this.data);
-    console.log(this.value);
   }
 }

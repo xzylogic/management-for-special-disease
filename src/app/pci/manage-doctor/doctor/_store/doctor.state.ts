@@ -16,6 +16,8 @@ export class Doctor {
   avatarUrl: string;
   certificationUrl: string;
   description: string;
+  state: boolean;
+  failureReason: string;
 
   constructor(obj?: Doctor) {
     this.id = obj && obj.id || 0;
@@ -27,5 +29,6 @@ export class Doctor {
     this.avatarUrl = obj && obj.avatarUrl || '';
     this.certificationUrl = obj && obj.certificationUrl || '';
     this.description = obj && obj.description || '';
+    this.state = obj && obj.state || null;
   }
 }

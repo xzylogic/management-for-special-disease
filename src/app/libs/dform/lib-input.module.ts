@@ -10,7 +10,6 @@ import {
 } from '@angular/material';
 import { QuillEditorModule } from 'ngx-quill-editor';
 
-import { DFormControlService, UploadService } from './_service';
 import { LibInputTextComponent } from './component/lib-input/lib-input-text';
 import { LibInputCheckboxComponent } from './component/lib-input/lib-input-checkbox';
 import { LibInputDateComponent } from './component/lib-input/lib-input-date';
@@ -21,6 +20,8 @@ import { LibInputFileComponent } from './component/lib-input/lib-input-file';
 import { LibInputRadioComponent } from './component/lib-input/lib-input-radio';
 import { LibInputTimeComponent } from './component/lib-input/lib-input-time';
 import { LibInputTextareaComponent } from './component/lib-input/lib-input-textarea';
+import { HttpService } from '../_service/http.service';
+import { DFormControlService } from './_service/form-control.service';
 
 export * from './_entity';
 
@@ -51,7 +52,7 @@ export * from './_entity';
   ],
   providers: [
     DFormControlService,
-    UploadService
+    HttpService
   ],
   exports: [
     CommonModule,

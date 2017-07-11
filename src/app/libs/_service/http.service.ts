@@ -100,4 +100,14 @@ export class HttpService {
       .catch(err => Observable.throw(err))
       .map(HttpService.getJson);
   }
+
+  /**
+   * 上传图片
+   */
+  upload(path: string, data: any): Observable<any> {
+    return this.http.post(path, data, {headers: new Headers({processData: false})})
+      .map(HttpService.checkForError)
+      .catch(err => Observable.throw(err))
+      .map(HttpService.getJson);
+  }
 }

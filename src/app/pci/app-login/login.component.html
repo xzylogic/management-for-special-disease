@@ -2,7 +2,7 @@
   <h1>心血管家后台管理系统</h1>
 </md-toolbar>
 <div class="login-container">
-  <form class="login__form" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+  <form *ngIf="loginForm" class="login__form" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
     <app-input-text class="login__form__input" [form]="loginForm"
                     *ngFor="let data of loginLib" [data]="data"
     ></app-input-text>

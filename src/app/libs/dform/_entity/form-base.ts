@@ -12,47 +12,35 @@
  * file - 文件上传
  */
 import { ERRMSG } from '../../../pci/_store/static';
+
 export enum FormType { text, date, time, datetime, textarea, editor, radio, checkbox, dropdown, file }
 
 export class FormBase<T> {
   value: T; // 默认值
   key: string; // 键值key
   label: string; // label显示名称
-  maxlength: string; // 限制最大可输入长度
-  required: boolean; // 是否必须
-  validated: boolean; // 暂未使用（文本验证）
-  disabled: boolean; // 是否可用
-  readonly: boolean; // 是否只读
-  placeholder: string; // 默认值
-  controlType: FormType; // Form类型
-  errMsg: string; // 错误提示
-  order: number; // 排序
+  maxlength?: number; // 限制最大可输入长度
+  required?: boolean; // 是否必须
+  validated?: boolean; // 暂未使用（文本验证）
+  disabled?: boolean; // 是否可用
+  readonly?: boolean; // 是否只读
+  placeholder?: string; // 默认值
+  controlType?: FormType; // Form类型
+  errMsg?: string; // 错误提示
+  order?: number; // 排序
 
-  constructor(options: {
-    value: T,
-    key: string,
-    label?: string,
-    maxlength?: string,
-    required?: boolean,
-    validated?: boolean,
-    disabled?: boolean,
-    readonly?: boolean,
-    placeholder?: string,
-    controlType?: FormType,
-    errMsg: string,
-    order?: number
-  }) {
+  constructor(options: FormBase<T>) {
     this.value = options.value;
     this.key = options.key;
-    this.label = options.label || '';
-    this.maxlength = options.maxlength || '';
+    this.label = options.label;
+    this.maxlength = options.maxlength || null;
     this.required = !!options.required;
     this.validated = !!options.validated;
     this.disabled = !!options.disabled;
     this.readonly = !!options.readonly;
     this.placeholder = options.placeholder || '';
     this.controlType = options.controlType || FormType.text;
-    this.errMsg = options.errMsg || ERRMSG.inputErr;
+    this.errMsg = options.errMsg || '';
     this.order = options.order || 1;
   }
 }

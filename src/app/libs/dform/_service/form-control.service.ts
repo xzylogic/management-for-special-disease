@@ -5,17 +5,18 @@ import { FormBase } from '../_entity';
 
 @Injectable()
 export class DFormControlService {
-  constructor() {}
+  constructor() {
+  }
 
   toFormGroup(forms: FormBase<any>[]) {
-    let group: any = {};
+    const group: any = {};
 
     forms.forEach(form => {
       group[form.key] = form.required ?
         new FormControl({
-          value: form.value == 0 ? form.value : form.value || '',
-          disabled: form.disabled
-        },
+            value: form.value == 0 ? form.value : form.value || '',
+            disabled: form.disabled
+          },
           Validators.compose([
             Validators.required
           ])) :

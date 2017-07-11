@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MdDialogModule, MdButtonModule, MdInputModule } from '@angular/material';
 
 import { DialogComponent } from './dialog.component';
+import { DialogImgComponent } from './dialog-img.component';
 
 export * from './dialog.entity';
 export * from './dialog.component';
@@ -17,10 +18,12 @@ export * from './dialog.component';
     MdInputModule
   ],
   declarations: [
-    DialogComponent
+    DialogComponent,
+    DialogImgComponent
   ],
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    DialogImgComponent
   ],
   exports: [
     CommonModule,
@@ -28,7 +31,8 @@ export * from './dialog.component';
     MdDialogModule,
     MdButtonModule,
     MdInputModule,
-    DialogComponent
+    DialogComponent,
+    DialogImgComponent
   ]
 })
 export class LibDialogModule {

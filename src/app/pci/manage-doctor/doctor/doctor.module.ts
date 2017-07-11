@@ -10,6 +10,7 @@ import { LibModule } from '../../../libs/common/lib.module';
 import { DoctorComponent } from './doctor.component';
 import { DoctorEditComponent } from './doctor-edit/doctor-edit.component';
 import { SendMessageComponent } from './send-message/send-message.component';
+import { DoctorIntegralComponent } from './doctor-integral/doctor-integral.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { DoctorService } from './_service/doctor.service';
@@ -29,6 +30,10 @@ const routes: Routes = [{
   path: 'message',
   component: SendMessageComponent,
   canActivate: [AuthGuardService],
+}, {
+  path: 'integral',
+  component: DoctorIntegralComponent,
+  canActivate: [AuthGuardService],
 }];
 
 @NgModule({
@@ -44,7 +49,8 @@ const routes: Routes = [{
   declarations: [
     DoctorComponent,
     DoctorEditComponent,
-    SendMessageComponent
+    SendMessageComponent,
+    DoctorIntegralComponent
   ],
   providers: [
     DoctorService,

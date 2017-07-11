@@ -1,9 +1,9 @@
 import { FormBase, FormType } from './form-base';
 
-export class FormDate extends FormBase<string> {
-  controlType = FormType.date;
+export class FormDate extends FormBase<Date | string> {
+  controlType?: FormType = FormType.date;
 
-  constructor(options) {
+  constructor(options: FormDate) {
     super(options);
   }
 }

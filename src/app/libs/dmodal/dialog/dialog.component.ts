@@ -32,5 +32,31 @@ export function HintDialog(msg, dialog) {
       }),
     width: '300px'
   };
-  dialog.open(DialogComponent, option);
+  return dialog.open(DialogComponent, option);
 }
+
+export function MessageDialog(title, msg, dialog) {
+  const option: MdDialogConfig = <MdDialogConfig>{
+    data: new DialogOptions(
+      {
+        title: title,
+        message: msg,
+        buttons: [{
+          key: 'comfirm',
+          value: '确定',
+          color: ''
+        }]
+      }),
+    width: '300px'
+  };
+  return dialog.open(DialogComponent, option);
+}
+
+export function ActionDialog(config: DialogOptions, dialog) {
+  const option: MdDialogConfig = <MdDialogConfig>{
+    data: config,
+    width: '500px'
+  };
+  return dialog.open(DialogComponent, option);
+}
+

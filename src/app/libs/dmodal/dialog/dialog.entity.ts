@@ -15,8 +15,8 @@ export class DialogOptions {
   message: string; // 模态框提示信息
   buttons: Array<DialogButton>; // 按钮列表
   forms: Array<DialogForm>;
-  
-  constructor(obj?: {title: string, message: string, buttons: Array<DialogButton>, forms?: Array<DialogForm>}) {
+
+  constructor(obj?: { title: string, message: string, buttons: Array<DialogButton>, forms?: Array<DialogForm> }) {
     this.title = obj && obj.title || '';
     this.message = obj && obj.message || '';
     this.buttons = obj && obj.buttons || [];

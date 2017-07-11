@@ -8,7 +8,7 @@ import { FormDropdown } from '../../_entity/form-dropdown';
     <div [formGroup]="form">
       <div class="input_container">
         <md-select style="width: 100%" [placeholder]="data.label" [formControlName]="data.key" [(ngModel)]="value">
-          <md-option *ngFor="let opt of data.options" [value]="opt.id.toString()">
+          <md-option *ngFor="let opt of data.options" [value]="opt.id">
             {{opt.name}}
           </md-option>
         </md-select>

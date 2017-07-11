@@ -4,7 +4,7 @@ import { FormDate } from '../../_entity/form-date';
 
 declare var require;
 const Flatpickr = require('flatpickr');
-const ZH = require("flatpickr/dist/l10n/zh.js").zh;
+const ZH = require('flatpickr/dist/l10n/zh.js').zh;
 
 @Component({
   selector: 'app-input-date',
@@ -12,8 +12,8 @@ const ZH = require("flatpickr/dist/l10n/zh.js").zh;
     <div [formGroup]="form">
       <div class="input_container">
         <input class="input_content"
-               [placeholder]="data.placeholder" 
-               [formControlName]="data.key" 
+               [placeholder]="data.placeholder"
+               [formControlName]="data.key"
                [(ngModel)]="value" #date
         >
         <span class="input_span">{{data.label}}</span>
