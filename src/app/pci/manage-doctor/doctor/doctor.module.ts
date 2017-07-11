@@ -16,7 +16,6 @@ import { AuthGuardService } from '../../_service/auth-guard.service';
 import { DoctorService } from './_service/doctor.service';
 import { DoctorFormService } from './_service/doctor-form.service';
 import { DoctorTableService } from './_service/doctor-table.service';
-import { DoctorAction } from './_store/doctor.action';
 
 const routes: Routes = [{
   path: '',
@@ -55,8 +54,7 @@ const routes: Routes = [{
   providers: [
     DoctorService,
     DoctorTableService,
-    DoctorFormService,
-    DoctorAction
+    DoctorFormService
   ]
 })
 export class DoctorModule {

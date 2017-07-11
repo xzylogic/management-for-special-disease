@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 export class ContainerConfig {
   title: string;
@@ -10,7 +10,7 @@ export class ContainerConfig {
   constructor(obj?: ContainerConfig) {
     this.title = obj.title || '';
     this.subTitle = obj.subTitle || '';
-    this.ifHome = obj.ifHome || true;
+    this.ifHome = !!obj.ifHome;
     this.homeRouter = obj.homeRouter || '';
     this.currentRouter = obj.currentRouter || '';
   }
@@ -21,6 +21,10 @@ export class ContainerConfig {
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss']
 })
-export class ContainerComponent {
+export class ContainerComponent implements OnInit {
   @Input() config: ContainerConfig;
+
+  ngOnInit() {
+    // console.log(this.config);
+  }
 }

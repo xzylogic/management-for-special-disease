@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 
 import { AuthService } from '../../../_service/auth.service';
-import { Doctor } from '../_store/doctor.state';
+import { Doctor } from '../_entity/doctor.entity';
 
 import { FormBase, FormText, FormTextarea, FormFile, FormDropdown } from '../../../../libs/dform';
 

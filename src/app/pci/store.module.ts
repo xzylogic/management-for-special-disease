@@ -3,11 +3,12 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { createLogger } from 'redux-logger';
 import { MainReducer } from './_store/main.reducer';
 import { combineReducers } from 'redux';
-import { reducer as doctorReducer } from './manage-doctor/index';
+import { createReducer } from './_store/api/api.reducer';
 
 export const rootReducer = combineReducers({
   main: MainReducer,
-  ...doctorReducer
+  doctor: createReducer('doctor', [0, 0, 0], {}),
+  data: createReducer('data', [0, 0, 0, 0, 0], {}),
 });
 
 @NgModule({

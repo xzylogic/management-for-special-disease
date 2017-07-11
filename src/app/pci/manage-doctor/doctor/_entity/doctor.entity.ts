@@ -1,11 +1,3 @@
-export interface IDoctorState {
-  readonly tab: number;
-  readonly tabPage0: number;
-  readonly tabPage1: number;
-  readonly tabPage2: number;
-  readonly doctor: Doctor;
-}
-
 export class Doctor {
   id: number;
   tel: string;

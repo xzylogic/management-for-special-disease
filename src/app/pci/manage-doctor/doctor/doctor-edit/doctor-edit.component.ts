@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
 import { DoctorService } from '../_service/doctor.service';
 import { DoctorFormService } from '../_service/doctor-form.service';
-import { Doctor } from '../_store/doctor.state';
+import { Doctor } from '../_entity/doctor.entity';
 import { ERRMSG } from '../../../_store/static';
 import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 
@@ -17,7 +17,7 @@ import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 })
 export class DoctorEditComponent implements OnInit {
   containerConfig: ContainerConfig;
-  @select(['doctor', 'doctor']) doctor: Observable<Doctor>;
+  @select(['doctor', 'data']) doctor: Observable<Doctor>;
   errMsg = '';
   form: any;
   state: boolean;

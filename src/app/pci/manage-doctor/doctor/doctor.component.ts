@@ -9,11 +9,11 @@ import { ContainerConfig } from '../../../libs/common/container/container.compon
 import { ERRMSG } from '../../_store/static';
 import { DoctorService } from './_service/doctor.service';
 import { DoctorTableService } from './_service/doctor-table.service';
-import { DoctorAction } from './_store/doctor.action';
-import { Doctor } from './_store/doctor.state';
+import { Doctor } from './_entity/doctor.entity';
 import { ImageDialog } from '../../../libs/dmodal/dialog/dialog-img.component';
 import { ActionDialog, HintDialog, MessageDialog } from '../../../libs/dmodal/dialog/dialog.component';
 import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
+import { ApiAction } from '../../_store/api/api.action';
 
 @Component({
   selector: 'app-doctor',
@@ -47,18 +47,19 @@ export class DoctorComponent implements OnInit {
   auditingTable: TableOption;
   failureTable: TableOption;
   @select(['doctor', 'tab']) tab: Observable<number>;
+  @select(['doctor', 'page']) page: Observable<Array<number>>;
 
   constructor(
     private doctorService: DoctorService,
     private doctorTableService: DoctorTableService,
-    private doctorAction: DoctorAction,
+    private apiAction: ApiAction,
     private dialog: MdDialog,
     private router: Router
   ) {
+    apiAction.dataChange('doctor', new Doctor());
   }
 
   ngOnInit() {
-    this.doctorAction.doctorReset();
     this.containerConfig = this.doctorService.doctorConfig();
     this.auditedTable = new TableOption({
       titles: this.doctorTableService.setDoctorAuditedTitles(),
@@ -72,9 +73,7 @@ export class DoctorComponent implements OnInit {
       titles: this.doctorTableService.setDoctorFailureTitles(),
       ifPage: true
     });
-    this.reset0();
-    this.reset1();
-    this.reset2();
+    this.reset();
   }
 
   reset() {
@@ -85,20 +84,27 @@ export class DoctorComponent implements OnInit {
 
   reset0() {
     this.auditedTable.queryKey = '';
-    this.getAuditedDoctors(0);
+    this.page.subscribe((page: Array<number>) => {
+      this.getAuditedDoctors(page[0]);
+    });
   }
 
   reset1() {
     this.auditingTable.queryKey = '';
-    this.getAuditingDoctors(0);
+    this.page.subscribe((page: Array<number>) => {
+      this.getAuditingDoctors(page[1]);
+    });
   }
 
   reset2() {
     this.failureTable.queryKey = '';
-    this.getFailureDoctors(0);
+    this.page.subscribe((page: Array<number>) => {
+      this.getFailureDoctors(page[2]);
+    });
   }
 
   getAuditedDoctors(page: number) {
+    this.apiAction.pageChange('doctor', [page, this.auditingTable.currentPage, this.failureTable.currentPage]);
     this.auditedTable.reset(page);
     this.doctorService.getAuditedDoctors(
       this.auditedTable.queryKey, page, this.auditedTable.size)
@@ -120,6 +126,7 @@ export class DoctorComponent implements OnInit {
   }
 
   getAuditingDoctors(page: number) {
+    this.apiAction.pageChange('doctor', [this.auditedTable.currentPage, page, this.failureTable.currentPage]);
     this.auditingTable.reset(page);
     this.doctorService.getAuditingDoctors(
       this.auditingTable.queryKey, page, this.auditingTable.size)
@@ -141,6 +148,7 @@ export class DoctorComponent implements OnInit {
   }
 
   getFailureDoctors(page: number) {
+    this.apiAction.pageChange('doctor', [this.auditedTable.currentPage, this.auditingTable.currentPage, page]);
     this.failureTable.reset(page);
     this.doctorService.getFailureDoctors(
       this.failureTable.queryKey, page, this.failureTable.size)
@@ -174,7 +182,7 @@ export class DoctorComponent implements OnInit {
   }
 
   newData() {
-    this.doctorAction.doctorChange(new Doctor());
+    this.apiAction.dataChange('doctor', new Doctor());
     this.router.navigate(['/doctor/edit']);
   }
 
@@ -182,11 +190,11 @@ export class DoctorComponent implements OnInit {
     console.log(res);
     const doctor = <Doctor>res.value;
     if (res.key === 'editAudited' || res.key === 'editAuditing') {
-      this.doctorAction.doctorChange(doctor);
+      this.apiAction.dataChange('doctor', doctor);
       this.router.navigate(['/doctor/edit']);
     }
     if (res.key === 'integral') {
-      this.doctorAction.doctorChange(doctor);
+      this.apiAction.dataChange('doctor', doctor);
       this.router.navigate(['/doctor/integral']);
     }
     if (res.key === 'certificationUrl') {
@@ -277,6 +285,6 @@ export class DoctorComponent implements OnInit {
   }
 
   change(index) {
-    this.doctorAction.tabChange(index);
+    this.apiAction.tabChange('doctor', index);
   }
 }

@@ -43,6 +43,26 @@ export class DoctorService {
     });
   }
 
+  doctorMessageConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生信息管理',
+      subTitle: '短信提醒医生',
+      ifHome: false,
+      homeRouter: '/doctor',
+      currentRouter: '/doctor/message'
+    });
+  }
+
+  doctorIntegralConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生信息管理',
+      subTitle: '医生积分详情列表',
+      ifHome: false,
+      homeRouter: '/doctor',
+      currentRouter: '/doctor/integral'
+    });
+  }
+
   getDoctors(key: string, page: number, size: number, index: number) {
     return this.httpService.get(
       `${this.app.pci.BASE_URL}${PATH.doctorQuery}?page=${page}&size=${size}&param=${key}&index=${index}`
