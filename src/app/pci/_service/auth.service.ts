@@ -3,9 +3,6 @@ import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
-import { HttpService } from '../../libs/_service/http.service';
-import { MainAction } from '../_store/main.action';
-
 const PATH = {
   login: 'api/login', // 登陆
 };
@@ -20,8 +17,8 @@ export class AuthService {
   constructor(
     private router: Router,
     @Inject('app') public app,
-    private httpService: HttpService,
-    private mainAction: MainAction
+    @Inject('http') public httpService,
+    @Inject('main') public mainAction
   ) {
   }
 

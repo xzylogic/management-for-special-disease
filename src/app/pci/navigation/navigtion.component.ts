@@ -1,9 +1,7 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
-import { NavigationService } from '../_service/navigation.service';
-import { AuthService } from '../_service/auth.service';
 import { Navbar } from '../_store/main.state';
 
 @Component({
@@ -16,16 +14,16 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   @select(['main', 'navigation']) readonly sidebars: Observable<Navbar[]>;
 
   constructor(
-    public sidebarService: NavigationService,
-    public authService: AuthService
+    @Inject('nav') private navService,
+    @Inject('auth') private authService
   ) {
   }
 
   ngOnInit() {
     console.log('init navigation');
     this.initSidebars();
-    this.sidebarService.setCount(100, 'doctorgroup', 'doctor');
-    this.sidebarService.setCount(80, 'doctorgroup', 'doctoraccount');
+    this.navService.setCount(100, 'doctorgroup', 'doctor');
+    this.navService.setCount(80, 'doctorgroup', 'doctoraccount');
   }
 
   ngAfterViewInit() {
@@ -40,44 +38,44 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initSidebars() {
     const path = window.location.pathname.split('/')[1];
-    this.sidebarService.initSidebars(path);
+    this.navService.initSidebars(path);
     this.setCount();
   }
 
   setCount() {
-    // this.sidebarService.getDoctorCount()
+    // this.navService.getDoctorCount()
     //   .subscribe(data => {
     //     if (data.data && data.code === 0) {
     //       let count = {key: 'doctor', group: 'doctorgroup', tag: data.data};
-    //       this.sidebarService.setNavCount(count);
+    //       this.navService.setNavCount(count);
     //     }
     //   });
-    // this.sidebarService.getDoctorAccountCount()
+    // this.navService.getDoctorAccountCount()
     //   .subscribe(data => {
     //     if (data.data && data.code === 0) {
     //       let count = {key: 'doctoraccount', group: 'doctorgroup', tag: data.data.purchase + data.data.withdraw};
-    //       this.sidebarService.setNavCount(count);
+    //       this.navService.setNavCount(count);
     //     }
     //   });
-    // this.sidebarService.getUserCertificationCount()
+    // this.navService.getUserCertificationCount()
     //   .subscribe(data => {
     //     if (data.data && data.code === 0) {
     //       let count = {key: 'usercertification', group: 'usergroup', tag: data.data.auditing};
-    //       this.sidebarService.setNavCount(count);
+    //       this.navService.setNavCount(count);
     //     }
     //   });
-    // this.sidebarService.getDoctorGroupCount()
+    // this.navService.getDoctorGroupCount()
     //   .subscribe(data => {
     //     if (data.data && data.code === 0) {
     //       let count = {key: 'doctorgroup', group: 'doctorgroup', tag: data.data};
-    //       this.sidebarService.setNavCount(count);
+    //       this.navService.setNavCount(count);
     //     }
     //   });
-    // this.sidebarService.getUserOrderCount()
+    // this.navService.getUserOrderCount()
     //   .subscribe(data => {
     //     if (data.data && data.code === 0) {
     //       let count = {key: 'userorder', group: 'usergroup', tag: data.data.refundSum + data.data.thirdSum};
-    //       this.sidebarService.setNavCount(count);
+    //       this.navService.setNavCount(count);
     //     }
     //   });
   }

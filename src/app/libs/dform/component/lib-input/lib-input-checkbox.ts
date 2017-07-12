@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormCheckbox } from '../../_entity/form-checkbox';
+
+import { FormCheckbox } from '../../_entity';
 
 @Component({
   selector: 'app-input-checkbox',

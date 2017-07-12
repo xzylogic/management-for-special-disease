@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormText } from '../../_entity/form-text';
+
+import { FormText } from '../../_entity';
 
 declare var require;
 const Flatpickr = require('flatpickr');
-const ZH = require("flatpickr/dist/l10n/zh.js").zh;
+const ZH = require('flatpickr/dist/l10n/zh.js').zh;
 
 @Component({
   selector: 'app-input-datetime',

@@ -1,0 +1,73 @@
+<div class="content-wrapper">
+  <div class="content-location">
+    <i>你的位置</i>
+    <i class="fa fa-angle-right" aria-hidden="true" style="padding: 0 10px;"></i> {{title}}
+  </div>
+  <div class="content-title">
+    {{title}} － <strong>{{subTitle}}</strong>
+  </div>
+  <tab-set [menuClass]="'teal four item inverted content-tab'">
+    <tab title="全部订单">
+      <div *ngIf="!userOrderTable.lists&&userOrderTable.loading">Loading...</div>
+      <div *ngIf="userOrderTable.lists">
+        <dynamic-table [titles]="userOrderTable.titles" [lists]="userOrderTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="userOrderTable.lists" [totalPages]="userOrderTable.totalPage" [currentPage]="userOrderTable.currentPage" (pageEmitter)="getUserOrders($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!userOrderTable.lists&&!userOrderTable.loading" class="error-message">
+        <p>{{userOrderTable.errorMessage}}</p>
+        <button *ngIf="userOrderTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+    <tab title="待退款" [label]="refundCount">
+      <div *ngIf="!userOrderRefundTable.lists&&userOrderRefundTable.loading">Loading...</div>
+      <div *ngIf="userOrderRefundTable.lists">
+        <dynamic-table [titles]="userOrderRefundTable.titles" [lists]="userOrderRefundTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="userOrderRefundTable.lists" [totalPages]="userOrderRefundTable.totalPage" [currentPage]="userOrderRefundTable.currentPage" (pageEmitter)="getUserRefundOrders($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!userOrderRefundTable.lists&&!userOrderRefundTable.loading" class="error-message">
+        <p>{{userOrderRefundTable.errorMessage}}</p>
+        <button *ngIf="userOrderRefundTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+    <tab title="服务中">
+      <div *ngIf="!userOrderServicingTable.lists&&userOrderServicingTable.loading">Loading...</div>
+      <div *ngIf="userOrderServicingTable.lists">
+        <dynamic-table [titles]="userOrderServicingTable.titles" [lists]="userOrderServicingTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="userOrderServicingTable.lists" [totalPages]="userOrderServicingTable.totalPage" [currentPage]="userOrderServicingTable.currentPage" (pageEmitter)="getUserServicingOrders($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!userOrderServicingTable.lists&&!userOrderServicingTable.loading" class="error-message">
+        <p>{{userOrderServicingTable.errorMessage}}</p>
+        <button *ngIf="userOrderServicingTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+    <tab title="未处理第三方服务" [label]="thirdCount">
+      <div *ngIf="!userOrderThirdTable.lists&&userOrderThirdTable.loading">Loading...</div>
+      <div *ngIf="userOrderThirdTable.lists">
+        <dynamic-table [titles]="userOrderThirdTable.titles" [lists]="userOrderThirdTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="userOrderThirdTable.lists" [totalPages]="userOrderThirdTable.totalPage" [currentPage]="userOrderThirdTable.currentPage" (pageEmitter)="getUserThirdOrders($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!userOrderThirdTable.lists&&!userOrderThirdTable.loading" class="error-message">
+        <p>{{userOrderThirdTable.errorMessage}}</p>
+        <button *ngIf="userOrderThirdTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+  </tab-set>
+</div>
+<app-user-order-record *ngIf="enableRecord" [(enable)]="enableRecord" [data]="userOrder"></app-user-order-record>
+<modal-edit *ngIf="enableRefund" [(enable)]="enableRefund" [title]="'操作提示'" [message]="'确定已退款？'">
+  <button class="ui button blue" (click)="processRefund()">确定</button>
+  <button class="ui button" (click)="refundCancel()">取消</button>
+</modal-edit>
+<modal-edit *ngIf="enableProcess" [(enable)]="enableProcess" [title]="'操作提示'" [message]="'确定已处理？'">
+  <button class="ui button blue" (click)="processThird()">确定</button>
+  <button class="ui button" (click)="processCancel()">取消</button>
+</modal-edit>
+<modal-show *ngIf="enableShow" [(enable)]="enableShow" [title]="titleShow" [message]="message"></modal-show>

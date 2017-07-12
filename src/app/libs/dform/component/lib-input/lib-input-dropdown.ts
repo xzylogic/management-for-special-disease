@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormDropdown } from '../../_entity/form-dropdown';
+
+import { FormDropdown } from '../../_entity';
 
 @Component({
   selector: 'app-input-dropdown',

@@ -4,12 +4,11 @@ import { MdDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { ContainerConfig, HintDialog } from '../../../../libs';
 import { DoctorService } from '../_service/doctor.service';
 import { DoctorFormService } from '../_service/doctor-form.service';
 import { Doctor } from '../_entity/doctor.entity';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-doctor-edit',

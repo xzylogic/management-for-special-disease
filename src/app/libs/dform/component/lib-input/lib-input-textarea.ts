@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormTextarea } from '../../_entity/form-textarea';
+
+import { FormTextarea } from '../../_entity';
 
 @Component({
   selector: 'app-input-textarea',

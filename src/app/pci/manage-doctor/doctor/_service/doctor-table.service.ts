@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ControlType, TableTitle } from '../../../../libs/dtable/dtable.entity';
+
+import { ControlType, TableTitle } from '../../../../libs';
 
 @Injectable()
 export class DoctorTableService {
@@ -68,6 +69,7 @@ export class DoctorTableService {
         controlType: ControlType.button,
       })
     ];
+
     return Titles;
   }
 
@@ -135,6 +137,7 @@ export class DoctorTableService {
         controlType: ControlType.button
       })
     ];
+
     return Titles;
   }
 
@@ -200,5 +203,4 @@ export class DoctorTableService {
 
     return Titles;
   }
-
 }

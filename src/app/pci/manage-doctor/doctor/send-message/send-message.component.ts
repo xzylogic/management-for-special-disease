@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
+import { ContainerConfig } from '../../../../libs';
 import { DoctorService } from '../_service/doctor.service';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 @Component({
   selector: 'app-send-message',

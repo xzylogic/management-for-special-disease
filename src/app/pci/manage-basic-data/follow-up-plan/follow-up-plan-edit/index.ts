@@ -1,0 +1,1 @@
+export * from './follow-up-plan-edit.component';

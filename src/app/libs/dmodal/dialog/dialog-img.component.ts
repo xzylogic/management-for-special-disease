@@ -23,8 +23,7 @@ export class DialogImgComponent {
 
 export function ImageDialog(title, image, dialog) {
   const option: MdDialogConfig = <MdDialogConfig>{
-    data: {title: title, image: image},
-    // width: '500px'
+    data: {title: title, image: image}
   };
   return dialog.open(DialogImgComponent, option);
 }

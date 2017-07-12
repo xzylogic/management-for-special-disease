@@ -1,0 +1,44 @@
+<div class="content-wrapper">
+  <div class="content-location">
+    <i>你的位置</i>
+    <i class="fa fa-angle-right" aria-hidden="true" style="padding: 0 10px;"></i> {{title}}
+  </div>
+  <div class="content-title">
+    {{title}} － <strong>{{subTitle}}</strong>
+  </div>
+  <tab-set [menuClass]="'teal two item inverted content-tab'">
+    <tab title="全部医生小组">
+      <div *ngIf="!doctorGroupTable.lists&&doctorGroupTable.loading">Loading...</div>
+      <div *ngIf="doctorGroupTable.lists">
+        <dynamic-table [titles]="doctorGroupTable.titles" [lists]="doctorGroupTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="doctorGroupTable.lists" [totalPages]="doctorGroupTable.totalPage" [currentPage]="doctorGroupTable.currentPage" (pageEmitter)="getDoctorGroups($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!doctorGroupTable.lists&&!doctorGroupTable.loading" class="error-message">
+        <p>{{doctorGroupTable.errorMessage}}</p>
+        <button *ngIf="doctorGroupTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+    <tab title="待审核服务说明" [label]="auditingServiceCount">
+      <div *ngIf="!auditingServiceTable.lists&&auditingServiceTable.loading">Loading...</div>
+      <div *ngIf="auditingServiceTable.lists">
+        <dynamic-table [titles]="auditingServiceTable.titles" [lists]="auditingServiceTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="auditingServiceTable.lists" [totalPages]="auditingServiceTable.totalPage" [currentPage]="auditingServiceTable.currentPage" (pageEmitter)="getAuditingServices($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!auditingServiceTable.lists&&!auditingServiceTable.loading" class="error-message">
+        <p>{{auditingServiceTable.errorMessage}}</p>
+        <button *ngIf="auditingServiceTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+  </tab-set>
+</div>
+<app-service-detail *ngIf="enableDetail" [(enable)]="enableDetail" [data]="doctorGroup"></app-service-detail>
+<app-doctor-group-edit *ngIf="enableEdit" [(enable)]="enableEdit" [data]="doctorGroup" (handleEmit)="handleSuccess($event)"></app-doctor-group-edit>
+<modal-show *ngIf="enableShow" [(enable)]="enableShow" [title]="titleShow" [message]="message"></modal-show>
+<modal-edit *ngIf="enableProcess" [(enable)]="enableProcess" [title]="'操作提示'" [message]="'确定审核通过？'">
+  <button class="ui button blue" (click)="process()">确定</button>
+  <button class="ui button" (click)="processCancel()">取消</button>
+</modal-edit>

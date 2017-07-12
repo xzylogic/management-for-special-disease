@@ -1,0 +1,1 @@
+export * from './doctor-group-edit.component';

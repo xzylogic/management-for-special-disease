@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
+
+import { ContainerConfig } from '../../../../libs';
 import { DoctorService } from '../_service/doctor.service';
 
 @Component({

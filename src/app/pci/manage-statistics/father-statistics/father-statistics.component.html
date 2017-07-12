@@ -1,0 +1,31 @@
+<div class="content-wrapper">
+  <div class="content-location">
+    <i>你的位置</i>
+    <i class="fa fa-angle-right" aria-hidden="true" style="padding: 0 10px;"></i> {{title}}
+  </div>
+  <div class="content-title">
+    {{title}} － <strong>{{subTitle}}</strong>
+  </div>
+  <tab-set [menuClass]="'teal one item inverted content-tab'">
+    <tab title="父亲节统计">
+      <form class="ui small form" style="margin: 15px 0 30px" #uf="ngForm">
+        <div class="inline fields">
+          <div class="field">
+            <input type="text" placeholder="选择日期范围" name="queryfatherDate" [(ngModel)]="queryfatherDate" id="main" style="width: 200px">
+          </div>
+          <div class="field">
+            <button type="button" class="ui small button" (click)="clickfatherSearch(queryfatherDate)">搜索</button>
+          </div>
+        </div>
+      </form>
+      <div *ngIf="!faherTable.lists&&faherTable.loading">Loading...</div>
+      <div *ngIf="faherTable.lists">
+        <dynamic-table [titles]="faherTable.titles" [lists]="faherTable.lists"></dynamic-table>
+      </div>
+      <div *ngIf="!faherTable.lists&&!faherTable.loading" class="error-message">
+        <p>{{faherTable.errorMessage}}</p>
+        <button *ngIf="faherTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+  </tab-set>
+</div>

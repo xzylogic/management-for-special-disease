@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormRadio } from '../../_entity/form-radio';
+
+import { FormRadio } from '../../_entity';
 
 @Component({
   selector: 'app-input-radio',

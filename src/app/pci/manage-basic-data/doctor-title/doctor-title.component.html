@@ -1,0 +1,23 @@
+<div class="content-wrapper">
+  <div class="content-location">
+    <i>你的位置</i>
+    <i class="fa fa-angle-right" aria-hidden="true" style="padding: 0 10px;"></i> {{title}}
+  </div>
+  <div class="content-title">
+    {{title}} － <strong>{{subTitle}}</strong>
+  </div>
+  <div class="content-addition">
+    <button class="ui button" (click)="newDoctorTitle()">新增职称</button>
+  </div>
+  <div class="table-title">{{subTitle}}</div>
+  <div class="table-content">
+    <div *ngIf="!doctorTitleTable.lists&&doctorTitleTable.loading">Loading...</div>
+    <dynamic-table [titles]="doctorTitleTable.titles" [lists]="doctorTitleTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+    <div *ngIf="!doctorTitleTable.lists&&!doctorTitleTable.loading" class="error-message">
+        <p>{{doctorTitleTable.errorMessage}}</p>
+        <button *ngIf="doctorTitleTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+    </div>
+  </div>
+</div>
+<doctor-title-edit *ngIf="enableEdit" [(enable)]="enableEdit"  [data]="doctorTitle" (handleEmit)="handleSuccess($event)"></doctor-title-edit>
+<modal-show *ngIf="enableShow" [(enable)]="enableShow" [title]="titleShow" [message]="message"></modal-show>

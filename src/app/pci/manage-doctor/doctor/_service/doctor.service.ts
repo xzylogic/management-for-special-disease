@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { HttpService } from '../../../../libs/_service/http.service';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
-import { AuthService } from '../../../_service/auth.service';
+import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
   doctorQuery: 'api/doctor/query', // 查询选项列表
@@ -18,8 +16,8 @@ const PATH = {
 export class DoctorService {
   constructor(
     @Inject('app') private app,
-    private httpService: HttpService,
-    private authService: AuthService
+    @Inject('http') private httpService,
+    @Inject('auth') private authService
   ) {
   }
 
@@ -117,7 +115,9 @@ export class DoctorService {
    * @param {number} id [description]
    */
   doctorAuditingSuccess(id: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorAuditing}?id=${id}&status=1&auditor=${this.authService.getAdminName()}`);
+    return this.httpService.get(
+      `${this.app.pci.BASE_URL}${PATH.doctorAuditing}?id=${id}&status=1&auditor=${this.authService.getAdminName()}`
+    );
   }
 
   /**
@@ -126,6 +126,8 @@ export class DoctorService {
    * @param {string} message [description]
    */
   doctorAuditingFailure(id: number, message: string) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorAuditing}?id=${id}&status=0&message=${message}&auditor=${this.authService.getAdminName()}`);
+    return this.httpService.get(
+      `${this.app.pci.BASE_URL}${PATH.doctorAuditing}?id=${id}&status=0&message=${message}&auditor=${this.authService.getAdminName()}`
+    );
   }
 }

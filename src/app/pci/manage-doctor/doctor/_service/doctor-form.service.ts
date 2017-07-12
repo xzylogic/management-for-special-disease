@@ -1,16 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { AuthService } from '../../../_service/auth.service';
 import { Doctor } from '../_entity/doctor.entity';
-
-import { FormBase, FormText, FormTextarea, FormFile, FormDropdown } from '../../../../libs/dform';
+import { FormBase, FormText, FormTextarea, FormFile, FormDropdown } from '../../../../libs';
 
 @Injectable()
 export class DoctorFormService {
 
   constructor(
     @Inject('app') private app,
-    private authService: AuthService
+    @Inject('auth') private authService
   ) {
   }
 

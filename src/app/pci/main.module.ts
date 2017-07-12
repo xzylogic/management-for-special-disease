@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
+import {
+  MdButtonModule, MdChipsModule,
+  MdIconModule, MdSidenavModule, MdToolbarModule
+} from '@angular/material';
 
 import { LoginModule } from './app-login/login.module';
 import { PciRoutingModule } from './main-routing.module';
@@ -9,12 +13,12 @@ import { NavigationComponent } from './navigation/navigtion.component';
 import { AuthGuardService } from './_service/auth-guard.service';
 import { AuthService } from './_service/auth.service';
 import { HttpService } from '../libs/_service/http.service';
-import { app } from '../../environments/environment';
 import { NavigationService } from './_service/navigation.service';
-import { MdButtonModule, MdChipsModule, MdIconModule, MdSidenavModule, MdToolbarModule } from '@angular/material';
 
-import { MainAction } from './_store/main.action';
+import { app } from '../../environments/environment';
+
 import { StoreModule } from './store.module';
+import { MainAction } from './_store/main.action';
 import { ApiAction } from './_store/api/api.action';
 
 @NgModule({
@@ -41,6 +45,11 @@ import { ApiAction } from './_store/api/api.action';
     NavigationService,
     MainAction,
     ApiAction,
+    {provide: 'http', useClass: HttpService},
+    {provide: 'auth', useClass: AuthService},
+    {provide: 'nav', useClass: NavigationService},
+    {provide: 'main', useClass: MainAction},
+    {provide: 'action', useClass: ApiAction},
     {provide: 'app', useValue: app},
   ]
 })

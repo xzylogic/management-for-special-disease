@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormText } from '../../_entity/form-text';
+
+import { FormText } from '../../_entity';
 
 @Component({
   selector: 'app-input-editor',

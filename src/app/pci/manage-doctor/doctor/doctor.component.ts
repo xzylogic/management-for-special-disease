@@ -1,45 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
-import { TableOption } from '../../../libs/dtable/dtable.entity';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
-import { ERRMSG } from '../../_store/static';
 import { DoctorService } from './_service/doctor.service';
 import { DoctorTableService } from './_service/doctor-table.service';
 import { Doctor } from './_entity/doctor.entity';
-import { ImageDialog } from '../../../libs/dmodal/dialog/dialog-img.component';
-import { ActionDialog, HintDialog, MessageDialog } from '../../../libs/dmodal/dialog/dialog.component';
-import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
-import { ApiAction } from '../../_store/api/api.action';
+import {
+  TableOption, ContainerConfig, DialogOptions,
+  ImageDialog, ActionDialog, HintDialog, MessageDialog
+} from '../../../libs';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
-  styles: [`
-    .content {
-      position: relative;
-    }
-
-    .count {
-      position: absolute;
-      top: 10px;
-      left: 270px;
-    }
-
-    .count > md-chip {
-      padding: 4px 5px;
-      font-size: 12px;
-    }
-
-    @media (max-width: 600px) {
-      .count {
-        left: 138px;
-      }
-    }
-  `]
+  styleUrls: ['./doctor.component.css']
 })
 export class DoctorComponent implements OnInit {
   containerConfig: ContainerConfig;
@@ -50,13 +27,13 @@ export class DoctorComponent implements OnInit {
   @select(['doctor', 'page']) page: Observable<Array<number>>;
 
   constructor(
+    @Inject('action') private action,
     private doctorService: DoctorService,
     private doctorTableService: DoctorTableService,
-    private apiAction: ApiAction,
     private dialog: MdDialog,
     private router: Router
   ) {
-    apiAction.dataChange('doctor', new Doctor());
+    action.dataChange('doctor', new Doctor());
   }
 
   ngOnInit() {
@@ -104,7 +81,7 @@ export class DoctorComponent implements OnInit {
   }
 
   getAuditedDoctors(page: number) {
-    this.apiAction.pageChange('doctor', [page, this.auditingTable.currentPage, this.failureTable.currentPage]);
+    this.action.pageChange('doctor', [page, this.auditingTable.currentPage, this.failureTable.currentPage]);
     this.auditedTable.reset(page);
     this.doctorService.getAuditedDoctors(
       this.auditedTable.queryKey, page, this.auditedTable.size)
@@ -126,7 +103,7 @@ export class DoctorComponent implements OnInit {
   }
 
   getAuditingDoctors(page: number) {
-    this.apiAction.pageChange('doctor', [this.auditedTable.currentPage, page, this.failureTable.currentPage]);
+    this.action.pageChange('doctor', [this.auditedTable.currentPage, page, this.failureTable.currentPage]);
     this.auditingTable.reset(page);
     this.doctorService.getAuditingDoctors(
       this.auditingTable.queryKey, page, this.auditingTable.size)
@@ -148,7 +125,7 @@ export class DoctorComponent implements OnInit {
   }
 
   getFailureDoctors(page: number) {
-    this.apiAction.pageChange('doctor', [this.auditedTable.currentPage, this.auditingTable.currentPage, page]);
+    this.action.pageChange('doctor', [this.auditedTable.currentPage, this.auditingTable.currentPage, page]);
     this.failureTable.reset(page);
     this.doctorService.getFailureDoctors(
       this.failureTable.queryKey, page, this.failureTable.size)
@@ -182,7 +159,7 @@ export class DoctorComponent implements OnInit {
   }
 
   newData() {
-    this.apiAction.dataChange('doctor', new Doctor());
+    this.action.dataChange('doctor', new Doctor());
     this.router.navigate(['/doctor/edit']);
   }
 
@@ -190,11 +167,11 @@ export class DoctorComponent implements OnInit {
     console.log(res);
     const doctor = <Doctor>res.value;
     if (res.key === 'editAudited' || res.key === 'editAuditing') {
-      this.apiAction.dataChange('doctor', doctor);
+      this.action.dataChange('doctor', doctor);
       this.router.navigate(['/doctor/edit']);
     }
     if (res.key === 'integral') {
-      this.apiAction.dataChange('doctor', doctor);
+      this.action.dataChange('doctor', doctor);
       this.router.navigate(['/doctor/integral']);
     }
     if (res.key === 'certificationUrl') {
@@ -285,6 +262,6 @@ export class DoctorComponent implements OnInit {
   }
 
   change(index) {
-    this.apiAction.tabChange('doctor', index);
+    this.action.tabChange('doctor', index);
   }
 }

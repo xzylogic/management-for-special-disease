@@ -59,4 +59,3 @@ export function ActionDialog(config: DialogOptions, dialog) {
   };
   return dialog.open(DialogComponent, option);
 }
-

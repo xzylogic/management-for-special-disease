@@ -1,0 +1,73 @@
+<div class="content-wrapper">
+  <div class="content-location">
+    <i>你的位置</i>
+    <i class="fa fa-angle-right" aria-hidden="true" style="padding: 0 10px;"></i> {{title}}
+  </div>
+  <div class="content-title">
+    {{title}} － <strong>{{subTitle}}</strong>
+  </div>
+  <tab-set [menuClass]="'teal three item inverted content-tab'">
+    <tab title="全部账户">
+      <div *ngIf="!doctorAccountTable.lists&&doctorAccountTable.loading">Loading...</div>
+      <div *ngIf="doctorAccountTable.lists">
+        <dynamic-table *ngIf="doctorAccountTable.lists" [titles]="doctorAccountTable.titles" [lists]="doctorAccountTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="doctorAccountTable.totalPage" [totalPages]="doctorAccountTable.totalPage" [currentPage]="doctorAccountTable.currentPage" (pageEmitter)="getDoctorAccounts($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!doctorAccountTable.lists&&!doctorAccountTable.loading" class="error-message">
+        <p>{{doctorAccountTable.errorMessage}}</p>
+        <button *ngIf="doctorAccountTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+    <tab title="提现处理" [label]="withdrawDepositCount">
+      <div *ngIf="!withdrawDepositTable.lists&&withdrawDepositTable.loading">Loading...</div>
+      <div *ngIf="withdrawDepositTable.lists">
+        <dynamic-table [titles]="withdrawDepositTable.titles" [lists]="withdrawDepositTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="withdrawDepositTable.lists" [totalPages]="withdrawDepositTable.totalPage" [currentPage]="withdrawDepositTable.currentPage" (pageEmitter)="getWithdrawDeposits($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!withdrawDepositTable.lists&&!withdrawDepositTable.loading" class="error-message">
+        <p>{{withdrawDepositTable.errorMessage}}</p>
+        <button *ngIf="withdrawDepositTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+    <tab title="商品兑换" [label]="commodityExchangeCount">
+      <div *ngIf="!commodityExchangeTable.lists&&commodityExchangeTable.loading">Loading...</div>
+      <div *ngIf="commodityExchangeTable.lists">
+        <dynamic-table *ngIf="commodityExchangeTable.lists" [titles]="commodityExchangeTable.titles" [lists]="commodityExchangeTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+        <div class="table-nav" style="text-align: right">
+          <page-menu *ngIf="commodityExchangeTable.totalPage" [totalPages]="commodityExchangeTable.totalPage" [currentPage]="commodityExchangeTable.currentPage" (pageEmitter)="getCommodityExchanges($event)"></page-menu>
+        </div>
+      </div>
+      <div *ngIf="!commodityExchangeTable.lists&&!commodityExchangeTable.loading" class="error-message">
+        <p>{{commodityExchangeTable.errorMessage}}</p>
+        <button *ngIf="commodityExchangeTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+      </div>
+    </tab>
+  </tab-set>
+</div>
+<app-exchange-commodities *ngIf="enableExchangeDetail" [(enable)]="enableExchangeDetail" [data]="doctorAccount"></app-exchange-commodities>
+<app-receive-flowers *ngIf="enableReceiveDetail" [(enable)]="enableReceiveDetail" [data]="doctorAccount"></app-receive-flowers>
+<modal-edit *ngIf="enablePay" [(enable)]="enablePay" [title]="'操作提示'" [message]="'确定已打款？'">
+  <button class="ui button blue" (click)="processPay()">确定</button>
+  <button class="ui button" (click)="payCancel()">取消</button>
+</modal-edit>
+<modal-edit *ngIf="enableReach" [(enable)]="enableReach" [title]="'操作提示'" [message]="'确定已到货？'">
+  <button class="ui button blue" (click)="processReach()">确定</button>
+  <button class="ui button" (click)="reachCancel()">取消</button>
+</modal-edit>
+<modal-edit *ngIf="enableExpress" [(enable)]="enableExpress" [title]="'操作提示'" [message]="'请填写以下信息：'">
+  <form #f="ngForm" (ngSubmit)="processExpress(f.value)" class="ui form" style="padding-bottom: 15px">
+    <div class="ui fuild field">
+      <input rows="5" placeholder="快递公司" name="expressCompany" ngModel required>
+    </div>
+    <div class="ui fuild field">
+      <input rows="5" placeholder="快递单号" name="expressNumber" ngModel required>
+    </div>
+    <button class="ui button blue" type="submit">确定</button>
+    <button class="ui button" type="button" (click)="expressCancel()">取消</button>
+  </form>
+</modal-edit>
+<modal-show *ngIf="enableShow" [(enable)]="enableShow" [title]="titleShow" [message]="message"></modal-show>

@@ -1,0 +1,36 @@
+<div class="content-wrapper">
+  <div class="content-location">
+    <i>你的位置</i>
+    <i class="fa fa-angle-right" aria-hidden="true" style="padding: 0 10px;"></i> {{title}}
+  </div>
+  <div class="content-title">
+    {{title}} － <strong>{{subTitle}}</strong>
+  </div>
+  <tab-set [menuClass]="'teal four item inverted content-tab'">
+    <tab title="已认证">
+      <dynamic-table [titles]="userCertificationTable.titles" [lists]="userCertificationTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+      <div class="table-nav" style="text-align: right">
+        <page-menu *ngIf="userCertificationTable.lists" [totalPages]="userCertificationTable.totalPage" [currentPage]="userCertificationTable.currentPage" (pageEmitter)="getUserCertifications($event)"></page-menu>
+      </div>
+    </tab>
+    <tab title="未认证">
+      <dynamic-table [titles]="userUncertificationTable.titles" [lists]="userUncertificationTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+      <div class="table-nav" style="text-align: right">
+        <page-menu *ngIf="userUncertificationTable.lists" [totalPages]="userUncertificationTable.totalPage" [currentPage]="userUncertificationTable.currentPage" (pageEmitter)="getUserUncertifications($event)"></page-menu>
+      </div>
+    </tab>
+    <tab title="申请中" [label]="certificatingCount">
+      <dynamic-table [titles]="userCertificatingTable.titles" [lists]="userCertificatingTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+      <div class="table-nav" style="text-align: right">
+        <page-menu *ngIf="userCertificatingTable.lists" [totalPages]="userCertificatingTable.totalPage" [currentPage]="userCertificatingTable.currentPage" (pageEmitter)="getUserCertificatings($event)"></page-menu>
+      </div>
+    </tab>
+    <tab title="申请失败" [label]="failureCount">
+      <dynamic-table [titles]="userCertificationFailureTable.titles" [lists]="userCertificationFailureTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+      <div class="table-nav" style="text-align: right">
+        <page-menu *ngIf="userCertificationFailureTable.lists" [totalPages]="userCertificationFailureTable.totalPage" [currentPage]="userCertificationFailureTable.currentPage" (pageEmitter)="getUserCertificationFailures($event)"></page-menu>
+      </div>
+    </tab>
+  </tab-set>
+</div>
+<modal-img *ngIf="enableImg" [(enable)]="enableImg" [imgUrls]="imgUrls"></modal-img>

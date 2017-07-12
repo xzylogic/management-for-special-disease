@@ -8,6 +8,7 @@ import { DialogImgComponent } from './dialog-img.component';
 
 export * from './dialog.entity';
 export * from './dialog.component';
+export * from './dialog-img.component';
 
 @NgModule({
   imports: [

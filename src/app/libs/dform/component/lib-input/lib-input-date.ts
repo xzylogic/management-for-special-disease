@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormDate } from '../../_entity/form-date';
+
+import { FormDate } from '../../_entity';
 
 declare var require;
 const Flatpickr = require('flatpickr');

@@ -1,0 +1,25 @@
+<div class="content-wrapper">
+  <div class="content-location">
+    <i>你的位置</i>
+    <i class="fa fa-angle-right" aria-hidden="true" style="padding: 0 10px;"></i> {{title}}
+  </div>
+  <div class="content-title">
+    {{title}} － <strong>{{subTitle}}</strong>
+  </div>
+  <!-- <div class="content-addition">
+    <button class="ui button" (click)="newBasicService()">新增服务</button>
+  </div> -->
+  <div class="table-title">{{subTitle}}</div>
+  <div class="table-content">
+    <div *ngIf="!basicServiceTable.lists&&basicServiceTable.loading">Loading...</div>
+    <div *ngIf="basicServiceTable.lists">
+      <dynamic-table [titles]="basicServiceTable.titles" [lists]="basicServiceTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
+    </div>
+    <div *ngIf="!basicServiceTable.lists&&!basicServiceTable.loading" class="error-message">
+      <p>{{basicServiceTable.errorMessage}}</p>
+      <button *ngIf="basicServiceTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
+    </div>
+  </div>
+</div>
+<app-basic-service-edit *ngIf="enableEdit" [(enable)]="enableEdit" [data]="basicService" (handleEmit)="handleSuccess($event)"></app-basic-service-edit>
+<modal-show *ngIf="enableShow" [(enable)]="enableShow" [title]="titleShow" [message]="message"></modal-show>

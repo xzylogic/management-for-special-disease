@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MdIconModule } from '@angular/material';
 
-import { ContainerComponent } from './container/container.component';
+import { ContainerComponent } from './container';
 
 @NgModule({
   imports: [

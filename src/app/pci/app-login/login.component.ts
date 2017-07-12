@@ -1,13 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
-import { AuthService } from '../_service/auth.service';
-import { HintDialog } from '../../libs/dmodal/dialog/dialog.component';
-import { ERRMSG } from '../_store/static';
-import { MainAction } from '../_store/main.action';
+
+import { FormText, HintDialog } from '../../libs';
 import { Admin } from '../_store/main.state';
-import { FormText } from '../../libs/dform/_entity/form-text';
+import { ERRMSG } from '../_store/static';
 
 @Component({
   selector: 'app-login',
@@ -20,11 +18,11 @@ export class LoginComponent implements OnInit {
   errorMsg = '';
 
   constructor(
+    @Inject('main') private mainAction,
+    @Inject('auth') private authService,
     private fb: FormBuilder,
     private router: Router,
     private dialog: MdDialog,
-    private _authService: AuthService,
-    private mainAction: MainAction,
     private cdr: ChangeDetectorRef
   ) {
   }
@@ -54,10 +52,10 @@ export class LoginComponent implements OnInit {
 
   onSubmit(value) {
     if (value.name && value.password) {
-      this._authService.login(value)
+      this.authService.login(value)
         .subscribe(res => {
           if (res && res.code === 0 && res.data) {
-            this._authService.setJwt(JSON.stringify(res.data));
+            this.authService.setJwt(JSON.stringify(res.data));
             this.mainAction.setAdmin(new Admin({id: res.data.id, name: res.data.name}));
             // this.store$.dispatch(new SetAdminAction({id: res.data.id, name: res.data.name}));
             this.router.navigate(['']);

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { TableOption, ControlType } from './dtable.entity';
 
 @Component({
@@ -83,5 +84,4 @@ export class DTableComponent implements OnInit {
     this.pageEmitter.emit(this.table.totalPage - 1);
     this.getPageList(this.table.totalPage, this.table.totalPage - 1);
   }
-
 }

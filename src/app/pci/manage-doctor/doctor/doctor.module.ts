@@ -3,9 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MdChipsModule, MdTabsModule } from '@angular/material';
 
-import { DTableModule } from '../../../libs/dtable/dtable.module';
-import { DFormModule } from '../../../libs/dform/dform.module';
-import { LibModule } from '../../../libs/common/lib.module';
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
 import { DoctorComponent } from './doctor.component';
 import { DoctorEditComponent } from './doctor-edit/doctor-edit.component';
@@ -21,18 +19,19 @@ const routes: Routes = [{
   path: '',
   component: DoctorComponent,
   canActivate: [AuthGuardService],
-}, {
-  path: 'edit',
-  component: DoctorEditComponent,
-  canActivate: [AuthGuardService],
-}, {
-  path: 'message',
-  component: SendMessageComponent,
-  canActivate: [AuthGuardService],
-}, {
-  path: 'integral',
-  component: DoctorIntegralComponent,
-  canActivate: [AuthGuardService],
+  children: [{
+    path: 'edit',
+    component: DoctorEditComponent,
+    canActivate: [AuthGuardService],
+  }, {
+    path: 'message',
+    component: SendMessageComponent,
+    canActivate: [AuthGuardService],
+  }, {
+    path: 'integral',
+    component: DoctorIntegralComponent,
+    canActivate: [AuthGuardService],
+  }]
 }];
 
 @NgModule({
