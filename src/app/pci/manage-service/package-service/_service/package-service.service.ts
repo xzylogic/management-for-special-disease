@@ -1,19 +1,26 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from '@angular/core';
 
-import { PATH } from '../../../_services/api-url';
-import { ApiService } from "../../../_services/api";
+const PATH = {
+  packageServiceList: 'opt/combinatorials/list', // 套餐包列表
+  packageServiceSave: 'opt/combinatorials/save', // 套餐包列表
+  serviceOptionDList: 'opt/combinatorials/listDoctorPackage', // 医生服务列表
+  serviceOptionTList: 'opt/combinatorials/listThirdSpecifications', // 第三方服务规格列表
+};
 
 @Injectable()
 export class PackageServiceService {
 
-  constructor(private _apiService: ApiService) {
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
   }
 
   /**
    * [getPackageServices description]
    */
   getPackageServices() {
-    return this._apiService.get(`${PATH.packageServiceList}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.packageServiceList}`);
   }
 
   /**
@@ -21,21 +28,20 @@ export class PackageServiceService {
    * @param {[type]} body [description]
    */
   packageServiceSave(body) {
-    return this._apiService.post(`${PATH.packageServiceSave}`, body);
+    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.packageServiceSave}`, body);
   }
 
   /**
    * [getServiceOptionD description]
    */
   getServiceOptionD() {
-    return this._apiService.get(`${PATH.serviceOptionDList}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.serviceOptionDList}`);
   }
 
   /**
    * [getServiceOptionT description]
    */
   getServiceOptionT() {
-    return this._apiService.get(`${PATH.serviceOptionTList}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.serviceOptionTList}`);
   }
-
 }

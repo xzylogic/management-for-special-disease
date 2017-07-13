@@ -1,35 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ActivenessStatisticsComponent } from './activeness-statistics.component';
 
-import {
-  ActivenessStatisticsService,
-  ActivenessStatisticsTableService
-} from './_service';
-
-import {
-  DynamicTableModule,
-  ModalModule,
-  TabModule
-} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { ActivenessStatisticsService } from './_service/activeness-statistics.service';
+import { ActivenessStatisticsTableService } from './_service/activeness-statistics-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: ActivenessStatisticsComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    DynamicTableModule,
-    ModalModule,
-    TabModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -40,4 +25,5 @@ const routes: Routes = [{
     ActivenessStatisticsTableService
   ]
 })
-export class ActivenessStatisticsModule {}
+export class ActivenessStatisticsModule {
+}

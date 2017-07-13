@@ -1,12 +1,18 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from '@angular/core';
 
-import { PATH } from '../../../_services/api-url';
-import { ApiService } from "../../../_services/api";
+const PATH = {
+  integralCommodityList: 'opt/integral/goods/list', // 积分商品维护列表
+  integralCommodityEdit: 'opt/integral/goods/update', // 新增更新商品
+  integralCommodityStatus: 'opt/integral/goods/updateStatus', // 更新商品状态
+};
 
 @Injectable()
 export class IntegralCommodityService {
 
-  constructor(private _apiService: ApiService) {
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
   }
 
   /**
@@ -15,9 +21,9 @@ export class IntegralCommodityService {
    */
   getIntegralCommodity(flag: number) {
     if (flag) {
-      return this._apiService.get(`${PATH.integralCommodityList}?flag=${flag}`);
+      return this.httpService.get(`${PATH.integralCommodityList}?flag=${flag}`);
     } else {
-      return this._apiService.get(`${PATH.integralCommodityList}`);
+      return this.httpService.get(`${PATH.integralCommodityList}`);
     }
   }
 
@@ -25,14 +31,13 @@ export class IntegralCommodityService {
    * 新增更新商品
    */
   integralCommodityUpdate(body: any) {
-    return this._apiService.post(`${PATH.integralCommodityEdit}`, body);
+    return this.httpService.post(`${PATH.integralCommodityEdit}`, body);
   }
 
   /**
    * 更新商品状态
    */
   updateIntegralStatus(goodsId: number, idx: number) {
-    return this._apiService.get(`${PATH.integralCommodityStatus}/${goodsId}/${idx}`);
+    return this.httpService.get(`${PATH.integralCommodityStatus}/${goodsId}/${idx}`);
   }
-
 }

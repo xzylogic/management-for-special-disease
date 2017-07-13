@@ -1,43 +1,25 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DoctorGroupComponent } from './doctor-group.component';
-import { DoctorGroupEditComponent } from './doctor-group-edit';
-import { ServiceDetailComponent } from './service-detail';
+import { DoctorGroupEditComponent } from './doctor-group-edit/doctor-group-edit.component';
+import { ServiceDetailComponent } from './service-detail/service-detail.component';
 
-import {
-  DoctorGroupService,
-  DoctorGroupFormService,
-  DoctorGroupTableService,
-  AuditingServiceTableService,
-  ServiceDetailTableService
-} from './_service';
-
-import {
-  TabModule,
-  DynamicTableModule,
-  DynamicFormModule,
-  EditModule,
-  ModalModule
-} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { DoctorGroupService } from './_service/doctor-group.service';
+import { DoctorGroupFormService } from './_service/doctor-group-form.service';
+import { DoctorGroupTableService } from './_service/doctor-group-table.service';
+import { AuditingServiceTableService } from './_service/auditing-service-table.service';
+import { ServiceDetailTableService } from './_service/service-detail-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: DoctorGroupComponent
 }];
 
-
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -53,4 +35,5 @@ const routes: Routes = [{
     ServiceDetailTableService
   ]
 })
-export class DoctorGroupModule {}
+export class DoctorGroupModule {
+}

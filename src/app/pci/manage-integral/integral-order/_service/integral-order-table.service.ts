@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { TableTitle } from '../../../../entities';
+import { TableTitle, ControlType } from '../../../../libs';
 
 @Injectable()
 export class IntegralOrderTableService {
 
   /**
    * 待处理列表
-   * @param {[type]} body [description]
    */
   setDealTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -43,20 +42,18 @@ export class IntegralOrderTableService {
       new TableTitle({
         name: '发送短信',
         key: 'sendMessage',
-        controlType: 'showTitle',
-        minwidth: 120
+        controlType: ControlType.button
       })
     ];
 
     return Titles;
   }
- 
+
   /**
    * 已处理列表
-   * @param {[type]} body [description]
    */
   setDealedTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -90,7 +87,7 @@ export class IntegralOrderTableService {
         name: '快递单号',
         key: 'trackingNum'
       }),
-       new TableTitle({
+      new TableTitle({
         name: '处理人',
         key: 'operator'
       }),
@@ -101,12 +98,10 @@ export class IntegralOrderTableService {
       new TableTitle({
         name: '编辑单号',
         key: 'editNumber',
-        controlType: 'showTitle',
-        minwidth: 120
+        controlType: ControlType.button
       })
     ];
 
     return Titles;
   }
-
 }

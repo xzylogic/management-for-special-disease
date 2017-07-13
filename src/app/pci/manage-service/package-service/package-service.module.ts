@@ -1,52 +1,35 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 
 import { PackageServiceComponent } from './package-service.component';
+import { PackageServiceEditComponent } from './package-service-edit/package-service-edit.component';
 
-import { PackageServiceEditNewComponent } from './package-service-edit-new';
-import { PackageServiceEditComponent } from './package-service-edit';
-
-import {
-  PackageServiceService,
-  PackageServiceFormService,
-  PackageServiceTableService
-} from './_service';
-import { ServiceSpecService } from '../service-spec/_service';
-
-import { DynamicTableModule, TabModule ,DynamicFormModule, EditModule, ModalModule} from '../../../shared';
-import { AuthService } from "../../_services/auth";
-import { CommonService } from "../../_services/common.service";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { PackageServiceService } from './_service/package-service.service';
+import { PackageServiceFormService } from './_service/package-service-form.service';
+import { PackageServiceTableService } from './_service/package-service-table.service';
+import { ServiceSpecService } from '../service-spec/_service/service-spec.service';
 
 export const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: PackageServiceComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    TabModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
     PackageServiceComponent,
     PackageServiceEditComponent,
-    PackageServiceEditNewComponent
   ],
   providers: [
     PackageServiceService,
     PackageServiceFormService,
     PackageServiceTableService,
-    ServiceSpecService,
-    CommonService
+    ServiceSpecService
   ]
 })
-export class PackageServiceModule {}
+export class PackageServiceModule {
+}

@@ -1,21 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
-import {
-  FormBase,
-  FormText,
-  FormFile,
-  FormTextarea,
-  FormDropdown,
-  FormEditor
-} from '../../../../entities';
+
+import { FormBase, FormText, FormFile, FormDropdown, FormTextarea, FormEditor } from '../../../../libs';
 
 @Injectable()
 export class HealthServiceFormService {
 
-constructor(@Inject('admin') private admin) {}
+  constructor(@Inject('admin') private admin) {
+  }
 
-  setForm(organizationList, data ? : any) {
+  setForm(organizationList, data?: any) {
 
-    let forms: FormBase < any > [] = [];
+    const forms: FormBase<any> [] = [];
 
     if (data) {
       forms.push(
@@ -35,7 +30,7 @@ constructor(@Inject('admin') private admin) {}
         key: 'imageUrl',
         label: '服务小图',
         value: data && data.imageUrl || '',
-        accept: 'image/*',
+        url: '',
         required: false,
         order: 1
       }),
@@ -43,7 +38,7 @@ constructor(@Inject('admin') private admin) {}
         key: 'pictures',
         label: '详情图片',
         value: data && data.pictures || [],
-        accept: 'image/*',
+        url: '',
         multiple: true,
         required: false,
         order: 2
@@ -69,8 +64,8 @@ constructor(@Inject('admin') private admin) {}
         value: data && (data.enable === false ? data.enable : data.enable || ''),
         required: false,
         options: [
-          { id: true, name: '启用' },
-          { id: false, name: '禁用' }
+          {id: true, name: '启用'},
+          {id: false, name: '禁用'}
         ],
         order: 5
       }),
@@ -100,5 +95,4 @@ constructor(@Inject('admin') private admin) {}
 
     return forms.sort((a, b) => a.order - b.order);
   }
-
 }

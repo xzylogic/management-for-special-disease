@@ -1,37 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { VersionControlComponent } from './version-control.component';
-import { VersionControlEditComponent } from './version-control-edit';
+import { VersionControlEditComponent } from './version-control-edit/version-control-edit.component';
 
-import {
-  VersionControlService,
-  VersionControlFormService,
-  VersionControlTableService
-} from './_service';
-
-import {
-  DynamicTableModule,
-  DynamicFormModule,
-  EditModule,
-  ModalModule
-} from '../../shared';
-import { AuthService } from "../_services/auth";
+import { AuthGuardService } from '../_service/auth-guard.service';
+import { VersionControlService } from './_service/version-control.service';
+import { VersionControlFormService } from './_service/version-control-form.service';
+import { VersionControlTableService } from './_service/version-control-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: VersionControlComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -44,4 +29,5 @@ const routes: Routes = [{
     VersionControlTableService
   ]
 })
-export class VersionControlModule {}
+export class VersionControlModule {
+}

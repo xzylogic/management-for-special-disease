@@ -1,35 +1,24 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import {MomentModule} from 'angular2-moment';
-
 import { UserComponent } from './user.component';
-import { UserEditComponent } from './user-edit';
-import { IntegralDetailComponent } from "./integral-detail";
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { IntegralDetailComponent } from './integral-detail/integral-detail.component';
 
-import { UserService, UserFormService, UserTableService, UserIntegralDetailTableService } from './_service';
-
-import { DynamicTableModule, TabModule, DynamicFormModule, EditModule, ModalModule } from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { UserService } from './_service/user.service';
+import { UserFormService } from './_service/user-form.service';
+import { UserTableService } from './_service/user-table.service';
+import { UserIntegralDetailTableService } from './_service/user-integral-detail-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: UserComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    TabModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
-    MomentModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -44,4 +33,5 @@ const routes: Routes = [{
     UserIntegralDetailTableService
   ]
 })
-export class UserModule {}
+export class UserModule {
+}

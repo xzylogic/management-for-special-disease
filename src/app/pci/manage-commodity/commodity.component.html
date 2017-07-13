@@ -1,28 +1,2 @@
-<div class="content-wrapper">
-  <div class="content-location">
-    <i>你的位置</i>
-    <i class="fa fa-angle-right" aria-hidden="true" style="padding: 0 10px;"></i> {{title}}
-  </div>
-  <div class="content-title">
-    {{title}} － <strong>{{subTitle}}</strong>
-  </div>
-  <div class="content-addition">
-    <button class="ui button" (click)="newCommodity()">新增商品</button>
-  </div>
-  <div class="table-title">{{subTitle}}</div>
-  <div class="table-content">
-    <div *ngIf="!commodityTable.lists&&commodityTable.loading">Loading...</div>
-    <dynamic-table [titles]="commodityTable.titles" [lists]="commodityTable.lists" (handleEmmit)="gotoHandle($event)"></dynamic-table>
-    <div *ngIf="!commodityTable.lists" class="error-message">
-      <p>{{commodityTable.errorMessage}}</p>
-      <button *ngIf="commodityTable.errorMessage" class="ui button small" (click)="refresh()">点击刷新</button>
-    </div>
-  </div>
-</div>
-<commodity-edit *ngIf="enableEdit" [data]="commodity" [(enable)]="enableEdit" (handleEmit)="handleSuccess($event)"></commodity-edit>
-<modal-show *ngIf="enableShow" [title]="'提示信息'" [message]="message" [(enable)]="enableShow"></modal-show>
-<modal-edit *ngIf="enableOperate" [(enable)]="enableOperate" [title]="'操作提示'" [message]="message">
-  <button class="ui button blue" (click)="operate()">确定</button>
-  <button class="ui button" (click)="delOperate()">取消</button>
-</modal-edit>
+<h1>commodity</h1>
 

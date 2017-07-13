@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { FormBase, FormText, FormFile, FormTextarea, FormDropdown } from '../../../../entities';
+
+import { FormBase, FormText } from '../../../../libs';
 
 @Injectable()
 export class NewsClassifyFormService {
 
-  setForm( healthInfo ? : any) {
+  setForm(healthInfo?: any) {
 
-    let disable: boolean = false;
-    let healthInfoforms: FormBase<any>[] = [];
+    const healthInfoforms: FormBase<any>[] = [];
+
     if (healthInfo) {
-      disable = true;
       healthInfoforms.push(
         new FormText({
           key: 'id',
           label: '健康资讯ID',
           value: healthInfo && healthInfo.id || '',
-          disable: disable,
+          disabled: true,
           required: true,
-          type: "hidden",
+          type: 'hidden',
           order: 0
         })
       );
@@ -31,7 +31,6 @@ export class NewsClassifyFormService {
         required: true,
         order: 1
       })
-     
     );
 
     return healthInfoforms.sort((a, b) => a.order - b.order);

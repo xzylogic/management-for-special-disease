@@ -1,57 +1,55 @@
-import { Injectable, Inject } from "@angular/core";
+import { Injectable, Inject } from '@angular/core';
 
-import { PATH } from '../../../_services/api-url';
-import { ApiService } from "../../../_services/api";
+const PATH = {
+  integralOrderList: 'opt/integral/exchanges/list', // 积分商品订单列表
+  integralExpressList: 'opt/courier/companys/list', // 快递列表
+  integralExpressEdit: 'opt/integral/exchanges/updateCourier', // 编辑单号
+  integralOrderCount: 'opt/integral/exchanges/countProcess', // 积分订单商品数量
+};
 
 @Injectable()
 export class IntegralOrderService {
 
-    constructor(private _apiService: ApiService) {}
-    /**
-     * 积分商品订单列表
-     * @param {[type]} idx [description]
-     * @param {[type]} flag [description]
-     */
-    getIntegralOrder(obj: {idx ? : number, flag ? : number}) {
-        if(obj.idx && !obj.flag){
-            return this._apiService.get(`${PATH.integralOrderList}?idx=${obj.idx}`);
-        }else if(!obj.idx && obj.flag){
-            return this._apiService.get(`${PATH.integralOrderList}?flag=${obj.flag}`);
-        }else if(!obj.idx && !obj.flag){
-            return this._apiService.get(`${PATH.integralOrderList}`);
-        }else{
-            return this._apiService.get(`${PATH.integralOrderList}?idx=${obj.idx}&flag=${obj.flag}`);
-        }
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
+  }
+
+  /**
+   * 积分商品订单列表
+   */
+  getIntegralOrder(obj: { idx?: number, flag?: number }) {
+    if (obj.idx && !obj.flag) {
+      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderList}?idx=${obj.idx}`);
+    } else if (!obj.idx && obj.flag) {
+      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderList}?flag=${obj.flag}`);
+    } else if (!obj.idx && !obj.flag) {
+      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderList}`);
+    } else {
+      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderList}?idx=${obj.idx}&flag=${obj.flag}`);
+    }
   }
 
   /**
    * 积分订单商品数量
    */
-   getIntegralOrderCount(){
-       return this._apiService.get(`${PATH.integralOrderCount}`);
-   }
-    /**
-     * 快递列表
-     */
-    getExpressList(){
-        return this._apiService.get(`${PATH.integralExpressList}`);
-    }
+  getIntegralOrderCount() {
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderCount}`);
+  }
 
-    /**
-     * 编辑单号
-     */
+  /**
+   * 快递列表
+   */
+  getExpressList() {
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralExpressList}`);
+  }
 
-    // editExpressNo(exchangeId: number, courierId: number, trackingNum: string, operator: string, msg ? : string){
-    //     if(!msg){
-    //         return this._apiService.postParma(`${PATH.integralExpressEdit}?exchangeId=${exchangeId}&courierId=${courierId}&trackingNum=${trackingNum}&operator=${operator}`);
-    //     }else{
-    //         return this._apiService.postParma(`${PATH.integralExpressEdit}?exchangeId=${exchangeId}&courierId=${courierId}&trackingNum=${trackingNum}&operator=${operator}&msg=${msg}`);
-    //     }
-    // }
+  /**
+   * 编辑单号
+   */
+  editExpressNo(body) {
+    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.integralExpressEdit}`, body);
 
-       editExpressNo(body){
-            return this._apiService.post(`${PATH.integralExpressEdit}`,body);
-
-    }
-
+  }
 }

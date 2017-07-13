@@ -1,31 +1,24 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DynamicTableModule, DynamicFormModule, EditModule, ModalModule } from '../../shared';
-
-import { HealthNewsService, HealthNewsFormService, HealthNewsTableService, ReadCoefficientFormService } from './_service';
-
 import { HealthNewsComponent } from './health-news.component';
-import { HealthNewsEditComponent } from './health-news-edit';
-import { ReadingQuantityComponent } from './reading-quantity';
-import { AuthService } from "../_services/auth";
+import { HealthNewsEditComponent } from './health-news-edit/health-news-edit.component';
+import { ReadingQuantityComponent } from './reading-quantity/reading-quantity.component';
+
+import { AuthGuardService } from '../_service/auth-guard.service';
+import { HealthNewsService } from './_service/health-news.service';
+import { HealthNewsFormService } from './_service/health-news-form.service';
+import { HealthNewsTableService } from './_service/health-news-table.service';
+import { ReadCoefficientFormService } from './_service/reading-quantity-form.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: HealthNewsComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -40,4 +33,5 @@ const routes: Routes = [{
     ReadCoefficientFormService
   ]
 })
-export class HealthNewsModule {}
+export class HealthNewsModule {
+}

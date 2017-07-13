@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { FormBase, FormText, FormFile, FormTextarea, FormDropdown } from '../../../../entities';
+
+import { FormBase, FormText, FormDropdown } from '../../../../libs';
 
 @Injectable()
 export class SpecificationFormService {
 
-  setForm(data ? : any) {
+  setForm(data?: any) {
+    const forms: FormBase<any>[] = [];
 
-    let forms: FormBase<any>[] = [];
     if (data) {
       forms.push(
         new FormText({
@@ -55,8 +56,8 @@ export class SpecificationFormService {
         value: data && data.specificationType,
         required: true,
         options: [
-        { id: 'Ordinary', name: '普通套餐' },
-        { id: 'Custom', name: '组合套餐' }
+          {id: 'Ordinary', name: '普通套餐'},
+          {id: 'Custom', name: '组合套餐'}
         ],
         order: 4
       })

@@ -1,18 +1,26 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from '@angular/core';
 
-import { PATH } from '../../_services/api-url';
-import { ApiService } from "../../_services/api";
+const PATH = {
+  commodityCreate: 'api/goods/add', // 新增商品
+  commodityUpdate: 'api/goods/update', // 编辑商品
+  commodityStatus: 'api/goods/update/status', // 上下架删除商品
+  commodityList: 'api/goods/all', // 查询商品列表
+};
 
 @Injectable()
 export class CommodityService {
 
-  constructor(private _apiService: ApiService) {}
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
+  }
 
   /**
    * 获取通过审核的医生列表
    */
   getCommodities() {
-    return this._apiService.get(`${PATH.commodityList}`);
+    return this.httpService.get(`${PATH.commodityList}`);
   }
 
   /**
@@ -20,7 +28,7 @@ export class CommodityService {
    * @param {[type]} body [description]
    */
   commodityCreate(body) {
-    return this._apiService.post(`${PATH.commodityCreate}`, body);
+    return this.httpService.post(`${PATH.commodityCreate}`, body);
   }
 
   /**
@@ -28,7 +36,7 @@ export class CommodityService {
    * @param {[type]} body [description]
    */
   commodityUpdate(body) {
-    return this._apiService.post(`${PATH.commodityUpdate}`, body);
+    return this.httpService.post(`${PATH.commodityUpdate}`, body);
   }
 
   /**
@@ -37,7 +45,6 @@ export class CommodityService {
    * @param {number} status [description]
    */
   commodityStatus(id: number, status: number) {
-    return this._apiService.get(`${PATH.commodityStatus}?id=${id}&status=${status}`);
+    return this.httpService.get(`${PATH.commodityStatus}?id=${id}&status=${status}`);
   }
-
 }

@@ -1,32 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule }  from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PushTimeComponent } from './push-time.component';
+import { PushTimeEditComponent } from './push-time-edit/push-time-edit.component';
 
-import { PushTimeEditComponent } from './push-time-edit';
-
-import { PushTimeService, PushTimeTableService } from './_service';
-
-import { DynamicTableModule, TabModule ,DynamicFormModule, EditModule, ModalModule} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { PushTimeService } from './_service/push-time-service.service';
+import { PushTimeTableService } from './_service/push-time-service-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: PushTimeComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    FormsModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -38,4 +27,5 @@ const routes: Routes = [{
     PushTimeTableService
   ]
 })
-export class PushTimeModule {}
+export class PushTimeModule {
+}

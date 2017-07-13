@@ -1,27 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UserCertificationComponent } from './user-certification.component';
 
-import { UserCertificationService, UserCertificationTableService } from './_service';
-
-import { DynamicTableModule, DynamicFormModule, TabModule, ModalModule } from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { UserCertificationService } from './_service/user-certification.service';
+import { UserCertificationTableService } from './_service/user-certification-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: UserCertificationComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -32,4 +25,5 @@ const routes: Routes = [{
     UserCertificationTableService
   ]
 })
-export class UserCertificationModule {}
+export class UserCertificationModule {
+}

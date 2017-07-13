@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormBase, FormText, FormFile, FormTextarea, FormDropdown } from '../../../../entities';
+
+import { FormBase, FormText, FormTextarea } from '../../../../libs';
 
 @Injectable()
 export class DoctorGroupFormService {
 
-  setForm(data ? : any) {
-
-    let forms: FormBase<any>[] = [];
+  setForm(data?: any) {
+    const forms: FormBase<any>[] = [];
 
     forms.push(
       new FormText({

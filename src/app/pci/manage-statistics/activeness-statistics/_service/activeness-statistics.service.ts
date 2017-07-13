@@ -1,36 +1,58 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
-import { PATH } from '../../../_services/api-url';
-import { ApiService } from "../../../_services/api";
+const PATH = {
+  userActivenessStatistics: 'api/statistics/activity/user', // 患者日活跃度统计
+  doctorActivenessStatistics: 'api/statistics/activity/doctor', // 医生日活跃度统计
+  userPeriodStatistics: 'api/statistics/login/log/user', // 患者时间段内活跃度统计
+  doctorPeriodStatistics: 'api/statistics/login/log/doctor', // 医生时间段内活跃度统计
+};
 
 @Injectable()
 export class ActivenessStatisticsService {
 
-  constructor(private _apiService: ApiService) {
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
   }
 
   getUserActiveness(obj: { page: number, size: number, key ?: string, date ?: string }) {
     if (obj.date && !obj.key) {
-      return this._apiService.get(`${PATH.userActivenessStatistics}?date=${obj.date}&page=${obj.page}&size=${obj.size}`);
+      return this.httpService.get(
+        `${this.api.pci.BASE_URL}${PATH.userActivenessStatistics}?date=${obj.date}&page=${obj.page}&size=${obj.size}`
+      );
     } else if (!obj.date && obj.key) {
-      return this._apiService.get(`${PATH.userActivenessStatistics}?key=${obj.key}&page=${obj.page}&size=${obj.size}`);
+      return this.httpService.get(
+        `${this.api.pci.BASE_URL}${PATH.userActivenessStatistics}?key=${obj.key}&page=${obj.page}&size=${obj.size}`
+      );
     } else if (obj.date && obj.key) {
-      return this._apiService.get(`${PATH.userActivenessStatistics}?key=${obj.key}&date=${obj.date}&page=${obj.page}&size=${obj.size}`);
+      return this.httpService.get(
+        `${this.api.pci.BASE_URL}${PATH.userActivenessStatistics}?key=${obj.key}&date=${obj.date}&page=${obj.page}&size=${obj.size}`
+      );
     } else {
-      return this._apiService.get(`${PATH.userActivenessStatistics}?page=${obj.page}&size=${obj.size}`);
+      return this.httpService.get(
+        `${this.api.pci.BASE_URL}${PATH.userActivenessStatistics}?page=${obj.page}&size=${obj.size}`
+      );
     }
   }
 
   getDoctorActiveness(obj: { page: number, size: number, key ?: string, date ?: string }) {
     if (obj.date && !obj.key) {
-      return this._apiService.get(`${PATH.doctorActivenessStatistics}?date=${obj.date}&page=${obj.page}&size=${obj.size}`);
+      return this.httpService.get(
+        `${this.api.pci.BASE_URL}${PATH.doctorActivenessStatistics}?date=${obj.date}&page=${obj.page}&size=${obj.size}`
+      );
     } else if (!obj.date && obj.key) {
-      return this._apiService.get(`${PATH.doctorActivenessStatistics}?key=${obj.key}&page=${obj.page}&size=${obj.size}`);
+      return this.httpService.get(
+        `${this.api.pci.BASE_URL}${PATH.doctorActivenessStatistics}?key=${obj.key}&page=${obj.page}&size=${obj.size}`
+      );
     } else if (obj.date && obj.key) {
-      return this._apiService.get(`${PATH.doctorActivenessStatistics}?key=${obj.key}&date=${obj.date}&page=${obj.page}&size=${obj.size}`);
+      return this.httpService.get(
+        `${this.api.pci.BASE_URL}${PATH.doctorActivenessStatistics}?key=${obj.key}&date=${obj.date}&page=${obj.page}&size=${obj.size}`
+      );
     } else {
-      return this._apiService.get(`${PATH.doctorActivenessStatistics}?page=${obj.page}&size=${obj.size}`);
+      return this.httpService.get(
+        `${this.api.pci.BASE_URL}${PATH.doctorActivenessStatistics}?page=${obj.page}&size=${obj.size}`
+      );
     }
   }
-
 }

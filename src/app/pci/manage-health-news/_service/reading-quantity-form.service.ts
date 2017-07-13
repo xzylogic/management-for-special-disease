@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import {
-  FormBase,
-  FormText,
-  FormFile,
-  FormTextarea,
-  FormDropdown
-} from '../../../entities';
+import { FormBase, FormText } from '../../../libs';
 
 @Injectable()
 export class ReadCoefficientFormService {
 
-  ReadCoefficientForm(readcoefficient ? : any) {
+  ReadCoefficientForm(readcoefficient?: any) {
 
-    let readcoefficientforms: FormBase < any > [] = [];
+    const forms: FormBase<any>[] = [];
 
-    readcoefficientforms.push(
+    forms.push(
       new FormText({
         key: 'data',
         label: '配置阅读量系数',
@@ -25,7 +19,7 @@ export class ReadCoefficientFormService {
       })
     );
 
-    return readcoefficientforms.sort((a, b) => a.order - b.order);
+    return forms.sort((a, b) => a.order - b.order);
   }
 
 }

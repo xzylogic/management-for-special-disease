@@ -1,66 +1,69 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from '@angular/core';
 
-import { PATH } from '../../_services/api-url';
-import { ApiService } from "../../_services/api";
+const PATH = {
+  healthNewsList: 'api/article/list', // 获取所有资讯
+  healthNewsUpdate: 'api/article/update', // 修改健康资讯
+  healthNewsDelete: 'api/article/delete', // 删除健康资讯
+  healthNewsCreate: 'api/article/save', // 新增健康资讯
+  healthNewsFactor: 'api/article/factor', // 读取修改健康咨询系数
+  healthInfoList: 'api/articleType/list', // 获取所有资讯分类
+};
 
 @Injectable()
 export class HealthNewsService {
 
-  constructor(private _apiService: ApiService) {}
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
+  }
 
   /**
    * 获取新闻资讯类型列表
    */
   getHealthNewsType() {
-    return this._apiService.get(`${PATH.healthInfoList}`);
+    return this.httpService.get(`${PATH.healthInfoList}`);
   }
 
   /**
    * 获取新闻资讯列表
-   * @param {[type]} body [description]
    */
   getHealthNews(typeId: number, page: number, size: number) {
-    return this._apiService.get(`${PATH.healthNewsList}?typeId=${typeId}&size=${size}&page=${page}`);
+    return this.httpService.get(`${PATH.healthNewsList}?typeId=${typeId}&size=${size}&page=${page}`);
   }
 
   /**
    * 新建新闻资讯
-   * @param {[type]} body [description]
    */
   healthNewsCreate(data) {
-    return this._apiService.post(`${PATH.healthNewsCreate}`, data);
+    return this.httpService.post(`${PATH.healthNewsCreate}`, data);
   }
 
   /**
    * 编辑新闻资讯
-   * @param {[type]} body [description]
    */
   healthNewsUpdate(data) {
-    return this._apiService.put(`${PATH.healthNewsUpdate}`, data);
+    return this.httpService.put(`${PATH.healthNewsUpdate}`, data);
   }
 
   /**
    * 删除新闻资讯
-   * @param {[type]} body [description]
    */
   healthNewsDelete(id: number) {
-    return this._apiService.delete(`${PATH.healthNewsDelete}?id=${id}`);
+    return this.httpService.delete(`${PATH.healthNewsDelete}?id=${id}`);
   }
 
   /**
    * 读取健康资讯系数
-   * @param {[type]} body [description]
    */
   healthNewsFetch() {
-    return this._apiService.get(`${PATH.healthNewsFactor}`);
+    return this.httpService.get(`${PATH.healthNewsFactor}`);
   }
 
   /**
-   * 修改健康资讯系数
-   * @param {[type]} body [description]
+   * 修改健康资讯系
    */
   healthNewsEdit(data) {
-    return this._apiService.put(`${PATH.healthNewsFactor}`,data);
+    return this.httpService.put(`${PATH.healthNewsFactor}`, data);
   }
-
 }

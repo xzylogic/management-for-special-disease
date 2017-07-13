@@ -1,32 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { DynamicTableModule, DynamicFormModule, EditModule, ModalModule } from '../../../shared';
-
-import { InspectionItemService, InspectionItemTableService, InspectionItemFormService } from './_service';
 
 import { InspectionItemComponent } from './inspection-item.component';
-import { InspectionItemEditComponent } from './inspection-item-edit';
-import { AuthService } from "../../_services/auth";
+import { InspectionItemEditComponent } from './inspection-item-edit/inspection-item-edit.component';
+
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { InspectionItemService } from './_service/inspection-item.service';
+import { InspectionItemTableService } from './_service/inspection-item-table.service';
+import { InspectionItemFormService } from './_service/inspection-item-form.service';
+
+const routes: Routes = [{
+  path: '',
+  component: InspectionItemComponent,
+  canActivate: [AuthGuardService]
+}];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: InspectionItemComponent,
-        canActivate: [AuthService]
-      }
-    ]),
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule
+    RouterModule.forChild(routes)
   ],
   declarations: [
     InspectionItemComponent,
@@ -39,5 +30,4 @@ import { AuthService } from "../../_services/auth";
   ]
 })
 export class InspectionItemModule {
-
 }

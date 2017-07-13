@@ -1,28 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IntegralCommodityComponent } from './integral-commodity.component';
-import { IntegralCommodityEditComponent } from './integral-commodity-edit';
+import { IntegralCommodityEditComponent } from './integral-commodity-edit/integral-commodity-edit.component';
 
-import { IntegralCommodityService, IntegralCommodityFormService, IntegralCommodityTableService } from './_service';
-
-import { DynamicTableModule, TabModule, ModalModule, EditModule } from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { IntegralCommodityService } from './_service/integral-commodity.service';
+import { IntegralCommodityFormService } from './_service/integral-commodity-form.service';
+import { IntegralCommodityTableService } from './_service/integral-commodity-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: IntegralCommodityComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    DynamicTableModule,
-    ModalModule,
-    EditModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -35,4 +29,5 @@ const routes: Routes = [{
     IntegralCommodityTableService
   ]
 })
-export class IntegralCommodityModule {}
+export class IntegralCommodityModule {
+}

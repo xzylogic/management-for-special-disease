@@ -1,28 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CommodityComponent } from './commodity.component';
-import { CommodityEditComponent } from './commodity-edit';
+import { CommodityEditComponent } from './commodity-edit/commodity-edit.component';
 
-import { CommodityService, CommodityFormService, CommodityTableService } from './_service';
-
-import { DynamicTableModule, TabModule, ModalModule, EditModule } from '../../shared';
-import { AuthService } from "../_services/auth";
+import { AuthGuardService } from '../_service/auth-guard.service';
+import { CommodityService } from './_service/commodity.service';
+import { CommodityFormService } from './_service/commodity-form.service';
+import { CommodityTableService } from './_service/commodity-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: CommodityComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    DynamicTableModule,
-    ModalModule,
-    EditModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -35,4 +29,5 @@ const routes: Routes = [{
     CommodityTableService
   ]
 })
-export class CommodityModule {}
+export class CommodityModule {
+}

@@ -1,12 +1,22 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from '@angular/core';
 
-import { PATH } from '../../../_services/api-url';
-import { ApiService } from "../../../_services/api";
+const PATH = {
+  doctorGroupList: 'opt/doctorGroups/queryAllDoctorGroup', // 查询所有医生小组
+  auditingServiceList: 'opt/doctorPackages/list', // 查询待审核服务列表
+  doctorGroupOrderDetail: 'opt/healthOrders/listOrderDetail', // 查询服务明细列表
+  doctorGroupUpdateDesc: 'opt/doctorGroups/saveDoctorGroupDesc', // 保存医生小组介绍
+  doctorGroupCountAuditing: 'opt/doctorPackages/countNoPassDoctorPackages', // 计算没有审核的服务数量
+  auditingServiceSuccess: '/opt/doctorPackages/audit', // 审核服务
+};
 
 @Injectable()
 export class DoctorGroupService {
 
-  constructor(private _apiService: ApiService) {}
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
+  }
 
   /**
    * [getDoctorGroups description]
@@ -14,7 +24,7 @@ export class DoctorGroupService {
    * @param {number} size [description]
    */
   getDoctorGroups(page: number, size: number) {
-    return this._apiService.get(`${PATH.doctorGroupList}?page=${page}&size=${size}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.doctorGroupList}?page=${page}&size=${size}`);
   }
 
   /**
@@ -23,7 +33,7 @@ export class DoctorGroupService {
    * @param {number} size [description]
    */
   getAuditingServices(page: number, size: number) {
-    return this._apiService.get(`${PATH.auditingServiceList}?page=${page}&size=${size}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.auditingServiceList}?page=${page}&size=${size}`);
   }
 
   /**
@@ -33,7 +43,7 @@ export class DoctorGroupService {
    * @param {number} size [description]
    */
   getServiceDetails(id: number, page: number, size: number) {
-    return this._apiService.get(`${PATH.doctorGroupOrderDetail}?dgid=${id}&page=${page}&size=${size}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.doctorGroupOrderDetail}?dgid=${id}&page=${page}&size=${size}`);
   }
 
   /**
@@ -42,14 +52,14 @@ export class DoctorGroupService {
    * @param {string} desc [description]
    */
   doctorGroupUpdateDesc(id: number, desc: string) {
-    return this._apiService.postParma(`${PATH.doctorGroupUpdateDesc}?dgid=${id}&desc=${desc}`)
+    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.doctorGroupUpdateDesc}?dgid=${id}&desc=${desc}`, {})
   }
 
   /**
    * [getAuditingServiceCount description]
    */
   getAuditingServiceCount() {
-    return this._apiService.get(`${PATH.doctorGroupCountAuditing}`)
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.doctorGroupCountAuditing}`)
   }
 
   /**
@@ -57,7 +67,6 @@ export class DoctorGroupService {
    * @param {number} id [description]
    */
   serviceAuditingSuccess(id: number) {
-    return this._apiService.postParma(`${PATH.auditingServiceSuccess}?pid=${id}&index=1`);
+    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.auditingServiceSuccess}?pid=${id}&index=1`, {});
   }
-
 }

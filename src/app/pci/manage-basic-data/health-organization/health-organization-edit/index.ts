@@ -1,1 +1,0 @@
-export * from './health-organization-edit.component';

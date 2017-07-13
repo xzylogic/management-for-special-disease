@@ -1,35 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IntegralDetailComponent } from './integral-detail.component';
 
-import {
-  IntegralDetailService,
-  IntegralDetailTableService
-} from './_service';
-
-import {
-  DynamicTableModule,
-  ModalModule,
-  TabModule
-} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { IntegralDetailService } from './_service/integral-detail.service';
+import { IntegralDetailTableService } from './_service/integral-detail-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: IntegralDetailComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    DynamicTableModule,
-    ModalModule,
-    TabModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -40,4 +25,5 @@ const routes: Routes = [{
     IntegralDetailTableService
   ]
 })
-export class IntegralDetailModule {}
+export class IntegralDetailModule {
+}

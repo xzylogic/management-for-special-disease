@@ -1,29 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from '@angular/common';
-
-import { DynamicTableModule, DynamicFormModule, EditModule, ModalModule } from '../../../shared';
-
-import { InspectionCategoryService, InspectionCategoryTableService, InspectionCategoryFormService } from './_service';
 
 import { InspectionCategoryComponent } from './inspection-category.component';
-import { InspectionCategoryEditComponent } from './inspection-category-edit';
-import { AuthService } from "../../_services/auth";
+import { InspectionCategoryEditComponent } from './inspection-category-edit/inspection-category-edit.component';
+
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { InspectionCategoryService } from './_service/inspection-category.service';
+import { InspectionCategoryTableService } from './_service/inspection-category-table.service';
+import { InspectionCategoryFormService } from './_service/inspection-category-form.service';
+
+const routes: Routes = [{
+  path: '',
+  component: InspectionCategoryComponent,
+  canActivate: [AuthGuardService]
+}];
 
 @NgModule({
   imports: [
-    CommonModule,
     RouterModule.forChild([
       {
         path: '',
         component: InspectionCategoryComponent,
-        canActivate: [AuthService]
+        canActivate: [AuthGuardService]
       }
-    ]),
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule
+    ])
   ],
   declarations: [
     InspectionCategoryComponent,

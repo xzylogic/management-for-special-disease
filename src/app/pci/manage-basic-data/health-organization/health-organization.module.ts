@@ -1,30 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HealthOrganizationComponent } from './health-organization.component';
-import { HealthOrganizationEditComponent } from './health-organization-edit';
+import { HealthOrganizationEditComponent } from './health-organization-edit/health-organization-edit.component';
 
-import { HealthOrganizationService, HealthOrganizationFormService, HealthOrganizationTableService } from './_service';
-
-import { DynamicTableModule, TabModule, DynamicFormModule, EditModule, ModalModule} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { HealthOrganizationService } from './_service/health-organization.service';
+import { HealthOrganizationFormService } from './_service/health-organization-form.service';
+import { HealthOrganizationTableService } from './_service/health-organization-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: HealthOrganizationComponent
 }];
 
-
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    TabModule,
-    DynamicTableModule,
-    DynamicFormModule, EditModule, ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -37,4 +29,5 @@ const routes: Routes = [{
     HealthOrganizationTableService
   ]
 })
-export class HealthOrganizationModule {}
+export class HealthOrganizationModule {
+}

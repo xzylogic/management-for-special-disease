@@ -1,20 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import {
-  FormBase,
-  FormText,
-  FormFile,
-  FormTextarea,
-  FormDropdown,
-  FormOptionList
-} from '../../../../entities';
+import { FormBase, FormText, FormFile, FormDropdown, FormTextarea } from '../../../../libs';
 
 @Injectable()
 export class BasicServiceFormService {
 
-  setForm(data ? : any) {
-
-    let forms: FormBase < any > [] = [];
+  setForm(data?: any) {
+    const forms: FormBase<any>[] = [];
 
     if (data) {
       forms.push(
@@ -41,7 +33,7 @@ export class BasicServiceFormService {
         key: 'iconUrl',
         label: '服务图片',
         value: data && data.iconUrl || '',
-        accept: 'image/*',
+        url: '',
         required: true,
         order: 1
       }),
@@ -80,13 +72,13 @@ export class BasicServiceFormService {
         }],
         order: 5
       }),
-      new FormOptionList({
-        key: 'numbers',
-        label: '服务时长',
-        value: data && data.serviceNumbers || '',
-        required: true,
-        order: 6
-      }),
+      // new FormCheckbox({
+      //   key: 'numbers',
+      //   label: '服务时长',
+      //   value: data && data.serviceNumbers || '',
+      //   required: true,
+      //   order: 6
+      // }),
       new FormTextarea({
         key: 'description',
         label: '服务说明',

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
+
 import { DrugComponent } from './drug.component';
 import { DrugEditComponent } from './drug-edit/drug-edit.component';
 
@@ -22,6 +24,9 @@ export const routes: Routes = [{
 
 @NgModule({
   imports: [
+    DTableModule,
+    DFormModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

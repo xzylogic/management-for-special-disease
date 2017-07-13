@@ -1,31 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { FollowUpPlanComponent } from './follow-up-plan.component';
+import { FollowUpPlanEditComponent } from './follow-up-plan-edit/follow-up-plan-edit.component';
 
-import { FollowUpPlanEditComponent } from './follow-up-plan-edit';
-
-import { FollowUpPlanService, FollowUpPlanTableService } from './_service';
-
-import { DynamicTableModule, TabModule, ModalModule } from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { FollowUpPlanService } from './_service/follow-up-plan.service';
+import { FollowUpPlanTableService } from './_service/follow-up-plan-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: FollowUpPlanComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TabModule,
-    DynamicTableModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -37,4 +27,5 @@ const routes: Routes = [{
     FollowUpPlanTableService
   ]
 })
-export class FollowUpPlanModule {}
+export class FollowUpPlanModule {
+}

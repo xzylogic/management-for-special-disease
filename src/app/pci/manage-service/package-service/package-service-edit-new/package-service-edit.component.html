@@ -1,129 +1,129 @@
-<div class="modal-full">
-  <i class="close icon" (click)="close()"></i>
-  <div class="modal-header">
-    {{modalTitle}}
-  </div>
-  <div class="modal-container">
-    <div *ngIf="errorMessage" class="error-message">* {{errorMessage}}</div>
-    <form #f="ngForm" class="ui form" (ngSubmit)="getValue(f.value)">
-      <div class="field">
-        <div class="ui grid">
-          <div class="three wide column right aligned">
-            <label>
-              套餐包图片
-              <span *ngIf="!iconUrl||(iconUrl&&iconUrl.length==0)" style="color: #e74c3c;">*</span>
-            </label>
-          </div>
-          <div class="nine wide column">
-            <input type="file" (change)="uploadChange($event)">
-            <input type="hidden" name="iconUrl" [(ngModel)]="iconUrl">
-            <div class="upload-content">
-              <div *ngIf="iconUrl">
-                <img class="ui image small" [src]="iconUrl">
-                <i class="close icon" (click)="fileDel()"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ui grid">
-          <div class="three wide column right aligned">
-            <label>
-              套餐名称
-              <span *ngIf="!name||(name&&name.length==0)" style="color: #e74c3c;">*</span>
-            </label>
-          </div>
-          <div class="nine wide column">
-            <input type="text" name="name" [(ngModel)]="name" required>
-          </div>
-        </div>
-        <div class="ui grid">
-          <div class="three wide column right aligned">
-            <label>
-              医生小组服务
-            </label>
-          </div>
-          <div class="nine wide column">
-            <select id="doctorPackageId" class="ui fluid dropdown" name="doctorPackageId" [(ngModel)]="doctorPackageId">
-              <option [value]="''"></option>
-              <option *ngFor="let opt of DoctorServiceList" [value]="opt.id">{{opt.name}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="ui grid">
-          <div class="three wide column right aligned">
-            <label>
-              第三方服务
-            </label>
-          </div>
-          <div class="nine wide column">
-            <input type="text" name="serviceName" placeholder="输入第三方服务以检索" (change)="search($event)" (keyup)="search($event)" [(ngModel)]="serviceName">
-            <div *ngIf="specifications" style="padding: 10px 0">
-              <div class="ui label transition visible" *ngFor="let opt of specifications; let i=index">
-                {{opt.name}} <i class="delete icon" (click)="specDel(i)"></i>
-              </div>
-            </div>
-            <div class="ui middle aligned divided selection list" style="background-color: #fff">
-              <div class="item" *ngFor="let result of results$">
-                <div class="content">
-                  <div class="header" (click)="selected(result)">{{result.name}}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ui grid">
-          <div class="three wide column right aligned">
-            <label>
-              套餐价格
-            </label>
-          </div>
-          <div class="nine wide column">
-            <input type="text" name="price" [(ngModel)]="price">
-          </div>
-        </div>
-        <div class="ui grid">
-          <div class="three wide column right aligned">
-            <label>
-              套餐说明
-            </label>
-          </div>
-          <div class="nine wide column">
-            <textarea type="text" name="description" [(ngModel)]="description"></textarea>
-          </div>
-        </div>
-        <div class="ui grid">
-          <div class="three wide column right aligned">
-            <label>
-              状态
-            </label>
-          </div>
-          <div class="nine wide column">
-            <select id="enable" class="ui fluid dropdown" name="enable" [(ngModel)]="enabled">
-              <option [value]="''"></option>
-              <option [value]="'true'">启用</option>
-              <option [value]="'false'">禁用</option>
-            </select>
-          </div>
-        </div>
-        <div class="ui grid">
-          <div class="three wide column right aligned">
-            <label>
-              操作人
-              <span *ngIf="!operator||(operator&&operator.length==0)" style="color: #e74c3c;">*</span>
-            </label>
-          </div>
-          <div class="nine wide column">
-            <input type="text" name="operator" [(ngModel)]="operator" required>
-          </div>
-        </div>
-        <div class="ui grid">
-          <div class="three wide column"></div>
-          <div class="nine wide column">
-            <button class="ui submit button" type="submit" [disabled]="!f.valid">保存</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-<modal-show *ngIf="enableShow" [title]="title" [message]="message" [(enable)]="enableShow"></modal-show>
+<!--<div class="modal-full">-->
+  <!--<i class="close icon" (click)="close()"></i>-->
+  <!--<div class="modal-header">-->
+    <!--{{modalTitle}}-->
+  <!--</div>-->
+  <!--<div class="modal-container">-->
+    <!--<div *ngIf="errorMessage" class="error-message">* {{errorMessage}}</div>-->
+    <!--<form #f="ngForm" class="ui form" (ngSubmit)="getValue(f.value)">-->
+      <!--<div class="field">-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column right aligned">-->
+            <!--<label>-->
+              <!--套餐包图片-->
+              <!--<span *ngIf="!iconUrl||(iconUrl&&iconUrl.length==0)" style="color: #e74c3c;">*</span>-->
+            <!--</label>-->
+          <!--</div>-->
+          <!--<div class="nine wide column">-->
+            <!--<input type="file" (change)="uploadChange($event)">-->
+            <!--<input type="hidden" name="iconUrl" [(ngModel)]="iconUrl">-->
+            <!--<div class="upload-content">-->
+              <!--<div *ngIf="iconUrl">-->
+                <!--<img class="ui image small" [src]="iconUrl">-->
+                <!--<i class="close icon" (click)="fileDel()"></i>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column right aligned">-->
+            <!--<label>-->
+              <!--套餐名称-->
+              <!--<span *ngIf="!name||(name&&name.length==0)" style="color: #e74c3c;">*</span>-->
+            <!--</label>-->
+          <!--</div>-->
+          <!--<div class="nine wide column">-->
+            <!--<input type="text" name="name" [(ngModel)]="name" required>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column right aligned">-->
+            <!--<label>-->
+              <!--医生小组服务-->
+            <!--</label>-->
+          <!--</div>-->
+          <!--<div class="nine wide column">-->
+            <!--<select id="doctorPackageId" class="ui fluid dropdown" name="doctorPackageId" [(ngModel)]="doctorPackageId">-->
+              <!--<option [value]="''"></option>-->
+              <!--<option *ngFor="let opt of DoctorServiceList" [value]="opt.id">{{opt.name}}</option>-->
+            <!--</select>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column right aligned">-->
+            <!--<label>-->
+              <!--第三方服务-->
+            <!--</label>-->
+          <!--</div>-->
+          <!--<div class="nine wide column">-->
+            <!--<input type="text" name="serviceName" placeholder="输入第三方服务以检索" (change)="search($event)" (keyup)="search($event)" [(ngModel)]="serviceName">-->
+            <!--<div *ngIf="specifications" style="padding: 10px 0">-->
+              <!--<div class="ui label transition visible" *ngFor="let opt of specifications; let i=index">-->
+                <!--{{opt.name}} <i class="delete icon" (click)="specDel(i)"></i>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="ui middle aligned divided selection list" style="background-color: #fff">-->
+              <!--<div class="item" *ngFor="let result of results$">-->
+                <!--<div class="content">-->
+                  <!--<div class="header" (click)="selected(result)">{{result.name}}</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column right aligned">-->
+            <!--<label>-->
+              <!--套餐价格-->
+            <!--</label>-->
+          <!--</div>-->
+          <!--<div class="nine wide column">-->
+            <!--<input type="text" name="price" [(ngModel)]="price">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column right aligned">-->
+            <!--<label>-->
+              <!--套餐说明-->
+            <!--</label>-->
+          <!--</div>-->
+          <!--<div class="nine wide column">-->
+            <!--<textarea type="text" name="description" [(ngModel)]="description"></textarea>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column right aligned">-->
+            <!--<label>-->
+              <!--状态-->
+            <!--</label>-->
+          <!--</div>-->
+          <!--<div class="nine wide column">-->
+            <!--<select id="enable" class="ui fluid dropdown" name="enable" [(ngModel)]="enabled">-->
+              <!--<option [value]="''"></option>-->
+              <!--<option [value]="'true'">启用</option>-->
+              <!--<option [value]="'false'">禁用</option>-->
+            <!--</select>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column right aligned">-->
+            <!--<label>-->
+              <!--操作人-->
+              <!--<span *ngIf="!operator||(operator&&operator.length==0)" style="color: #e74c3c;">*</span>-->
+            <!--</label>-->
+          <!--</div>-->
+          <!--<div class="nine wide column">-->
+            <!--<input type="text" name="operator" [(ngModel)]="operator" required>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="ui grid">-->
+          <!--<div class="three wide column"></div>-->
+          <!--<div class="nine wide column">-->
+            <!--<button class="ui submit button" type="submit" [disabled]="!f.valid">保存</button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</form>-->
+  <!--</div>-->
+<!--</div>-->
+<!--<modal-show *ngIf="enableShow" [title]="title" [message]="message" [(enable)]="enableShow"></modal-show>-->

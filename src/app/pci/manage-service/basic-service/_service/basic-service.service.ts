@@ -1,18 +1,24 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from '@angular/core';
 
-import { PATH } from '../../../_services/api-url';
-import { ApiService } from "../../../_services/api";
+const PATH = {
+  basicServiceList: 'opt/servicePackages/list', // 医生小组服务包列表
+  basicServiceUpdate: 'opt/servicePackages/modify', // 医生小组服务包修改
+};
 
 @Injectable()
 export class BasicServiceService {
 
-  constructor(private _apiService: ApiService) {}
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
+  }
 
   /**
    * 获取基础服务列表
    */
   getBasicServices() {
-    return this._apiService.get(`${PATH.basicServiceList}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.basicServiceList}`);
   }
 
   /**
@@ -20,7 +26,6 @@ export class BasicServiceService {
    * @param {any} body [description]
    */
   basicServiceUpdate(body: any) {
-    return this._apiService.post(`${PATH.basicServiceUpdate}`, body);
+    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.basicServiceUpdate}`, body);
   }
-
 }

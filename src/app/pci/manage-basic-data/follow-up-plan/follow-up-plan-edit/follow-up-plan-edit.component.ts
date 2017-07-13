@@ -1,25 +1,19 @@
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FollowUpPlanService } from '../_service/follow-up-plan.service';
 
-import { FollowUpPlanService } from '../_service';
-
-declare var $: any;
+// declare var $: any;
 
 @Component({
-  selector: 'follow-edit',
+  selector: 'app-follow-p-edit',
   templateUrl: 'follow-up-plan-edit.component.html'
 })
 export class FollowUpPlanEditComponent implements OnInit, AfterViewInit {
 
   @Input() data: any;
   @Input() enable: boolean;
-  @Output() enableChange: EventEmitter < any > = new EventEmitter();
-  @Output() handleEmit: EventEmitter < any > = new EventEmitter();
+  @Output() enableChange: EventEmitter<any> = new EventEmitter();
+  @Output() handleEmit: EventEmitter<any> = new EventEmitter();
 
   modalTitle: string;
   errorMessage: string;
@@ -30,47 +24,48 @@ export class FollowUpPlanEditComponent implements OnInit, AfterViewInit {
   custom: boolean;
   customName: string;
 
-  followTypeList: Array < any > = [{
+  followTypeList: Array<any> = [{
     id: 1,
-    name: "一个月"
+    name: '一个月'
   }, {
     id: 3,
-    name: "三个月"
+    name: '三个月'
   }, {
     id: 6,
-    name: "六个月"
+    name: '六个月'
   }, {
     id: 9,
-    name: "九个月"
+    name: '九个月'
   }, {
     id: 12,
-    name: "十二个月"
+    name: '十二个月'
   }];
 
-  customList: Array < any > = [{
+  customList: Array<any> = [{
     id: 1,
-    name: "复查血一套"
+    name: '复查血一套'
   }, {
     id: 2,
-    name: "心电图"
+    name: '心电图'
   }, {
     id: 3,
-    name: "心超和彩超"
+    name: '心超和彩超'
   }, {
     id: 4,
-    name: "24小时心电图"
+    name: '24小时心电图'
   }, {
     id: 5,
-    name: "颈动脉多普勒超声"
+    name: '颈动脉多普勒超声'
   }, {
     id: 6,
-    name: "复查冠脉造影"
+    name: '复查冠脉造影'
   }, {
     id: 7,
-    name: "自定义"
+    name: '自定义'
   }];
 
-  constructor(private _followUpPlanService: FollowUpPlanService, private fb: FormBuilder) {}
+  constructor(private _followUpPlanService: FollowUpPlanService, private fb: FormBuilder) {
+  }
 
   ngOnInit() {
     this.type = this.data && this.data.value && this.data.value.type || null;
@@ -96,8 +91,8 @@ export class FollowUpPlanEditComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    $('#followTypeList').dropdown();
-    $('#customList').dropdown();
+    // $('#followTypeList').dropdown();
+    // $('#customList').dropdown();
   }
 
   get isTypeValid() {
@@ -108,7 +103,7 @@ export class FollowUpPlanEditComponent implements OnInit, AfterViewInit {
     return this.myForm.controls['name'].valid;
   }
 
-  //提交保存信息
+  // 提交保存信息
   onSubmit(data) {
     if (data.name === '自定义') {
       data.name = data.customName;
@@ -121,41 +116,41 @@ export class FollowUpPlanEditComponent implements OnInit, AfterViewInit {
       data.id = this.data.value.id;
       this._followUpPlanService.followUpPlanEdit(data)
         .subscribe(
-          data => {
-            if (data.code === 0) {
-              this.handleEmit.emit("修改随访项成功！");
+          res => {
+            if (res.code === 0) {
+              this.handleEmit.emit('修改随访项成功！');
               this.close();
             } else {
-              if (data.msg) {
-                this.errorMessage = data.msg;
+              if (res.msg) {
+                this.errorMessage = res.msg;
               } else {
-                this.errorMessage = "操作失败！";
+                this.errorMessage = '操作失败！';
               }
             }
           }, err => {
-            this.errorMessage = "啊哦！访问出错啦～";
+            this.errorMessage = '啊哦！访问出错啦～';
           })
     } else {
       this._followUpPlanService.followUpPlanCreate(data)
         .subscribe(
-          data => {
-            if (data.code === 0) {
-              this.handleEmit.emit("新增随访项成功！");
+          res => {
+            if (res.code === 0) {
+              this.handleEmit.emit('新增随访项成功！');
               this.close();
             } else {
-              if (data.msg) {
-                this.errorMessage = data.msg;
+              if (res.msg) {
+                this.errorMessage = res.msg;
               } else {
-                this.errorMessage = "操作失败！";
+                this.errorMessage = '操作失败！';
               }
             }
           }, err => {
-            this.errorMessage = "啊哦！访问出错啦～";
+            this.errorMessage = '啊哦！访问出错啦～';
           })
     }
   }
 
-  //关闭模态框
+  // 关闭模态框
   close() {
     this.enable = !this.enable;
     this.enableChange.emit(this.enable);

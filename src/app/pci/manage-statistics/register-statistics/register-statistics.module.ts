@@ -1,33 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { RegisterStatisticsComponent } from './register-statistics.component';
-
-import {
-  RegisterStatisticsService,
-  RegisterStatisticsTableService
-} from './_service';
-
-import {
-  DynamicTableModule,
-  ModalModule,
-  TabModule
-} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { RegisterStatisticsService } from './_service/register-statistics.service';
+import { RegisterStatisticsTableService } from './_service/register-statistics-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: RegisterStatisticsComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    DynamicTableModule,
-    ModalModule,
-    TabModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

@@ -1,1 +1,0 @@
-export * from './service-spec-edit.component';

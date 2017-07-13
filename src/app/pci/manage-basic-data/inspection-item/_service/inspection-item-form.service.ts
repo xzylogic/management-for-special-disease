@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { FormBase, FormText, FormDropdown } from '../../../../entities';
+import { FormBase, FormText } from '../../../../libs';
 
 @Injectable()
 export class InspectionItemFormService {
-  
-  setForm( data ? : any) {
-    let forms: FormBase<any>[] = [];
+
+  setForm(data?: any) {
+    const forms: FormBase<any>[] = [];
 
     if (data) {
       forms.push(
@@ -15,7 +15,7 @@ export class InspectionItemFormService {
           label: 'ID',
           value: data && data.id || '',
           required: true,
-          type: "hidden",
+          type: 'hidden',
           order: 0
         })
       );
@@ -50,27 +50,6 @@ export class InspectionItemFormService {
         required: true,
         order: 4
       }),
-      // new FormText({
-      //   key: 'name',
-      //   label: '上限值',
-      //   value: data && data.name || '',
-      //   required: true,
-      //   order: 1
-      // }),
-      // new FormText({
-      //   key: 'name',
-      //   label: '下限值',
-      //   value: data && data.name || '',
-      //   required: true,
-      //   order: 1
-      // }),
-      // new FormText({
-      //   key: 'name',
-      //   label: '参考值',
-      //   value: data && data.name || '',
-      //   required: true,
-      //   order: 1
-      // }),
       new FormText({
         key: 'unit',
         label: '单位',
@@ -82,5 +61,4 @@ export class InspectionItemFormService {
 
     return forms.sort((a, b) => a.order - b.order);
   }
-
 }

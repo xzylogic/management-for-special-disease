@@ -1,22 +1,15 @@
 import { Injectable, Inject } from '@angular/core';
 
-import {
-  FormBase,
-  FormText,
-  FormFile,
-  FormTextarea,
-  FormDropdown,
-  FormEditor
-} from '../../../../entities';
+import { FormBase, FormText, FormFile, FormDropdown, FormTextarea } from '../../../../libs';
 
 @Injectable()
 export class IntegralCommodityFormService {
 
-constructor(@Inject('admin') private admin) {}
+  constructor(@Inject('auth') private admin) {
+  }
 
-  setForm(data ? : any) {
-
-    let forms: FormBase < any > [] = [];
+  setForm(data?: any) {
+    const forms: FormBase<any>[] = [];
 
     if (data) {
       forms.push(
@@ -36,6 +29,7 @@ constructor(@Inject('admin') private admin) {}
         key: 'picUrl',
         label: '商品图片',
         value: data && data.picUrl || '',
+        url: '',
         required: true,
         order: 1
       }),
@@ -87,13 +81,13 @@ constructor(@Inject('admin') private admin) {}
         }, {
           id: 1,
           name: '医生端'
-        },{
+        }, {
           id: 2,
           name: '全部'
         }],
         order: 6
       }),
-       new FormText({
+      new FormText({
         key: 'freight',
         label: '运费',
         value: data && (data.freight === 0 ? data.freight : data.freight || ''),
@@ -111,8 +105,7 @@ constructor(@Inject('admin') private admin) {}
       new FormText({
         key: 'operator',
         label: '操作人',
-        value: this.admin.getName(),
-        // value: data && data.operator || '',
+        value: this.admin.getAdminName(),
         type: 'hidden',
         required: false,
         order: 9
@@ -121,5 +114,4 @@ constructor(@Inject('admin') private admin) {}
 
     return forms.sort((a, b) => a.order - b.order);
   }
-
 }

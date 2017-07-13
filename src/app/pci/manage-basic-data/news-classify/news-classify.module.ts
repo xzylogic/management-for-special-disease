@@ -1,31 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { NewsClassifyComponent } from './news-classify.component';
+import { NewsClassifyEditComponent } from './news-classify-edit/news-classify-edit.component';
 
-import { NewsClassifyEditComponent } from './news-classify-edit';
-
-import { NewsClassifyService, NewsClassifyFormService, NewsClassifyTableService } from './_service';
-
-import { DynamicTableModule, TabModule , DynamicFormModule, EditModule, ModalModule} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { NewsClassifyService } from './_service/news-classify.service';
+import { NewsClassifyFormService } from './_service/news-classify-form.service';
+import { NewsClassifyTableService } from './_service/news-classify-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: NewsClassifyComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    DynamicTableModule,
-     DynamicFormModule,
-     EditModule,
-     ModalModule,
-     RouterModule.forChild(routes)
+    RouterModule.forChild(routes)
   ],
   declarations: [
     NewsClassifyComponent,
@@ -37,4 +29,5 @@ const routes: Routes = [{
     NewsClassifyTableService
   ]
 })
-export class NewsClassifyModule {}
+export class NewsClassifyModule {
+}

@@ -1,28 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UserOrderComponent } from './user-order.component';
-import { UserOrderRecordComponent } from './user-order-record';
+import { UserOrderRecordComponent } from './user-order-record/user-order-record.component';
 
-import { UserOrderService, UserOrderTableService, ServiceRecordFormService, ServiceRecordTableService } from './_service';
-
-import { DynamicTableModule, DynamicFormModule, TabModule, ModalModule } from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { UserOrderService } from './_service/user-order.service';
+import { UserOrderTableService } from './_service/user-order-table.service';
+import { ServiceRecordTableService } from './_service/service-record-table.service';
+import { ServiceRecordFormService } from './_service/service-record-form.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: UserOrderComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -36,4 +31,5 @@ const routes: Routes = [{
     ServiceRecordFormService
   ]
 })
-export class UserOrderModule {}
+export class UserOrderModule {
+}

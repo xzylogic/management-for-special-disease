@@ -1,30 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HospitalComponent } from './hospital.component';
+import { HospitalEditComponent } from './hospital-edit/hospital-edit.component';
 
-import { HospitalEditComponent } from './hospital-edit';
-
-import { HospitalService, HospitalFormService, HospitalTableService } from './_service';
-
-import { DynamicTableModule, TabModule ,DynamicFormModule, EditModule, ModalModule} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { HospitalService } from './_service/hospital.service';
+import { HospitalFormService } from './_service/hospital-form.service';
+import { HospitalTableService } from './_service/hospital-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: HospitalComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -37,4 +29,5 @@ const routes: Routes = [{
     HospitalTableService
   ]
 })
-export class HospitalModule {}
+export class HospitalModule {
+}

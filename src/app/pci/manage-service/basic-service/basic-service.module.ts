@@ -1,37 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { BasicServiceComponent } from './basic-service.component';
-import { BasicServiceEditComponent } from './basic-service-edit';
+import { BasicServiceEditComponent } from './basic-service-edit/basic-service-edit.component';
 
-import {
-  BasicServiceService,
-  BasicServiceTableService,
-  BasicServiceFormService
-} from './_service';
-
-import {
-  DynamicTableModule,
-  DynamicFormModule,
-  EditModule,
-  ModalModule
-} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { BasicServiceService } from './_service/basic-service.service';
+import { BasicServiceTableService } from './_service/basic-service-table.service';
+import { BasicServiceFormService } from './_service/basic-service-form.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: BasicServiceComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -44,4 +29,5 @@ const routes: Routes = [{
     BasicServiceFormService
   ]
 })
-export class BasicServiceModule {}
+export class BasicServiceModule {
+}

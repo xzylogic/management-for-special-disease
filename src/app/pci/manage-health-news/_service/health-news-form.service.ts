@@ -1,16 +1,18 @@
 import { Injectable, Inject } from '@angular/core';
-import { FormBase, FormText, FormFile, FormTextarea, FormDropdown } from '../../../entities';
+
+import { FormBase, FormText, FormTextarea, FormDropdown, FormFile } from '../../../libs';
 
 @Injectable()
 export class HealthNewsFormService {
 
-  constructor(@Inject('admin') private admin) {}
+  constructor(@Inject('admin') private admin) {
+  }
 
   setForm(
-    typeList: Array < any > ,
-    data ? : any
+    typeList: Array<any>,
+    data?: any
   ) {
-    let forms: FormBase < any > [] = [];
+    const forms: FormBase<any> [] = [];
 
     if (data) {
       forms.push(
@@ -19,7 +21,7 @@ export class HealthNewsFormService {
           label: '',
           value: data && data.id || '',
           required: true,
-          type: "hidden",
+          type: 'hidden',
           order: 1
         }),
         new FormDropdown({
@@ -47,6 +49,7 @@ export class HealthNewsFormService {
         key: 'imageUrl',
         label: '资讯图片',
         value: data && data.imageUrl || '',
+        url: '',
         required: true,
         order: 3
       }),

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { FormBase, FormText, FormFile, FormTextarea, FormDropdown, FormCheckbox } from '../../../../entities';
+
+import { FormBase, FormText, FormFile, FormDropdown, FormCheckbox, FormTextarea } from '../../../../libs';
 
 @Injectable()
 export class PackageServiceFormService {
 
-  setForm(doctorPackages, thirdPackages, data ? : any) {
-    
-    let forms: FormBase<any>[] = [];
-    
+  setForm(doctorPackages, thirdPackages, data?: any) {
+
+    const forms: FormBase<any>[] = [];
+
     if (data) {
       forms.push(
         new FormText({
@@ -33,7 +34,7 @@ export class PackageServiceFormService {
         key: 'iconUrl',
         label: '套餐图片',
         value: data && data.iconUrl || '',
-        accept: 'image/*',
+        url: '',
         required: false,
         order: 1
       }),
@@ -66,8 +67,8 @@ export class PackageServiceFormService {
         value: data && (data.enable == 0 ? data.enable : data.enable || ''),
         required: true,
         options: [
-        { id: true, name: '启用' },
-        { id: false, name: '禁用' }
+          {id: true, name: '启用'},
+          {id: false, name: '禁用'}
         ],
         order: 4
       }),

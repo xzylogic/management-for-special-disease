@@ -1,34 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule}  from '@angular/forms';
-import { MaterialModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
 
 import { OperationPushComponent } from './operation-push.component';
+import { OperationPushEditComponent } from './operation-push-edit/operation-push-edit.component';
 
-import { OperationPushEditComponent } from './operation-push-edit';
-
-import { OperationPushService, OperationPushTableService} from './_service';
-
-import { DynamicTableModule, TabModule ,DynamicFormModule, EditModule, ModalModule} from '../../shared';
-import { AuthService } from "../_services/auth";
+import { AuthGuardService } from '../_service/auth-guard.service';
+import { OperationPushService } from './_service/operation-push-service.service';
+import { OperationPushTableService } from './_service/operation-push-service-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: OperationPushComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    TabModule,
-    FormsModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
-    MaterialModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -40,4 +27,5 @@ const routes: Routes = [{
     OperationPushTableService
   ]
 })
-export class OperationPushModule {}
+export class OperationPushModule {
+}

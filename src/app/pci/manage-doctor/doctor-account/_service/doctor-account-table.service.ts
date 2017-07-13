@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { TableTitle } from '../../../../entities';
+import { TableTitle, ControlType } from '../../../../libs';
 
 @Injectable()
 export class DoctorAccountTableService {
 
   setDoctorAccountTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -14,7 +14,7 @@ export class DoctorAccountTableService {
       new TableTitle({
         name: '头像',
         key: 'avatar',
-        controlType: 'image'
+        controlType: ControlType.image
       }),
       new TableTitle({
         name: '医生姓名',
@@ -40,12 +40,12 @@ export class DoctorAccountTableService {
       new TableTitle({
         name: '收到鲜花',
         key: 'totalRevenue',
-        controlType: 'showExtra',
+        controlType: ControlType.button
       }),
       new TableTitle({
         name: '已兑换',
         key: 'totalExpenses',
-        controlType: 'showExtra',
+        controlType: ControlType.button
       }),
       new TableTitle({
         name: '剩余',
@@ -61,7 +61,7 @@ export class DoctorAccountTableService {
    * @param {[type]} body [description]
    */
   setWithdrawDepositTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -112,8 +112,7 @@ export class DoctorAccountTableService {
       new TableTitle({
         name: '操作',
         key: 'pay',
-        controlType: 'showTitle',
-        minwidth: 65
+        controlType: ControlType.button
       }),
       new TableTitle({
         name: '处理人',
@@ -134,7 +133,7 @@ export class DoctorAccountTableService {
    * @param {[type]} body [description]
    */
   setCommodityExchangeTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -185,14 +184,12 @@ export class DoctorAccountTableService {
       new TableTitle({
         name: '输入快递单',
         key: 'editExpress',
-        controlType: 'showTitle',
-        minwidth: 120
+        controlType: ControlType.button
       }),
       new TableTitle({
         name: '已到货',
         key: 'arrival',
-        controlType: 'showTitle',
-        minwidth: 75
+        controlType: ControlType.button
       }),
       new TableTitle({
         name: '处理人',
@@ -213,7 +210,7 @@ export class DoctorAccountTableService {
    * @param {[type]} body [description]
    */
   setExchangeDetailTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -254,7 +251,7 @@ export class DoctorAccountTableService {
    * @param {[type]} body [description]
    */
   setIncomeDetailTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -294,5 +291,4 @@ export class DoctorAccountTableService {
 
     return Titles;
   }
-
 }

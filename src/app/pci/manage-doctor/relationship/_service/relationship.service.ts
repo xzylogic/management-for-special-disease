@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from "../../../_services/api";
+import { Inject, Injectable } from '@angular/core';
 
 const PATH = {
   relationship: 'api/relation'
@@ -8,11 +7,15 @@ const PATH = {
 @Injectable()
 export class RelationshipService {
 
-  constructor(private _apiService: ApiService) {
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
   }
 
   getRelationships(page, size, keyword, accept) {
-    return this._apiService.get(`${PATH.relationship}?page=${page}&size=${size}&keyword=${keyword}&accept=${accept}`);
+    return this.httpService.get(
+      `${this.api.pci.BASE_URL}${PATH.relationship}?page=${page}&size=${size}&keyword=${keyword}&accept=${accept}`
+    );
   }
-
 }

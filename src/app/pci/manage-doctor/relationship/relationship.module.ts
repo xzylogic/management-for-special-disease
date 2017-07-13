@@ -1,25 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { DynamicTableModule } from '../../../shared';
-
-import { RelationshipService, RelationshipTableService } from './_service';
 
 import { RelationshipComponent } from './relationship.component';
 
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { RelationshipService } from './_service/relationship.service';
+import { RelationshipTableService } from './_service/relationship-table.service';
+
+const routes: Routes = [{
+  path: '',
+  component: RelationshipComponent,
+  canActivate: [AuthGuardService]
+}];
+
 @NgModule({
-  imports:[
-    CommonModule,
-    FormsModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: RelationshipComponent
-      }
-    ]),
-    DynamicTableModule
+  imports: [
+    RouterModule.forChild(routes)
   ],
   declarations: [
     RelationshipComponent
@@ -30,5 +26,4 @@ import { RelationshipComponent } from './relationship.component';
   ]
 })
 export class RelationshipModule {
-
 }

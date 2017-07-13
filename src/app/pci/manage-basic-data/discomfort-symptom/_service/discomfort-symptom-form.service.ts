@@ -38,6 +38,7 @@ export class DiscomfortSymptomFormService {
         key: 'symptomUrl',
         label: '说明图片（可选）',
         value: data && data.symptomUrl || '',
+        url: '',
         required: false,
         order: 2
       }),

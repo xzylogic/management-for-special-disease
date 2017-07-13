@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { TableTitle } from '../../../../entities';
+import { TableTitle, ControlType } from '../../../../libs';
 
 @Injectable()
 export class InspectionItemTableService {
 
   setTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -34,16 +34,15 @@ export class InspectionItemTableService {
       new TableTitle({
         name: '编辑',
         key: 'edit',
-        controlType: 'showTitle'
+        controlType: ControlType.button
       }),
       new TableTitle({
         name: '删除',
         key: 'delete',
-        controlType: 'showTitle'
+        controlType: ControlType.button
       })
     ];
 
     return Titles;
   }
-
 }

@@ -1,35 +1,27 @@
 import { Injectable } from '@angular/core';
 
-import {
-  FormBase,
-  FormText,
-  FormFile,
-  FormTextarea,
-  FormDropdown
-} from '../../../../entities';
+import { FormBase, FormText, FormTextarea } from '../../../../libs';
 
 @Injectable()
 export class DoctorAccountFormService {
 
-  setForm(data ? : any) {
-
-    let forms: FormBase < any > [] = [];
+  setForm(data?: any) {
+    const forms: FormBase<any>[] = [];
 
     forms.push(
       new FormText({
         key: 'expressName',
         label: '快递公司',
         value: data && data.expressCompany || '',
-        disable: true,
+        disabled: true,
         required: true,
         order: 1
       }),
-
       new FormTextarea({
         key: 'expressNo',
         label: '快递单号',
         value: data && data.expressNo || '',
-        disable: true,
+        disabled: true,
         required: true,
         order: 2
       })
@@ -37,5 +29,4 @@ export class DoctorAccountFormService {
 
     return forms.sort((a, b) => a.order - b.order);
   }
-
 }

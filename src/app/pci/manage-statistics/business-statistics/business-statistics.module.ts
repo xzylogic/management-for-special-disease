@@ -1,35 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { BusinessStatisticsComponent } from './business-statistics.component';
 
-import {
-  BusinessStatisticsService,
-  BusinessStatisticsTableService
-} from './_service';
-
-import {
-  DynamicTableModule,
-  ModalModule,
-  TabModule
-} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { BusinessStatisticsService } from './_service/business-statistics.service';
+import { BusinessStatisticsTableService } from './_service/business-statistics-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: BusinessStatisticsComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    DynamicTableModule,
-    ModalModule,
-    TabModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

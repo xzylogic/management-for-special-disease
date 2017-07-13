@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from "../../../_services/api";
+import { Inject, Injectable } from '@angular/core';
 
 const PATH = {
   getServiceSpec: 'opt/specifications/list',
@@ -11,23 +10,25 @@ const PATH = {
 @Injectable()
 export class ServiceSpecService {
 
-  constructor(private _apiService: ApiService) {
+  constructor(
+    @Inject('api') private api,
+    @Inject('http') private httpService
+  ) {
   }
 
   getServiceSpec(page, size) {
-    return this._apiService.get(`${PATH.getServiceSpec}?page=${page}&size=${size}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.getServiceSpec}?page=${page}&size=${size}`);
   }
 
   serviceSpecUpdate(body) {
-    return this._apiService.post(`${PATH.updateServiceSpec}`, body);
+    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.updateServiceSpec}`, body);
   }
 
   searchSpecName(param) {
-    return this._apiService.get(`${PATH.searchSpecName}/${param}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.searchSpecName}/${param}`);
   }
 
   searchThird(param) {
-    return this._apiService.get(`${PATH.searchThird}/${param}`);
+    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.searchThird}/${param}`);
   }
-
 }

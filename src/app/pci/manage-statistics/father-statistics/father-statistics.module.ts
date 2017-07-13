@@ -1,43 +1,29 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { FatherStatisticsComponent } from './father-statistics.component';
 
-import {
-  fatherStatisticsService,
-  fatherStatisticsTableService
-} from './_service';
-
-import {
-  DynamicTableModule,
-  ModalModule,
-  TabModule
-} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { FatherStatisticsService } from './_service/father-statistics.service';
+import { FatherStatisticsTableService } from './_service/father-statistics-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: FatherStatisticsComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    DynamicTableModule,
-    ModalModule,
-    TabModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
     FatherStatisticsComponent
   ],
   providers: [
-    fatherStatisticsService,
-    fatherStatisticsTableService
+    FatherStatisticsService,
+    FatherStatisticsTableService
   ]
 })
-export class FatherStatisticsModule {}
+export class FatherStatisticsModule {
+}

@@ -1,36 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DoctorAccountComponent } from './doctor-account.component';
-import { ExchangeCommoditiesComponent } from './exchange-commodities';
-import { ReceiveFlowersComponent } from './receive-flowers';
+import { ExchangeCommoditiesComponent } from './exchange-commodities/exchange-commodities.component';
+import { ReceiveFlowersComponent } from './receive-flowers/receive-flowers.component';
 
-import { DoctorAccountService, DoctorAccountTableService } from './_service';
-
-import {
-  DynamicTableModule,
-  DynamicFormModule,
-  TabModule,
-  ModalModule
-} from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { DoctorAccountService } from './_service/doctor-account.service';
+import { DoctorAccountTableService } from './_service/doctor-account-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: DoctorAccountComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    TabModule,
-    ModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -43,4 +29,5 @@ const routes: Routes = [{
     DoctorAccountTableService
   ]
 })
-export class DoctorAccountModule {}
+export class DoctorAccountModule {
+}

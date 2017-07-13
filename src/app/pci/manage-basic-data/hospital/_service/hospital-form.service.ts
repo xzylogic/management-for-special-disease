@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { FormBase, FormText, FormFile, FormTextarea, FormDropdown } from '../../../../entities';
+
+import { FormBase, FormText, FormFile } from '../../../../libs';
 
 @Injectable()
 export class HospitalFormService {
 
-  setHospitalForm( hospital ? : any) {
+  setHospitalForm(hospital?: any) {
 
-    let disable: boolean = false;
-    let hospitalforms: FormBase<any>[] = [];
+    const hospitalforms: FormBase<any>[] = [];
+
     if (hospital) {
-      disable = true;
       hospitalforms.push(
         new FormText({
           key: 'id',
           label: '医院ID',
           value: hospital && hospital.id || '',
-          disable: disable,
+          disabled: true,
           required: true,
-          type: "hidden",
+          type: 'hidden',
           order: 0
         })
       );
@@ -28,11 +28,10 @@ export class HospitalFormService {
         key: 'imageUrl',
         label: '医院图片',
         value: hospital && hospital.imageUrl || '',
-        accept: 'image/*',
+        url: '',
         required: false,
         order: 1
       })
-     
     );
 
     hospitalforms.push(
@@ -43,7 +42,6 @@ export class HospitalFormService {
         required: true,
         order: 2
       })
-     
     );
 
     return hospitalforms.sort((a, b) => a.order - b.order);

@@ -1,33 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import {MomentModule} from 'angular2-moment';
-
 import { HealthDataComponent } from './health-data.component';
-
-import { HealthDataService, HealthDataTableService } from './_service';
-
-import { DynamicTableModule, TabModule, DynamicFormModule, EditModule, ModalModule } from '../../../shared';
-import { AuthService } from "../../_services/auth";
+import { AuthGuardService } from '../../_service/auth-guard.service';
+import { HealthDataService } from './_service/health-data.service';
+import { HealthDataTableService } from './_service/health-data-table.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthService],
+  canActivate: [AuthGuardService],
   component: HealthDataComponent
 }];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    TabModule,
-    DynamicTableModule,
-    DynamicFormModule,
-    EditModule,
-    ModalModule,
-    MomentModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -38,4 +24,5 @@ const routes: Routes = [{
     HealthDataTableService
   ]
 })
-export class HealthDataModule {}
+export class HealthDataModule {
+}

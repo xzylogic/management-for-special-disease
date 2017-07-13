@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { FormBase, FormText } from '../../../../entities';
+import { FormBase, FormText } from '../../../../libs';
 
 @Injectable()
 export class InspectionCategoryFormService {
 
-  setForm( data ? : any) {
-    let forms: FormBase<any>[] = [];
+  setForm(data?: any) {
+    const forms: FormBase<any>[] = [];
 
     if (data) {
       forms.push(
@@ -15,7 +15,7 @@ export class InspectionCategoryFormService {
           label: 'ID',
           value: data && data.id || '',
           required: true,
-          type: "hidden",
+          type: 'hidden',
           order: 0
         })
       );
@@ -33,5 +33,4 @@ export class InspectionCategoryFormService {
 
     return forms.sort((a, b) => a.order - b.order);
   }
-
 }

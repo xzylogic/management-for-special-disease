@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import {
-  FormBase,
-  FormText,
-  FormFile,
-  FormTextarea,
-  FormDropdown
-} from '../../../../entities';
+import { FormBase, FormText, FormFile } from '../../../../libs';
 
 @Injectable()
 export class HealthOrganizationFormService {
 
-  setForm(thirdParty ? : any) {
+  setForm(thirdParty?: any) {
 
-    let thirdPartyforms: FormBase < any > [] = [];
+    const thirdPartyforms: FormBase<any> [] = [];
 
     if (thirdParty) {
       thirdPartyforms.push(
@@ -22,7 +16,7 @@ export class HealthOrganizationFormService {
           label: '机构ID',
           value: thirdParty && thirdParty.id || '',
           required: true,
-          type: "hidden",
+          type: 'hidden',
           order: 0
         })
       );
@@ -33,11 +27,10 @@ export class HealthOrganizationFormService {
         key: 'imageUrl',
         label: '机构图片',
         value: thirdParty && thirdParty.imageUrl || '',
-        accept: 'image/*',
+        url: '',
         required: true,
         order: 1
       })
-
     );
 
     thirdPartyforms.push(
@@ -48,7 +41,6 @@ export class HealthOrganizationFormService {
         required: true,
         order: 2
       })
-
     );
 
     return thirdPartyforms.sort((a, b) => a.order - b.order);

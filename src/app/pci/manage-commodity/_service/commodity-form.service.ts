@@ -1,22 +1,15 @@
 import { Injectable, Inject } from '@angular/core';
 
-import {
-  FormBase,
-  FormText,
-  FormFile,
-  FormTextarea,
-  FormDropdown,
-  FormEditor
-} from '../../../entities';
+import { FormBase, FormText, FormTextarea, FormFile, FormDropdown, FormEditor } from '../../../libs';
 
 @Injectable()
 export class CommodityFormService {
 
-constructor(@Inject('admin') private admin) {}
+  constructor(@Inject('admin') private admin) {
+  }
 
-  setForm(data ? : any) {
-
-    let forms: FormBase < any > [] = [];
+  setForm(data?: any) {
+    const forms: FormBase<any> [] = [];
 
     if (data) {
       forms.push(
@@ -36,13 +29,15 @@ constructor(@Inject('admin') private admin) {}
         key: 'avatar',
         label: '商品小图',
         value: data && data.avatar || '',
+        url: '',
         required: true,
         order: 1
       }),
       new FormFile({
         key: 'pictures',
         label: '详情图片',
-        value: data && data.pictures || '',
+        value: data && data.pictures || [],
+        url: '',
         multiple: true,
         required: false,
         order: 2
@@ -124,5 +119,4 @@ constructor(@Inject('admin') private admin) {}
 
     return forms.sort((a, b) => a.order - b.order);
   }
-
 }
