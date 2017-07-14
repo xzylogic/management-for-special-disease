@@ -171,8 +171,8 @@ export class DoctorComponent implements OnInit {
       this.router.navigate(['/doctor/edit']);
     }
     if (res.key === 'integral') {
-      this.action.dataChange('doctor', doctor);
-      this.router.navigate(['/doctor/integral']);
+      // this.action.dataChange('doctor', doctor);
+      this.router.navigate(['/doctor/integral'], {queryParams: {id: doctor.id}});
     }
     if (res.key === 'certificationUrl') {
       ImageDialog(doctor.name, doctor.avatarUrl, this.dialog);

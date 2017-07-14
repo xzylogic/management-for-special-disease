@@ -10,6 +10,7 @@ const PATH = {
   doctorAuditedUpdate: 'api/doctor/audited/update', // 编辑审核通过的医生
   doctorAuditingUpdate: 'api/doctor/auditing/update', // 编辑审核失败医生
   doctorAuditing: 'api/doctor/auditing', // 医生审核
+  integralDetail: 'opt/integral/records/list', // 积分明细
 };
 
 @Injectable()
@@ -129,5 +130,12 @@ export class DoctorService {
     return this.httpService.get(
       `${this.app.pci.BASE_URL}${PATH.doctorAuditing}?id=${id}&status=0&message=${message}&auditor=${this.authService.getAdminName()}`
     );
+  }
+
+  /**
+   * 个人积分明细表
+   */
+  doctorIntegralDetail(traderId: number, page: number) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetail}/${traderId}/1?flag=${page}`);
   }
 }
