@@ -15,7 +15,7 @@ const PATH = {
 export class DoctorAccountService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService,
     @Inject('auth') private admin,
   ) {
@@ -25,28 +25,28 @@ export class DoctorAccountService {
    * 收入列表
    */
   getDetailList(doctorId: number, size: number, page: number) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.incomeDetailList}?doctorId=${doctorId}&size=${size}&page=${page}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeDetailList}?doctorId=${doctorId}&size=${size}&page=${page}`);
   }
 
   /**
    * 获取待处理数量
    */
   getCount() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.incomeExchangeCount}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeExchangeCount}`);
   }
 
   /**
    * 医生兑换列表
    */
   getExchangeList(doctorId: number, size: number, page: number) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.incomeExchangeList}?doctorId=${doctorId}&size=${size}&page=${page}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeExchangeList}?doctorId=${doctorId}&size=${size}&page=${page}`);
   }
 
   /**
    * 所有账户列表
    */
   getDoctorAccounts(page: number, size: number) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.incomeList}?size=${size}&page=${page}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeList}?size=${size}&page=${page}`);
   }
 
   /**
@@ -54,7 +54,7 @@ export class DoctorAccountService {
    */
   getPurchase(id: number, expressNo: string, expressName: string, status: number) {
     return this.httpService.post(
-      `${this.api.pci.BASE_URL}${PATH.incomePurchase}?
+      `${this.app.pci.BASE_URL}${PATH.incomePurchase}?
         id=${id}&adminId=${this.admin.getAdminName()}
         &expressNo=${expressNo}&expressName=${expressName}&status=${status}`,
       {}
@@ -65,20 +65,20 @@ export class DoctorAccountService {
    * 兑换列表
    */
   getCommodityExchanges(page: number, size: number) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.incomePurchaseList}?size=${size}&page=${page}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomePurchaseList}?size=${size}&page=${page}`);
   }
 
   /**
    * 提现处理
    */
   getWithdraw(id: number) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.incomeWithdraw}?id=${id}&adminId=${this.admin.getId()}`, {});
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.incomeWithdraw}?id=${id}&adminId=${this.admin.getId()}`, {});
   }
 
   /**
    * 提现列表
    */
   getWithdrawDeposits(page: number, size: number) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.incomeWithdrawList}?size=${size}&page=${page}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeWithdrawList}?size=${size}&page=${page}`);
   }
 }

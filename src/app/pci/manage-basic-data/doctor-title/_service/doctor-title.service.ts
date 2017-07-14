@@ -10,7 +10,7 @@ const PATH = {
 export class DoctorTitleService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -19,7 +19,7 @@ export class DoctorTitleService {
    * 获取职称列表
    */
   getDoctorTitles() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.positionalTitleList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.positionalTitleList}`);
   }
 
   /**
@@ -27,7 +27,7 @@ export class DoctorTitleService {
    * @param {[type]} data [description]
    */
   doctorTitleCreate(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.positionalTitleCreate}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.positionalTitleCreate}`, data);
   }
 
   /**
@@ -35,6 +35,6 @@ export class DoctorTitleService {
    * @param {[type]} data [description]
    */
   doctorTitleEdit(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.positionalTitleEdit}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.positionalTitleEdit}`, data);
   }
 }

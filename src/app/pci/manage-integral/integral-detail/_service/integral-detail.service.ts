@@ -7,7 +7,7 @@ const PATH = {
 @Injectable()
 export class IntegralDetailService {
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -17,13 +17,13 @@ export class IntegralDetailService {
    */
   getIntegralDetail(obj: { type: number, param?: string, flag?: number }) {
     if (obj.param && !obj.flag) {
-      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}?param=${obj.param}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}?param=${obj.param}`);
     } else if (!obj.param && obj.flag) {
-      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}?flag=${obj.flag}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}?flag=${obj.flag}`);
     } else if (obj.param && obj.flag) {
-      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}?param=${obj.param}&flag=${obj.flag}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}?param=${obj.param}&flag=${obj.flag}`);
     } else {
-      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}`);
     }
   }
 }

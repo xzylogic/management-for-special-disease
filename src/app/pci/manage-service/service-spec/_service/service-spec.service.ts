@@ -11,24 +11,24 @@ const PATH = {
 export class ServiceSpecService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
 
   getServiceSpec(page, size) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.getServiceSpec}?page=${page}&size=${size}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.getServiceSpec}?page=${page}&size=${size}`);
   }
 
   serviceSpecUpdate(body) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.updateServiceSpec}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.updateServiceSpec}`, body);
   }
 
   searchSpecName(param) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.searchSpecName}/${param}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.searchSpecName}/${param}`);
   }
 
   searchThird(param) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.searchThird}/${param}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.searchThird}/${param}`);
   }
 }

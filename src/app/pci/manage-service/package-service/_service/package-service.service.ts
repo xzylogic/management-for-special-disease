@@ -11,7 +11,7 @@ const PATH = {
 export class PackageServiceService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -20,7 +20,7 @@ export class PackageServiceService {
    * [getPackageServices description]
    */
   getPackageServices() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.packageServiceList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.packageServiceList}`);
   }
 
   /**
@@ -28,20 +28,20 @@ export class PackageServiceService {
    * @param {[type]} body [description]
    */
   packageServiceSave(body) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.packageServiceSave}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.packageServiceSave}`, body);
   }
 
   /**
    * [getServiceOptionD description]
    */
   getServiceOptionD() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.serviceOptionDList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.serviceOptionDList}`);
   }
 
   /**
    * [getServiceOptionT description]
    */
   getServiceOptionT() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.serviceOptionTList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.serviceOptionTList}`);
   }
 }

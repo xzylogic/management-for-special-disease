@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { createReducer } from '../_store/api/api.reducer';
 
 export const routes: Routes = [{
   path: 'assessment-risk',
@@ -16,3 +17,11 @@ export const routes: Routes = [{
   path: 'lecture',
   loadChildren: 'app/pci/manage-wechat/lecture/lecture.module#LectureModule'
 }];
+
+export const stores = {
+  assessmentRisk: createReducer('assessmentRisk', [0], {}),
+  autoReply: createReducer('autoReply', [0], {}),
+  customMenu: createReducer('customMenu', [0], {}),
+  familyAccount: createReducer('familyAccount', [0], {}),
+  lecture: createReducer('lecture', [0], {})
+};

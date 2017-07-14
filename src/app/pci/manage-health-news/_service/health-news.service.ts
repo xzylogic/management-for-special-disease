@@ -13,7 +13,7 @@ const PATH = {
 export class HealthNewsService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }

@@ -8,24 +8,24 @@ const PATH = {
 export class InspectionCategoryService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
 
   getInspectionCategories() {
-    return this.httpService.get(`${this.api.COMMON_URL}${PATH.inspectionCategory}`);
+    return this.httpService.get(`${this.app.COMMON_URL}${PATH.inspectionCategory}`);
   }
 
   inspectionCategoryCreate(data) {
-    return this.httpService.post(`${this.api.COMMON_URL}${PATH.inspectionCategory}`, data);
+    return this.httpService.post(`${this.app.COMMON_URL}${PATH.inspectionCategory}`, data);
   }
 
   inspectionCategoryEdit(data) {
-    return this.httpService.put(`${this.api.COMMON_URL}${PATH.inspectionCategory}/${data.id}`, data);
+    return this.httpService.put(`${this.app.COMMON_URL}${PATH.inspectionCategory}/${data.id}`, data);
   }
 
   inspectionCategoryDelete(id) {
-    return this.httpService.del(`${this.api.COMMON_URL}${PATH.inspectionCategory}/${id}`);
+    return this.httpService.del(`${this.app.COMMON_URL}${PATH.inspectionCategory}/${id}`);
   }
 }

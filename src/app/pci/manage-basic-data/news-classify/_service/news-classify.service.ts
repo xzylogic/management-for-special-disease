@@ -11,7 +11,7 @@ const PATH = {
 export class NewsClassifyService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -20,20 +20,20 @@ export class NewsClassifyService {
    * 获取通过审核的医生列表
    */
   getNewsClassifies() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.healthInfoList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.healthInfoList}`);
   }
 
   /**
    * 新建健康资讯分类
    */
   newsClassifyCreate(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.healthInfoCreate}?name=${data}`, {});
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.healthInfoCreate}?name=${data}`, {});
   }
 
   /**
    * 编辑健康资讯分类
    */
   newsClassifyUpdate(id, data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.healthInfoUpdate}?id=${id}&name=${data}`, {});
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.healthInfoUpdate}?id=${id}&name=${data}`, {});
   }
 }

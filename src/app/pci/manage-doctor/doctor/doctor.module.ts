@@ -18,20 +18,19 @@ import { DoctorTableService } from './_service/doctor-table.service';
 const routes: Routes = [{
   path: '',
   component: DoctorComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'edit',
+  component: DoctorEditComponent,
   canActivate: [AuthGuardService],
-  children: [{
-    path: 'edit',
-    component: DoctorEditComponent,
-    canActivate: [AuthGuardService],
-  }, {
-    path: 'message',
-    component: SendMessageComponent,
-    canActivate: [AuthGuardService],
-  }, {
-    path: 'integral',
-    component: DoctorIntegralComponent,
-    canActivate: [AuthGuardService],
-  }]
+}, {
+  path: 'message',
+  component: SendMessageComponent,
+  canActivate: [AuthGuardService],
+}, {
+  path: 'integral',
+  component: DoctorIntegralComponent,
+  canActivate: [AuthGuardService],
 }];
 
 @NgModule({

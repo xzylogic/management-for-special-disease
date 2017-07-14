@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { createReducer } from '../_store/api/api.reducer';
 
 export const routes: Routes = [{
   path: 'basic-service',
@@ -13,3 +14,10 @@ export const routes: Routes = [{
   path: 'service-spec',
   loadChildren: 'app/pci/manage-service/service-spec/service-spec.module#ServiceSpecModule'
 }];
+
+export const stores = {
+  baseService: createReducer('baseService', [0], {}),
+  healthService: createReducer('healthService', [0], {}),
+  packageService: createReducer('packageService', [0], {}),
+  serviceSpec: createReducer('serviceSpec', [0], {})
+};

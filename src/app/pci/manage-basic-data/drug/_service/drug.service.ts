@@ -11,7 +11,7 @@ const PATH = {
 export class DrugService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -23,7 +23,7 @@ export class DrugService {
    * @param {string} search   [description]
    */
   getDrugs(page: number, size: number, search?: string) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.drugList}?page=${page}&size=${size}&keyword=${search || ''}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.drugList}?page=${page}&size=${size}&keyword=${search || ''}`);
   }
 
   /**
@@ -31,7 +31,7 @@ export class DrugService {
    * @param {[type]} data [description]
    */
   drugCreate(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.drugSave}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.drugSave}`, data);
   }
 
   /**
@@ -39,6 +39,6 @@ export class DrugService {
    * @param {[type]} data [description]
    */
   drugEdit(data) {
-    return this.httpService.put(`${this.api.pci.BASE_URL}${PATH.drugUpdate}`, data);
+    return this.httpService.put(`${this.app.pci.BASE_URL}${PATH.drugUpdate}`, data);
   }
 }

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { createReducer } from '../_store/api/api.reducer';
 
 export const routes: Routes = [{
   path: 'department',
@@ -43,3 +44,20 @@ export const routes: Routes = [{
   path: 'download-origin',
   loadChildren: 'app/pci/manage-basic-data/download-origin/download-origin.module#DownloadOriginModule'
 }];
+
+export const stores = {
+  department: createReducer('department', [0], {}),
+  discomfortSymptom: createReducer('discomfortSymptom', [0], {}),
+  doctorSort: createReducer('doctorSort', [0], {}),
+  doctorTitle: createReducer('doctorTitle', [0], {}),
+  downloadOrigin: createReducer('downloadOrigin', [0], {}),
+  drug: createReducer('drug', [0], {}),
+  flowerGrade: createReducer('flowerGrade', [0], {}),
+  followUpPlan: createReducer('followUpPlan', [0], {}),
+  healthOrganization: createReducer('healthOrganization', [0], {}),
+  hospital: createReducer('hospital', [0], {}),
+  inspectionCategory: createReducer('inspectionCategory', [0], {}),
+  inspectionItem: createReducer('inspectionItem', [0], {}),
+  newsClassify: createReducer('newsClassify', [0], {}),
+  pushTime: createReducer('pushTime', [0], {}),
+};

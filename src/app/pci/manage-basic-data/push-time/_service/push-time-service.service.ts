@@ -9,16 +9,16 @@ const PATH = {
 export class PushTimeService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
 
   getPushTime() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.pushTime}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.pushTime}`);
   }
 
   PushTimeEdit(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.pushTimeEdit}?pushTime=${data}`, {});
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.pushTimeEdit}?pushTime=${data}`, {});
   }
 }

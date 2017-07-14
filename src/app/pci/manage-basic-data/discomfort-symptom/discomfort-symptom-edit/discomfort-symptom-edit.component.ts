@@ -5,7 +5,7 @@ import { DiscomfortSymptomFormService } from '../_service/discomfort-symptom-for
 
 @Component({
   selector: 'app-discomfort-symptom-edit',
-  templateUrl: './discomfort-symptom-edit.html'
+  templateUrl: './discomfort-symptom-edit.component.html'
 })
 export class DiscomfortSymptomEditComponent implements OnInit {
 

@@ -9,7 +9,7 @@ const PATH = {
 export class BasicServiceService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -18,7 +18,7 @@ export class BasicServiceService {
    * 获取基础服务列表
    */
   getBasicServices() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.basicServiceList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.basicServiceList}`);
   }
 
   /**
@@ -26,6 +26,6 @@ export class BasicServiceService {
    * @param {any} body [description]
    */
   basicServiceUpdate(body: any) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.basicServiceUpdate}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.basicServiceUpdate}`, body);
   }
 }

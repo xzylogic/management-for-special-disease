@@ -13,7 +13,7 @@ const PATH = {
 export class DoctorGroupService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -24,7 +24,7 @@ export class DoctorGroupService {
    * @param {number} size [description]
    */
   getDoctorGroups(page: number, size: number) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.doctorGroupList}?page=${page}&size=${size}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorGroupList}?page=${page}&size=${size}`);
   }
 
   /**
@@ -33,7 +33,7 @@ export class DoctorGroupService {
    * @param {number} size [description]
    */
   getAuditingServices(page: number, size: number) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.auditingServiceList}?page=${page}&size=${size}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.auditingServiceList}?page=${page}&size=${size}`);
   }
 
   /**
@@ -43,7 +43,7 @@ export class DoctorGroupService {
    * @param {number} size [description]
    */
   getServiceDetails(id: number, page: number, size: number) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.doctorGroupOrderDetail}?dgid=${id}&page=${page}&size=${size}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorGroupOrderDetail}?dgid=${id}&page=${page}&size=${size}`);
   }
 
   /**
@@ -52,14 +52,14 @@ export class DoctorGroupService {
    * @param {string} desc [description]
    */
   doctorGroupUpdateDesc(id: number, desc: string) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.doctorGroupUpdateDesc}?dgid=${id}&desc=${desc}`, {})
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.doctorGroupUpdateDesc}?dgid=${id}&desc=${desc}`, {})
   }
 
   /**
    * [getAuditingServiceCount description]
    */
   getAuditingServiceCount() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.doctorGroupCountAuditing}`)
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorGroupCountAuditing}`)
   }
 
   /**
@@ -67,6 +67,6 @@ export class DoctorGroupService {
    * @param {number} id [description]
    */
   serviceAuditingSuccess(id: number) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.auditingServiceSuccess}?pid=${id}&index=1`, {});
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.auditingServiceSuccess}?pid=${id}&index=1`, {});
   }
 }

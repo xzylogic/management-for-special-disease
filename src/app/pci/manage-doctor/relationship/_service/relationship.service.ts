@@ -8,14 +8,14 @@ const PATH = {
 export class RelationshipService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
 
   getRelationships(page, size, keyword, accept) {
     return this.httpService.get(
-      `${this.api.pci.BASE_URL}${PATH.relationship}?page=${page}&size=${size}&keyword=${keyword}&accept=${accept}`
+      `${this.app.pci.BASE_URL}${PATH.relationship}?page=${page}&size=${size}&keyword=${keyword}&accept=${accept}`
     );
   }
 }

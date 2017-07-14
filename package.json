@@ -6,7 +6,7 @@
     "start": "ng serve -p 4203",
     "serve-pci": "ng serve -p 4201 -e pci-test",
     "serve-kidney": "ng serve -p 4202 -e kidney-test",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist && rm -rf management-pci && rm -rf management-kidney",
     "to-pci": "mkdir management-pci && cp -r dist/** management-pci",
     "to-kidney": "mkdir management-kidney && cp -r dist/** management-kidney",
     "to-all": "mkdir management && cp dist/** management",

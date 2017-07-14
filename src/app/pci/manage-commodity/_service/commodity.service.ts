@@ -11,7 +11,7 @@ const PATH = {
 export class CommodityService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }

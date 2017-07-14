@@ -11,7 +11,7 @@ const PATH = {
 export class FlowerGradeService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService,
   ) {
   }
@@ -20,7 +20,7 @@ export class FlowerGradeService {
    * 获取鲜花等级
    */
   getFlowerGrades() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.flowerClassList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.flowerClassList}`);
   }
 
   /**
@@ -31,7 +31,7 @@ export class FlowerGradeService {
    */
   flowerGradeCreate(title, imgUrl, value) {
     return this.httpService.post(
-      `${this.api.pci.BASE_URL}${PATH.flowerClassCreate}?title=${title}&imgUrl=${imgUrl}&value=${value}`,
+      `${this.app.pci.BASE_URL}${PATH.flowerClassCreate}?title=${title}&imgUrl=${imgUrl}&value=${value}`,
       {}
     );
   }
@@ -46,7 +46,7 @@ export class FlowerGradeService {
    */
   flowerGradeEdit(id, title, imgUrl, value) {
     return this.httpService.post(
-      `${this.api.pci.BASE_URL}${PATH.flowerClassEdit}?id=${id}&title=${title}&imgUrl=${imgUrl}&value=${value}`,
+      `${this.app.pci.BASE_URL}${PATH.flowerClassEdit}?id=${id}&title=${title}&imgUrl=${imgUrl}&value=${value}`,
       {}
     );
   }
@@ -56,6 +56,6 @@ export class FlowerGradeService {
    * @param {number} id [description]
    */
   flowerGradeDelete(id: number) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.flowerClassDelete}?id=${id}`, {});
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.flowerClassDelete}?id=${id}`, {});
   }
 }

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { createReducer } from '../_store/api/api.reducer';
 
 export const routes: Routes = [{
   path: 'user',
@@ -13,3 +14,10 @@ export const routes: Routes = [{
   path: 'health-data',
   loadChildren: 'app/pci/manage-user/health-data/health-data.module#HealthDataModule'
 }];
+
+export const stores = {
+  user: createReducer('user', [0], {}),
+  userOrder: createReducer('userOrder', [0], {}),
+  userCertification: createReducer('userCertification', [0], {}),
+  healthData: createReducer('healthData', [0], {})
+};

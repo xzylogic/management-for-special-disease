@@ -12,7 +12,7 @@ const PATH = {
 export class DiscomfortSymptomService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -21,7 +21,7 @@ export class DiscomfortSymptomService {
    * 获取不适症状类型列表
    */
   getDiscomfortSymptomType() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.discomfortTypeList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.discomfortTypeList}`);
   }
 
   /**
@@ -29,7 +29,7 @@ export class DiscomfortSymptomService {
    * @param {[type]} id   [description]
    */
   getDiscomfortSymptoms(id) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.discomfortList}?symptomTypeId=${id}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.discomfortList}?symptomTypeId=${id}`);
   }
 
   /**
@@ -37,7 +37,7 @@ export class DiscomfortSymptomService {
    * @param {[type]} data [description]
    */
   discomfortSymptomCreate(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.discomfortCreate}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.discomfortCreate}`, data);
   }
 
   /**
@@ -45,6 +45,6 @@ export class DiscomfortSymptomService {
    * @param {[type]} data [description]
    */
   discomfortSymptomEdit(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.discomfortEdit}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.discomfortEdit}`, data);
   }
 }

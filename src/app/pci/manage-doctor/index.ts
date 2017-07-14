@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { createReducer } from '../_store/api/api.reducer';
 
 export const routes: Routes = [{
   path: 'doctor',
@@ -13,3 +14,10 @@ export const routes: Routes = [{
   path: 'relationship',
   loadChildren: 'app/pci/manage-doctor/relationship/relationship.module#RelationshipModule'
 }];
+
+export const stores = {
+  doctor: createReducer('doctor', [0, 0, 0], {}),
+  doctorAccount: createReducer('doctorAccount', [0], {}),
+  doctorGroup: createReducer('doctorGroup', [0], {}),
+  relationship: createReducer('relationship', [0], {}),
+};

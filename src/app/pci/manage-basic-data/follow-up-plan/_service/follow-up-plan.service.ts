@@ -11,7 +11,7 @@ const PATH = {
 export class FollowUpPlanService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -20,28 +20,27 @@ export class FollowUpPlanService {
    * 获取第三方机构列表
    */
   getFollowUpPlans(type) {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.followList}?type=${type}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.followList}?type=${type}`);
   }
 
   /**
    * 新建鲜花等级
    */
   followUpPlanCreate(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.followCreate}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.followCreate}`, data);
   }
 
   /**
    * 编辑鲜花等级
    */
   followUpPlanEdit(data) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.followEdit}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.followEdit}`, data);
   }
 
   /**
    * 删除鲜花等级
    */
   followUpPlanDelete(id: number) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.followDelete}?id=${id}`, {});
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.followDelete}?id=${id}`, {});
   }
-
 }

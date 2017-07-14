@@ -15,7 +15,7 @@ const PATH = {
 export class HealthServiceService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }

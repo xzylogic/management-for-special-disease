@@ -9,28 +9,28 @@ const PATH = {
 export class InspectionItemService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
 
   getInspectionCategories() {
-    return this.httpService.get(`${this.api.COMMON_URL}${PATH.inspectionCategory}`);
+    return this.httpService.get(`${this.app.COMMON_URL}${PATH.inspectionCategory}`);
   }
 
   getInspectionItems(page: number, size: number, type: number) {
-    return this.httpService.get(`${this.api.COMMON_URL}${PATH.inspectionItem}?page=${page}&size=${size}&type=${type}`);
+    return this.httpService.get(`${this.app.COMMON_URL}${PATH.inspectionItem}?page=${page}&size=${size}&type=${type}`);
   }
 
   inspectionItemCreate(data) {
-    return this.httpService.post(`${this.api.COMMON_URL}${PATH.inspectionItem}`, data);
+    return this.httpService.post(`${this.app.COMMON_URL}${PATH.inspectionItem}`, data);
   }
 
   inspectionItemEdit(data) {
-    return this.httpService.put(`${this.api.COMMON_URL}${PATH.inspectionItem}/${data.id}`, data);
+    return this.httpService.put(`${this.app.COMMON_URL}${PATH.inspectionItem}/${data.id}`, data);
   }
 
   inspectionItemDelete(id) {
-    return this.httpService.del(`${this.api.COMMON_URL}${PATH.inspectionItem}/${id}`);
+    return this.httpService.del(`${this.app.COMMON_URL}${PATH.inspectionItem}/${id}`);
   }
 }

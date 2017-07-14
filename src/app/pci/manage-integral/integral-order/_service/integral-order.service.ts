@@ -11,7 +11,7 @@ const PATH = {
 export class IntegralOrderService {
 
   constructor(
-    @Inject('api') private api,
+    @Inject('app') private app,
     @Inject('http') private httpService
   ) {
   }
@@ -21,13 +21,13 @@ export class IntegralOrderService {
    */
   getIntegralOrder(obj: { idx?: number, flag?: number }) {
     if (obj.idx && !obj.flag) {
-      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderList}?idx=${obj.idx}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?idx=${obj.idx}`);
     } else if (!obj.idx && obj.flag) {
-      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderList}?flag=${obj.flag}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?flag=${obj.flag}`);
     } else if (!obj.idx && !obj.flag) {
-      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderList}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}`);
     } else {
-      return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderList}?idx=${obj.idx}&flag=${obj.flag}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?idx=${obj.idx}&flag=${obj.flag}`);
     }
   }
 
@@ -35,21 +35,21 @@ export class IntegralOrderService {
    * 积分订单商品数量
    */
   getIntegralOrderCount() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralOrderCount}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderCount}`);
   }
 
   /**
    * 快递列表
    */
   getExpressList() {
-    return this.httpService.get(`${this.api.pci.BASE_URL}${PATH.integralExpressList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralExpressList}`);
   }
 
   /**
    * 编辑单号
    */
   editExpressNo(body) {
-    return this.httpService.post(`${this.api.pci.BASE_URL}${PATH.integralExpressEdit}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.integralExpressEdit}`, body);
 
   }
 }
