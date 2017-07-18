@@ -12,7 +12,8 @@ export class AuthService {
   JWT_KEY = 'pci_login_token';
   // store the URL so we can redirect after logging in
   redirectUrl: string;
-  @select(['main', 'adminName']) admin: Observable<any>;
+  @select(['main', 'adminName']) adminName: Observable<string>;
+  @select(['main', 'adminId']) adminId: Observable<number>;
 
   constructor(
     private router: Router,
@@ -48,9 +49,17 @@ export class AuthService {
 
   getAdminName(): string {
     let name: string;
-    this.admin.subscribe(res => {
+    this.adminName.subscribe(res => {
       name = res;
     });
     return name;
+  }
+
+  getAdminId(): number {
+    let id: number;
+    this.adminId.subscribe(res => {
+      id = res;
+    });
+    return id;
   }
 }

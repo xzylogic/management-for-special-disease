@@ -1,1 +1,58 @@
-<h1>doctor account</h1>
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="全部账户">
+        <div *ngIf="!doctorAccountTable.lists&&doctorAccountTable.loading">Loading...</div>
+        <div *ngIf="!doctorAccountTable.lists&&!doctorAccountTable.loading&&!!doctorAccountTable.errorMessage"
+             class="center">
+          {{doctorAccountTable.errorMessage}}
+        </div>
+        <div *ngIf="doctorAccountTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="doctorAccountTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getDoctorAccounts($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="提现处理">
+        <div *ngIf="!withdrawDepositTable.lists&&withdrawDepositTable.loading">Loading...</div>
+        <div *ngIf="!withdrawDepositTable.lists&&!withdrawDepositTable.loading&&!!withdrawDepositTable.errorMessage"
+             class="center">
+          {{withdrawDepositTable.errorMessage}}
+        </div>
+        <div *ngIf="withdrawDepositTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="withdrawDepositTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getWithdrawDeposits($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="商品兑换">
+        <div *ngIf="!commodityExchangeTable.lists&&commodityExchangeTable.loading">Loading...</div>
+        <div
+          *ngIf="!commodityExchangeTable.lists&&!commodityExchangeTable.loading&&!!commodityExchangeTable.errorMessage"
+          class="center">
+          {{commodityExchangeTable.errorMessage}}
+        </div>
+        <div *ngIf="commodityExchangeTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="commodityExchangeTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getCommodityExchanges($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+    <!--<div class="count">-->
+    <!--<md-chip color="accent" selected="true">32</md-chip>-->
+    <!--</div>-->
+  </div>
+</app-container>

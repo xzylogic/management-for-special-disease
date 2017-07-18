@@ -1,253 +1,258 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+import { select } from '@angular-redux/store';
 
+import { ContainerConfig, TableOption, HintDialog } from '../../../libs';
 import { DoctorAccountService } from './_service/doctor-account.service';
 import { DoctorAccountTableService } from './_service/doctor-account-table.service';
+import { ERRMSG } from '../../_store/static';
+import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
+import { ActionDialog } from '../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-doctor-account',
   templateUrl: './doctor-account.component.html'
 })
 export class DoctorAccountComponent implements OnInit {
-  // title = '医生账户管理';
-  // subTitle = '医生账户列表';
-  //
-  // doctorAccountTable: TableOption;
-  // withdrawDepositTable: TableOption;
-  // commodityExchangeTable: TableOption;
-  //
-  // withdrawDepositCount: number;
-  // commodityExchangeCount: number;
-  //
-  // doctorAccount: any;
-  // enableExchangeDetail: boolean;
-  // enableReceiveDetail: boolean;
-  // enablePay: boolean;
-  // enableExpress: boolean;
-  // enableReach: boolean;
-  //
-  // titleShow: string = '提示信息';
-  // message: string;
-  // enableShow: boolean;
+  containerConfig: ContainerConfig;
+  doctorAccountTable: TableOption;
+  withdrawDepositTable: TableOption;
+  commodityExchangeTable: TableOption;
+  @select(['doctorAccount', 'tab']) tab: Observable<number>;
+  @select(['doctorAccount', 'page']) page: Observable<Array<number>>;
 
   constructor(
-    private _doctorAccountService: DoctorAccountService,
-    private _doctorAccountTableService: DoctorAccountTableService
+    @Inject('action') private action,
+    private doctorAccountService: DoctorAccountService,
+    private doctorAccountTableService: DoctorAccountTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    // this.refresh();
+    this.containerConfig = this.doctorAccountService.doctorAccountConfig();
+    this.doctorAccountTable = new TableOption({
+      titles: this.doctorAccountTableService.setDoctorAccountTitles(),
+      ifPage: true
+    });
+    this.withdrawDepositTable = new TableOption({
+      titles: this.doctorAccountTableService.setWithdrawDepositTitles(),
+      ifPage: true
+    });
+    this.commodityExchangeTable = new TableOption({
+      titles: this.doctorAccountTableService.setCommodityExchangeTitles(),
+      ifPage: true
+    });
+    this.reset();
   }
 
-  // refresh() {
-  //   this.doctorAccountTable = new TableOption();
-  //   this.withdrawDepositTable = new TableOption();
-  //   this.commodityExchangeTable = new TableOption();
-  //   this.getDoctorAccountTitles();
-  //   this.getWithdrawDepositTitles();
-  //   this.getCommodityExchangeTitles();
-  //   this.getDoctorAccounts(0);
-  //   this.getWithdrawDeposits(0);
-  //   this.getCommodityExchanges(0);
-  //   this.getCount();
-  // }
-  //
-  // getDoctorAccountTitles() {
-  //   this.doctorAccountTable.titles = this._doctorAccountTableService.setDoctorAccountTitles();
-  // }
-  //
-  // getWithdrawDepositTitles() {
-  //   this.withdrawDepositTable.titles = this._doctorAccountTableService.setWithdrawDepositTitles();
-  // }
-  //
-  // getCommodityExchangeTitles() {
-  //   this.commodityExchangeTable.titles = this._doctorAccountTableService.setCommodityExchangeTitles();
-  // }
-  //
-  // getDoctorAccounts(page: number) {
-  //   this.doctorAccountTable.currentPage = page;
-  //   this._doctorAccountService.getDoctorAccounts(page, this.doctorAccountTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.doctorAccountTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.doctorAccountTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.doctorAccountTable.totalPage = data.data.totalPages;
-  //           this.doctorAccountTable.lists = data.data.content;
-  //         } else {
-  //           this.doctorAccountTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.doctorAccountTable.loading = false;
-  //         this.doctorAccountTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // getWithdrawDeposits(page: number) {
-  //   this.withdrawDepositTable.currentPage = page;
-  //   this._doctorAccountService.getWithdrawDeposits(page, this.withdrawDepositTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.withdrawDepositTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.withdrawDepositTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.withdrawDepositTable.totalPage = data.data.totalPages;
-  //           this.withdrawDepositTable.lists = data.data.content;
-  //         } else {
-  //           this.withdrawDepositTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.withdrawDepositTable.loading = false;
-  //         this.withdrawDepositTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // getCommodityExchanges(page: number) {
-  //   this.commodityExchangeTable.currentPage = page;
-  //   this._doctorAccountService.getCommodityExchanges(page, this.commodityExchangeTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.commodityExchangeTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.commodityExchangeTable.errorMessage = "该数据为空哦～";
-  //         } else
-  //         if (data.data && data.data.content && data.code === 0) {
-  //           this.commodityExchangeTable.totalPage = data.data.totalPages;
-  //           this.commodityExchangeTable.lists = data.data.content;
-  //         } else {
-  //           this.commodityExchangeTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.commodityExchangeTable.loading = false;
-  //         this.commodityExchangeTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // getCount() {
-  //   this._doctorAccountService.getCount()
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.withdrawDepositCount = data.data.withdraw;
-  //           this.commodityExchangeCount = data.data.purchase;
-  //           this._sidebarService.setCount(this.withdrawDepositCount + this.commodityExchangeCount, 'doctorgroup', 'doctor');
-  //         }
-  //       })
-  // }
-  //
-  // gotoHandle(data) {
-  //   this.doctorAccount = data.value;
-  //   if (data.key === 'totalRevenue') {
-  //     this.enableReceiveDetail = true;
-  //   } else if (data.key === 'totalExpenses') {
-  //     this.enableExchangeDetail = true;
-  //   } else if (data.key === 'pay') {
-  //     if (data.value.status === 0) {
-  //       this.enablePay = true;
-  //     } else {
-  //       this.message = '已提现成功！';
-  //       this.enableShow = true;
-  //     }
-  //   } else if (data.key === 'editExpress') {
-  //     if (data.value.status === 0) {
-  //       this.enableExpress = true;
-  //     } else {
-  //       this.message = '已输入信息！';
-  //       this.enableShow = true;
-  //     }
-  //   } else if (data.key === 'arrival') {
-  //     if (data.value.status === 0) {
-  //       this.message = '请先输入快递单号';
-  //       this.enableShow = true;
-  //     } else if (data.value.status === 1) {
-  //       this.enableReach = true;
-  //     } else {
-  //       this.message = '已到货';
-  //       this.enableShow = true;
-  //     }
-  //   }
-  // }
-  //
-  // processPay() {
-  //   this._doctorAccountService.getWithdraw(this.doctorAccount.id)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.message = "操作成功～";
-  //           this.enablePay = false;
-  //           this.enableShow = true;
-  //           this.refresh();
-  //         } else {
-  //           if (data.msg) {
-  //             this.message = data.msg;
-  //           } else {
-  //             this.message = "操作失败～";
-  //           }
-  //           this.enablePay = false;
-  //           this.enableShow = true;
-  //         }
-  //       }, err => {
-  //         this.message = "连接服务器出错";
-  //         this.enablePay = false;
-  //         this.enableShow = true;
-  //       })
-  // }
-  //
-  // payCancel() {
-  //   this.doctorAccount = null;
-  //   this.enablePay = false;
-  // }
-  //
-  // processExpress(data) {
-  //   this.getPurchaseEdit(this.doctorAccount.id, data.expressNumber, data.expressCompany, 1);
-  // }
-  //
-  // processReach() {
-  //   this.getPurchaseEdit(this.doctorAccount.id, this.doctorAccount.expressNo, this.doctorAccount.expressCompany, 2);
-  // }
-  //
-  // getPurchaseEdit(id, expressNumber, expressCompany, status) {
-  //   this._doctorAccountService.getPurchase(
-  //       id,
-  //       expressNumber,
-  //       expressCompany,
-  //       status
-  //     )
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.message = "操作成功～";
-  //           this.enableExpress = false;
-  //           this.enableReach = false;
-  //           this.enableShow = true;
-  //           this.refresh();
-  //         } else {
-  //           if (data.msg) {
-  //             this.message = data.msg;
-  //           } else {
-  //             this.message = "操作失败～";
-  //           }
-  //           this.enableReach = false;
-  //           this.enableExpress = false;
-  //           this.enableShow = true;
-  //         }
-  //       }, err => {
-  //         this.message = "连接服务器出错";
-  //         this.enableReach = false;
-  //         this.enableExpress = false;
-  //         this.enableShow = true;
-  //       })
-  // }
-  //
-  // expressCancel() {
-  //   this.doctorAccount = null;
-  //   this.enableExpress = false;
-  // }
-  //
-  // reachCancel() {
-  //   this.doctorAccount = null;
-  //   this.enableReach = false;
-  // }
+  reset() {
+    this.reset0();
+    this.reset1();
+    this.reset2();
+  }
+
+  reset0() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getDoctorAccounts(page[0]);
+    });
+  }
+
+  reset1() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getWithdrawDeposits(page[1]);
+    });
+  }
+
+  reset2() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getCommodityExchanges(page[2]);
+    });
+  }
+
+  getDoctorAccounts(page: number) {
+    this.action.pageChange('doctorAccount', [page, this.withdrawDepositTable.currentPage, this.commodityExchangeTable.currentPage]);
+    this.doctorAccountTable.reset(page);
+    this.doctorAccountService.getDoctorAccounts(page, this.doctorAccountTable.size)
+      .subscribe(
+        res => {
+          this.doctorAccountTable.loading = false;
+          if (res.data && res.data.content && res.data.content.length === 0 && res.code === 0) {
+            this.doctorAccountTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.content && res.code === 0) {
+            this.doctorAccountTable.totalPage = res.data.totalPages;
+            this.doctorAccountTable.lists = res.data.content;
+          } else {
+            this.doctorAccountTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.doctorAccountTable.loading = false;
+          console.log(err);
+          this.doctorAccountTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getWithdrawDeposits(page: number) {
+    this.action.pageChange('doctorAccount', [this.doctorAccountTable.currentPage, page, this.commodityExchangeTable.currentPage]);
+    this.withdrawDepositTable.reset(page);
+    this.doctorAccountService.getWithdrawDeposits(page, this.withdrawDepositTable.size)
+      .subscribe(
+        res => {
+          this.withdrawDepositTable.loading = false;
+          if (res.data && res.data.content && res.data.content.length === 0 && res.code === 0) {
+            this.withdrawDepositTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.content && res.code === 0) {
+            this.withdrawDepositTable.totalPage = res.data.totalPages;
+            this.withdrawDepositTable.lists = res.data.content;
+          } else {
+            this.withdrawDepositTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.withdrawDepositTable.loading = false;
+          console.log(err);
+          this.withdrawDepositTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getCommodityExchanges(page: number) {
+    this.action.pageChange('doctorAccount', [this.doctorAccountTable.currentPage, this.withdrawDepositTable.currentPage, page]);
+    this.withdrawDepositTable.reset(page);
+    this.doctorAccountService.getCommodityExchanges(page, this.commodityExchangeTable.size)
+      .subscribe(
+        res => {
+          this.commodityExchangeTable.loading = false;
+          if (res.data && res.data.content && res.data.content.length === 0 && res.code === 0) {
+            this.commodityExchangeTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.content && res.code === 0) {
+            this.commodityExchangeTable.totalPage = res.data.totalPages;
+            this.commodityExchangeTable.lists = res.data.content;
+          } else {
+            this.commodityExchangeTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.commodityExchangeTable.loading = false;
+          console.log(err);
+          this.commodityExchangeTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  gotoHandle(res) {
+    const data = res.value;
+    if (res.key === 'totalRevenue') {
+      this.router.navigate(['/doctor-account/receive-flowers'], {queryParams: {id: data.id}});
+    }
+    if (res.key === 'totalExpenses') {
+      this.router.navigate(['/doctor-account/exchange-commodities'], {queryParams: {id: data.id}});
+    }
+    if (res.key === 'pay') {
+      if (data.status === 0) {
+        HintDialog('确定已提现成功？', this.dialog).afterClosed()
+          .subscribe(result => {
+            if (result && result.key === 'comfirm') {
+              this.processPay(data.id);
+            }
+          });
+      } else {
+        HintDialog('已提现成功！', this.dialog);
+      }
+    }
+    if (res.key === 'editExpress') {
+      if (data.status === 0) {
+        const config = new DialogOptions({
+          title: '请填写快递信息',
+          message: '',
+          buttons: [{
+            key: 'confirm',
+            value: '提交',
+            color: 'primary'
+          }, {
+            key: 'cancel',
+            value: '取消',
+            color: ''
+          }],
+          forms: [{
+            key: 'expressCompany',
+            label: '快递公司',
+            value: ''
+          }, {
+            key: 'expressNumber',
+            label: '快递单号',
+            value: ''
+          }]
+        });
+        ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+          if (result.key === 'confirm' && result.value[0] && result.value[1]) {
+            this.processExpress(data.id, result.value[0].value, result.value[1].value);
+          }
+        });
+      } else {
+        HintDialog('已输入信息！', this.dialog);
+      }
+    }
+    if (res.key === 'arrival') {
+      if (res.value.status === 0) {
+        HintDialog('请先输入快递单号', this.dialog);
+      } else if (res.value.status === 1) {
+        console.log(data);
+        HintDialog('确定已到货？', this.dialog).afterClosed()
+          .subscribe(result => {
+            if (result && result.key === 'comfirm') {
+              this.processReach(data.id, data.expressNo, data.expressCompany);
+            }
+          });
+      } else {
+        HintDialog('已到货', this.dialog);
+      }
+    }
+  }
+
+  processPay(id) {
+    this.doctorAccountService.getWithdraw(id)
+      .subscribe(
+        res => {
+          if (res.code === 0) {
+            HintDialog(res.msg || '操作成功！', this.dialog);
+          } else {
+            HintDialog(res.msg || '操作失败～', this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.netErrMsg, this.dialog);
+        });
+  }
+
+  processExpress(id, expressNumber, expressCompany) {
+    this.getPurchaseEdit(id, expressNumber, expressCompany, 1);
+  }
+
+  processReach(id, expressNumber, expressCompany) {
+    this.getPurchaseEdit(id, expressNumber, expressCompany, 2);
+  }
+
+  getPurchaseEdit(id, expressNumber, expressCompany, status) {
+    this.doctorAccountService.getPurchase(
+      id,
+      expressNumber,
+      expressCompany,
+      status
+    )
+      .subscribe(
+        res => {
+          if (res.code === 0) {
+            HintDialog(res.msg || '操作成功！', this.dialog);
+          } else {
+            HintDialog(res.msg || '操作失败～', this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.netErrMsg, this.dialog);
+        })
+  }
+
+  change(index) {
+    this.action.tabChange('doctor', index);
+  }
 }

@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdInputModule, MdSelectModule } from '@angular/material';
+
+import { DTableModule, LibModule } from '../../../libs';
 
 import { RelationshipComponent } from './relationship.component';
 
@@ -15,6 +19,11 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    DTableModule,
+    LibModule,
+    FormsModule,
+    MdInputModule,
+    MdSelectModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

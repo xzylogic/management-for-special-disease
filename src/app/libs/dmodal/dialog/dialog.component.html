@@ -9,7 +9,8 @@
 </div>
 <div md-dialog-actions style="float: right;">
   <div style="margin: 20px 0">
-    <button *ngFor="let btn of option.buttons" color="{{btn.color}}" md-raised-button style="margin-left: 15px" (click)="dialogRef.close({key:btn.key,value:option.forms})">
+    <button *ngFor="let btn of option.buttons" color="{{btn.color}}" md-raised-button style="margin-left: 15px"
+            (click)="dialogRef.close({key:btn.key,value:option.forms || ''})">
       {{btn.value}}
     </button>
   </div>

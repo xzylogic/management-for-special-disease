@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { ContainerConfig } from '../../../../libs';
+
 const PATH = {
   doctorGroupList: 'opt/doctorGroups/queryAllDoctorGroup', // 查询所有医生小组
   auditingServiceList: 'opt/doctorPackages/list', // 查询待审核服务列表
@@ -16,6 +18,16 @@ export class DoctorGroupService {
     @Inject('app') private app,
     @Inject('http') private httpService
   ) {
+  }
+
+  doctorGroupConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生小组管理',
+      subTitle: '医生小组列表',
+      ifHome: true,
+      homeRouter: '/doctor-group',
+      currentRouter: '/doctor-group'
+    });
   }
 
   /**

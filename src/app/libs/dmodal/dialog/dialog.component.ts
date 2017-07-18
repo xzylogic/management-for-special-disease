@@ -5,7 +5,7 @@ import { DialogOptions } from './dialog.entity';
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: 'dialog.component.html'
+  templateUrl: './dialog.component.html'
 })
 export class DialogComponent {
   option: DialogOptions = new DialogOptions();

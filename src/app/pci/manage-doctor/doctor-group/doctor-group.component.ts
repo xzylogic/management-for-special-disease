@@ -1,120 +1,124 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { DoctorGroupService } from './_service/doctor-group.service';
 import { DoctorGroupTableService } from './_service/doctor-group-table.service';
 import { AuditingServiceTableService } from './_service/auditing-service-table.service';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-doctor-group',
   templateUrl: './doctor-group.component.html'
 })
 export class DoctorGroupComponent implements OnInit {
-  // title = '医生小组管理';
-  // subTitle = '医生小组列表';
-  //
-  // doctorGroupTable: TableOption;
-  // auditingServiceTable: TableOption;
-  //
-  // auditingServiceCount: number;
-  //
-  // doctorGroup: any;
-  // enableDetail: boolean;
-  // enableEdit: boolean;
-  //
-  // titleShow: string;
-  // message: string;
-  // enableShow: boolean;
-  //
-  // processData: any;
-  // enableProcess: boolean;
+  containerConfig: ContainerConfig;
+  doctorGroupTable: TableOption;
+  auditingServiceTable: TableOption;
+  @select(['doctorGroup', 'tab']) tab: Observable<number>;
+  @select(['doctorGroup', 'page']) page: Observable<Array<number>>;
 
   constructor(
-    private _doctorGroupService: DoctorGroupService,
-    private _doctorGroupTableService: DoctorGroupTableService,
-    private _auditingServiceTableService: AuditingServiceTableService
-  ) {}
-
-  ngOnInit() {
-    // this.refresh();
+    @Inject('action') private action,
+    private doctorGroupService: DoctorGroupService,
+    private doctorGroupTableService: DoctorGroupTableService,
+    private auditingServiceTableService: AuditingServiceTableService,
+    private dialog: MdDialog,
+    private router: Router
+  ) {
   }
 
-  // refresh() {
-  //   this.doctorGroupTable = new TableOption();
-  //   this.auditingServiceTable = new TableOption();
-  //   this.getDoctorGroupTitles();
-  //   this.getAuditingServiceTitles();
-  //   this.getDoctorGroups(0);
-  //   this.getAuditingServices(0);
-  //   this.getAuditingServiceCount();
-  // }
-  //
-  // getDoctorGroupTitles() {
-  //   this.doctorGroupTable.titles = this._doctorGroupTableService.setTitles();
-  // }
-  //
-  // getDoctorGroups(page: number) {
-  //   this.doctorGroupTable.currentPage = page;
-  //   this._doctorGroupService.getDoctorGroups(page, this.doctorGroupTable.size)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.doctorGroupTable.totalPage = data.data.totalPages;
-  //           this.doctorGroupTable.lists = data.data.content;
-  //         }
-  //       }, err => {
-  //         this.doctorGroupTable.loading = false;
-  //         this.doctorGroupTable.errorMessage = "啊哦～接口访问出错了！";
-  //       })
-  // }
-  //
-  // getAuditingServiceTitles() {
-  //   this.auditingServiceTable.titles = this._auditingServiceTableService.setTitles();
-  // }
-  //
-  // getAuditingServices(page: number) {
-  //   this.auditingServiceTable.currentPage = page;
-  //   this._doctorGroupService.getAuditingServices(page, this.auditingServiceTable.size)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.auditingServiceTable.totalPage = data.data.totalPages;
-  //           this.auditingServiceTable.lists = data.data.content;
-  //         }
-  //       }, err => {
-  //         this.auditingServiceTable.loading = false;
-  //         this.auditingServiceTable.errorMessage = "啊哦～接口访问出错了！";
-  //       })
-  // }
-  //
-  // getAuditingServiceCount() {
-  //   this._doctorGroupService.getAuditingServiceCount()
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.auditingServiceCount = data.data;
-  //           this._sidebarService.setCount(this.auditingServiceCount, 'doctorgroup', 'doctorgroup');
-  //         }
-  //       })
-  // }
-  //
-  // gotoHandle(data) {
-  //   if (data.key === 'show') {
-  //     this.doctorGroup = data.value;
-  //     this.enableDetail = true;
-  //   } else if (data.key === 'edit') {
-  //     this.doctorGroup = data.value;
-  //     this.enableEdit = true;
-  //   } else if (data.key === 'auditing') {
-  //     this.processData = data.value;
-  //     this.enableProcess = true;
-  //   }
-  // }
-  //
-  // handleSuccess(data) {
-  //   this.titleShow = '提示信息';
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.refresh();
-  // }
+  ngOnInit() {
+    this.containerConfig = this.doctorGroupService.doctorGroupConfig();
+    this.doctorGroupTable = new TableOption({
+      titles: this.doctorGroupTableService.setTitles(),
+      ifPage: true
+    });
+    this.auditingServiceTable = new TableOption({
+      titles: this.auditingServiceTableService.setTitles(),
+      ifPage: true
+    });
+    this.reset();
+  }
+
+  reset() {
+    this.reset0();
+    this.reset1();
+  }
+
+  reset0() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getDoctorGroups(page[0]);
+    });
+  }
+
+  reset1() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getAuditingServices(page[1]);
+    });
+  }
+
+  getDoctorGroups(page: number) {
+    this.action.pageChange('doctorGroup', [page, this.auditingServiceTable.currentPage]);
+    this.doctorGroupTable.reset(page);
+    this.doctorGroupService.getDoctorGroups(page, this.doctorGroupTable.size)
+      .subscribe(
+        res => {
+          if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+            this.doctorGroupTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.code === 0 && res.data && res.data.content) {
+            this.doctorGroupTable.totalPage = res.data.totalPages;
+            this.doctorGroupTable.lists = res.data.content;
+          } else {
+            this.doctorGroupTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.doctorGroupTable.loading = false;
+          console.log(err);
+          this.doctorGroupTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getAuditingServices(page: number) {
+    this.action.pageChange('doctorGroup', [this.doctorGroupTable.currentPage, page]);
+    this.auditingServiceTable.reset(page);
+    this.doctorGroupService.getAuditingServices(page, this.auditingServiceTable.size)
+      .subscribe(
+        res => {
+          if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+            this.auditingServiceTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.code === 0 && res.data && res.data.content) {
+            this.auditingServiceTable.totalPage = res.data.totalPages;
+            this.auditingServiceTable.lists = res.data.content;
+          } else {
+            this.auditingServiceTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.auditingServiceTable.loading = false;
+          console.log(err);
+          this.auditingServiceTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  gotoHandle(data) {
+    console.log(data);
+    if (data.key === 'show') {
+      // this.doctorGroup = data.value;
+      // this.enableDetail = true;
+    }
+    if (data.key === 'edit') {
+      // this.doctorGroup = data.value;
+      // this.enableEdit = true;
+    }
+    if (data.key === 'auditing') {
+      // this.processData = data.value;
+      // this.enableProcess = true;
+    }
+  }
+
   //
   // process() {
   //   this._doctorGroupService.serviceAuditingSuccess(this.processData.id)
@@ -145,4 +149,8 @@ export class DoctorGroupComponent implements OnInit {
   //   this.processData = null;
   //   this.enableProcess = false;
   // }
+
+  change(index) {
+    this.action.tabChange('doctor', index);
+  }
 }

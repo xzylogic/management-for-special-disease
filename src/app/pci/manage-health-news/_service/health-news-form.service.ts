@@ -5,7 +5,10 @@ import { FormBase, FormText, FormTextarea, FormDropdown, FormFile } from '../../
 @Injectable()
 export class HealthNewsFormService {
 
-  constructor(@Inject('admin') private admin) {
+  constructor(
+    @Inject('app') private app,
+    @Inject('auth') private admin
+  ) {
   }
 
   setForm(
@@ -21,7 +24,7 @@ export class HealthNewsFormService {
           label: '',
           value: data && data.id || '',
           required: true,
-          type: 'hidden',
+          readonly: true,
           order: 1
         }),
         new FormDropdown({
@@ -49,7 +52,7 @@ export class HealthNewsFormService {
         key: 'imageUrl',
         label: '资讯图片',
         value: data && data.imageUrl || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: true,
         order: 3
       }),
@@ -84,8 +87,8 @@ export class HealthNewsFormService {
       new FormText({
         key: 'adminId',
         label: '上传者',
-        value: this.admin.getId(),
-        type: 'hidden',
+        value: this.admin.getAdminId(),
+        readonly: true,
         required: false,
         order: 8
       })

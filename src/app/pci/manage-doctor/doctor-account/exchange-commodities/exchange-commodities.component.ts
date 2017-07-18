@@ -1,70 +1,63 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
+import { ContainerConfig, TableOption } from '../../../../libs';
 import { DoctorAccountService } from '../_service/doctor-account.service';
 import { DoctorAccountTableService } from '../_service/doctor-account-table.service';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-exchange-commodities',
-  template: `
-    <h1>exchange-commodities</h1>
-  `
+  templateUrl: './exchange-commodities.component.html'
 })
 export class ExchangeCommoditiesComponent implements OnInit {
-  // modalTitle: string = '已兑换';
-  // exchangeCommoditiesTable: TableOption = new TableOption();
-  //
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter < any > = new EventEmitter();
+  containerConfig: ContainerConfig;
+  exchangeCommoditiesTable: TableOption = new TableOption();
+
+  id: number;
 
   constructor(
-    private _doctorAccountService: DoctorAccountService,
-    private _doctorAccountTableService: DoctorAccountTableService
+    private doctorAccountService: DoctorAccountService,
+    private doctorAccountTableService: DoctorAccountTableService,
+    private router: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    // this.getExchangeCommoditiesTitles();
-    // if (this.data) {
-    //   this.getExchangeCommodities(0);
-    // } else {
-    //   this.exchangeCommoditiesTable.errorMessage = "空空如也～";
-    // }
+    this.containerConfig = this.doctorAccountService.exchangeCommoditiesConfig();
+    this.exchangeCommoditiesTable = new TableOption({
+      titles: this.doctorAccountTableService.setExchangeDetailTitles(),
+      ifPage: true
+    });
+    this.router.queryParams.subscribe(params => {
+      this.id = +params['id'];
+      if (!this.id) {
+        this.exchangeCommoditiesTable.loading = false;
+        this.exchangeCommoditiesTable.errorMessage = ERRMSG.nullMsg;
+      } else {
+        this.getExchangeCommodities(this.id, 0);
+      }
+    });
   }
 
-  // refresh() {
-  //   if (this.data) {
-  //     this.exchangeCommoditiesTable.loading = true;
-  //     this.getExchangeCommodities(0);
-  //   } else {
-  //     this.exchangeCommoditiesTable.errorMessage = "空空如也～";
-  //   }
-  // }
-  //
-  // getExchangeCommoditiesTitles() {
-  //   this.exchangeCommoditiesTable.titles = this._doctorAccountTableService.setExchangeDetailTitles();
-  // }
-  //
-  // getExchangeCommodities(page: number) {
-  //   this.exchangeCommoditiesTable.currentPage = page;
-  //   this._doctorAccountService.getExchangeList(this.data.id, page, this.exchangeCommoditiesTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.exchangeCommoditiesTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.exchangeCommoditiesTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.exchangeCommoditiesTable.totalPage = data.data.totalPages;
-  //           this.exchangeCommoditiesTable.lists = data.data.content;
-  //         }
-  //       }, err => {
-  //         this.exchangeCommoditiesTable.loading = false;
-  //         this.exchangeCommoditiesTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
+  getExchangeCommodities(id, page: number) {
+    this.exchangeCommoditiesTable.reset(page);
+    this.doctorAccountService.getExchangeList(id, page, this.exchangeCommoditiesTable.size)
+      .subscribe(
+        res => {
+          this.exchangeCommoditiesTable.loading = false;
+          if (res.data && res.data.content && res.data.content.length === 0 && res.code === 0) {
+            this.exchangeCommoditiesTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.content && res.code === 0) {
+            this.exchangeCommoditiesTable.totalPage = res.data.totalPages;
+            this.exchangeCommoditiesTable.lists = res.data.content;
+          } else {
+            this.exchangeCommoditiesTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.exchangeCommoditiesTable.loading = false;
+          console.log(err);
+          this.exchangeCommoditiesTable.errorMessage = ERRMSG.netErrMsg;
+        });
+  }
 }

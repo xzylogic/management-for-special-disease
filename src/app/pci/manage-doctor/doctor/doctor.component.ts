@@ -97,6 +97,7 @@ export class DoctorComponent implements OnInit {
           this.auditedTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
       }, err => {
+        this.auditedTable.loading = false;
         console.log(err);
         this.auditedTable.errorMessage = ERRMSG.netErrMsg;
       })
@@ -119,6 +120,7 @@ export class DoctorComponent implements OnInit {
           this.auditingTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
       }, err => {
+        this.auditingTable.loading = false;
         console.log(err);
         this.auditingTable.errorMessage = ERRMSG.netErrMsg;
       })
@@ -141,6 +143,7 @@ export class DoctorComponent implements OnInit {
           this.failureTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
       }, err => {
+        this.failureTable.loading = false;
         console.log(err);
         this.failureTable.errorMessage = ERRMSG.netErrMsg;
       })
@@ -164,7 +167,7 @@ export class DoctorComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    console.log(res);
+    // console.log(res);
     const doctor = <Doctor>res.value;
     if (res.key === 'editAudited' || res.key === 'editAuditing') {
       this.action.dataChange('doctor', doctor);

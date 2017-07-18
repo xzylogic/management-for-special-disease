@@ -17,7 +17,6 @@ export const routes: Routes = [{
 
 export const stores = {
   doctor: createReducer('doctor', [0, 0, 0], {}),
-  doctorAccount: createReducer('doctorAccount', [0], {}),
-  doctorGroup: createReducer('doctorGroup', [0], {}),
-  relationship: createReducer('relationship', [0], {}),
+  doctorAccount: createReducer('doctorAccount', [0, 0, 0], {}),
+  doctorGroup: createReducer('doctorGroup', [0, 0], {})
 };

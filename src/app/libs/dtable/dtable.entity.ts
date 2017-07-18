@@ -36,14 +36,14 @@ export class TableOption {
   private _queryKey: any; // 查询键
   private _ifPage: boolean; // 是否分页
 
-  constructor(obj: {
+  constructor(obj?: {
     titles: TableTitle[],
     size?: number,
     ifPage?: boolean,
   }) {
-    this._titles = obj.titles || null;
-    this._size = obj.size || 20;
-    this._ifPage = obj.ifPage || false;
+    this._titles = obj && obj.titles || null;
+    this._size = obj && obj.size || 20;
+    this._ifPage = obj && obj.ifPage || false;
     this._lists = null;
     this._totalPage = 0;
     this._currentPage = 0;

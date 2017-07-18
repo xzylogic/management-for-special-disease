@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
 import { DoctorGroupComponent } from './doctor-group.component';
 import { DoctorGroupEditComponent } from './doctor-group-edit/doctor-group-edit.component';
@@ -20,6 +23,11 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    DTableModule,
+    DFormModule,
+    LibModule,
+    MdTabsModule,
+    MdChipsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

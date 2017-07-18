@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MdButtonModule, MdIconModule } from '@angular/material';
 
 import { DTableComponent } from './dtable.component';
+import { DPageComponent } from './page.component';
 
 export * from './dtable.entity';
 
@@ -13,13 +14,15 @@ export * from './dtable.entity';
     MdIconModule
   ],
   declarations: [
-    DTableComponent
+    DTableComponent,
+    DPageComponent
   ],
   exports: [
     CommonModule,
     MdButtonModule,
     MdIconModule,
     DTableComponent,
+    DPageComponent
   ]
 })
 export class DTableModule {

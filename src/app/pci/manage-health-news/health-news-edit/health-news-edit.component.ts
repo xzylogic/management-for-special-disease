@@ -1,89 +1,80 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
+import { ContainerConfig, HintDialog } from '../../../libs';
 import { HealthNewsService } from '../_service/health-news.service';
 import { HealthNewsFormService } from '../_service/health-news-form.service';
+import { HealthNews } from '../_entity/health-news.entity';
+import { ERRMSG } from 'app/pci/_store/static';
 
 @Component({
   selector: 'app-health-news-edit',
-  template: `
-    <h1>health-news-edit</h1>
-  `
+  templateUrl: './health-news-edit.component.html'
 })
 export class HealthNewsEditComponent implements OnInit {
-  // @Input() data: any;
-  // @Input() typeList: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter < any > = new EventEmitter();
-  // @Output() handleEmit: EventEmitter < any > = new EventEmitter();
-  //
-  // modalTitle: string;
-  // formDatas: any;
-  // errorMessage: string;
+  containerConfig: ContainerConfig;
+  @select(['healthNews', 'data']) healthNews: Observable<HealthNews>;
+  errMsg = '';
+  form: any;
+  state: boolean;
 
   constructor(
-    private _healthNewsService: HealthNewsService,
-    private _healthNewsFormService: HealthNewsFormService
+    private healthNewsService: HealthNewsService,
+    private healthNewsFormService: HealthNewsFormService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    // if (this.typeList) {
-    //   this.setHealthNewsForm();
-    // } else {
-    //   this.errorMessage = '数据错误～';
-    // }
+    this.healthNews.subscribe(data => {
+      if (data.id === 0 && data.typeList) {
+        this.state = false;
+        this.containerConfig = this.healthNewsService.healthNewsEditConfig(true);
+        this.form = this.healthNewsFormService.setForm(data.typeList);
+      } else if (data.typeList) {
+        this.state = true;
+        this.containerConfig = this.healthNewsService.healthNewsEditConfig(false);
+        this.form = this.healthNewsFormService.setForm(data.typeList, data);
+      } else {
+        this.router.navigate(['/health-news']);
+      }
+    });
   }
 
-  // setHealthNewsForm() {
-  //   if (this.data) {
-  //     this.modalTitle = "编辑健康资讯信息";
-  //     this.formDatas = this._healthNewsFormService.setForm(this.typeList, this.data);
-  //   } else {
-  //     this.modalTitle = "新增健康资讯信息";
-  //     this.formDatas = this._healthNewsFormService.setForm(this.typeList);
-  //   }
-  // }
-  //
-  // getValue(value) {
-  //   if (this.data) {
-  //     this._healthNewsService.healthNewsUpdate(value)
-  //       .catch(
-  //         err => {
-  //           this.errorMessage = "啊哦！接口访问出错啦～";
-  //           return Observable.throw(err);
-  //         })
-  //       .subscribe(
-  //         data => {
-  //           if (data.code === 0) {
-  //             this.handleEmit.emit("健康资讯分类修改成功！");
-  //             this.close();
-  //           } else {
-  //             this.errorMessage = "保存失败～请重新操作！";
-  //           }
-  //         })
-  //
-  //   } else {
-  //     this._healthNewsService.healthNewsCreate(value)
-  //       .catch(
-  //         err => {
-  //           this.errorMessage = "啊哦！接口访问出错啦～";
-  //           return Observable.throw(err);
-  //         })
-  //       .subscribe(
-  //         data => {
-  //           if (data.code === 0) {
-  //             this.handleEmit.emit("健康资讯分类保存成功！");
-  //             this.close();
-  //           } else {
-  //             this.errorMessage = "保存失败～请重新操作！";
-  //           }
-  //         })
-  //   }
-  //
-  // }
-  //
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
+  getValues(value) {
+    console.log(value);
+    if (this.state) {
+      this.healthNewsService.healthNewsUpdate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/health-news']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    } else {
+      this.healthNewsService.healthNewsCreate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/health-news']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    }
+  }
 }

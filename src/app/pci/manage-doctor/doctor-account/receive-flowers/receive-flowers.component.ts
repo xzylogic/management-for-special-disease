@@ -1,70 +1,63 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
+import { ContainerConfig, TableOption } from '../../../../libs';
 import { DoctorAccountService } from '../_service/doctor-account.service';
 import { DoctorAccountTableService } from '../_service/doctor-account-table.service';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-receive-flowers',
-  template: `
-    <h1>app-receive-flowers</h1>
-  `
+  templateUrl: './receive-flowers.component.html'
 })
 export class ReceiveFlowersComponent implements OnInit {
-  // modalTitle: string = '收到鲜花';
-  // receiveFlowersTable: TableOption = new TableOption();
-  //
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter < any > = new EventEmitter();
+  containerConfig: ContainerConfig;
+  receiveFlowersTable: TableOption;
+
+  id: number;
 
   constructor(
     private doctorAccountService: DoctorAccountService,
-    private doctorAccountTableService: DoctorAccountTableService
+    private doctorAccountTableService: DoctorAccountTableService,
+    private router: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    // this.getReceiveFlowersTitles();
-    // if (this.data) {
-    //   this.getReceiveFlowers(0);
-    // } else {
-    //   this.receiveFlowersTable.errorMessage = "空空如也～";
-    // }
+    this.containerConfig = this.doctorAccountService.receiveFlowersConfig();
+    this.receiveFlowersTable = new TableOption({
+      titles: this.doctorAccountTableService.setIncomeDetailTitles(),
+      ifPage: true
+    });
+    this.router.queryParams.subscribe(params => {
+      this.id = +params['id'];
+      if (!this.id) {
+        this.receiveFlowersTable.loading = false;
+        this.receiveFlowersTable.errorMessage = ERRMSG.nullMsg;
+      } else {
+        this.getReceiveFlowers(this.id, 0);
+      }
+    });
   }
 
-  // refresh() {
-  //   if (this.data) {
-  //     this.receiveFlowersTable.loading = true;
-  //     this.getReceiveFlowers(0);
-  //   } else {
-  //     this.receiveFlowersTable.errorMessage = "空空如也～";
-  //   }
-  // }
-  //
-  // getReceiveFlowersTitles() {
-  //   this.receiveFlowersTable.titles = this._doctorAccountTableService.setIncomeDetailTitles();
-  // }
-  //
-  // getReceiveFlowers(page: number) {
-  //   this.receiveFlowersTable.currentPage = page;
-  //   this._doctorAccountService.getDetailList(this.data.id, page, this.receiveFlowersTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.receiveFlowersTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.receiveFlowersTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.receiveFlowersTable.totalPage = data.data.totalPages;
-  //           this.receiveFlowersTable.lists = data.data.content;
-  //         }
-  //       }, err => {
-  //         this.receiveFlowersTable.loading = false;
-  //         this.receiveFlowersTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
+  getReceiveFlowers(id, page: number) {
+    this.receiveFlowersTable.reset(page);
+    this.doctorAccountService.getDetailList(id, page, this.receiveFlowersTable.size)
+      .subscribe(
+        res => {
+          this.receiveFlowersTable.loading = false;
+          if (res.data && res.data.content && res.data.content.length === 0 && res.code === 0) {
+            this.receiveFlowersTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.content && res.code === 0) {
+            this.receiveFlowersTable.totalPage = res.data.totalPages;
+            this.receiveFlowersTable.lists = res.data.content;
+          } else {
+            this.receiveFlowersTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.receiveFlowersTable.loading = false;
+          console.log(err);
+          this.receiveFlowersTable.errorMessage = ERRMSG.netErrMsg;
+        });
+  }
 }

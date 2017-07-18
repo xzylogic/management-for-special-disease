@@ -1,5 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 
+import { ContainerConfig } from '../../../../libs';
+
 const PATH = {
   incomeDetailList: 'api/income/detail/list', // 收入列表
   incomeExchangeCount: 'api/income/exchange/count', // 获取待处理数量
@@ -19,6 +21,36 @@ export class DoctorAccountService {
     @Inject('http') private httpService,
     @Inject('auth') private admin,
   ) {
+  }
+
+  doctorAccountConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生账户管理',
+      subTitle: '医生账户列表',
+      ifHome: true,
+      homeRouter: '/doctor-account',
+      currentRouter: '/doctor-account'
+    });
+  }
+
+  receiveFlowersConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生账户管理',
+      subTitle: '收到鲜花列表',
+      ifHome: false,
+      homeRouter: '/doctor-account',
+      currentRouter: '/doctor-account'
+    });
+  }
+
+  exchangeCommoditiesConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生账户管理',
+      subTitle: '已兑换商品列表',
+      ifHome: false,
+      homeRouter: '/doctor-account',
+      currentRouter: '/doctor-account'
+    });
   }
 
   /**
@@ -55,7 +87,7 @@ export class DoctorAccountService {
   getPurchase(id: number, expressNo: string, expressName: string, status: number) {
     return this.httpService.post(
       `${this.app.pci.BASE_URL}${PATH.incomePurchase}?
-        id=${id}&adminId=${this.admin.getAdminName()}
+        id=${id}&adminId=${this.admin.getAdminId()}
         &expressNo=${expressNo}&expressName=${expressName}&status=${status}`,
       {}
     );
@@ -72,7 +104,7 @@ export class DoctorAccountService {
    * 提现处理
    */
   getWithdraw(id: number) {
-    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.incomeWithdraw}?id=${id}&adminId=${this.admin.getId()}`, {});
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.incomeWithdraw}?id=${id}&adminId=${this.admin.getAdminId()}`, {});
   }
 
   /**

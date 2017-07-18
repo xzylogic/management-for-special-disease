@@ -31,27 +31,33 @@ export class DoctorIntegralComponent implements OnInit {
       ifPage: true
     });
     this.router.queryParams.subscribe(params => {
-      console.log(params);
       this.id = +params['id'];
-      this.getIntegralDetail(this.id, 0);
-    })
+      if (!this.id) {
+        this.doctorIntegralTable.loading = false;
+        this.doctorIntegralTable.errorMessage = ERRMSG.nullMsg;
+      } else {
+        this.getIntegralDetail(this.id, 0);
+      }
+    });
   }
 
   getIntegralDetail(id, page) {
     this.doctorIntegralTable.reset(page);
     this.doctorService.doctorIntegralDetail(id, page)
       .subscribe(res => {
-        console.log(res);
         this.doctorIntegralTable.loading = false;
-        if (res.code === 0 && res.data.content) {
+        if (res.code === 0 && res.data.content && res.data.content.length === 0) {
+          this.doctorIntegralTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data.content) {
           this.doctorIntegralTable.totalPage = res.data.totalPages;
           this.doctorIntegralTable.lists = res.data.content;
         } else {
           this.doctorIntegralTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
       }, err => {
+        this.doctorIntegralTable.loading = false;
         console.log(err);
         this.doctorIntegralTable.errorMessage = ERRMSG.netErrMsg;
-      })
+      });
   }
 }

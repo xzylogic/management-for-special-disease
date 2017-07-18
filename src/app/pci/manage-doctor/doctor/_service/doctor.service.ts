@@ -138,4 +138,13 @@ export class DoctorService {
   doctorIntegralDetail(traderId: number, page: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetail}/${traderId}/1?flag=${page}`);
   }
+
+
+  /**
+   * 编辑短信提醒医生
+   * @param {any} body [description]
+   */
+  sendMessage(body: any) {
+    return this.httpService.post(`${PATH.sendMessage}`, body);
+  }
 }

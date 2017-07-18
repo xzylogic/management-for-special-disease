@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
 import { DoctorAccountComponent } from './doctor-account.component';
 import { ExchangeCommoditiesComponent } from './exchange-commodities/exchange-commodities.component';
@@ -11,12 +14,25 @@ import { DoctorAccountTableService } from './_service/doctor-account-table.servi
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthGuardService],
-  component: DoctorAccountComponent
+  component: DoctorAccountComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'receive-flowers',
+  component: ReceiveFlowersComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'exchange-commodities',
+  component: ExchangeCommoditiesComponent,
+  canActivate: [AuthGuardService]
 }];
 
 @NgModule({
   imports: [
+    DTableModule,
+    DFormModule,
+    LibModule,
+    MdTabsModule,
+    MdChipsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

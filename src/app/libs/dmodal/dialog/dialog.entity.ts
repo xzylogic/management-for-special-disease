@@ -7,7 +7,7 @@ export class DialogButton {
 export class DialogForm {
   key: string;
   label: string;
-  value: string;
+  value: any;
 }
 
 export class DialogOptions {

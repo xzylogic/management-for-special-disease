@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdSelectModule } from '@angular/material';
+
+import { DTableModule, DFormModule, LibModule } from '../../libs';
 
 import { HealthNewsComponent } from './health-news.component';
 import { HealthNewsEditComponent } from './health-news-edit/health-news-edit.component';
-import { ReadingQuantityComponent } from './reading-quantity/reading-quantity.component';
 
 import { AuthGuardService } from '../_service/auth-guard.service';
 import { HealthNewsService } from './_service/health-news.service';
@@ -13,18 +16,26 @@ import { ReadCoefficientFormService } from './_service/reading-quantity-form.ser
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthGuardService],
-  component: HealthNewsComponent
+  component: HealthNewsComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'edit',
+  component: HealthNewsEditComponent,
+  canActivate: [AuthGuardService]
 }];
 
 @NgModule({
   imports: [
+    DTableModule,
+    DFormModule,
+    LibModule,
+    FormsModule,
+    MdSelectModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
     HealthNewsComponent,
-    HealthNewsEditComponent,
-    ReadingQuantityComponent
+    HealthNewsEditComponent
   ],
   providers: [
     HealthNewsService,
