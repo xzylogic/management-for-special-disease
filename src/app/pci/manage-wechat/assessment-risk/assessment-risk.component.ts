@@ -1,90 +1,76 @@
 import { Component, OnInit } from '@angular/core';
+
+import { ContainerConfig, TableOption } from '../../../libs';
 import { AssessmentRiskService } from './_service/assessment-risk.service';
 import { AssessmentRiskTableService } from './_service/assessment-risk-table.service';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-assessment-risk',
   templateUrl: './assessment-risk.component.html'
 })
 export class AssessmentRiskComponent implements OnInit {
-  // title = '服务号管理';
-  // subTitle = '风险评估结果';
-  //
-  // assessmentRiskTable: TableOption;
-  //
-  // assessmentRisk: any;
-  // enableDetail: boolean;
-  // queryKey: string = '';
-  // queryBind: number | string = '' ;
+  containerConfig: ContainerConfig;
+  assessmentRiskTable: TableOption;
+  queryResult: any;
 
   constructor(
-    private _assessmentRiskService: AssessmentRiskService,
-    private _assessmentRiskTableService: AssessmentRiskTableService
+    private assessmentRiskService: AssessmentRiskService,
+    private assessmentRiskTableService: AssessmentRiskTableService
   ) {
   }
 
   ngOnInit() {
-    // this.refresh();
+    this.containerConfig = this.assessmentRiskService.assessmentRiskConfig();
+    this.assessmentRiskTable = new TableOption({
+      titles: this.assessmentRiskTableService.setTitles(),
+      ifPage: true
+    });
+    this.reset();
   }
 
-  // ngAfterViewInit() {
-  // $('#list').dropdown();
-  // }
+  reset() {
+    this.assessmentRiskTable.queryKey = '';
+    this.getAssessmentRisks(0);
+  }
 
-  // refresh() {
-  //   this.assessmentRiskTable = new TableOption();
-  //   this.getAssessmentRiskTitles();
-  //   this.getAssessmentRisks(0);
-  // }
-  //
-  //  reset() {
-  //   this.queryKey = '';
-  //   this.queryBind = '';
-  //   $('.text').text('筛选风险评估结果');
-  //   $('.text').addClass('default');
-  //   this.getAssessmentRisks(0);
-  // }
-  //
-  // getAssessmentRiskTitles() {
-  //   this.assessmentRiskTable.titles = this._assessmentRiskTableService.setTitles();
-  // }
-  //
-  // getAssessmentRisks(page: number) {
-  //   this.assessmentRiskTable.currentPage = page;
-  //   this._assessmentRiskService.getAssessmentServices(this.queryKey,this.queryBind,this.assessmentRiskTable.size, page)
-  //   .subscribe(
-  //       data => {
-  //         this.assessmentRiskTable.loading = false;
-  //         if (data.data && data.data.content && data.data.length === 0 && data.code === 0) {
-  //           this.assessmentRiskTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.formatUser(data.data.content);
-  //           this.assessmentRiskTable.lists = data.data.content;
-  //           this.assessmentRiskTable.totalPage = data.data.totalPages;
-  //         } else {
-  //           this.assessmentRiskTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.assessmentRiskTable.loading = false;
-  //         this.assessmentRiskTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // formatUser(list: Array < any > ) {
-  //   list.forEach(data => {
-  //     if (data.sex === "Female") {
-  //       data.sexName = '女';
-  //     }
-  //     if (data.sex === "Male") {
-  //       data.sexName = '男';
-  //     }
-  //   })
-  // }
-  //
-  // gotoHandle(data) {
-  //   if (data.key === 'show') {
-  //     this.assessmentRisk = data.value;
-  //     this.enableDetail = true;
-  //   }
-  // }
+  getAssessmentRisks(page: number) {
+    this.assessmentRiskTable.reset(page);
+    this.assessmentRiskService.getAssessmentServices(this.assessmentRiskTable.queryKey, this.queryResult, this.assessmentRiskTable.size, page)
+      .subscribe(res => {
+        this.assessmentRiskTable.loading = false;
+        if (res.data && res.data.content && res.data.length === 0 && res.code === 0) {
+          this.assessmentRiskTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.data && res.data.content && res.code === 0) {
+          this.formatUser(res.data.content);
+          this.assessmentRiskTable.lists = res.data.content;
+          this.assessmentRiskTable.totalPage = res.data.totalPages;
+        } else {
+          this.assessmentRiskTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.assessmentRiskTable.loading = false;
+        console.log(err);
+        this.assessmentRiskTable.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
+
+  formatUser(list: Array<any>) {
+    list.forEach(data => {
+      if (data.sex === 'Female') {
+        data.sexName = '女';
+      }
+      if (data.sex === 'Male') {
+        data.sexName = '男';
+      }
+    })
+  }
+
+  gotoHandle(res) {
+    console.log(res)
+    if (res.key === 'show') {
+      // this.assessmentRisk = data.value;
+      // this.enableDetail = true;
+    }
+  }
 }

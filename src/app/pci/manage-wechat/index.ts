@@ -19,8 +19,6 @@ export const routes: Routes = [{
 }];
 
 export const stores = {
-  assessmentRisk: createReducer('assessmentRisk', [0], {}),
-  autoReply: createReducer('autoReply', [0], {}),
   customMenu: createReducer('customMenu', [0], {}),
   familyAccount: createReducer('familyAccount', [0], {}),
   lecture: createReducer('lecture', [0], {})

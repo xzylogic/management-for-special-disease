@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdInputModule, MdSelectModule } from '@angular/material';
 
+import { LibModule, DTableModule } from '../../../libs';
 import { AssessmentRiskComponent } from './assessment-risk.component';
 import { RiskDetailComponent } from './risk-detail/risk-detail.component';
 import { AuthGuardService } from '../../_service/auth-guard.service';
@@ -15,6 +18,11 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    LibModule,
+    DTableModule,
+    FormsModule,
+    MdInputModule,
+    MdSelectModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
