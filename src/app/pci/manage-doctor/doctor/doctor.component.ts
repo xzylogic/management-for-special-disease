@@ -198,7 +198,7 @@ export class DoctorComponent implements OnInit {
         }]
       });
       ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-        if (result.key === 'topass') {
+        if (result && result.key === 'topass') {
           this.toPassAuditing(doctor.id);
         }
       });
@@ -223,7 +223,7 @@ export class DoctorComponent implements OnInit {
         }]
       });
       ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-        if (result.key === 'torefuse' && result.value[0]) {
+        if (result && result.key === 'torefuse' && result.value[0]) {
           this.toRefuseAuditing(doctor.id, result.value[0].value);
         }
       });

@@ -17,7 +17,7 @@ export class NewsClassifyTableService {
       }),
       new TableTitle({
         name: '编辑',
-        key: 'editHealthInfo',
+        key: 'edit',
         controlType: ControlType.button
       })
     ];

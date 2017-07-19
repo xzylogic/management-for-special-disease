@@ -1,4 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
+import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
   doctorRankList: 'api/doctor/rank/list', // 医生排序
@@ -13,6 +14,26 @@ export class DoctorSortService {
     @Inject('app') private app,
     @Inject('http') private httpService
   ) {
+  }
+
+  doctorSortConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '医生排序列表',
+      ifHome: true,
+      homeRouter: '/doctor-sort',
+      currentRouter: '/doctor-sort'
+    });
+  }
+
+  doctorSortEditConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '编辑医生排序',
+      ifHome: false,
+      homeRouter: '/doctor-sort',
+      currentRouter: '/doctor-sort'
+    });
   }
 
   /**

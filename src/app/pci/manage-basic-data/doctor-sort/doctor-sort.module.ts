@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
@@ -14,12 +15,11 @@ import { DoctorSortFormService } from './_service/doctor-sort-form.service';
 export const routes: Routes = [{
   path: '',
   component: DoctorSortComponent,
-  canActivate: [AuthGuardService],
-  children: [{
-    path: 'edit',
-    component: DoctorSortEditComponent,
-    canActivate: [AuthGuardService]
-  }]
+  canActivate: [AuthGuardService]
+}, {
+  path: 'edit',
+  component: DoctorSortEditComponent,
+  canActivate: [AuthGuardService]
 }];
 
 @NgModule({
@@ -27,6 +27,7 @@ export const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

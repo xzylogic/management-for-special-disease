@@ -5,7 +5,7 @@ import { FormBase, FormText } from '../../../../libs';
 @Injectable()
 export class DoctorSortFormService {
 
-  setForm(data?: any) {
+  setForm(data: any) {
 
     const forms: FormBase<any> [] = [];
 
@@ -15,7 +15,7 @@ export class DoctorSortFormService {
         label: '职称ID',
         value: data && data.id || '',
         required: true,
-        type: 'hidden',
+        readonly: true,
         order: 0
       }),
       new FormText({

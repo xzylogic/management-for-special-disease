@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   healthInfoUpdate: 'api/articleType/update', // 修改资讯分类
@@ -14,6 +15,16 @@ export class NewsClassifyService {
     @Inject('app') private app,
     @Inject('http') private httpService
   ) {
+  }
+
+  newsClassifyConfig() {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '健康资讯分类管理',
+      ifHome: true,
+      homeRouter: '/news-classify',
+      currentRouter: '/news-classify'
+    });
   }
 
   /**

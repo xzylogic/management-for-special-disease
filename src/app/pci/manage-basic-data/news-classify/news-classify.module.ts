@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { LibModule, DTableModule } from '../../../libs';
+
 import { NewsClassifyComponent } from './news-classify.component';
-import { NewsClassifyEditComponent } from './news-classify-edit/news-classify-edit.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { NewsClassifyService } from './_service/news-classify.service';
-import { NewsClassifyFormService } from './_service/news-classify-form.service';
 import { NewsClassifyTableService } from './_service/news-classify-table.service';
 
 const routes: Routes = [{
@@ -17,15 +17,15 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    DTableModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
-    NewsClassifyComponent,
-    NewsClassifyEditComponent
+    NewsClassifyComponent
   ],
   providers: [
     NewsClassifyService,
-    NewsClassifyFormService,
     NewsClassifyTableService
   ]
 })

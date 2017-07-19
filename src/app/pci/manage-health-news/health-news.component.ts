@@ -2,13 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 
-import { TableOption, ContainerConfig } from '../../libs';
+import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../libs';
 import { HealthNewsService } from './_service/health-news.service';
 import { HealthNewsTableService } from './_service/health-news-table.service';
-import { ERRMSG } from '../_store/static';
 import { HealthNews } from './_entity/health-news.entity';
-import { DialogOptions } from '../../libs/dmodal/dialog/dialog.entity';
-import { ActionDialog, HintDialog } from '../../libs/dmodal/dialog/dialog.component';
+import { ERRMSG } from '../_store/static';
 
 @Component({
   selector: 'app-health-news',
@@ -79,7 +77,7 @@ export class HealthNewsComponent implements OnInit {
           this.healthNewsTable.loading = false;
           console.log(err);
           this.healthNewsTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
   newData() {
@@ -109,7 +107,7 @@ export class HealthNewsComponent implements OnInit {
         }]
       });
       ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-        if (result.key === 'confirm') {
+        if (result && result.key === 'confirm') {
           this.delHealthNews(healthNews.id);
         }
       });
@@ -163,7 +161,7 @@ export class HealthNewsComponent implements OnInit {
       }]
     });
     ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-      if (result.key === 'confirm' && result.value[0] && result.value[0].value) {
+      if (result && result.key === 'confirm' && result.value[0] && result.value[0].value) {
         this.updateReadingQuantity({value: result.value[0].value});
       }
     });
@@ -174,14 +172,13 @@ export class HealthNewsComponent implements OnInit {
       .subscribe(res => {
         if (res.code === 0) {
           this.getReadCoefficient();
-          HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
-          });
+          HintDialog(ERRMSG.saveSuccess, this.dialog);
         } else {
           HintDialog(res.msg || ERRMSG.saveError, this.dialog);
         }
       }, err => {
         console.log(err);
-        HintDialog(ERRMSG.saveError, this.dialog);
+        HintDialog(ERRMSG.netErrMsg, this.dialog);
       });
   }
 }

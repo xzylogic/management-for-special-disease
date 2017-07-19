@@ -58,6 +58,5 @@ export const stores = {
   hospital: createReducer('hospital', [0], {}),
   inspectionCategory: createReducer('inspectionCategory', [0], {}),
   inspectionItem: createReducer('inspectionItem', [0], {}),
-  newsClassify: createReducer('newsClassify', [0], {}),
   pushTime: createReducer('pushTime', [0], {}),
 };

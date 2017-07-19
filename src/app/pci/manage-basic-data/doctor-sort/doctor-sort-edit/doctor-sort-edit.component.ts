@@ -1,56 +1,61 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
 import { DoctorSortService } from '../_service/doctor-sort.service';
 import { DoctorSortFormService } from '../_service/doctor-sort-form.service';
+import { ContainerConfig, HintDialog } from '../../../../libs';
+import { DoctorSort } from '../_entity/doctor-sort.entity';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-doctor-sort-edit',
   templateUrl: './doctor-sort-edit.component.html'
 })
 export class DoctorSortEditComponent implements OnInit {
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter<any> = new EventEmitter();
-  // @Output() handleEmit: EventEmitter<any> = new EventEmitter();
-  //
-  // modalTitle: string;
-  // formDatas: any;
-  // errorMessage: string;
+  containerConfig: ContainerConfig;
+  @select(['doctorSort', 'data']) doctorSort: Observable<DoctorSort>;
+  errMsg = '';
+  form: any;
+  state: boolean;
 
   constructor(
-    private _doctorSortService: DoctorSortService,
-    private _doctorSortFormService: DoctorSortFormService
+    private doctorSortService: DoctorSortService,
+    private doctorSortFormService: DoctorSortFormService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    this.setDoctorSortForm();
-  }
-
-  setDoctorSortForm() {
-    // this.modalTitle = '修改医生排序';
-    // this.formDatas = this._doctorSortFormService.setForm(this.data.value);
+    this.doctorSort.subscribe(data => {
+      if (data && data.id !== 0) {
+        this.containerConfig = this.doctorSortService.doctorSortEditConfig();
+        this.form = this.doctorSortFormService.setForm(data);
+      } else {
+        this.router.navigate(['/doctor-sort']);
+      }
+    });
   }
 
   // 提交保存信息
-  getValue(data) {
-    // if (this.data) {
-    //   this._doctorSortService.doctorRankEdit(data)
-    //     .subscribe(
-    //       data => {
-    //         if (data.code === 0) {
-    //           this.handleEmit.emit('修改医生排序成功！');
-    //           this.close();
-    //         } else {
-    //           if (data.msg) {
-    //             this.errorMessage = data.msg;
-    //           } else {
-    //             this.errorMessage = '操作失败！';
-    //           }
-    //         }
-    //       }, err => {
-    //         this.errorMessage = '啊哦！访问出错啦～';
-    //       })
-    // }
+  getValues(data) {
+    if (data.id !== 0) {
+      this.doctorSortService.doctorRankEdit(data)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/doctor-sort']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    }
   }
 }
