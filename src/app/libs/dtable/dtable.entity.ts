@@ -34,6 +34,7 @@ export class TableOption {
   private _errorMessage: string; // 错误信息
   private _loading: boolean; // 是否加载中
   private _queryKey: any; // 查询键
+  private _queryBind: boolean; // 下拉框查询
   private _ifPage: boolean; // 是否分页
 
   constructor(obj: {
@@ -49,6 +50,7 @@ export class TableOption {
     this._currentPage = 0;
     this._errorMessage = '';
     this._queryKey = '';
+    this._queryBind = false;
     this._loading = true;
   }
 
@@ -121,6 +123,14 @@ export class TableOption {
 
   set queryKey(value: any) {
     this._queryKey = value;
+  }
+
+  get queryBind(): any {
+    return this._queryBind;
+  }
+
+  set queryBind(value: any) {
+    this._queryBind = value;
   }
 
   get ifPage(): boolean {

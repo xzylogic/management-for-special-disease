@@ -20,7 +20,7 @@ import { ERRMSG } from '../../_store/static';
 })
 export class DoctorComponent implements OnInit {
   containerConfig: ContainerConfig;
-  auditedTable: TableOption;
+  userTable: TableOption;
   auditingTable: TableOption;
   failureTable: TableOption;
   @select(['doctor', 'tab']) tab: Observable<number>;
@@ -38,7 +38,7 @@ export class DoctorComponent implements OnInit {
 
   ngOnInit() {
     this.containerConfig = this.doctorService.doctorConfig();
-    this.auditedTable = new TableOption({
+    this.userTable = new TableOption({
       titles: this.doctorTableService.setDoctorAuditedTitles(),
       ifPage: true
     });
@@ -60,7 +60,7 @@ export class DoctorComponent implements OnInit {
   }
 
   reset0() {
-    this.auditedTable.queryKey = '';
+    this.userTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getAuditedDoctors(page[0]);
     });
@@ -82,28 +82,28 @@ export class DoctorComponent implements OnInit {
 
   getAuditedDoctors(page: number) {
     this.action.pageChange('doctor', [page, this.auditingTable.currentPage, this.failureTable.currentPage]);
-    this.auditedTable.reset(page);
+    this.userTable.reset(page);
     this.doctorService.getAuditedDoctors(
-      this.auditedTable.queryKey, page, this.auditedTable.size)
+      this.userTable.queryKey, page, this.userTable.size)
       .subscribe(res => {
-        this.auditedTable.loading = false;
+        this.userTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
-          this.auditedTable.errorMessage = ERRMSG.nullMsg;
+          this.userTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data && res.data.content) {
-          this.auditedTable.totalPage = res.data.totalPages;
+          this.userTable.totalPage = res.data.totalPages;
           this.formatDoctor(res.data.content, true);
-          this.auditedTable.lists = res.data.content;
+          this.userTable.lists = res.data.content;
         } else {
-          this.auditedTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          this.userTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
       }, err => {
         console.log(err);
-        this.auditedTable.errorMessage = ERRMSG.netErrMsg;
+        this.userTable.errorMessage = ERRMSG.netErrMsg;
       })
   }
 
   getAuditingDoctors(page: number) {
-    this.action.pageChange('doctor', [this.auditedTable.currentPage, page, this.failureTable.currentPage]);
+    this.action.pageChange('doctor', [this.userTable.currentPage, page, this.failureTable.currentPage]);
     this.auditingTable.reset(page);
     this.doctorService.getAuditingDoctors(
       this.auditingTable.queryKey, page, this.auditingTable.size)
@@ -125,7 +125,7 @@ export class DoctorComponent implements OnInit {
   }
 
   getFailureDoctors(page: number) {
-    this.action.pageChange('doctor', [this.auditedTable.currentPage, this.auditingTable.currentPage, page]);
+    this.action.pageChange('doctor', [this.userTable.currentPage, this.auditingTable.currentPage, page]);
     this.failureTable.reset(page);
     this.doctorService.getFailureDoctors(
       this.failureTable.queryKey, page, this.failureTable.size)
