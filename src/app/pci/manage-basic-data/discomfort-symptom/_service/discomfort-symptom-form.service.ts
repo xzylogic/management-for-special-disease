@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { FormBase, FormText, FormFile, FormDropdown } from '../../../../libs';
 
 @Injectable()
 export class DiscomfortSymptomFormService {
 
+  constructor(@Inject('app') private app) {
+  }
+
   setForm(
     symptomTypes: Array<any>,
-    symptomTypeId ?: number,
     data?: any
   ) {
 
@@ -19,7 +21,7 @@ export class DiscomfortSymptomFormService {
           key: 'symptomId',
           label: '不适症状ID',
           value: data && data.id || '',
-          type: 'hidden',
+          readonly: true,
           required: true,
           order: 0
         }));
@@ -29,7 +31,7 @@ export class DiscomfortSymptomFormService {
       new FormDropdown({
         key: 'symptomTypeId',
         label: '请选择类型',
-        value: symptomTypeId || '',
+        value: data && data.symptomTypeId || '',
         required: true,
         options: symptomTypes,
         order: 1
@@ -38,7 +40,7 @@ export class DiscomfortSymptomFormService {
         key: 'symptomUrl',
         label: '说明图片（可选）',
         value: data && data.symptomUrl || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: false,
         order: 2
       }),

@@ -1,4 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   discomfortTypeList: '/api/symptomType/list', // 不适症状类型列表
@@ -15,6 +16,26 @@ export class DiscomfortSymptomService {
     @Inject('app') private app,
     @Inject('http') private httpService
   ) {
+  }
+
+  discomfortSymptomConfig() {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '不适症状维护',
+      ifHome: true,
+      homeRouter: '/discomfort-symptom',
+      currentRouter: '/discomfort-symptom'
+    });
+  }
+
+  discomfortSymptomEditConfig(flag) {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: flag ? '编辑不适症状维护' : '新增不适症状维护',
+      ifHome: false,
+      homeRouter: '/discomfort-symptom',
+      currentRouter: '/discomfort-symptom/edit'
+    });
   }
 
   /**

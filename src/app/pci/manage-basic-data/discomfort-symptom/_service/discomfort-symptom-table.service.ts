@@ -26,7 +26,7 @@ export class DiscomfortSymptomTableService {
       }),
       new TableTitle({
         name: '编辑',
-        key: 'editDiscomfort',
+        key: 'edit',
         controlType: ControlType.button,
       })
     ];

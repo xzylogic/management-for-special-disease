@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
@@ -14,12 +15,11 @@ import { DiscomfortSymptomTableService } from './_service/discomfort-symptom-tab
 const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
-  component: DiscomfortSymptomComponent,
-  children: [{
-    path: 'edit',
-    canActivate: [AuthGuardService],
-    component: DiscomfortSymptomEditComponent
-  }]
+  component: DiscomfortSymptomComponent
+}, {
+  path: 'edit',
+  canActivate: [AuthGuardService],
+  component: DiscomfortSymptomEditComponent
 }];
 
 @NgModule({
@@ -27,6 +27,7 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

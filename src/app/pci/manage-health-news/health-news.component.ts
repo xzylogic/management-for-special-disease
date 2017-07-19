@@ -44,7 +44,7 @@ export class HealthNewsComponent implements OnInit {
       }, err => {
         this.healthNewsTable.loading = false;
         console.log(err);
-        this.healthNewsTable.errorMessage = '啊哦！接口访问出错啦～';
+        this.healthNewsTable.errorMessage = ERRMSG.netErrMsg;
       });
   }
 

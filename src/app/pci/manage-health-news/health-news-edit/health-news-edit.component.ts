@@ -46,7 +46,7 @@ export class HealthNewsEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
+    // console.log(value);
     if (this.state) {
       this.healthNewsService.healthNewsUpdate(value)
         .subscribe(res => {

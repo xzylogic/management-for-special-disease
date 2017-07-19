@@ -1,1 +1,26 @@
-<h1>discomfort symptom</h1>
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="addition">
+    <button md-raised-button (click)="newData()">新增不适症状</button>
+  </div>
+  <div class="content">
+    <form style="padding: 2em 1em" *ngIf="discomfortSymptomTable&&discomfortTypes">
+      <md-select placeholder="请选择不适症状类别" [(ngModel)]="discomfortSymptomTable.queryKey" name="type" style="width: 100%">
+        <md-option [value]="opt.id" *ngFor="let opt of discomfortTypes" (click)="getDiscomfortSymptoms()">
+          {{opt.name}}
+        </md-option>
+      </md-select>
+    </form>
+    <div *ngIf="!discomfortSymptomTable.lists&&discomfortSymptomTable.loading">Loading...</div>
+    <div *ngIf="!discomfortSymptomTable.lists&&!discomfortSymptomTable.loading&&!!discomfortSymptomTable.errorMessage" class="center">
+      {{discomfortSymptomTable.errorMessage}}
+    </div>
+    <div *ngIf="discomfortSymptomTable.lists">
+      <div class="content__table">
+        <app-lib-table
+          [table]="discomfortSymptomTable"
+          (handleEmmit)="gotoHandle($event)"
+        ></app-lib-table>
+      </div>
+    </div>
+  </div>
+</app-container>

@@ -12,7 +12,6 @@ import { AuthGuardService } from '../_service/auth-guard.service';
 import { HealthNewsService } from './_service/health-news.service';
 import { HealthNewsFormService } from './_service/health-news-form.service';
 import { HealthNewsTableService } from './_service/health-news-table.service';
-import { ReadCoefficientFormService } from './_service/reading-quantity-form.service';
 
 const routes: Routes = [{
   path: '',
@@ -40,8 +39,7 @@ const routes: Routes = [{
   providers: [
     HealthNewsService,
     HealthNewsFormService,
-    HealthNewsTableService,
-    ReadCoefficientFormService
+    HealthNewsTableService
   ]
 })
 export class HealthNewsModule {
