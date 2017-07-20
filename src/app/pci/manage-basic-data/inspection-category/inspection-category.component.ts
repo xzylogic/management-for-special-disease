@@ -1,104 +1,150 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialog } from '@angular/material';
 
-import { TableOption } from '../../../libs/dtable/dtable.entity';
+import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
 import { InspectionCategoryService } from './_service/inspection-category.service';
 import { InspectionCategoryTableService } from './_service/inspection-category-table.service';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-inspection-category',
-  templateUrl: 'inspection-category.component.html'
+  templateUrl: './inspection-category.component.html'
 })
 export class InspectionCategoryComponent implements OnInit {
-  //
-  // title = '检查类目维护';
-  // subTitle = '检查类目维护列表';
-  //
-  // inspectionCategoryTable: TableOption;
-  //
-  // inspectionCategoryData: any;
-  // enableEdit: boolean;
-  //
-  // message: string;
-  // enableShow: boolean;
+  containerConfig: ContainerConfig;
+  inspectionCategoryTable: TableOption;
 
   constructor(
-    private _inspectionCategoryService: InspectionCategoryService,
-    private _inspectionCategoryTableService: InspectionCategoryTableService
+    private inspectionCategoryService: InspectionCategoryService,
+    private inspectionCategoryTableService: InspectionCategoryTableService,
+    private dialog: MdDialog
   ) {
   }
 
   ngOnInit() {
-    // this.refresh();
+    this.containerConfig = this.inspectionCategoryService.inspectionCategoryConfig();
+    this.inspectionCategoryTable = new TableOption({
+      titles: this.inspectionCategoryTableService.setTitles(),
+      ifPage: false
+    });
+    this.getInspectionCategories();
   }
 
-  // refresh() {
-  //   this.inspectionCategoryTable = new TableOption();
-  //   this.getInspectionCategoryTitles();
-  //   this.getInspectionCategories();
-  // }
-  //
-  // getInspectionCategoryTitles() {
-  //   this.inspectionCategoryTable.titles = this._inspectionCategoryTableService.setTitles();
-  // }
-  //
-  // getInspectionCategories() {
-  //   this._inspectionCategoryService.getInspectionCategories()
-  //     .subscribe(
-  //        res => {
-  //          this.inspectionCategoryTable.loading = false;
-  //          if (res.code === 0 && res.data && res.data.length === 0) {
-  //            this.inspectionCategoryTable.errorMessage = '该数据为空哦～';
-  //          } else if (res.code === 0 && res.data) {
-  //            this.inspectionCategoryTable.lists = res.data;
-  //          } else {
-  //            this.inspectionCategoryTable.errorMessage = '空空如也～';
-  //          }
-  //        }, err => {
-  //          this.inspectionCategoryTable.loading = false;
-  //          this.inspectionCategoryTable.errorMessage = '啊哦！接口访问出错啦～';
-  //        }
-  //     )
-  // }
-  //
-  // gotoHandle(data) {
-  //   if (data.key === 'edit') {
-  //     this.inspectionCategoryData = data.value;
-  //     this.enableEdit = true;
-  //   }
-  //
-  //   if (data.key === 'delete') {
-  //     // console.log(data.value);
-  //     this._inspectionCategoryService.inspectionCategoryDelete(data.value.id)
-  //       .subscribe(
-  //         res => {
-  //           if (res.code === 0) {
-  //             this.message = '检查类目删除成功！';
-  //             this.enableShow = true;
-  //             this.refresh();
-  //           } else {
-  //             if(res.msg) {
-  //               this.message = res.msg;
-  //             } else {
-  //               this.message = "检查类目删除失败！";
-  //             }
-  //             this.enableShow = true;
-  //           }
-  //         }, err => {
-  //           this.message = "啊哦！接口访问出错啦～";
-  //           this.enableShow = true;
-  //         }
-  //       )
-  //   }
-  // }
-  //
-  // newItem() {
-  //   this.inspectionCategoryData = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  // handleSuccess(data) {
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.refresh();
-  // }
+  getInspectionCategories() {
+    this.inspectionCategoryService.getInspectionCategories()
+      .subscribe(res => {
+        this.inspectionCategoryTable.loading = false;
+        if (res.code === 0 && res.data && res.data.length === 0) {
+          this.inspectionCategoryTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data) {
+          this.inspectionCategoryTable.lists = res.data;
+        } else {
+          this.inspectionCategoryTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.inspectionCategoryTable.loading = false;
+        console.log(err);
+        this.inspectionCategoryTable.errorMessage = ERRMSG.netErrMsg;
+      });
+  }
+
+  gotoHandle(res) {
+    console.log(res);
+    const inspectionCategory = res.value;
+    if (res.key === 'edit') {
+      this.inspectionCategoryUpdate(inspectionCategory);
+    }
+    if (res.key === 'delete') {
+      HintDialog(`你确定要删除检查类目: ${inspectionCategory.name}？`, this.dialog)
+        .afterClosed().subscribe(
+        result => {
+          if (result && result.key === 'confirm') {
+            this.delData(inspectionCategory.id);
+          }
+        });
+    }
+  }
+
+  newData() {
+    this.inspectionCategoryUpdate();
+  }
+
+  inspectionCategoryUpdate(data?) {
+    const config = new DialogOptions({
+      title: `${data ? '编辑' : '新增'}检查类目`,
+      message: '',
+      buttons: [{
+        key: 'confirm',
+        value: '确定',
+        color: 'primary'
+      }, {
+        key: 'cancel',
+        value: '取消',
+        color: ''
+      }],
+      forms: [{
+        key: 'name',
+        label: '检查类目名称',
+        value: data && data.name || ''
+      }]
+    });
+    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result && result.key === 'confirm' && result.value[0] && data) {
+        this.getValue({id: data.id, name: result.value[0].value}, true);
+      } else if (result && result.key === 'confirm' && result.value[0] && !data) {
+        this.getValue({name: result.value[0].value}, false);
+      }
+    });
+  }
+
+  getValue(data, state) {
+    if (state) {
+      this.inspectionCategoryService.inspectionCategoryEdit(data)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog);
+            this.getInspectionCategories();
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.netErrMsg, this.dialog);
+        })
+
+    } else {
+      this.inspectionCategoryService.inspectionCategoryCreate(data)
+        .subscribe(
+          res => {
+            if (res.code === 0) {
+              HintDialog(ERRMSG.saveSuccess, this.dialog);
+              this.getInspectionCategories()
+            } else {
+              if (res.msg) {
+              } else {
+                HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+              }
+            }
+          }, err => {
+            console.log(err);
+            HintDialog(ERRMSG.netErrMsg, this.dialog);
+          })
+    }
+  }
+
+  delData(id) {
+    this.inspectionCategoryService.inspectionCategoryDelete(id)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(ERRMSG.saveSuccess, this.dialog);
+          this.getInspectionCategories();
+        } else {
+          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.netErrMsg, this.dialog);
+      });
+  }
+
 }

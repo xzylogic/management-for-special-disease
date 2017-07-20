@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
   healthInfoUpdate: 'api/articleType/update', // 修改资讯分类

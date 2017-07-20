@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdInputModule } from '@angular/material';
+
+import { LibModule, LibDialogModule } from '../../../libs';
 
 import { AutoReplyComponent } from './auto-reply.component';
 
@@ -14,6 +18,10 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    LibModule,
+    LibDialogModule,
+    FormsModule,
+    MdInputModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -23,4 +31,5 @@ const routes: Routes = [{
     AutoReplyService
   ]
 })
-export class AutoReplyModule {}
+export class AutoReplyModule {
+}

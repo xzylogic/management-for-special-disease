@@ -25,7 +25,7 @@ export function HintDialog(msg, dialog) {
         title: '提示信息',
         message: msg,
         buttons: [{
-          key: 'comfirm',
+          key: 'confirm',
           value: '确定',
           color: 'primary'
         }]

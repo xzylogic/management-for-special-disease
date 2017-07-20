@@ -17,8 +17,8 @@ export class AssessmentRiskService {
 
   assessmentRiskConfig(): ContainerConfig {
     return new ContainerConfig({
-      title: '医生信息管理',
-      subTitle: '医生信息列表',
+      title: '服务号管理',
+      subTitle: '风险评估管理',
       ifHome: true,
       homeRouter: '/assessment-risk',
       currentRouter: '/assessment-risk'
@@ -29,6 +29,8 @@ export class AssessmentRiskService {
    * 获取默认风险评估列表
    */
   getAssessmentServices(keyword: string, level: number | string, size: number, page: number) {
-    return this.httpService.get(`${PATH.assessmentRisk}?keyword=${keyword}&level=${level}&size=${size}&page=${page}`);
+    return this.httpService.get(
+      `${this.app.pci.BASE_URL}${PATH.assessmentRisk}?keyword=${keyword || ''}&level=${level || ''}&size=${size}&page=${page}`
+    );
   }
 }

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { LibModule, DTableModule } from '../../../libs';
+
 import { InspectionCategoryComponent } from './inspection-category.component';
-import { InspectionCategoryEditComponent } from './inspection-category-edit/inspection-category-edit.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { InspectionCategoryService } from './_service/inspection-category.service';
 import { InspectionCategoryTableService } from './_service/inspection-category-table.service';
-import { InspectionCategoryFormService } from './_service/inspection-category-form.service';
 
 const routes: Routes = [{
   path: '',
@@ -17,24 +17,17 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    RouterModule.forChild([
-      {
-        path: '',
-        component: InspectionCategoryComponent,
-        canActivate: [AuthGuardService]
-      }
-    ])
+    DTableModule,
+    LibModule,
+    RouterModule.forChild(routes)
   ],
   declarations: [
-    InspectionCategoryComponent,
-    InspectionCategoryEditComponent
+    InspectionCategoryComponent
   ],
   providers: [
     InspectionCategoryService,
-    InspectionCategoryTableService,
-    InspectionCategoryFormService
+    InspectionCategoryTableService
   ]
 })
 export class InspectionCategoryModule {
-
 }

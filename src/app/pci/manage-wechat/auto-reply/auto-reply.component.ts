@@ -1,62 +1,62 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialog } from '@angular/material';
+
+import { ContainerConfig, HintDialog } from '../../../libs';
 import { AutoReplyService } from './_service/auto-reply.service';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-auto-reply',
-  templateUrl: 'auto-reply.component.html'
+  templateUrl: './auto-reply.component.html'
 })
 export class AutoReplyComponent implements OnInit {
-  // title = '自动回复维护';
-  // subTitle = '自动回复信息';
-  //
-  // autoReply: string;
-  //
-  // ifEdit: boolean = false;
-  //
-  // errorMessage: string = '';
+  containerConfig: ContainerConfig;
+  autoReply: string;
+  ifEdit = false;
+  errorMessage = '';
 
-  constructor(private _autoReplyService: AutoReplyService) {
+  constructor(
+    private autoReplyService: AutoReplyService,
+    private dialog: MdDialog
+  ) {
   }
 
   ngOnInit() {
-    // this.getAutoReply();
+    this.containerConfig = this.autoReplyService.autoReplyConfig();
+    this.getAutoReply();
   }
 
-  // getAutoReply() {
-  //   this._autoReplyService.getAutoReply()
-  //     .subscribe(data => {
-  //       if (data.code === 0 && data.data) {
-  //         this.autoReply = data.data;
-  //       }
-  //     }, error => {
-  //
-  //     })
-  // }
-  //
-  // updateReply(value) {
-  //   this._autoReplyService.autoReplyUpdate(value.name)
-  //     .subscribe(data => {
-  //       if (data.code === 0) {
-  //         this.errorMessage = '';
-  //         this.getAutoReply();
-  //         this.ifEdit = false;
-  //       } else {
-  //         if (data.msg) {
-  //           this.errorMessage = data.msg;
-  //         } else {
-  //           this.errorMessage = '保存失败！';
-  //         }
-  //       }
-  //     }, err => {
-  //       this.errorMessage = '连接服务器出错！';
-  //     })
-  // }
-  //
-  // toUpdate() {
-  //   this.ifEdit = true;
-  // }
-  //
-  // toCancel() {
-  //   this.ifEdit = false;
-  // }
+  getAutoReply() {
+    this.autoReplyService.getAutoReply()
+      .subscribe(res => {
+        if (res.code === 0 && res.data) {
+          this.autoReply = res.data;
+        } else {
+          this.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        console.log(err);
+        this.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
+
+  toUpdate() {
+    this.ifEdit = true;
+  }
+
+  updateReply(value) {
+    this.autoReplyService.autoReplyUpdate(value.name)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.getAutoReply();
+          this.ifEdit = false;
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
+  }
 }

@@ -1,1 +1,22 @@
-<h1>auto reply</h1>
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="addition">
+    <button md-raised-button *ngIf="!ifEdit" (click)="toUpdate()">编辑自动回复</button>
+  </div>
+  <div class="content">
+    <div *ngIf="!ifEdit" style="padding: 1em 0">
+      <p>{{autoReply}}</p>
+    </div>
+    <div *ngIf="ifEdit" style="padding: 1em 0">
+      <form #f="ngForm" (ngSubmit)="updateReply(f.value)">
+        <md-input-container style="width: 100%">
+          <textarea mdInput [attr.row]="'5'"
+                    [placeholder]="'编辑自动回复'"
+                    name="name"
+                    [(ngModel)]="autoReply"
+          ></textarea>
+        </md-input-container>
+        <button md-raised-button color="primary">保存</button>
+      </form>
+    </div>
+  </div>
+</app-container>

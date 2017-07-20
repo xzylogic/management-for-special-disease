@@ -36,23 +36,26 @@ export class AssessmentRiskComponent implements OnInit {
 
   getAssessmentRisks(page: number) {
     this.assessmentRiskTable.reset(page);
-    this.assessmentRiskService.getAssessmentServices(this.assessmentRiskTable.queryKey, this.queryResult, this.assessmentRiskTable.size, page)
-      .subscribe(res => {
-        this.assessmentRiskTable.loading = false;
-        if (res.data && res.data.content && res.data.length === 0 && res.code === 0) {
-          this.assessmentRiskTable.errorMessage = ERRMSG.nullMsg;
-        } else if (res.data && res.data.content && res.code === 0) {
-          this.formatUser(res.data.content);
-          this.assessmentRiskTable.lists = res.data.content;
-          this.assessmentRiskTable.totalPage = res.data.totalPages;
-        } else {
-          this.assessmentRiskTable.errorMessage = res.msg || ERRMSG.otherMsg;
-        }
-      }, err => {
-        this.assessmentRiskTable.loading = false;
-        console.log(err);
-        this.assessmentRiskTable.errorMessage = ERRMSG.netErrMsg;
-      })
+    this.assessmentRiskService.getAssessmentServices(
+      this.assessmentRiskTable.queryKey,
+      this.queryResult,
+      this.assessmentRiskTable.size, page
+    ).subscribe(res => {
+      this.assessmentRiskTable.loading = false;
+      if (res.data && res.data.content && res.data.content.length === 0 && res.code === 0) {
+        this.assessmentRiskTable.errorMessage = ERRMSG.nullMsg;
+      } else if (res.data && res.data.content && res.code === 0) {
+        this.formatUser(res.data.content);
+        this.assessmentRiskTable.lists = res.data.content;
+        this.assessmentRiskTable.totalPage = res.data.totalPages;
+      } else {
+        this.assessmentRiskTable.errorMessage = res.msg || ERRMSG.otherMsg;
+      }
+    }, err => {
+      this.assessmentRiskTable.loading = false;
+      console.log(err);
+      this.assessmentRiskTable.errorMessage = ERRMSG.netErrMsg;
+    })
   }
 
   formatUser(list: Array<any>) {
