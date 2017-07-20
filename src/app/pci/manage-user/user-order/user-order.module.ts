@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
 import { UserOrderComponent } from './user-order.component';
 import { UserOrderRecordComponent } from './user-order-record/user-order-record.component';
@@ -14,10 +18,20 @@ const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
   component: UserOrderComponent
-}];
+}, {
+  path: 'edit',
+  component: UserOrderRecordComponent,
+  canActivate: [AuthGuardService],
+}, ];
 
 @NgModule({
   imports: [
+    FormsModule,
+    MdChipsModule,
+    MdTabsModule,
+    DTableModule,
+    DFormModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
