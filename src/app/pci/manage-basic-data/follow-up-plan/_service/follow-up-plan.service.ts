@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   followList: 'api/flupTemplate/list', // 随访计划模板列表
@@ -16,30 +17,38 @@ export class FollowUpPlanService {
   ) {
   }
 
-  /**
-   * 获取第三方机构列表
-   */
+  followUpPlanConfig() {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '随访计划模版数据维护',
+      ifHome: true,
+      homeRouter: '/follow-up-plan',
+      currentRouter: '/follow-up-plan'
+    });
+  }
+
+  followUpPlanEditConfig(flag) {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: flag ? '编辑随访计划模版' : '新增随访计划模版',
+      ifHome: true,
+      homeRouter: '/follow-up-plan',
+      currentRouter: '/follow-up-plan/edit'
+    });
+  }
+
   getFollowUpPlans(type) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.followList}?type=${type}`);
   }
 
-  /**
-   * 新建鲜花等级
-   */
   followUpPlanCreate(data) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.followCreate}`, data);
   }
 
-  /**
-   * 编辑鲜花等级
-   */
   followUpPlanEdit(data) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.followEdit}`, data);
   }
 
-  /**
-   * 删除鲜花等级
-   */
   followUpPlanDelete(id: number) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.followDelete}?id=${id}`, {});
   }

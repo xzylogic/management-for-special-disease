@@ -3,54 +3,66 @@ import { Component, OnInit } from '@angular/core';
 import { TableOption } from '../../../libs';
 import { FollowUpPlanService } from './_service/follow-up-plan.service';
 import { FollowUpPlanTableService } from './_service/follow-up-plan-table.service';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-follow-up-plan',
   templateUrl: './follow-up-plan.component.html'
 })
 export class FollowUpPlanComponent implements OnInit {
-  // followUpPlanTable1: TableOption = new TableOption();
-  discomfortTypes: any;
+  containerConfig: ContainerConfig;
+  followUpPlanTable: TableOption;
+  discomfortTypes = [{
+    id: 1,
+    name: '一个月'
+  }, {
+    id: 3,
+    name: '三个月'
+  }, {
+    id: 6,
+    name: '六个月'
+  }, {
+    id: 9,
+    name: '九个月'
+  }, {
+    id: 12,
+    name: '十二个月'
+  }];
 
   constructor(
-    private _followUpPlanService: FollowUpPlanService,
-    private _followUpPlanTableService: FollowUpPlanTableService
+    private followUpPlanService: FollowUpPlanService,
+    private followUpPlanTableService: FollowUpPlanTableService
   ) {
   }
 
   ngOnInit() {
-    // this.getFollowUpPlanTitles();
-    // this.getFollowUpPlans(1, this.followUpPlanTable1);
-    // this.getFollowUpPlans(3, this.followUpPlanTable2);
-    // this.getFollowUpPlans(6, this.followUpPlanTable3);
-    // this.getFollowUpPlans(9, this.followUpPlanTable4);
-    // this.getFollowUpPlans(12, this.followUpPlanTable5);
+    this.containerConfig = this.followUpPlanService.followUpPlanConfig();
+    this.followUpPlanTable = new TableOption({
+      titles: this.followUpPlanTableService.setTitles(),
+      ifPage: false
+    });
+    this.followUpPlanTable.queryKey = 1;
+    this.getFollowUpPlans();
   }
 
-  getFollowUpPlanTitles() {
-    // this.followUpPlanTable1.titles = this._followUpPlanTableService.setTitles();
-    // this.followUpPlanTable2.titles = this._followUpPlanTableService.setTitles();
-    // this.followUpPlanTable3.titles = this._followUpPlanTableService.setTitles();
-    // this.followUpPlanTable4.titles = this._followUpPlanTableService.setTitles();
-    // this.followUpPlanTable5.titles = this._followUpPlanTableService.setTitles();
-  }
-
-  getFollowUpPlans(id: number, list: TableOption) {
-    // list.lists = [];
-    // this._followUpPlanService.getFollowUpPlans(id)
-    //   .subscribe(
-    //     data => {
-    //       this.followUpPlanTable1.loading = false;
-    //       if(data.data && data.code === 0){
-    //         this.followUpPlanFormat(data.data);
-    //         data.data.forEach(obj => {
-    //           list.lists.push(obj);
-    //         })
-    //     }
-    //   },err =>{
-    //      this.followUpPlanTable1.loading = false;
-    //      this.followUpPlanTable1.errorMessage = "啊哦！接口访问出错啦～";
-    //   })
+  getFollowUpPlans() {
+    this.followUpPlanService.getFollowUpPlans(this.followUpPlanTable.queryKey)
+      .subscribe(res => {
+        this.followUpPlanTable.loading = false;
+        if (res.data && res.data.length === 0 && res.code === 0) {
+          this.followUpPlanTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.data && res.code === 0) {
+          this.followUpPlanFormat(res.data);
+          this.followUpPlanTable.lists = res.data;
+        } else {
+          this.followUpPlanTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.followUpPlanTable.loading = false;
+        console.log(err);
+        this.followUpPlanTable.errorMessage = ERRMSG.netErrMsg;
+      })
   }
 
   refresh() {
@@ -73,16 +85,16 @@ export class FollowUpPlanComponent implements OnInit {
   }
 
   followUpPlanFormat(data) {
-    // data.forEach(obj => {
-    //   if (obj.custom === true) {
-    //     obj.customName = obj.name;
-    //     obj.name = '自定义';
-    //   }
-    // })
+    data.forEach(obj => {
+      if (obj.custom === true) {
+        obj.customName = obj.name;
+        obj.name = '自定义';
+      }
+    });
   }
 
   // 新增随访项
-  newFollowUpPlan() {
+  newData() {
     // this.follow = null;
     // this.enableEdit = true;
   }

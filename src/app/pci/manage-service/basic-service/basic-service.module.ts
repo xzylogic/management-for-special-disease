@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { LibModule, LibDialogModule, DFormModule, DTableModule } from '../../../libs';
+
 import { BasicServiceComponent } from './basic-service.component';
 import { BasicServiceEditComponent } from './basic-service-edit/basic-service-edit.component';
 
@@ -17,6 +19,10 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    LibModule,
+    LibDialogModule,
+    DFormModule,
+    DTableModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

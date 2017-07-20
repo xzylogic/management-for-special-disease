@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { LibModule, LibDialogModule, DFormModule, DTableModule } from '../../../libs';
+
 import { FollowUpPlanComponent } from './follow-up-plan.component';
 import { FollowUpPlanEditComponent } from './follow-up-plan-edit/follow-up-plan-edit.component';
 
@@ -10,12 +12,20 @@ import { FollowUpPlanTableService } from './_service/follow-up-plan-table.servic
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthGuardService],
-  component: FollowUpPlanComponent
+  component: FollowUpPlanComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'edit',
+  component: FollowUpPlanEditComponent,
+  canActivate: [AuthGuardService]
 }];
 
 @NgModule({
   imports: [
+    LibModule,
+    LibDialogModule,
+    DFormModule,
+    DTableModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

@@ -1,1 +1,16 @@
-<h1>basic service</h1>
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="content">
+    <div *ngIf="!basicServiceTable.lists&&basicServiceTable.loading">Loading...</div>
+    <div *ngIf="!basicServiceTable.lists&&!basicServiceTable.loading&&!!basicServiceTable.errorMessage" class="center">
+      {{basicServiceTable.errorMessage}}
+    </div>
+    <div *ngIf="basicServiceTable.lists">
+      <div class="content__table">
+        <app-lib-table
+          [table]="basicServiceTable"
+          (handleEmmit)="gotoHandle($event)"
+        ></app-lib-table>
+      </div>
+    </div>
+  </div>
+</app-container>
