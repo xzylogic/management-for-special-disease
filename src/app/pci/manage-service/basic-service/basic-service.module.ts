@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LibModule, LibDialogModule, DFormModule, DTableModule } from '../../../libs';
+import { LibModule, LibDialogModule, DFormModule, DTableModule, LibInputModule } from '../../../libs';
 
 import { BasicServiceComponent } from './basic-service.component';
 import { BasicServiceEditComponent } from './basic-service-edit/basic-service-edit.component';
@@ -13,14 +13,18 @@ import { BasicServiceFormService } from './_service/basic-service-form.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthGuardService],
-  component: BasicServiceComponent
+  component: BasicServiceComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'edit',
+  component: BasicServiceEditComponent
 }];
 
 @NgModule({
   imports: [
     LibModule,
     LibDialogModule,
+    LibInputModule,
     DFormModule,
     DTableModule,
     RouterModule.forChild(routes)

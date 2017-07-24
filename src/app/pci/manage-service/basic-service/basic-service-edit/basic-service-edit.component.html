@@ -1,0 +1,13 @@
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="content">
+    <form *ngIf="form" class="login__form" [formGroup]="form" (ngSubmit)="getValues(form.value)">
+      <app-input-file class="login__form__input" [form]="form"
+                      [data]="config.iconUrl"
+      ></app-input-file>
+      <button md-raised-button type="submit" class="login__form__button" color="primary"
+              [disabled]="!form.valid">保存
+      </button>
+      <button md-raised-button type="reset" class="login__form__button">重置</button>
+    </form>
+  </div>
+</app-container>

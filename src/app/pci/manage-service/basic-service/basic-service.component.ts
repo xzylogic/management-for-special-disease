@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../../libs';
 import { BasicServiceService } from './_service/basic-service.service';
 import { BasicServiceTableService } from './_service/basic-service-table.service';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { ERRMSG } from '../../_store/static';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-basic-service',
@@ -15,8 +16,10 @@ export class BasicServiceComponent implements OnInit {
   basicServiceTable: TableOption;
 
   constructor(
+    @Inject('action') private action,
     private basicServiceService: BasicServiceService,
-    private basicServiceTableService: BasicServiceTableService
+    private basicServiceTableService: BasicServiceTableService,
+    private router: Router
   ) {
   }
 
@@ -47,19 +50,12 @@ export class BasicServiceComponent implements OnInit {
       });
   }
 
-  gotoHandle(data) {
-    console.log(data);
-    //   if (data.key === 'edit') {
-    //     this.basicService = data.value;
-    //     this.enableEdit = true;
-    //   }
+  gotoHandle(res) {
+    const basicService = res.value;
+    console.log(basicService);
+    if (res.key === 'edit') {
+      this.action.dataChange('basicService', basicService);
+      this.router.navigate(['/basic-service/edit']);
+    }
   }
-
-  //
-  // handleSuccess(data) {
-  //   this.titleShow = '提示信息';
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.getBasicServices();
-  // }
 }
