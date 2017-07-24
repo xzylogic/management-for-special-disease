@@ -30,6 +30,26 @@ export class DoctorGroupService {
     });
   }
 
+  doctorGroupEditConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生小组管理',
+      subTitle: '编辑医生小组',
+      ifHome: false,
+      homeRouter: '/doctor-group',
+      currentRouter: '/doctor-group/edit'
+    });
+  }
+
+  serviceDetailConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生小组管理',
+      subTitle: '医生小组服务明细',
+      ifHome: false,
+      homeRouter: '/doctor-group',
+      currentRouter: '/doctor-group/service'
+    });
+  }
+
   /**
    * [getDoctorGroups description]
    * @param {number} page [description]

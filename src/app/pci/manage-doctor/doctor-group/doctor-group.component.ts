@@ -9,6 +9,9 @@ import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../_store/static';
+import { DoctorGroup } from './_entity/doctor-group.entity';
+import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
+import { resetFakeAsyncZone } from '@angular/core/testing';
 
 @Component({
   selector: 'app-doctor-group',
@@ -103,52 +106,39 @@ export class DoctorGroupComponent implements OnInit {
         })
   }
 
-  gotoHandle(data) {
-    console.log(data);
-    if (data.key === 'show') {
-      // this.doctorGroup = data.value;
-      // this.enableDetail = true;
+  gotoHandle(res) {
+    console.log(res);
+    const doctorGroup = <DoctorGroup>res.value;
+    if (res.key === 'edit') {
+      this.action.dataChange('doctorGroup', doctorGroup);
+      this.router.navigate(['/doctor-group/edit']);
     }
-    if (data.key === 'edit') {
-      // this.doctorGroup = data.value;
-      // this.enableEdit = true;
+    if (res.key === 'show') {
+      this.router.navigate(['/doctor-group/service'], {queryParams: {id: doctorGroup.id}});
     }
-    if (data.key === 'auditing') {
-      // this.processData = data.value;
-      // this.enableProcess = true;
+    if (res.key === 'auditing') {
+      HintDialog('确定审核通过？', this.dialog).afterClosed().subscribe(result => {
+        if (result && result.key === 'confirm') {
+          this.process(doctorGroup.id);
+        }
+      });
     }
   }
 
-  //
-  // process() {
-  //   this._doctorGroupService.serviceAuditingSuccess(this.processData.id)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.message = "操作成功～";
-  //           this.enableProcess = false;
-  //           this.enableShow = true;
-  //           this.refresh();
-  //         } else {
-  //           if (data.msg) {
-  //             this.message = data.msg;
-  //           } else {
-  //             this.message = "操作失败～";
-  //           }
-  //           this.enableProcess = false;
-  //           this.enableShow = true;
-  //         }
-  //       }, err => {
-  //         this.message = "连接服务器出错";
-  //         this.enableProcess = false;
-  //         this.enableShow = true;
-  //       })
-  // }
-  //
-  // processCancel() {
-  //   this.processData = null;
-  //   this.enableProcess = false;
-  // }
+  process(id) {
+    this.doctorGroupService.serviceAuditingSuccess(id)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(res.msg || '操作成功！', this.dialog);
+          this.reset1();
+        } else {
+          HintDialog(res.msg || '操作失败～', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.netErrMsg, this.dialog);
+      });
+  }
 
   change(index) {
     this.action.tabChange('doctor', index);

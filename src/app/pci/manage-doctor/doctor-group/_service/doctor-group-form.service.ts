@@ -13,7 +13,7 @@ export class DoctorGroupFormService {
         key: 'id',
         label: '#',
         value: data && data.id || '',
-        type: 'hidden',
+        readonly: true,
         order: 0
       }),
       new FormText({

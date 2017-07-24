@@ -151,7 +151,7 @@ export class DoctorAccountComponent implements OnInit {
       if (data.status === 0) {
         HintDialog('确定已提现成功？', this.dialog).afterClosed()
           .subscribe(result => {
-            if (result && result.key === 'comfirm') {
+            if (result && result.key === 'confirm') {
               this.processPay(data.id);
             }
           });
@@ -199,7 +199,7 @@ export class DoctorAccountComponent implements OnInit {
         console.log(data);
         HintDialog('确定已到货？', this.dialog).afterClosed()
           .subscribe(result => {
-            if (result && result.key === 'comfirm') {
+            if (result && result.key === 'confirm') {
               this.processReach(data.id, data.expressNo, data.expressCompany);
             }
           });

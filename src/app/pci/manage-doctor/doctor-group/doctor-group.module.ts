@@ -17,8 +17,16 @@ import { ServiceDetailTableService } from './_service/service-detail-table.servi
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthGuardService],
-  component: DoctorGroupComponent
+  component: DoctorGroupComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'edit',
+  component: DoctorGroupEditComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'service',
+  component: ServiceDetailComponent,
+  canActivate: [AuthGuardService]
 }];
 
 @NgModule({

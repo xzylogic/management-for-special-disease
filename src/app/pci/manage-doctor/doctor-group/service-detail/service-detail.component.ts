@@ -1,71 +1,62 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { TableOption } from '../../../../libs';
+import { TableOption, ContainerConfig } from '../../../../libs';
 import { DoctorGroupService } from '../_service/doctor-group.service';
 import { ServiceDetailTableService } from '../_service/service-detail-table.service';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-service-detail',
-  template: `
-    <h1>app-service-detail</h1>
-  `
+  templateUrl: './service-detail.component.html'
 })
 export class ServiceDetailComponent implements OnInit {
-  // modalTitle: string = '服务明细';
-  // serviceDetailTable: TableOption = new TableOption();
-  //
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter < any > = new EventEmitter();
+  containerConfig: ContainerConfig;
+  serviceDetailTable: TableOption = new TableOption();
+
+  id: number;
 
   constructor(
     private doctorGroupService: DoctorGroupService,
-    private serviceDetailTableService: ServiceDetailTableService
+    private serviceDetailTableService: ServiceDetailTableService,
+    private router: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    // this.getIncomeDetailTitles();
-    // if (this.data) {
-    //   this.getIncomeDetail(0);
-    // } else {
-    //   this.serviceDetailTable.errorMessage = "空空如也～";
-    // }
+    this.containerConfig = this.doctorGroupService.serviceDetailConfig();
+    this.serviceDetailTable = new TableOption({
+      titles: this.serviceDetailTableService.setTitles(),
+      ifPage: true
+    });
+    this.router.queryParams.subscribe(params => {
+      this.id = +params['id'];
+      if (!this.id) {
+        this.serviceDetailTable.loading = false;
+        this.serviceDetailTable.errorMessage = ERRMSG.nullMsg;
+      } else {
+        this.getIncomeDetail(this.id, 0);
+      }
+    });
   }
 
-  // refresh() {
-  //   if (this.data) {
-  //     this.serviceDetailTable.loading = true;
-  //     this.getIncomeDetail(0);
-  //   } else {
-  //     this.serviceDetailTable.errorMessage = "空空如也～";
-  //   }
-  // }
-  //
-  // getIncomeDetailTitles() {
-  //   this.serviceDetailTable.titles = this._serviceDetailTableService.setTitles();
-  // }
-  //
-  // getIncomeDetail(page: number) {
-  //   this.serviceDetailTable.currentPage = page;
-  //   this._doctorGroupService.getServiceDetails(this.data.id, page, this.serviceDetailTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.serviceDetailTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.serviceDetailTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.serviceDetailTable.totalPage = data.data.totalPages;
-  //           this.serviceDetailTable.lists = data.data.content;
-  //         }
-  //       }, err => {
-  //         this.serviceDetailTable.loading = false;
-  //         this.serviceDetailTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
+  getIncomeDetail(id: number, page: number) {
+    this.serviceDetailTable.reset(page);
+    this.doctorGroupService.getServiceDetails(id, page, this.serviceDetailTable.size)
+      .subscribe(res => {
+        this.serviceDetailTable.loading = false;
+        if (res.data && res.data.content && res.data.content.length === 0 && res.code === 0) {
+          this.serviceDetailTable.errorMessage = ERRMSG.nullMsg
+        } else if (res.data && res.data.content && res.code === 0) {
+          this.serviceDetailTable.totalPage = res.data.totalPages;
+          this.serviceDetailTable.lists = res.data.content;
+        } else {
+          this.serviceDetailTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.serviceDetailTable.loading = false;
+        console.log(err);
+        this.serviceDetailTable.errorMessage = ERRMSG.netErrMsg;
+      });
+  }
 }
