@@ -16,7 +16,7 @@ export const routes: Routes = [{
 }];
 
 export const stores = {
-  baseService: createReducer('baseService', [0], {}),
+  basicService: createReducer('basicService', [0], {}),
   healthService: createReducer('healthService', [0], {}),
   packageService: createReducer('packageService', [0], {}),
   serviceSpec: createReducer('serviceSpec', [0], {})

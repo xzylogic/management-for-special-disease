@@ -18,3 +18,13 @@ a {
 ul, li {
   list-style: none;
 }
+
+.hidden {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  visibility: hidden;
+}

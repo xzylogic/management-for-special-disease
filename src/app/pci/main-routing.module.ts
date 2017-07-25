@@ -27,18 +27,18 @@ import { routes as wechatRoutes} from './manage-wechat';
           pathMatch: 'full'
         },
         // ...adRoutes,
-        ...basicDataRoutes,
+        // ...basicDataRoutes,
         // ...commodityRoutes,
         // ...dataCollectionRoutes,
-        ...doctorRoutes,
-        ...healthNewsRoutes,
+        // ...doctorRoutes,
+        // ...healthNewsRoutes,
         // ...integralRoutes,
         // ...operationPushRoutes,
         ...serviceRoutes,
         // ...statisticsRoutes,
         // ...userRoutes,
         // ...versionControlRoutes,
-        ...wechatRoutes,
+        // ...wechatRoutes,
       ]
     }]
   )],

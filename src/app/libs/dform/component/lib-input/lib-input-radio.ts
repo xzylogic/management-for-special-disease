@@ -8,13 +8,14 @@ import { FormRadio } from '../../_entity';
   template: `
     <div [formGroup]="form">
       <div class="input_container">
-        <md-radio-group calss="input_content" 
-                        [formControlName]="data.key" 
+        <md-radio-group class="input_content"
+                        [formControlName]="data.key"
                         [(ngModel)]="value">
-          <md-radio-button class="check_content" 
-                           *ngFor="let opt of data.options" 
-                           [value]="opt.id.toString()"
-          >{{opt.name}}</md-radio-button>
+          <md-radio-button class="check_content"
+                           *ngFor="let opt of data.options"
+                           [value]="opt.id"
+          >{{opt.name}}
+          </md-radio-button>
         </md-radio-group>
         <span class="input_span">{{data.label}}</span>
       </div>

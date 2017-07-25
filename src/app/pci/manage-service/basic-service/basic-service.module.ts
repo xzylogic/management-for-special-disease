@@ -9,7 +9,6 @@ import { BasicServiceEditComponent } from './basic-service-edit/basic-service-ed
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { BasicServiceService } from './_service/basic-service.service';
 import { BasicServiceTableService } from './_service/basic-service-table.service';
-import { BasicServiceFormService } from './_service/basic-service-form.service';
 
 const routes: Routes = [{
   path: '',
@@ -35,8 +34,7 @@ const routes: Routes = [{
   ],
   providers: [
     BasicServiceService,
-    BasicServiceTableService,
-    BasicServiceFormService
+    BasicServiceTableService
   ]
 })
 export class BasicServiceModule {

@@ -6,6 +6,7 @@ import { BasicServiceTableService } from './_service/basic-service-table.service
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { ERRMSG } from '../../_store/static';
 import { Router } from '@angular/router';
+import { BasicService } from './_entity/basic-service.entity';
 
 @Component({
   selector: 'app-basic-service',
@@ -51,7 +52,7 @@ export class BasicServiceComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    const basicService = res.value;
+    const basicService = <BasicService>res.value;
     console.log(basicService);
     if (res.key === 'edit') {
       this.action.dataChange('basicService', basicService);
