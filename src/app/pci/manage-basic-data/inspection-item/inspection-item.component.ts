@@ -79,6 +79,7 @@ export class InspectionItemComponent implements OnInit {
 
   gotoHandle(res) {
     const data = <InspectionItem>res.value;
+    data.typeList = this.inspectionType;
     console.log(res);
     if (res.key === 'edit') {
       this.action.dataChange('inspectionItem', data);
@@ -95,8 +96,8 @@ export class InspectionItemComponent implements OnInit {
   }
 
   newData() {
-    //   this.inspectionItemData = null;
-    //   this.enableEdit = true;
+    this.action.dataChange('inspectionItem', new InspectionItem(this.inspectionType));
+    this.router.navigate(['/inspection-item/edit']);
   }
 
   delData(id) {

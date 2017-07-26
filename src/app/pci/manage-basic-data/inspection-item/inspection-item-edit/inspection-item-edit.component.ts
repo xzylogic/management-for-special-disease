@@ -1,13 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+
+import { ContainerConfig, FormDropdown, FormText, HintDialog } from '../../../../libs';
 
 import { InspectionItemService } from '../_service/inspection-item.service';
+import { InspectionItem } from '../_entity/inspection-item.entity';
+import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-inspection-item-edit',
   templateUrl: 'inspection-item-edit.component.html'
 })
 export class InspectionItemEditComponent implements OnInit {
+  containerConfig: ContainerConfig;
+  @select(['inspectionItem', 'data']) inspectionItem: Observable<InspectionItem>;
+  form: FormGroup;
+  config: any;
+  id: any;
 
   typeOption = [
     {
@@ -21,111 +35,167 @@ export class InspectionItemEditComponent implements OnInit {
   ];
   chartOption = [
     {
-      id: 'true',
+      id: true,
       name: '可显示图表'
     },
     {
-      id: 'false',
+      id: false,
       name: '无图表'
     }
   ];
 
   constructor(
     private inspectionItemService: InspectionItemService,
-    private fb: FormBuilder
+    private dialog: MdDialog,
+    private router: Router,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
 
   }
 
   ngOnInit() {
-    // this.setInspectionItemForm();
+    this.inspectionItem.subscribe(data => {
+      if (data.typeList && data.id > 0) {
+        this.containerConfig = this.inspectionItemService.inspectionItemEditConfig(true);
+        this.createForm(data.typeList, data);
+      } else if (data.typeList) {
+        this.containerConfig = this.inspectionItemService.inspectionItemEditConfig(false);
+        this.createForm(data.typeList);
+      }
+    });
+    this.cdr.detectChanges();
   }
 
-  // setInspectionItemForm() {
-  //   if (this.data) {
-  //     this.modalTitle = "编辑检查子项目";
-  //     this.selectedType = this.data.type;
-  //     this.selectedChart = this.data.chart == false ? 'false' : 'true' || '';
-  //   } else {
-  //     this.modalTitle = "新增检查子项目";
-  //   }
-  //   this.myForm = new FormGroup({
-  //     recordExaminationTypeId: new FormControl(this.data && this.data.recordExaminationTypeId || '',
-  //       Validators.compose([
-  //         Validators.required
-  //       ])),
-  //     name: new FormControl(this.data && this.data.name || '',
-  //       Validators.compose([
-  //         Validators.required
-  //       ])),
-  //     alias: new FormControl(this.data && this.data.alias || ''),
-  //     unit: new FormControl(this.data && this.data.unit || ''),
-  //     type: new FormControl(this.data && (this.data.type == 0 ? this.data.type : this.data.type || ''),
-  //       Validators.compose([
-  //         Validators.required
-  //       ])),
-  //     reference: new FormControl(this.data && (this.data.reference == 0 ? this.data.reference : this.data.reference || '')),
-  //     max: new FormControl(this.data && (this.data.max == 0 ? this.data.max : this.data.max || '')),
-  //     min: new FormControl(this.data && (this.data.min == 0 ? this.data.min : this.data.min || '')),
-  //     chart: new FormControl(this.data && (this.data.chart == false ? 'false' : 'true' || ''),
-  //       Validators.compose([
-  //         Validators.required
-  //       ])),
-  //     maxY: new FormControl(this.data && (this.data.maxY == 0 ? this.data.maxY : this.data.maxY || '')),
-  //     minY: new FormControl(this.data && (this.data.minY == 0 ? this.data.minY : this.data.minY || '')),
-  //     intervalY: new FormControl(this.data && (this.data.intervalY == 0 ? this.data.intervalY : this.data.intervalY || '')),
-  //     color: new FormControl(this.data && this.data.color || '#35B2F2'),
-  //   });
-  // }
-  //
-  // getValue(value) {
-  //   value.chart = value.chart == 'true' ? true : false;
-  //   // console.log(value);
-  //   if (this.data) {
-  //     value.id = this.data.id;
-  //     this._inspectionItemService.inspectionItemEdit(value)
-  //       .subscribe(
-  //         res => {
-  //           if (res.code === 0) {
-  //             this.handleEmit.emit("检查子项目修改成功！");
-  //             this.close();
-  //           } else {
-  //             if(res.msg) {
-  //               this.errorMessage = res.msg;
-  //             } else {
-  //               this.errorMessage = "保存失败～请重新操作！";
-  //             }
-  //           }
-  //         }, err => {
-  //           this.errorMessage = "啊哦！接口访问出错啦～";
-  //         })
-  //
-  //   } else {
-  //     this._inspectionItemService.inspectionItemCreate(value)
-  //       .subscribe(
-  //         res => {
-  //           if (res.code === 0) {
-  //             this.handleEmit.emit("检查子项目保存成功！");
-  //             this.close();
-  //           } else {
-  //             if(res.msg) {
-  //               this.errorMessage = res.msg;
-  //             } else {
-  //               this.errorMessage = "保存失败～请重新操作！";
-  //             }
-  //           }
-  //         }, err => {
-  //           this.errorMessage = "啊哦！接口访问出错啦～";
-  //         })
-  //   }
-  // }
-  //
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
-  //
-  // isValid(type) {
-  //   return this.myForm.controls[type].valid;
-  // }
+  createForm(list, data?) {
+    this.form = this.fb.group({
+      recordExaminationTypeId: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      alias: new FormControl(''),
+      unit: new FormControl(''),
+      type: new FormControl('', Validators.required),
+      reference: new FormControl(''),
+      max: new FormControl(''),
+      min: new FormControl(''),
+      chart: new FormControl('', Validators.required),
+      maxY: new FormControl(''),
+      minY: new FormControl(''),
+      intervalY: new FormControl(''),
+      color: new FormControl(''),
+    });
+    this.config = {
+      recordExaminationTypeId: new FormDropdown({
+        label: '所属大类',
+        key: 'recordExaminationTypeId',
+        options: list,
+        value: data && data.recordExaminationTypeId || ''
+      }),
+      name: new FormText({
+        type: 'text',
+        label: '项目名称',
+        key: 'name',
+        value: data && data.name || ''
+      }),
+      alias: new FormText({
+        type: 'text',
+        label: '别名',
+        key: 'alias',
+        value: data && data.alias || ''
+      }),
+      type: new FormRadio({
+        label: '类型',
+        key: 'type',
+        options: this.typeOption,
+        value: data && (data.type == 0 ? data.type : data.type || '')
+      }),
+      max: new FormText({
+        type: 'text',
+        label: '上限值',
+        key: 'max',
+        value: data && (data.max == 0 ? data.max : data.max || '')
+      }),
+      min: new FormText({
+        type: 'text',
+        label: '下限值',
+        key: 'min',
+        value: data && (data.max == 0 ? data.max : data.max || '')
+      }),
+      reference: new FormText({
+        type: 'text',
+        label: '参考值',
+        key: 'reference',
+        value: data && (data.reference == 0 ? data.reference : data.reference || '')
+      }),
+      unit: new FormText({
+        type: 'text',
+        label: '单位',
+        key: 'unit',
+        value: data && data.unit || ''
+      }),
+      chart: new FormRadio({
+        label: '图标选项',
+        key: 'chart',
+        options: this.chartOption,
+        value: data && data.chart
+      }),
+      maxY: new FormText({
+        type: 'text',
+        label: '图表纵坐标最大值',
+        key: 'maxY',
+        value: data && (data.maxY == 0 ? data.maxY : data.maxY || '')
+      }),
+      minY: new FormText({
+        type: 'text',
+        label: '图表纵坐标最小值',
+        key: 'minY',
+        value: data && (data.minY == 0 ? data.minY : data.minY || '')
+      }),
+      intervalY: new FormText({
+        type: 'text',
+        label: '纵坐标间隔',
+        key: 'intervalY',
+        value: data && (data.intervalY == 0 ? data.intervalY : data.intervalY || '')
+      }),
+      color: new FormText({
+        type: 'text',
+        label: '图表线条颜色',
+        key: 'color',
+        value: data && data.color || '#35B2F2'
+      }),
+    }
+  }
+
+  getValues(value) {
+    console.log(value);
+    if (this.id) {
+      value.id = this.id;
+      this.inspectionItemService.inspectionItemEdit(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/inspection-item']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    } else {
+      this.inspectionItemService.inspectionItemCreate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/inspection-item']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    }
+  }
 }

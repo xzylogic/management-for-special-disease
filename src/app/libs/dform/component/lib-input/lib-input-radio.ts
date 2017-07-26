@@ -9,8 +9,10 @@ import { FormRadio } from '../../_entity';
     <div [formGroup]="form">
       <div class="input_container">
         <md-radio-group class="input_content"
+                        style="border: none"
                         [formControlName]="data.key"
-                        [(ngModel)]="value">
+                        [(ngModel)]="value"
+                        (change)="change()">
           <md-radio-button class="check_content"
                            *ngFor="let opt of data.options"
                            [value]="opt.id"
@@ -33,5 +35,9 @@ export class LibInputRadioComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  change() {
+    this.valueChange.emit(this.value);
   }
 }
