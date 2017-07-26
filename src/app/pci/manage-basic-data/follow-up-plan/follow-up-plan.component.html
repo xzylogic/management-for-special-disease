@@ -4,7 +4,7 @@
   </div>
   <div class="content">
     <form style="padding: 2em 1em" *ngIf="followUpPlanTable&&discomfortTypes">
-      <md-select placeholder="请选择随访计划模版类型" [(ngModel)]="followUpPlanTable.queryKey" name="type" style="width: 100%">
+      <md-select placeholder="请选择随访计划模版类型" [(ngModel)]="followUpPlanTable.queryKey" (change)="setQuery()" name="type" style="width: 100%">
         <md-option [value]="opt.id" *ngFor="let opt of discomfortTypes" (click)="getFollowUpPlans()">
           {{opt.name}}
         </md-option>

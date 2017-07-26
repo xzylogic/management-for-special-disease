@@ -8,7 +8,7 @@ import { FormDropdown } from '../../_entity';
   template: `
     <div [formGroup]="form">
       <div class="input_container">
-        <md-select style="width: 100%" [placeholder]="data.label" [formControlName]="data.key" [(ngModel)]="value">
+        <md-select style="width: 100%" [placeholder]="data.label" [formControlName]="data.key" [(ngModel)]="value" (change)="change()">
           <md-option *ngFor="let opt of data.options" [value]="opt.id">
             {{opt.name}}
           </md-option>
@@ -28,5 +28,9 @@ export class LibInputDropdownComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  change() {
+    this.valueChange.emit(this.value);
   }
 }

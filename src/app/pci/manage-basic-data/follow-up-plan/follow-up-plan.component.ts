@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
-import { TableOption } from '../../../libs';
+import { ContainerConfig, TableOption, HintDialog } from '../../../libs';
 import { FollowUpPlanService } from './_service/follow-up-plan.service';
 import { FollowUpPlanTableService } from './_service/follow-up-plan-table.service';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { FollowUpPlan } from './_entity/follow-up-plan.entity';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
@@ -13,6 +17,8 @@ import { ERRMSG } from '../../_store/static';
 export class FollowUpPlanComponent implements OnInit {
   containerConfig: ContainerConfig;
   followUpPlanTable: TableOption;
+  @select(['followUpPlan', 'tab']) tab: Observable<number>;
+
   discomfortTypes = [{
     id: 1,
     name: '一个月'
@@ -31,8 +37,11 @@ export class FollowUpPlanComponent implements OnInit {
   }];
 
   constructor(
+    @Inject('action') private action,
     private followUpPlanService: FollowUpPlanService,
-    private followUpPlanTableService: FollowUpPlanTableService
+    private followUpPlanTableService: FollowUpPlanTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
@@ -42,8 +51,16 @@ export class FollowUpPlanComponent implements OnInit {
       titles: this.followUpPlanTableService.setTitles(),
       ifPage: false
     });
-    this.followUpPlanTable.queryKey = 1;
-    this.getFollowUpPlans();
+    this.reset();
+
+  }
+
+  reset() {
+    this.tab.subscribe(key => {
+      key = key || 1;
+      this.followUpPlanTable.queryKey = key;
+      this.getFollowUpPlans();
+    })
   }
 
   getFollowUpPlans() {
@@ -65,23 +82,19 @@ export class FollowUpPlanComponent implements OnInit {
       })
   }
 
-  refresh() {
-    // this.getFollowUpPlans(1,this.followUpPlanTable1);
-    // this.getFollowUpPlans(3,this.followUpPlanTable2);
-    // this.getFollowUpPlans(6,this.followUpPlanTable3);
-    // this.getFollowUpPlans(9,this.followUpPlanTable4);
-    // this.getFollowUpPlans(12,this.followUpPlanTable5);
-  }
-
-  gotoHandle(data) {
-    // if(data.key === "edit"){
-    //    this.follow = data;
-    //    this.enableEdit = true;
-    // }else if(data.key === "del"){
-    //   this.processData = data;
-    //   this.processMessage = '你确定要删除？';
-    //   this.enableProcess = true;
-    // }
+  gotoHandle(res) {
+    const followUpPlan = <FollowUpPlan>res.value;
+    if (res.key === 'edit') {
+      this.action.dataChange('followUpPlan', followUpPlan);
+      this.router.navigate(['/follow-up-plan/edit']);
+    }
+    if (res.key === 'del') {
+      HintDialog('您确定要删除该信息？', this.dialog).afterClosed().subscribe(result => {
+        if (result && result.key === 'confirm') {
+          this.process(followUpPlan.id);
+        }
+      });
+    }
   }
 
   followUpPlanFormat(data) {
@@ -95,46 +108,27 @@ export class FollowUpPlanComponent implements OnInit {
 
   // 新增随访项
   newData() {
-    // this.follow = null;
-    // this.enableEdit = true;
-  }
-
-  // 返回服务器信息
-  handleSuccess(data) {
-    // this.titleShow = '提示信息';
-    // this.message = data;
-    // this.enableShow = true;
-    // this.refresh();
+    this.action.dataChange('followUpPlan', new FollowUpPlan());
+    this.router.navigate(['/follow-up-plan/edit']);
   }
 
   // 确定删除
-  process() {
-    // this._followUpPlanService.followUpPlanDelete(this.processData.value.id)
-    // .subscribe(
-    //       data => {
-    //         this.enableProcess = false;
-    //         if (data.code === 0) {
-    //           this.titleShow = "提示信息"
-    //           this.message = "删除成功";
-    //           this.enableShow = true;
-    //           this.refresh();
-    //         } else {
-    //           this.titleShow = "提示信息"
-    //           this.message = "操作失败";
-    //           this.enableShow = true;
-    //         }
-    //       }, err => {
-    //         this.enableProcess = false;
-    //         this.titleShow = "提示信息"
-    //         this.message = "啊哦！访问出错啦～";
-    //         this.enableShow = true;
-    //       })
+  process(id) {
+    this.followUpPlanService.followUpPlanDelete(id)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
   }
 
-  // 取消删除
-  processCancel() {
-    // this.processData = null;
-    // this.processMessage = '';
-    // this.enableProcess = false;
+  setQuery() {
+    this.action.tabChange('followUpPlan', this.followUpPlanTable.queryKey);
   }
 }

@@ -1,30 +1,28 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { FollowUpPlanService } from '../_service/follow-up-plan.service';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
-// declare var $: any;
+import { ContainerConfig, FormDropdown, FormText, HintDialog } from '../../../../libs';
+import { FollowUpPlanService } from '../_service/follow-up-plan.service';
+import { FollowUpPlan } from '../_entity/follow-up-plan.entity';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-follow-p-edit',
-  templateUrl: 'follow-up-plan-edit.component.html'
+  templateUrl: './follow-up-plan-edit.component.html'
 })
-export class FollowUpPlanEditComponent implements OnInit, AfterViewInit {
+export class FollowUpPlanEditComponent implements OnInit {
+  containerConfig: ContainerConfig;
+  @select(['followUpPlan', 'data']) followUpPlan: Observable<FollowUpPlan>;
+  form: FormGroup;
+  config: any;
+  custom: any;
+  id: number;
 
-  @Input() data: any;
-  @Input() enable: boolean;
-  @Output() enableChange: EventEmitter<any> = new EventEmitter();
-  @Output() handleEmit: EventEmitter<any> = new EventEmitter();
-
-  modalTitle: string;
-  errorMessage: string;
-
-  myForm: FormGroup;
-  type: number;
-  name: string;
-  custom: boolean;
-  customName: string;
-
-  followTypeList: Array<any> = [{
+  followTypeList = [{
     id: 1,
     name: '一个月'
   }, {
@@ -41,7 +39,7 @@ export class FollowUpPlanEditComponent implements OnInit, AfterViewInit {
     name: '十二个月'
   }];
 
-  customList: Array<any> = [{
+  customList = [{
     id: 1,
     name: '复查血一套'
   }, {
@@ -64,95 +62,112 @@ export class FollowUpPlanEditComponent implements OnInit, AfterViewInit {
     name: '自定义'
   }];
 
-  constructor(private _followUpPlanService: FollowUpPlanService, private fb: FormBuilder) {
+  constructor(
+    private followUpPlanService: FollowUpPlanService,
+    private dialog: MdDialog,
+    private router: Router,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit() {
-    this.type = this.data && this.data.value && this.data.value.type || null;
-    if (this.data && this.data.value && this.data.value.custom) {
-      this.name = '自定义';
-      this.customName = this.data && this.data.value && this.data.value.customName || '';
-    } else {
-      this.name = this.data && this.data.value && this.data.value.name || '';
+    this.followUpPlan.subscribe(data => {
+      if (data && data.id > 0) {
+        this.id = data.id;
+        this.containerConfig = this.followUpPlanService.followUpPlanEditConfig(true);
+        this.customList.forEach(obj => {
+          if (data.custom) {
+            this.custom = 7;
+          } else if (!data.custom && obj.name == data.name) {
+            this.custom = obj.id;
+          }
+        });
+        this.createForm(data);
+      } else {
+        this.containerConfig = this.followUpPlanService.followUpPlanEditConfig(false);
+        this.createForm();
+      }
+    });
+    this.cdr.detectChanges();
+  }
+
+  createForm(data?) {
+    this.form = this.fb.group({
+      type: new FormControl({value: ''}, Validators.required),
+      custom: new FormControl({value: ''}, Validators.required),
+      name: new FormControl({value: ''}, Validators.required)
+    });
+    this.config = {
+      type: new FormDropdown({
+        label: '随访时间',
+        key: 'type',
+        options: this.followTypeList,
+        value: data && data.type || ''
+      }),
+      custom: new FormDropdown({
+        label: '随访项',
+        key: 'custom',
+        options: this.customList,
+        value: data && data.custom || ''
+      }),
+      name: new FormText({
+        type: 'text',
+        label: '自定义内容',
+        key: 'name',
+        value: data && data.name || ''
+      })
     }
-
-    this.myForm = new FormGroup({
-      type: new FormControl(this.type,
-        Validators.compose([
-          Validators.required
-        ])),
-      name: new FormControl(this.name,
-        Validators.compose([
-          Validators.required
-        ])),
-      customName: new FormControl(this.customName)
-    })
-
   }
 
-  ngAfterViewInit() {
-    // $('#followTypeList').dropdown();
-    // $('#customList').dropdown();
-  }
-
-  get isTypeValid() {
-    return this.myForm.controls['type'].valid;
-  }
-
-  get isNameValid() {
-    return this.myForm.controls['name'].valid;
+  setCustom(data) {
+    this.custom = data;
+    if (this.custom == 7) {
+      this.config.name.value = '';
+    }
+    this.cdr.detectChanges();
   }
 
   // 提交保存信息
-  onSubmit(data) {
-    if (data.name === '自定义') {
-      data.name = data.customName;
-      data.custom = true;
-    } else {
-      data.custom = false;
+  getValues(value) {
+    value.custom = value.custom == 7 ? true : false;
+    if (!value.custom) {
+      this.customList.forEach(obj => {
+        if (obj.id == this.custom) {
+          console.log(obj.name);
+          value.name = obj.name;
+        }
+      });
     }
-    delete data.customName;
-    if (this.data) {
-      data.id = this.data.value.id;
-      this._followUpPlanService.followUpPlanEdit(data)
-        .subscribe(
-          res => {
-            if (res.code === 0) {
-              this.handleEmit.emit('修改随访项成功！');
-              this.close();
-            } else {
-              if (res.msg) {
-                this.errorMessage = res.msg;
-              } else {
-                this.errorMessage = '操作失败！';
-              }
-            }
-          }, err => {
-            this.errorMessage = '啊哦！访问出错啦～';
-          })
+    if (this.id) {
+      value.id = this.id;
+      this.followUpPlanService.followUpPlanEdit(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/follow-up-plan']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
     } else {
-      this._followUpPlanService.followUpPlanCreate(data)
-        .subscribe(
-          res => {
-            if (res.code === 0) {
-              this.handleEmit.emit('新增随访项成功！');
-              this.close();
-            } else {
-              if (res.msg) {
-                this.errorMessage = res.msg;
-              } else {
-                this.errorMessage = '操作失败！';
-              }
-            }
-          }, err => {
-            this.errorMessage = '啊哦！访问出错啦～';
-          })
+      this.followUpPlanService.followUpPlanCreate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/follow-up-plan']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
     }
-  }
-
-  // 关闭模态框
-  close() {
-    this.enable = !this.enable;
-    this.enableChange.emit(this.enable);
   }
 }

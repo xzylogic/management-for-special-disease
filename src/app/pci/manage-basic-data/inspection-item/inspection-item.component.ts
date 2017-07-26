@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 
-import { ContainerConfig, TableOption } from '../../../libs';
+import { ContainerConfig, TableOption, HintDialog } from '../../../libs';
 import { InspectionItemService } from './_service/inspection-item.service';
 import { InspectionItemTableService } from './_service/inspection-item-table.service';
 import { ERRMSG } from '../../_store/static';
+import { InspectionItem } from './_entity/inspection-item.entity';
 
 @Component({
   selector: 'app-inspection-item',
@@ -15,8 +18,11 @@ export class InspectionItemComponent implements OnInit {
   inspectionType: any;
 
   constructor(
+    @Inject('action') private action,
     private inspectionItemService: InspectionItemService,
-    private inspectionItemTableService: InspectionItemTableService
+    private inspectionItemTableService: InspectionItemTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
@@ -71,40 +77,40 @@ export class InspectionItemComponent implements OnInit {
       })
   }
 
-  gotoHandle(data) {
-    console.log(data);
-    //   if (data.key === 'edit') {
-    //     this.inspectionItemData = data.value;
-    //     this.enableEdit = true;
-    //   }
-    //
-    //   if (data.key === 'delete') {
-    //     // console.log(data.value);
-    //     this._inspectionItemService.inspectionItemDelete(data.value.id)
-    //       .subscribe(
-    //         res => {
-    //           if (res.code === 0) {
-    //             this.message = '检查子项目删除成功！';
-    //             this.enableShow = true;
-    //             this.refresh();
-    //           } else {
-    //             if(res.msg) {
-    //               this.message = res.msg;
-    //             } else {
-    //               this.message = "检查子项目删除失败！";
-    //             }
-    //             this.enableShow = true;
-    //           }
-    //         }, err => {
-    //           this.message = "啊哦！接口访问出错啦～";
-    //           this.enableShow = true;
-    //         }
-    //       )
-    //   }
+  gotoHandle(res) {
+    const data = <InspectionItem>res.value;
+    console.log(res);
+    if (res.key === 'edit') {
+      this.action.dataChange('inspectionItem', data);
+      this.router.navigate(['/inspection-item/edit']);
+    }
+
+    if (res.key === 'delete') {
+      HintDialog('您确定要删除该信息？', this.dialog).afterClosed().subscribe(result => {
+        if (result && result.key === 'confirm') {
+          this.delData(data.id);
+        }
+      });
+    }
   }
 
   newData() {
     //   this.inspectionItemData = null;
     //   this.enableEdit = true;
+  }
+
+  delData(id) {
+    this.inspectionItemService.inspectionItemDelete(id)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
   }
 }

@@ -1,18 +1,14 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
-import { ContainerConfig, FormText } from '../../../../libs';
+import { ContainerConfig, FormText, FormFile, FormTextarea, FormRadio, HintDialog } from '../../../../libs';
 import { BasicServiceService } from '../_service/basic-service.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormFile } from '../../../../libs/dform/_entity/form-file';
-import { FormTextarea } from '../../../../libs/dform/_entity/form-textarea';
-import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
 import { BasicService } from '../_entity/basic-service.entity';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-basic-service-edit',

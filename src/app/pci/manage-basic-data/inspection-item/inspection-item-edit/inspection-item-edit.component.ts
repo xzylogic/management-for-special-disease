@@ -1,48 +1,37 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+
 import { InspectionItemService } from '../_service/inspection-item.service';
 
 @Component({
   selector: 'app-inspection-item-edit',
-  templateUrl: 'inspection-item-edit.component.html',
-  styleUrls: ['inspection-item-edit.component.css']
+  templateUrl: 'inspection-item-edit.component.html'
 })
-export class InspectionItemEditComponent implements OnInit, AfterViewInit {
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Input() inspectionType: any;
-  // @Output() enableChange: EventEmitter <any> = new EventEmitter();
-  // @Output() handleEmit: EventEmitter <any> = new EventEmitter();
-  //
-  // modalTitle: string;
-  // errorMessage: string;
-  //
-  // myForm: FormGroup;
-  // selectedType: any;
-  // selectedChart: any;
-  // typeOption = [
-  //   {
-  //     id: 0,
-  //     name: '无'
-  //   },
-  //   {
-  //     id: 1,
-  //     name: '范围'
-  //   }
-  // ];
-  // chartOption = [
-  //   {
-  //     id: 'true',
-  //     name: '可显示图表'
-  //   },
-  //   {
-  //     id: 'false',
-  //     name: '无图表'
-  //   }
-  // ];
+export class InspectionItemEditComponent implements OnInit {
+
+  typeOption = [
+    {
+      id: 0,
+      name: '无'
+    },
+    {
+      id: 1,
+      name: '范围'
+    }
+  ];
+  chartOption = [
+    {
+      id: 'true',
+      name: '可显示图表'
+    },
+    {
+      id: 'false',
+      name: '无图表'
+    }
+  ];
 
   constructor(
-    private _inspectionItemService: InspectionItemService,
+    private inspectionItemService: InspectionItemService,
     private fb: FormBuilder
   ) {
 
@@ -50,12 +39,6 @@ export class InspectionItemEditComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // this.setInspectionItemForm();
-  }
-
-  ngAfterViewInit() {
-    // $('#inspectionType').dropdown();
-    // $('#typeOption').dropdown();
-    // $('#chartOption').dropdown();
   }
 
   // setInspectionItemForm() {

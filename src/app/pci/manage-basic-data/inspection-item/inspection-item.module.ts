@@ -17,6 +17,10 @@ const routes: Routes = [{
   path: '',
   component: InspectionItemComponent,
   canActivate: [AuthGuardService]
+}, {
+  path: 'edit',
+  component: InspectionItemEditComponent,
+  canActivate: [AuthGuardService]
 }];
 
 @NgModule({
