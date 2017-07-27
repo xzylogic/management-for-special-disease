@@ -97,7 +97,7 @@ export class DoctorComponent implements OnInit {
           this.userTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
       }, err => {
-        this.auditedTable.loading = false;
+        this.userTable.loading = false;
         console.log(err);
         this.userTable.errorMessage = ERRMSG.netErrMsg;
       })
