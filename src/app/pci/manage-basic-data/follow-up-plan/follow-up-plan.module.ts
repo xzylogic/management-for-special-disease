@@ -12,6 +12,10 @@ const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
   component: FollowUpPlanComponent
+}, {
+  path: 'edit',
+  canActivate: [AuthGuardService],
+  component: FollowUpPlanEditComponent
 }];
 
 @NgModule({

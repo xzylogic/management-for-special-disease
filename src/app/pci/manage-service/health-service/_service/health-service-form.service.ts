@@ -5,7 +5,10 @@ import { FormBase, FormText, FormFile, FormDropdown, FormTextarea, FormEditor } 
 @Injectable()
 export class HealthServiceFormService {
 
-  constructor(@Inject('admin') private admin) {
+  constructor(
+    @Inject('app') private app,
+    @Inject('auth') private auth
+  ) {
   }
 
   setForm(organizationList, data?: any) {
@@ -18,7 +21,7 @@ export class HealthServiceFormService {
           key: 'serviceId',
           label: 'ID',
           value: data && data.serviceId || '',
-          type: 'hidden',
+          readonly: true,
           required: true,
           order: 0
         })
@@ -30,7 +33,7 @@ export class HealthServiceFormService {
         key: 'imageUrl',
         label: '服务小图',
         value: data && data.imageUrl || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: false,
         order: 1
       }),
@@ -38,7 +41,7 @@ export class HealthServiceFormService {
         key: 'pictures',
         label: '详情图片',
         value: data && data.pictures || [],
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         multiple: true,
         required: false,
         order: 2
@@ -69,7 +72,7 @@ export class HealthServiceFormService {
         ],
         order: 5
       }),
-      new FormTextarea({
+      new FormText({
         key: 'description',
         label: '服务简介',
         value: data && (data.description || ''),
@@ -86,8 +89,8 @@ export class HealthServiceFormService {
       new FormText({
         key: 'createdBy',
         label: '添加用户',
-        value: this.admin.getName(),
-        type: 'hidden',
+        value: this.auth.getAdminName(),
+        readonly: true,
         required: false,
         order: 10
       })

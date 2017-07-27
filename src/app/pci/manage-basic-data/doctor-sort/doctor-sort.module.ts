@@ -14,13 +14,12 @@ import { DoctorSortFormService } from './_service/doctor-sort-form.service';
 export const routes: Routes = [{
   path: '',
   component: DoctorSortComponent,
-  canActivate: [AuthGuardService],
-  children: [{
+  canActivate: [AuthGuardService]},
+  {
     path: 'edit',
     component: DoctorSortEditComponent,
     canActivate: [AuthGuardService]
-  }]
-}];
+  }];
 
 @NgModule({
   imports: [

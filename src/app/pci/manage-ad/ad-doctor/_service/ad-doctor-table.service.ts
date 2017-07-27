@@ -6,7 +6,7 @@ import { TableTitle, ControlType } from '../../../../libs';
 export class AdDoctorTableService {
 
   setAdDoctorTitles() {
-    let Titles: TableTitle[] = [
+    const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
         key: 'id'
@@ -46,8 +46,18 @@ export class AdDoctorTableService {
         key: 'statusName'
       }),
       new TableTitle({
+        name: '上/下架',
+        key: 'updown',
+        controlType: ControlType.button
+      }),
+      new TableTitle({
         name: '编辑',
-        key: 'status',
+        key: 'edit',
+        controlType: ControlType.button
+      }),
+      new TableTitle({
+        name: '删除',
+        key: 'del',
         controlType: ControlType.button
       })
     ];

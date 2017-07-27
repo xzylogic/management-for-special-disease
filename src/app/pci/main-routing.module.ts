@@ -23,7 +23,7 @@ import { routes as wechatRoutes} from './manage-wechat';
       children: [
         {
           path: '',
-          redirectTo: '/doctor',
+          redirectTo: '/integral',
           pathMatch: 'full'
         },
         ...adRoutes,

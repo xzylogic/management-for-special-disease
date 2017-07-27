@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   thirdPartyList: 'api/healthorganization/all', // 第三方机构列表
@@ -15,11 +16,31 @@ export class HealthOrganizationService {
   ) {
   }
 
+  healthOrganizationConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '第三方机构维护',
+      ifHome: true,
+      homeRouter: '/BasicData',
+      currentRouter: '/health-organization'
+    });
+  }
+
+  healthOrganizationEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '第三方机构维护',
+      subTitle: tag ? '新增第三方机构' : '编辑第三方机构',
+      ifHome: false,
+      homeRouter: '/health-organization',
+      currentRouter: '/health-organization/edit'
+    });
+  }
+
   /**
    * 获取第三方机构列表
    */
   getHealthOrganizations() {
-    return this.httpService.get(`${PATH.thirdPartyList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.thirdPartyList}`);
   }
 
   /**
@@ -27,7 +48,7 @@ export class HealthOrganizationService {
    * @param {[type]} data [description]
    */
   healthOrganizationCreate(data) {
-    return this.httpService.post(`${PATH.thirdPartyCreate}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.thirdPartyCreate}`, data);
   }
 
   /**
@@ -35,6 +56,6 @@ export class HealthOrganizationService {
    * @param {[type]} data [description]
    */
   healthOrganizationEdit(data) {
-    return this.httpService.post(`${PATH.thirdPartyEdit}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.thirdPartyEdit}`, data);
   }
 }

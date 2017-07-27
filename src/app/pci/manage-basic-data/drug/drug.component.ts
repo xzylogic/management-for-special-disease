@@ -1,29 +1,83 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../../libs';
 import { DrugService } from './_service/drug.service';
 import { DrugTableService } from './_service/drug-table.service';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { Observable } from 'rxjs/Observable';
+import { select } from '@angular-redux/store';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { Drug } from './_entity/drug.entity';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-drug',
   templateUrl: './drug.component.html'
 })
 export class DrugComponent implements OnInit {
+  containerConfig: ContainerConfig;
+  drugTable: TableOption;
+  @select(['drug', 'tab']) tab: Observable<number>;
+  @select(['drug', 'page']) page: Observable<Array<number>>;
 
   constructor(
-    private _drugService: DrugService,
-    private _drugTableService: DrugTableService
+    @Inject('action') private action,
+    private drugService: DrugService,
+    private drugTableService: DrugTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('drugService', new Drug());
   }
 
   ngOnInit() {
-    // this.getDrugTitles();
-    // this.getDrugs(0);
+    this.containerConfig = this.drugService.drugConfig();
+    this.drugTable = new TableOption({
+      titles: this.drugTableService.setTitles(),
+      ifPage: true
+    });
+    this.page.subscribe((page: Array<number>) => {
+      this.getDrug(page[0]);
+    });
   }
 
-  // getDrugTitles() {
-  //   this.drugTable.titles = this._drugTableService.setTitles();
-  // }
+  getDrug(page: number) {
+    // this.drugTable.reset(page);
+    this.drugService.getDrugs(page, 20)
+      .subscribe(res => {
+        this.drugTable.loading = false;
+        if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+          this.drugTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data && res.data.content) {
+          this.drugTable.totalPage = res.data.totalPages;
+          this.drugTable.lists = res.data.content;
+          for (let i = 0; i < this.drugTable.lists.length; i++) {
+            this.drugTable.lists[i].enableName = this.formatDrug(this.drugTable.lists[i].enable);
+          }
+        } else {
+          this.drugTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.drugTable.loading = false;
+        console.log(err);
+        this.drugTable.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
+
+  newData() {
+    this.action.dataChange('drug', new Drug());
+    this.router.navigate(['/drug/edit']);
+  }
+
+  gotoHandle(res) {
+    const drug = <Drug>res.value;
+    if (res.key === 'editDrug') {
+      this.action.dataChange('drug', drug);
+      this.router.navigate(['/drug/edit']);
+    }
+  }
+
   //
   // getDrugs(page: number) {
   //   this.drugTable.currentPage = page;
@@ -61,16 +115,17 @@ export class DrugComponent implements OnInit {
   //   this.drug = null;
   //   this.enableEdit = true;
   // }
-  // //状态信息转换
-  // getDrug(statu){
-  //   if(statu === true) {
-  //     return '启用';
-  //   }
-  //   if(statu === false) {
-  //     return '禁用';
-  //   }
-  //   return null;
-  // }
+  //状态信息转换
+  formatDrug(statu) {
+    if (statu === true) {
+      return '启用';
+    }
+    if (statu === false) {
+      return '禁用';
+    }
+    return null;
+  }
+
   //
   //
   // //返回服务器信息

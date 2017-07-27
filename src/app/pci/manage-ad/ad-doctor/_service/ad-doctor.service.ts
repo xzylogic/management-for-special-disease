@@ -1,4 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   adList: 'api/banner', // GET
@@ -13,8 +14,29 @@ export class AdDoctorService {
 
   constructor(
     @Inject('app') private app,
-    @Inject('http') private httpService
+    @Inject('http') private httpService,
+    @Inject('auth') private authService
   ) {
+  }
+
+  adDoctorConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '广告位管理',
+      subTitle: '医生端',
+      ifHome: true,
+      homeRouter: '/ad-doctor',
+      currentRouter: '/ad-doctor'
+    });
+  }
+
+  adDoctorEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '广告位管理-医生端',
+      subTitle: tag ? '新增广告位' : '编辑广告位',
+      ifHome: false,
+      homeRouter: '/ad-doctor',
+      currentRouter: '/ad-doctor/edit'
+    });
   }
 
   /**

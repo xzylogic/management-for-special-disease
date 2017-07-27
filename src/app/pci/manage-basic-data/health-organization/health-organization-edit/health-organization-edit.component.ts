@@ -2,84 +2,81 @@ import { Component, OnInit } from '@angular/core';
 
 import { HealthOrganizationService } from '../_service/health-organization.service';
 import { HealthOrganizationFormService } from '../_service/health-organization-form.service';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { Observable } from 'rxjs/Observable';
+import { select } from '@angular-redux/store';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { ERRMSG } from '../../../_store/static';
+import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
+import { HealthOrganization } from '../_entity/health-organization.entity';
 
 @Component({
   selector: 'app-health-organization-edit',
   templateUrl: './health-organization-edit.component.html'
 })
 export class HealthOrganizationEditComponent implements OnInit {
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter<any> = new EventEmitter();
-  // @Output() handleEmit: EventEmitter<any> = new EventEmitter();
-  //
-  // modalTitle: string;
-  // formDatas: any;
-  // errorMessage: string;
+  containerConfig: ContainerConfig;
+  @select(['healthOrganization', 'data']) healthOrganization: Observable<HealthOrganization>;
+  errMsg = '';
+  form: any;
+  healthOrganizationId: number;
 
   constructor(
-    private _healthOrganizationService: HealthOrganizationService,
-    private _healthOrganizationFormService: HealthOrganizationFormService
+    private healthOrganizationService: HealthOrganizationService,
+    private healthOrganizationFormService: HealthOrganizationFormService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    // this.setHealthOrganizationForm();
+    this.healthOrganization.subscribe(data => {
+        this.healthOrganizationId = data.id;
+        if (data.id === 0) {
+          this.containerConfig = this.healthOrganizationService.healthOrganizationEditConfig(true);
+          this.form = this.healthOrganizationFormService.setForm();
+        } else {
+          this.containerConfig = this.healthOrganizationService.healthOrganizationEditConfig(false);
+          this.form = this.healthOrganizationFormService.setForm(data);
+        }
+      },
+      err => {
+        console.log(err);
+        this.errMsg = ERRMSG.netErrMsg;
+      });
   }
 
-// // 编辑和新增机构
-//   setHealthOrganizationForm() {
-//     if (this.data) {
-//       this.modalTitle = '编辑机构';
-//       this.formDatas = this._healthOrganizationFormService.setForm(this.data.value);
-//     } else {
-//       this.modalTitle = '新增机构';
-//       this.formDatas = this._healthOrganizationFormService.setForm();
-//     }
-//   }
-//
-//   //提交保存信息
-//   getValue(data) {
-//     if (this.data) {
-//       this._healthOrganizationService.healthOrganizationEdit(data)
-//         .subscribe(
-//           data => {
-//             if (data.code === 0) {
-//               this.handleEmit.emit('第三方机构修改成功！');
-//               this.close();
-//             } else {
-//               if (data.msg) {
-//                 this.errorMessage = data.msg;
-//               } else {
-//                 this.errorMessage = '操作失败！';
-//               }
-//             }
-//           }, err => {
-//             this.errorMessage = '啊哦！访问出错啦～';
-//           })
-//     } else {
-//       this._healthOrganizationService.healthOrganizationCreate(data)
-//         .subscribe(
-//           data => {
-//             if (data.code === 0) {
-//               this.handleEmit.emit('新增第三方机构成功！');
-//               this.close();
-//             } else {
-//               if (data.msg) {
-//                 this.errorMessage = data.msg;
-//               } else {
-//                 this.errorMessage = '操作失败！';
-//               }
-//             }
-//           }, err => {
-//             this.errorMessage = '啊哦！访问出错啦～';
-//           })
-//     }
-//   }
-//
-// //关闭模态框
-//   close() {
-//     this.enable = !this.enable;
-//     this.enableChange.emit(this.enable);
-//   }
+  getValues(value) {
+    console.log(value);
+    if (this.healthOrganizationId !== 0) {
+      this.healthOrganizationService.healthOrganizationEdit(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/health-organization']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    } else {
+      this.healthOrganizationService.healthOrganizationCreate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/health-organization']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    }
+  }
 }

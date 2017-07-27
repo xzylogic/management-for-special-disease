@@ -2,74 +2,66 @@ import { Component, OnInit } from '@angular/core';
 
 import { IntegralCommodityFormService } from '../_service/integral-commodity-form.service';
 import { IntegralCommodityService } from '../_service/integral-commodity.service';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { ERRMSG } from '../../../_store/static';
+import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
+import { IntegralCommodity } from '../_entity/integralCommodity.entity';
 
 @Component({
   selector: 'app-integral-commodity-edit',
-  template: `
-    <h1>integral-commodity-edit</h1>
-  `,
+  templateUrl: './integral-commodity-edit.component.html'
 })
 export class IntegralCommodityEditComponent implements OnInit {
 
+  containerConfig: ContainerConfig;
+  @select(['integralCommodity', 'data']) integralCommodity: Observable<IntegralCommodity>;
+  errMsg = '';
+  form: any;
+  integralCommodityId: number;
+
   constructor(
+    private integralCommodityService: IntegralCommodityService,
     private integralCommodityFormService: IntegralCommodityFormService,
-    private integralCommodityService: IntegralCommodityService
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    // console.log(this.data);
-    // this.setIntegralCommodityForm();
+    this.integralCommodity.subscribe(data => {
+        this.integralCommodityId = data.id;
+        if (data.id === 0) {
+          this.containerConfig = this.integralCommodityService.integralCommodityEditConfig(true);
+          this.form = this.integralCommodityFormService.setForm();
+        } else {
+          this.containerConfig = this.integralCommodityService.integralCommodityEditConfig(false);
+          this.form = this.integralCommodityFormService.setForm(data);
+        }
+      },
+      err => {
+        console.log(err);
+        this.errMsg = ERRMSG.netErrMsg;
+      });
   }
 
-  // setIntegralCommodityForm() {
-  //   if (this.data) {
-  //     this.modalTitle = '编辑商品信息';
-  //     // console.log(this.data);
-  //     this.formDatas = this._IntegralCommodityFormService.setForm(this.data);
-  //   } else {
-  //     this.modalTitle = '新增商品信息';
-  //     this.formDatas = this._IntegralCommodityFormService.setForm();
-  //   }
-  // }
-  //
-  // getValue(data) {
-  //   if (this.data) {
-  //     //  console.log(this.data);
-  //     this._IntegralCommodityService.integralCommodityUpdate(data)
-  //       .subscribe(
-  //         data => {
-  //           // console.log(data);
-  //           if (data.code === 0) {
-  //             this.close();
-  //             this.handleEmit.emit('修改成功！');
-  //           } else {
-  //             this.errorMessage = '修改失败～请重新操作！';
-  //           }
-  //           ;
-  //         }), err => {
-  //       this.errorMessage = '啊哦！接口访问出错啦～';
-  //     }
-  //   } else {
-  //     // console.log(data);
-  //     this._IntegralCommodityService.integralCommodityUpdate(data)
-  //       .subscribe(
-  //         data => {
-  //           // console.log(data);
-  //           if (data.code === 0) {
-  //             this.close();
-  //             this.handleEmit.emit('添加成功！');
-  //           } else {
-  //             this.errorMessage = '添加失败～请重新操作！';
-  //           }
-  //         }), err => {
-  //       this.errorMessage = '啊哦！接口访问出错啦～';
-  //     }
-  //   }
-  // }
-  //
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
+  getValues(value) {
+    console.log(value);
+    this.integralCommodityService.integralCommodityUpdate(value)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+            this.router.navigate(['/integral-commodity']);
+          });
+        } else {
+          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.saveError, this.dialog);
+      });
+  }
 }

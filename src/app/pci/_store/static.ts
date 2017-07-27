@@ -312,5 +312,11 @@ export const ERRMSG = {
   otherMsg: '呀～发生未知错误，请关闭重试',
   inputErr: '输入数据错误，请重新输入！',
   saveSuccess: '保存数据成功！',
-  saveError: '保存数据失败！'
+  saveError: '保存数据失败！',
+  deleteSuccess: '删除成功！',
+  deleteError: '删除失败！',
+  updownSuccess: '上架成功！',
+  updownError: '上架失败',
+  statusSuccess: '',
+  statusError: '',
 };

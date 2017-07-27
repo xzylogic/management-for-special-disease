@@ -1,96 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../../libs';
 import { PackageServiceService } from './_service/package-service.service';
 import { PackageServiceTableService } from './_service/package-service-table.service';
+import { ContainerConfig } from '../../../libs';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { PackageService } from './_entity/package-service.entity';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-package-service',
   templateUrl: './package-service.component.html'
 })
 export class PackageServiceComponent implements OnInit {
-
-  // packageServiceTable: TableOption = new TableOption();
+  containerConfig: ContainerConfig;
+  packageServiceTable: TableOption;
+  @select(['packageService', 'tab']) tab: Observable<number>;
+  @select(['packageService', 'page']) page: Observable<Array<number>>;
 
   constructor(
-    private _packageServiceService: PackageServiceService,
-    private _packageServiceTableService: PackageServiceTableService
+    @Inject('action') private action,
+    private packageServiceService: PackageServiceService,
+    private packageServiceTableService: PackageServiceTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('packageService', new PackageService());
   }
 
   ngOnInit() {
-    // this.getPackageServiceTitles();
-    // this.getPackageServices();
-    // this.getDoctorService();
-    // this.getHealthService();
+    this.containerConfig = this.packageServiceService.packageServiceConfig();
+    this.packageServiceTable = new TableOption({
+      titles: this.packageServiceTableService.setTitles(),
+      ifPage: true
+    });
+    this.page.subscribe((page: Array<number>) => {
+      this.getPackageService(page[0]);
+    });
   }
 
-  // getPackageServiceTitles() {
-  //   this.packageServiceTable.titles = this._packageServiceTableService.setTitles();
-  // }
-  //
-  // getPackageServices() {
-  //   this._packageServiceService.getPackageServices()
-  //     .subscribe(
-  //       data => {
-  //         this.packageServiceTable.loading = false;
-  //         if (data.data && data.data.length === 0 && data.code === 0) {
-  //           this.packageServiceTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.code === 0) {
-  //           this.packageServiceTable.lists = data.data;
-  //         } else {
-  //           this.packageServiceTable.errorMessage = "空空如也～";
-  //         }
-  //       },err =>{
-  //         this.packageServiceTable.loading = false;
-  //         this.packageServiceTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // // 获取医生服务列表
-  // getDoctorService() {
-  //   this._packageServiceService.getServiceOptionD()
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.DoctorServiceList = data.data;
-  //         }
-  //     })
-  // }
-  //
-  //  //获取第三方服务列表
-  // getHealthService() {
-  //   this._packageServiceService.getServiceOptionT()
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.HealthServiceList = data.data;
-  //         }
-  //     })
-  // }
-  //
-  // //编辑套餐包
-  // gotoHandle(data) {
-  //   this.package = data;
-  //   this.enableEdit = true;
-  // }
-  // //刷新页面
-  // refresh(){
-  //   this.getPackageServices();
-  // }
-  //
-  // //新增套餐包
-  // newPackageService(){
-  //   this.package = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  //
-  //  //返回服务器信息
-  // handleSuccess(data){
-  //   this.titleShow = '提示信息';
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.refresh();
-  // }
+  getPackageService(page: number) {
+    this.action.pageChange('packageService', [page]);
+    this.packageServiceTable.reset(page);
+    this.packageServiceService.getPackageServices()
+      .subscribe(res => {
+        this.packageServiceTable.loading = false;
+        if (res.code === 0 && res.data && res.data.length === 0) {
+          this.packageServiceTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data) {
+          this.packageServiceTable.totalPage = res.data.totalPages;
+          this.packageServiceTable.lists = res.data;
+        } else {
+          this.packageServiceTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.packageServiceTable.loading = false;
+        console.log(err);
+        this.packageServiceTable.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
+
+  newData() {
+    this.action.dataChange('packageService', new PackageService());
+    this.router.navigate(['/package-service/edit']);
+  }
+
+  gotoHandle(res) {
+    const packageService = <PackageService>res.value;
+    if (res.key === 'edit') {
+      this.action.dataChange('packageService', packageService);
+      this.router.navigate(['/package-service/edit']);
+    }
+  }
 }

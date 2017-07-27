@@ -13,6 +13,7 @@ export class AuthService {
   // store the URL so we can redirect after logging in
   redirectUrl: string;
   @select(['main', 'adminName']) admin: Observable<any>;
+  @select(['main', 'adminId']) adminId: Observable<any>;
 
   constructor(
     private router: Router,
@@ -52,5 +53,13 @@ export class AuthService {
       name = res;
     });
     return name;
+  }
+
+  getAdminId(): number {
+    let id: number;
+    this.adminId.subscribe(res => {
+      id = res;
+    });
+    return id;
   }
 }

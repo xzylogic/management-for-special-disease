@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   flowerClassList: 'api/income/level/list', // 鲜花等级列表
@@ -14,6 +15,26 @@ export class FlowerGradeService {
     @Inject('app') private app,
     @Inject('http') private httpService,
   ) {
+  }
+
+  flowerGradeConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '鲜花等级维护',
+      ifHome: true,
+      homeRouter: '/BasicData',
+      currentRouter: '/doctorTitle'
+    });
+  }
+
+  flowerGradeEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '鲜花等级维护',
+      subTitle: tag ? '新增鲜花等级' : '编辑鲜花等级',
+      ifHome: false,
+      homeRouter: '/flowerGrade',
+      currentRouter: '/flowerGrade/edit'
+    });
   }
 
   /**

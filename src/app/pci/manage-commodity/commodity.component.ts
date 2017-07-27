@@ -1,158 +1,180 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../libs/dtable/dtable.entity';
 import { CommodityService } from './_service/commodity.service';
 import { CommodityTableService } from './_service/commodity-table.service';
+import { ContainerConfig } from '../../libs';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { Commodity } from './_entity/commodity.entity';
+import { ERRMSG } from '../_store/static';
+import { ActionDialog, HintDialog } from '../../libs/dmodal/dialog/dialog.component';
+import { DialogOptions } from '../../libs/dmodal/dialog/dialog.entity';
 
 @Component({
   selector: 'app-commodity',
   templateUrl: './commodity.component.html'
 })
 export class CommodityComponent implements OnInit {
-  // title = '商品维护';
-  // subTitle = '商品列表';
-
-  // commodityTable: TableOption = new TableOption();
-
-  // commodity: any;
-  // enableEdit: boolean;
-  //
-  // message: string;
-  // enableShow: boolean;
-  //
-  // status: number;
-  //
-  // delData: any;
-  //
-  // enableOperate: boolean;
+  containerConfig: ContainerConfig;
+  commodityTable: TableOption;
+  @select(['commodity', 'tab']) tab: Observable<number>;
+  @select(['commodity', 'page']) page: Observable<Array<number>>;
 
   constructor(
+    @Inject('action') private action,
     private commodityService: CommodityService,
-    private commodityTableService: CommodityTableService
+    private commodityTableService: CommodityTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('commodity', new Commodity());
   }
 
   ngOnInit() {
-    // this.getCommodityTitles();
-    // this.getCommodities();
+    this.containerConfig = this.commodityService.commodityConfig();
+    this.commodityTable = new TableOption({
+      titles: this.commodityTableService.setTitles(),
+      ifPage: true
+    });
+    this.page.subscribe((page: Array<number>) => {
+      this.getCommodity(page[0]);
+    });
   }
 
-  // getCommodityTitles() {
-  //   this.commodityTable.titles = this._commodityTableService.setTitles();
-  // }
-  //
-  // refresh() {
-  //   this.getCommodities();
-  // }
+  getCommodity(page: number) {
+    this.action.pageChange('commodity', [page]);
+    this.commodityTable.reset(page);
+    this.commodityService.getCommodities()
+      .subscribe(res => {
+        this.commodityTable.loading = false;
+        if (res.code === 0 && res.data && res.data.length === 0) {
+          this.commodityTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data) {
+          this.commodityTable.totalPage = res.data.totalPages;
+          this.formatCommodity(res.data);
+          this.commodityTable.lists = res.data;
+        } else {
+          this.commodityTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.commodityTable.loading = false;
+        console.log(err);
+        this.commodityTable.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
 
-  // getCommodities() {
-  //   this._commodityService.getCommodities()
-  //     .subscribe(
-  //       data => {
-  //         this.commodityTable.loading = false;
-  //         if (data.data && data.data.length === 0 && data.code === 0) {
-  //           this.commodityTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.code === 0) {
-  //           this.formatCommodity(data.data);
-  //           this.commodityTable.lists = data.data;
-  //           // console.log(data.data);
-  //         } else {
-  //           this.commodityTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.commodityTable.loading = false;
-  //         this.commodityTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // gotoHandle(data) {
-  //   if (data.key == 'edit') {
-  //     this.commodity = data.value;
-  //     this.enableEdit = true;
-  //   }
-  //   if (data.key == 'updown') {
-  //     this.delData = data.value;
-  //     this.enableOperate = true;
-  //     if(data.value.status){
-  //       this.message = "确定上架该数据？";
-  //       this.status = 0;
-  //       data.value.updown = '上架';
-  //     }else{
-  //       this.message = "确定下架该数据？";
-  //       this.status = 1;
-  //       data.value.updown = '下架';
-  //     }
-  //   }
-  //   if (data.key == 'del'){
-  //     this.delData = data.value;
-  //     this.enableOperate = true;
-  //     this.message = "确定删除该数据？";
-  //     this.status == 2;
-  //   }
-  // }
-  //
-  // formatCommodity(list: Array < any > ) {
-  //
-  //   list.forEach(data => {
-  //     data.typeName = data.type ? '现金兑换' : '商品兑换';
-  //     data.statusName = data.status ? '下架' : '上架';
-  //     data.updown = data.status ? '上架' : '下架';
-  //     data.createUserName = data.createUser && data.createUser.name || '';
-  //
-  //     data.pictures = [];
-  //     if (data.pictureList) {
-  //       data.pictureList.forEach(picture => {
-  //         data.pictures.push(picture.url);
-  //       });
-  //     }
-  //   });
-  // }
-  //
-  // newCommodity(){
-  //   this.commodity = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  // handleSuccess(data) {
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.getCommodities();
-  // }
-  //
-  // operate() {
-  //   if(this.status !== 0 && this.status !== 1){
-  //     this.status = 2;
-  //   }
-  //   this._commodityService.commodityStatus(this.delData.id, this.status)
-  //     .catch(
-  //       err => {
-  //         this.delOperate();
-  //         this.message = "操作失败";
-  //         this.enableShow = true;
-  //         return Observable.throw(err);
-  //       })
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.delOperate();
-  //           this.message = "操作成功";
-  //           this.status = null;
-  //           this.enableShow = true;
-  //           this.getCommodities();
-  //         } else {
-  //           this.delOperate();
-  //           if (data.msg) {
-  //             this.message = data.msg;
-  //           } else {
-  //             this.message = "操作失败";
-  //           }
-  //           this.enableShow = true;
-  //         }
-  //       })
-  // }
-  //
-  // delOperate() {
-  //   this.delData = null;
-  //   this.enableOperate = false;
-  // }
+  formatCommodity(list: Array < any > ) {
+    list.forEach(data => {
+      data.typeName = data.type ? '现金兑换' : '商品兑换';
+      data.statusName = data.status ? '下架' : '上架';
+      data.updown = data.status ? '上架' : '下架';
+      data.createUserName = data.createUser && data.createUser.name || '';
+
+      data.pictures = [];
+      if (data.pictureList) {
+        data.pictureList.forEach(picture => {
+          data.pictures.push(picture.url);
+        });
+      }
+    });
+  }
+
+  newData() {
+    this.action.dataChange('commodity', new Commodity());
+    this.router.navigate(['/commodity/edit']);
+  }
+
+  gotoHandle(data) {
+    const commodity = <Commodity>data.value;
+    if (data.key === 'edit') {
+      this.action.dataChange('commodity', commodity);
+      this.router.navigate(['/commodity/edit']);
+    }else if (data.key === 'updown') {
+      if (data.value.status === 1) {
+        const config = new DialogOptions({
+          title: `您确定要上架${commodity.title}？`,
+          message: '',
+          buttons: [{
+            key: 'topass',
+            value: '确定',
+            color: 'primary'
+          }, {
+            key: 'tocancel',
+            value: '取消',
+            color: ''
+          }]
+        });
+        ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+          if (result.key === 'topass') {
+            ERRMSG.statusSuccess = '上架成功!';
+            ERRMSG.statusError = '上架失败!';
+            this.status(data.value.id, 0);
+          }
+        });
+      }else if (data.value.status === 0) {
+        const config = new DialogOptions({
+          title: `您确定要下架${commodity.title}？`,
+          message: '',
+          buttons: [{
+            key: 'topass',
+            value: '确定',
+            color: 'primary'
+          }, {
+            key: 'tocancel',
+            value: '取消',
+            color: ''
+          }]
+        });
+        ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+          if (result.key === 'topass') {
+            ERRMSG.statusSuccess = '下架成功!';
+            ERRMSG.statusError = '下架失败!';
+            this.status(data.value.id, 1);
+          }
+        });
+      }
+    }else if (data.key === 'del') {
+      const config = new DialogOptions({
+        title: `您确定要删除${commodity.title}？`,
+        message: '',
+        buttons: [{
+          key: 'topass',
+          value: '确定',
+          color: 'primary'
+        }, {
+          key: 'tocancel',
+          value: '取消',
+          color: ''
+        }]
+      });
+      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+        if (result.key === 'topass') {
+          this.status(data.value.id, 2);
+          ERRMSG.statusSuccess = '删除成功！';
+          ERRMSG.statusError = '删除失败！';
+        }
+      });
+    }
+  }
+
+  status(id: number, status: number) {
+    this.commodityService.commodityStatus(id, status)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(ERRMSG.statusSuccess, this.dialog).afterClosed().subscribe(() => {
+            this.page.subscribe((page: Array<number>) => {
+              this.getCommodity(0);
+            });
+          });
+        } else {
+          HintDialog(res.msg || ERRMSG.statusError, this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.statusError, this.dialog);
+      });
+  }
 }

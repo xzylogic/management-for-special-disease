@@ -1,9 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { FormBase, FormText, FormFile } from '../../../../libs';
 
 @Injectable()
 export class HospitalFormService {
+
+  constructor(
+    @Inject('app') private app,
+    @Inject('auth') private auth
+  ) {
+  }
 
   setHospitalForm(hospital?: any) {
 
@@ -15,9 +21,8 @@ export class HospitalFormService {
           key: 'id',
           label: '医院ID',
           value: hospital && hospital.id || '',
-          disabled: true,
           required: true,
-          type: 'hidden',
+          readonly: true,
           order: 0
         })
       );
@@ -28,7 +33,7 @@ export class HospitalFormService {
         key: 'imageUrl',
         label: '医院图片',
         value: hospital && hospital.imageUrl || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: false,
         order: 1
       })

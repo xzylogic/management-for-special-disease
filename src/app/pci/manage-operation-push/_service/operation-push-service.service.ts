@@ -20,27 +20,27 @@ export class OperationPushService {
    * 推送列表
    */
   getOperationPush(idx: number, page: number) {
-    return this.httpService.get(`${PATH.operationPush}${idx}?flag=${page}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.operationPush}${idx}?flag=${page}`);
   }
 
   /**
    * 新增修改推送
    */
   OperationPushAdd(data) {
-    return this.httpService.post(`${PATH.operationPushSave}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.operationPushSave}`, data);
   }
 
   /**
    * 发送推送
    */
   OperationPushSend(id: number) {
-    return this.httpService.get(`${PATH.operationPushSend}${id}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.operationPushSend}${id}`);
   }
 
   /**
    * 删除推送
    */
   OperationPushDelete(id: number) {
-    return this.httpService.get(`${PATH.operationPushDel}${id}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.operationPushDel}${id}`);
   }
 }

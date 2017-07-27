@@ -1,4 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   integralOrderList: 'opt/integral/exchanges/list', // 积分商品订单列表
@@ -14,6 +15,26 @@ export class IntegralOrderService {
     @Inject('app') private app,
     @Inject('http') private httpService
   ) {
+  }
+
+  integralOrderConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '积分管理',
+      subTitle: '积分商品订单管理',
+      ifHome: true,
+      homeRouter: '/integral-order',
+      currentRouter: '/integral-order'
+    });
+  }
+
+  sendMessageConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '积分商品订单管理',
+      subTitle: tag ? '发送短信' : '编辑单号',
+      ifHome: false,
+      homeRouter: '/integral-order',
+      currentRouter: '/integral-order/send-message'
+    });
   }
 
   /**

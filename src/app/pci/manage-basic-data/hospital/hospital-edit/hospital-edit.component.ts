@@ -1,76 +1,81 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HospitalService } from '../_service/hospital.service';
-import { HospitalFormService } from '../_service/hospital-form.service';
+import { ContainerConfig, HintDialog } from '../../../../libs';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { HospitalFormService } from '../../hospital/_service/hospital-form.service';
+import { Router } from '@angular/router';
+import { ERRMSG } from '../../../_store/static';
+import { Hospital } from '../_entity/hospital.entity';
 
 @Component({
   selector: 'app-hospital-edit',
   templateUrl: './hospital-edit.component.html'
 })
 export class HospitalEditComponent implements OnInit {
+  containerConfig: ContainerConfig;
+  @select(['hospital', 'data']) hospital: Observable<Hospital>;
+  errMsg = '';
+  form: any;
+  hospitalId: number;
 
   constructor(
-    private _hospitalService: HospitalService,
-    private _hospitalFormService: HospitalFormService
+    private hospitalService: HospitalService,
+    private hospitalFormService: HospitalFormService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    // this.setHospitalForm();
+    this.hospital.subscribe(data => {
+        this.hospitalId = data.id;
+        if (data.id === 0) {
+          this.containerConfig = this.hospitalService.hospitalEditConfig(true);
+          this.form = this.hospitalFormService.setHospitalForm();
+        } else {
+          this.containerConfig = this.hospitalService.hospitalEditConfig(false);
+          this.form = this.hospitalFormService.setHospitalForm(data);
+        }
+      },
+      err => {
+        console.log(err);
+        this.errMsg = ERRMSG.netErrMsg;
+      });
   }
 
-  // setHospitalForm() {
-  //   if (this.data) {
-  //     this.modalTitle = '编辑医院';
-  //     this.formDatas = this._hospitalFormService.setHospitalForm(this.data.value);
-  //   } else {
-  //     this.modalTitle = '新增医院';
-  //     this.formDatas = this._hospitalFormService.setHospitalForm();
-  //   }
-  // }
-  //
-  // //提交保存信息
-  // getValue(data) {
-  //   if (this.data) {
-  //     this._hospitalService.hospitalEdit(data)
-  //       .subscribe(
-  //         data => {
-  //           if (data.code === 0) {
-  //             this.handleEmit.emit('医院修改成功！');
-  //             this.close();
-  //           } else {
-  //             if (data.msg) {
-  //               this.errorMessage = data.msg;
-  //             } else {
-  //               this.errorMessage = '操作失败！';
-  //             }
-  //           }
-  //         }, err => {
-  //           this.errorMessage = '啊哦！访问出错啦～';
-  //         })
-  //   } else {
-  //     this._hospitalService.hospitalCreate(data)
-  //       .subscribe(
-  //         data => {
-  //           if (data.code === 0) {
-  //             this.handleEmit.emit('新增医院成功！');
-  //             this.close();
-  //           } else {
-  //             if (data.msg) {
-  //               this.errorMessage = data.msg;
-  //             } else {
-  //               this.errorMessage = '操作失败！';
-  //             }
-  //           }
-  //         }, err => {
-  //           this.errorMessage = '啊哦！访问出错啦～';
-  //         })
-  //   }
-  // }
-  //
-  // //关闭模态框
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
+  getValues(value) {
+    console.log(value);
+    if (this.hospitalId !== 0) {
+      this.hospitalService.hospitalEdit(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/hospital']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    } else {
+      this.hospitalService.hospitalCreate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/hospital']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    }
+  }
 }

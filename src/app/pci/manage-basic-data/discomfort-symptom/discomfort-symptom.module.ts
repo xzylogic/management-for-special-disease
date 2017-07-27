@@ -14,13 +14,12 @@ import { DiscomfortSymptomTableService } from './_service/discomfort-symptom-tab
 const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
-  component: DiscomfortSymptomComponent,
-  children: [{
+  component: DiscomfortSymptomComponent},
+ {
     path: 'edit',
     canActivate: [AuthGuardService],
     component: DiscomfortSymptomEditComponent
-  }]
-}];
+  }];
 
 @NgModule({
   imports: [

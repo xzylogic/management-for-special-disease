@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
-  integralDetailList: 'opt/integral/records/listByParam', // 积分明细列表
+  integralDetailList: 'opt/integral/records/listByParam', // 查询选项列表
 }
 
 @Injectable()
@@ -12,10 +13,20 @@ export class IntegralDetailService {
   ) {
   }
 
+  integralDetailConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '积分管理',
+      subTitle: '积分明细',
+      ifHome: true,
+      homeRouter: '/integralDetail',
+      currentRouter: '/integralDetail'
+    });
+  }
+
   /**
    * 获取积分明细列表
    */
-  getIntegralDetail(obj: { type: number, param?: string, flag?: number }) {
+  getIntegralDetail(obj: {type: number, param ?: string, flag ?: number}) {
     if (obj.param && !obj.flag) {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}?param=${obj.param}`);
     } else if (!obj.param && obj.flag) {
@@ -27,3 +38,5 @@ export class IntegralDetailService {
     }
   }
 }
+
+

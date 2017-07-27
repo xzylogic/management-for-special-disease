@@ -1,84 +1,81 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../../libs';
 import { ServiceSpecService } from './_service/service-spec.service';
 import { ServiceSpecTableService } from './_service/service-spec-table.service';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { ERRMSG } from '../../_store/static';
+import { ServiceSpec } from './_entity/service-spec.entity';
 
 @Component({
   selector: 'app-service-apec',
   templateUrl: 'service-spec.component.html'
 })
 export class ServiceSpecComponent implements OnInit {
-
-  // title = '服务规格维护';
-  // subTitle = '服务规格列表';
-  //
-  // serviceSpecTable: TableOption;
-  //
+  containerConfig: ContainerConfig;
+  serviceSpecTable: TableOption;
+  @select(['serviceSpec', 'tab']) tab: Observable<number>;
+  @select(['serviceSpec', 'page']) page: Observable<Array<number>>;
   // serviceSpec: any;
-  // enableEdit: boolean;
-  //
-  // titleShow: string;
-  // message: string;
-  // enableShow: boolean;
 
   constructor(
-    private _serviceSpecService: ServiceSpecService,
-    private _serviceSpecTableService: ServiceSpecTableService
+    @Inject('action') private action,
+    private serviceSpecService: ServiceSpecService,
+    private serviceSpecTableService: ServiceSpecTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('serviceSpecService', new ServiceSpec());
   }
 
   ngOnInit() {
-    // this.refresh();
+    this.containerConfig = this.serviceSpecService.serviceSpecConfig();
+    this.serviceSpecTable = new TableOption({
+      titles: this.serviceSpecTableService.setTitles(),
+      ifPage: true
+    });
+    this.page.subscribe((page: Array<number>) => {
+      this.getServiceSpec(page[0]);
+    });
   }
 
-  // refresh() {
-  //   this.serviceSpecTable = new TableOption();
-  //   this.getServiceSpecTitles();
-  //   this.getServiceSpecs(0);
-  // }
-  //
-  // getServiceSpecTitles() {
-  //   this.serviceSpecTable.titles = this._serviceSpecTableService.setTitles();
-  // }
-  //
-  // getServiceSpecs(page) {
-  //   this.serviceSpecTable.currentPage = page;
-  //   this._serviceSpecService.getServiceSpec(page, this.serviceSpecTable.size)
-  //     .subscribe(
-  //     res => {
-  //       this.serviceSpecTable.loading = false;
-  //       if (res.data && res.data.content.length === 0 && res.code === 0) {
-  //         this.serviceSpecTable.errorMessage = "该数据为空哦～";
-  //       } else if (res.data && res.data.content && res.code === 0) {
-  //         this.serviceSpecTable.lists = res.data.content;
-  //         this.serviceSpecTable.totalPage = res.data.totalPages;
-  //       } else {
-  //         this.serviceSpecTable.errorMessage = res.msg || "空空如也～";
-  //       }
-  //     }, err => {
-  //       this.serviceSpecTable.loading = false;
-  //       this.serviceSpecTable.errorMessage = "啊哦！接口访问出错啦～";
-  //     });
-  // }
-  //
-  // gotoHandle(data) {
-  //   console.log(data);
-  //   if (data.key === 'edit') {
-  //     this.serviceSpec = data.value;
-  //     this.enableEdit = true;
-  //   }
-  // }
-  //
-  // newServiceSpec(){
-  //   this.serviceSpec = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  // handleSuccess(data) {
-  //   this.titleShow = '提示信息';
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.getServiceSpecs(0);
-  // }
+  getServiceSpec(page: number) {
+    this.action.pageChange('packageService', [page]);
+    this.serviceSpecTable.reset(page);
+    this.serviceSpecService.getServiceSpec(page, 20)
+      .subscribe(res => {
+        this.serviceSpecTable.loading = false;
+        if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+          this.serviceSpecTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data && res.data.content) {
+          this.serviceSpecTable.totalPage = res.data.totalPages;
+          this.serviceSpecTable.lists = res.data.content;
+          console.log(this.serviceSpecTable.lists);
+        } else {
+          this.serviceSpecTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.serviceSpecTable.loading = false;
+        console.log(err);
+        this.serviceSpecTable.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
+
+  newData() {
+    this.action.dataChange('serviceSpec', new ServiceSpec());
+    this.router.navigate(['/service-spec/edit']);
+  }
+
+  gotoHandle(res) {
+    const serviceSpec = <ServiceSpec>res.value;
+    if (res.key === 'edit') {
+      this.action.dataChange('serviceSpec', serviceSpec);
+      this.router.navigate(['/service-spec/edit']);
+    }
+  }
+
 }

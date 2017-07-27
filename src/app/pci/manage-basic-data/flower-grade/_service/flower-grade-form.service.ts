@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { FormBase, FormText, FormFile } from '../../../../libs';
 
 @Injectable()
 export class FlowerGradeFormService {
+  constructor(
+    @Inject('app') private app,
+    @Inject('http') private http
+  ) {
+  }
 
   setForm(flowerClass ?: any) {
 
@@ -16,7 +21,7 @@ export class FlowerGradeFormService {
           label: '鲜花等级ID',
           value: flowerClass && flowerClass.id || '',
           required: false,
-          type: 'hidden',
+          readonly: true,
           order: 0
         })
       );
@@ -34,7 +39,7 @@ export class FlowerGradeFormService {
         key: 'imgUrl',
         label: '称号图片',
         value: flowerClass && flowerClass.imageUrl || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: false,
         order: 2
       }),

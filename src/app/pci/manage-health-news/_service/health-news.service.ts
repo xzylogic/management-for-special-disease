@@ -22,48 +22,48 @@ export class HealthNewsService {
    * 获取新闻资讯类型列表
    */
   getHealthNewsType() {
-    return this.httpService.get(`${PATH.healthInfoList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.healthInfoList}`);
   }
 
   /**
    * 获取新闻资讯列表
    */
   getHealthNews(typeId: number, page: number, size: number) {
-    return this.httpService.get(`${PATH.healthNewsList}?typeId=${typeId}&size=${size}&page=${page}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.healthNewsList}?typeId=${typeId}&size=${size}&page=${page}`);
   }
 
   /**
    * 新建新闻资讯
    */
   healthNewsCreate(data) {
-    return this.httpService.post(`${PATH.healthNewsCreate}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.healthNewsCreate}`, data);
   }
 
   /**
    * 编辑新闻资讯
    */
   healthNewsUpdate(data) {
-    return this.httpService.put(`${PATH.healthNewsUpdate}`, data);
+    return this.httpService.put(`${this.app.pci.BASE_URL}${PATH.healthNewsUpdate}`, data);
   }
 
   /**
    * 删除新闻资讯
    */
   healthNewsDelete(id: number) {
-    return this.httpService.delete(`${PATH.healthNewsDelete}?id=${id}`);
+    return this.httpService.delete(`${this.app.pci.BASE_URL}${PATH.healthNewsDelete}?id=${id}`);
   }
 
   /**
    * 读取健康资讯系数
    */
   healthNewsFetch() {
-    return this.httpService.get(`${PATH.healthNewsFactor}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.healthNewsFactor}`);
   }
 
   /**
    * 修改健康资讯系
    */
   healthNewsEdit(data) {
-    return this.httpService.put(`${PATH.healthNewsFactor}`, data);
+    return this.httpService.put(`${this.app.pci.BASE_URL}${PATH.healthNewsFactor}`, data);
   }
 }

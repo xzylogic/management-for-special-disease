@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
 
 const PATH = {
   commodityCreate: 'api/goods/add', // 新增商品
@@ -16,11 +17,31 @@ export class CommodityService {
   ) {
   }
 
+  commodityConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '商品维护',
+      subTitle: '商品维护',
+      ifHome: true,
+      homeRouter: '/commodity',
+      currentRouter: '/commodity'
+    });
+  }
+
+  commodityEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '商品维护',
+      subTitle: tag ? '新增商品' : '编辑商品信息',
+      ifHome: false,
+      homeRouter: '/commodity',
+      currentRouter: '/commodity/edit'
+    });
+  }
+
   /**
-   * 获取通过审核的医生列表
+   * 商品列表
    */
   getCommodities() {
-    return this.httpService.get(`${PATH.commodityList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.commodityList}`);
   }
 
   /**
@@ -28,7 +49,7 @@ export class CommodityService {
    * @param {[type]} body [description]
    */
   commodityCreate(body) {
-    return this.httpService.post(`${PATH.commodityCreate}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.commodityCreate}`, body);
   }
 
   /**
@@ -36,7 +57,7 @@ export class CommodityService {
    * @param {[type]} body [description]
    */
   commodityUpdate(body) {
-    return this.httpService.post(`${PATH.commodityUpdate}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.commodityUpdate}`, body);
   }
 
   /**
@@ -45,6 +66,6 @@ export class CommodityService {
    * @param {number} status [description]
    */
   commodityStatus(id: number, status: number) {
-    return this.httpService.get(`${PATH.commodityStatus}?id=${id}&status=${status}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.commodityStatus}?id=${id}&status=${status}`);
   }
 }

@@ -8,15 +8,30 @@ import { AuthGuardService } from '../../_service/auth-guard.service';
 import { HealthOrganizationService } from './_service/health-organization.service';
 import { HealthOrganizationFormService } from './_service/health-organization-form.service';
 import { HealthOrganizationTableService } from './_service/health-organization-table.service';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { LibModule } from '../../../libs/common/lib.module';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
   component: HealthOrganizationComponent
+}, {
+  path: 'edit',
+  canActivate: [AuthGuardService],
+  component: HealthOrganizationEditComponent
 }];
 
 @NgModule({
   imports: [
+    DTableModule,
+    DFormModule,
+    LibModule,
+    MdTabsModule,
+    MdChipsModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

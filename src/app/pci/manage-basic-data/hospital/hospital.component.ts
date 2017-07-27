@@ -1,26 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../../libs';
 import { HospitalService } from './_service/hospital.service';
 import { HospitalTableService } from './_service/hospital-table.service';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { Hospital } from './_entity/hospital.entity';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-hospital',
   templateUrl: './hospital.component.html'
 })
 export class HospitalComponent implements OnInit {
-
-  // hospitalTable: TableOption = new TableOption();
+  containerConfig: ContainerConfig;
+  hospitalTable: TableOption;
+  @select(['hospital', 'tab']) tab: Observable<number>;
+  @select(['hospital', 'page']) page: Observable<Array<number>>;
 
   constructor(
-    private _hospitalService: HospitalService,
-    private _hospitalTableService: HospitalTableService,
+    @Inject('action') private action,
+    private hospitalService: HospitalService,
+    private hospitalTableService: HospitalTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('hospitalService', new Hospital());
   }
 
   ngOnInit() {
-    // this.getHospitalTitles();
-    // this.getHospitals();
+    this.containerConfig = this.hospitalService.hospitalConfig();
+    this.hospitalTable = new TableOption({
+      titles: this.hospitalTableService.setTitles(),
+      ifPage: true
+    });
+    this.page.subscribe((page: Array<number>) => {
+      this.getHospital();
+    });
+  }
+
+  getHospital() {
+    // this.action.pageChange('packageService', [page]);
+    this.hospitalService.getHospital()
+      .subscribe(res => {
+        this.hospitalTable.loading = false;
+        if (res.code === 0 && res.data && res.data.length === 0) {
+          this.hospitalTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data) {
+          this.hospitalTable.totalPage = res.data.totalPages;
+          this.hospitalTable.lists = res.data;
+        } else {
+          this.hospitalTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.hospitalTable.loading = false;
+        console.log(err);
+        this.hospitalTable.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
+
+  newData() {
+    this.action.dataChange('hospital', new Hospital());
+    this.router.navigate(['/hospital/edit']);
+  }
+
+  gotoHandle(res) {
+    const hospital = <Hospital>res.value;
+    if (res.key === 'editHospital') {
+      this.action.dataChange('hospital', hospital);
+      this.router.navigate(['/hospital/edit']);
+    }
   }
 
   // getHospitalTitles() {

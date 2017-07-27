@@ -1,83 +1,155 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { DoctorTitleService } from './_service/doctor-title.service';
 import { DoctorTitleTableService } from './_service/doctor-title-table.service';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { Observable } from 'rxjs/Observable';
+import { select } from '@angular-redux/store';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { DoctorTitle } from './_entity/doctor-title.entity';
+import { ERRMSG } from '../../_store/static';
+import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-doctor-title',
   templateUrl: './doctor-title.component.html'
 })
 export class DoctorTitleComponent implements OnInit {
-  // title = '基础数据维护';
-  // subTitle = '职称数据维护';
-  // loading: boolean = true;
-  //
-  // // 展示信息模态框选项
-  // titleShow: string;
-  // message: string;
-  // enableShow: boolean;
-  // errorMessage:string;
-  //
-  // doctorTitle:any;
-  // enableEdit: boolean;
-
-  // doctorTitleTable: TableOption = new TableOption();
-
+  containerConfig: ContainerConfig;
+  doctorTitleTable: TableOption;
+  @select(['doctorTitle', 'tab']) tab: Observable<number>;
+  @select(['doctorTitle', 'page']) page: Observable<Array<number>>;
+  doctorTitleId: number;
   constructor(
-    private _doctorTitleService: DoctorTitleService,
-    private _doctorTitleTableService: DoctorTitleTableService
+    @Inject('action') private action,
+    private doctorTitleService: DoctorTitleService,
+    private doctorTitleTableService: DoctorTitleTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('doctorTitleService', new DoctorTitle());
   }
 
   ngOnInit() {
-    // this.getDoctorTitleTitles();
-    // this.getDoctorTitles();
+    this.containerConfig = this.doctorTitleService.doctorTitleConfig();
+    this.doctorTitleTable = new TableOption({
+      titles: this.doctorTitleTableService.setTitles(),
+      ifPage: true
+    });
+    this.page.subscribe((page: Array<number>) => {
+      this.getDoctorTitle();
+    });
   }
 
-  getDoctorTitleTitles() {
-    // this.doctorTitleTable.titles = this._doctorTitleTableService.setTitles();
+  getDoctorTitle() {
+    this.doctorTitleService.getDoctorTitles()
+      .subscribe(res => {
+        this.doctorTitleTable.loading = false;
+        if (res.code === 0 && res.data && res.data.length === 0) {
+          this.doctorTitleTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data) {
+          this.doctorTitleTable.totalPage = res.data.totalPages;
+          this.doctorTitleTable.lists = res.data;
+        } else {
+          this.doctorTitleTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.doctorTitleTable.loading = false;
+        console.log(err);
+        this.doctorTitleTable.errorMessage = ERRMSG.netErrMsg;
+      })
   }
 
-  getDoctorTitles() {
-    // this._doctorTitleService.getDoctorTitles()
-    //   .subscribe(
-    //      data => {
-    //       this.doctorTitleTable.loading = false;
-    //       if (data.data  && data.data.length === 0 && data.code === 0) {
-    //         this.doctorTitleTable.errorMessage = "该数据为空哦～";
-    //       } else if (data.data && data.code === 0) {
-    //         this.doctorTitleTable.lists = data.data;
-    //       } else {
-    //         this.doctorTitleTable.errorMessage = "空空如也～";
-    //       }
-    //     },err =>{
-    //       this.doctorTitleTable.loading = false;
-    //       this.doctorTitleTable.errorMessage = "啊哦！接口访问出错啦～";
-    //     })
+  newData() {
+    const config = new DialogOptions({
+      title: `新增职称`,
+      message: '',
+      buttons: [{
+        key: 'toconfirm',
+        value: '确定',
+        color: 'primary'
+      }, {
+        key: 'tocancel',
+        value: '取消',
+        color: ''
+      }],
+      forms: [{
+        key: 'name',
+        label: '',
+        value: ''
+      }]
+    });
+    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result.key === 'toconfirm' && result.value[0]) {
+        const obj: any = {name: result.value[0].value};
+        this.new(obj);
+      }
+    });
   }
 
-  // gotoHandle(data) {
-  //   this.doctorTitle = data;
-  //   this.enableEdit = true;
-  // }
-  //
-  // refresh(){
-  //   this.getDoctorTitles();
-  // }
-  //
-  // //新增职称
-  // newDoctorTitle(){
-  //   this.doctorTitle = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  //
-  //  //返回服务器信息
-  // handleSuccess(data){
-  //   this.titleShow = '提示信息';
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.refresh();
-  // }
+  gotoHandle(res) {
+    const doctorTitle = <DoctorTitle>res.value;
+    this.doctorTitleId = doctorTitle.id;
+    if (res.key === 'editPositionalTitle') {
+      const config = new DialogOptions({
+        title: `编辑科室`,
+        message: '',
+        buttons: [{
+          key: 'toconfirm',
+          value: '确定',
+          color: 'primary'
+        }, {
+          key: 'tocancel',
+          value: '取消',
+          color: ''
+        }],
+        forms: [{
+          key: 'name',
+          label: '',
+          value: doctorTitle.name
+        }]
+      });
+      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+        if (result.key === 'toconfirm' && result.value[0]) {
+          const obj: any = {id: doctorTitle.id, name: result.value[0].value};
+          this.edit(obj);
+        }
+      });
+    }
+  }
+
+  edit(value) {
+    this.doctorTitleService.doctorTitleEdit(value)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+            this.getDoctorTitle();
+          });
+        } else {
+          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.saveError, this.dialog);
+      });
+  }
+
+  new(value) {
+    this.doctorTitleService.doctorTitleCreate(value)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+            this.getDoctorTitle();
+          });
+        } else {
+          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.saveError, this.dialog);
+      });
+  }
 }

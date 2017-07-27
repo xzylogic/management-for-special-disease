@@ -5,7 +5,10 @@ import { FormBase, FormText, FormFile } from '../../../../libs';
 @Injectable()
 export class AdDoctorFormService {
 
-  constructor(@Inject('api') private api) {
+  constructor(
+    @Inject('app') private app,
+    @Inject('auth') private authService
+  ) {
   }
 
   setAdDoctorForm(forms ?: any) {
@@ -18,7 +21,7 @@ export class AdDoctorFormService {
         key: 'imageUrl',
         label: '广告图片',
         value: forms && forms.imageUrl || '',
-        url: `${this.api.pci.BASE_URL}api/upload`,
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: false,
         order: 1
       })

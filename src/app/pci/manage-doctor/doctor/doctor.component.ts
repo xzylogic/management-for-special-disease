@@ -137,6 +137,7 @@ export class DoctorComponent implements OnInit {
           this.failureTable.totalPage = res.data.totalPages;
           this.formatDoctor(res.data.content, false);
           this.failureTable.lists = res.data.content;
+          console.log(this.failureTable.lists);
         } else {
           this.failureTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
