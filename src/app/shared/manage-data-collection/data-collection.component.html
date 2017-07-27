@@ -1,1 +1,66 @@
-<p>data collection</p>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="待录入">
+        <div *ngIf="!waitingTable.lists&&waitingTable.loading">Loading...</div>
+        <div *ngIf="!waitingTable.lists&&!waitingTable.loading&&!!waitingTable.errorMessage" class="center">
+          {{waitingTable.errorMessage}}
+        </div>
+        <div *ngIf="waitingTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="waitingTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getDataCollections(waitingTable,0,$event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="待审核">
+        <div *ngIf="!auditingTable.lists&&auditingTable.loading">Loading...</div>
+        <div *ngIf="!auditingTable.lists&&!auditingTable.loading&&!!auditingTable.errorMessage" class="center">
+          {{auditingTable.errorMessage}}
+        </div>
+        <div *ngIf="auditingTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="auditingTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getDataCollections(auditingTable,1,$event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="审核通过">
+        <div *ngIf="!auditedTable.lists&&auditedTable.loading">Loading...</div>
+        <div *ngIf="!auditedTable.lists&&!auditedTable.loading&&!!auditedTable.errorMessage" class="center">
+          {{auditedTable.errorMessage}}
+        </div>
+        <div *ngIf="auditedTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="auditedTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getDataCollections(auditedTable,3,$event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="未处理">
+        <div *ngIf="!unhandledTable.lists&&unhandledTable.loading">Loading...</div>
+        <div *ngIf="!unhandledTable.lists&&!unhandledTable.loading&&!!unhandledTable.errorMessage" class="center">
+          {{unhandledTable.errorMessage}}
+        </div>
+        <div *ngIf="unhandledTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="unhandledTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getDataCollections(unhandledTable,2,$event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>

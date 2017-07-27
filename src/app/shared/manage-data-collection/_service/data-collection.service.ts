@@ -1,4 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
 
 const PATH = {
   dataCollections: 'record/upload/list',
@@ -12,6 +13,26 @@ export class DataCollectionService {
     @Inject('app') private app,
     @Inject('http') private httpService
   ) {
+  }
+
+  dataCollectionConfig() {
+    return new ContainerConfig({
+      title: '病史资料录入',
+      subTitle: '病史资料列表',
+      ifHome: true,
+      homeRouter: '/data-collection',
+      currentRouter: '/data-collection'
+    })
+  }
+
+  dataCollectionDetailConfig() {
+    return new ContainerConfig({
+      title: '病史资料录入',
+      subTitle: '病史资料列表',
+      ifHome: true,
+      homeRouter: '/data-collection',
+      currentRouter: '/data-collection/detail'
+    })
   }
 
   getDataCollections(page, size, type) {

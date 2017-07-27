@@ -11,7 +11,7 @@ import { createReducer } from './_store/api/api.reducer';
 import { stores as adStores } from './manage-ad';
 import { stores as basicDataStores } from './manage-basic-data';
 import { stores as commodityStores } from './manage-commodity';
-// import { stores as dataCollectionStores} from './manage-data-collection';
+import { stores as dataCollectionStores } from '../shared/manage-data-collection';
 import { stores as doctorStores } from './manage-doctor';
 import { stores as healthNewsStores } from './manage-health-news';
 import { stores as integralStores } from './manage-integral';
@@ -27,7 +27,7 @@ export const rootReducer = combineReducers({
   ...adStores,
   ...basicDataStores,
   ...commodityStores,
-  // ...dataCollectionStores,
+  ...dataCollectionStores,
   ...doctorStores,
   ...healthNewsStores,
   ...integralStores,
@@ -43,7 +43,7 @@ export const rootReducer = combineReducers({
 })
 export class StoreModule {
   constructor(ngRedux: NgRedux<any>) {
-    if(environment.production === true) {
+    if (environment.production === true) {
       ngRedux.configureStore(rootReducer, {});
     } else {
       ngRedux.configureStore(rootReducer, {}, [createLogger()]);
