@@ -1,1 +1,72 @@
-<h1>user order</h1>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="全部订单">
+        <div *ngIf="!userOrderTable.lists&&userOrderTable.loading">Loading...</div>
+        <div *ngIf="!userOrderTable.lists&&!userOrderTable.loading&&!!userOrderTable.errorMessage" class="center">
+          {{userOrderTable.errorMessage}}
+        </div>
+        <div *ngIf="userOrderTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userOrderTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getUserOrders($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="待退款">
+        <div *ngIf="!userOrderRefundTable.lists&&userOrderRefundTable.loading">Loading...</div>
+        <div *ngIf="!userOrderRefundTable.lists&&!userOrderRefundTable.loading&&!!userOrderRefundTable.errorMessage" class="center">
+          {{userOrderRefundTable.errorMessage}}
+        </div>
+        <div *ngIf="userOrderRefundTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userOrderRefundTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getUserRefundOrders($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="服务中">
+        <div *ngIf="!userOrderServicingTable.lists&&userOrderServicingTable.loading">Loading...</div>
+        <div *ngIf="!userOrderServicingTable.lists&&!userOrderServicingTable.loading&&!!userOrderServicingTable.errorMessage" class="center">
+          {{userOrderServicingTable.errorMessage}}
+        </div>
+        <div *ngIf="userOrderServicingTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userOrderServicingTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getUserServicingOrders($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="未处理第三方服务">
+        <div *ngIf="!userOrderThirdTable.lists&&userOrderThirdTable.loading">Loading...</div>
+        <div *ngIf="!userOrderThirdTable.lists&&!userOrderThirdTable.loading&&!!userOrderThirdTable.errorMessage" class="center">
+          {{userOrderThirdTable.errorMessage}}
+        </div>
+        <div *ngIf="userOrderThirdTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userOrderThirdTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getUserThirdOrders($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+    <div class="count await-refund">
+      <md-chip color="accent" selected="true">12</md-chip>
+    </div>
+    <div class="count untreated">
+      <md-chip color="accent" selected="true">25</md-chip>
+    </div>
+  </div>
+</app-container>

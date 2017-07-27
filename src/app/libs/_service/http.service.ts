@@ -77,6 +77,20 @@ export class HttpService {
   }
 
   /**
+   * HTTP POST METHOD
+   * @param  {string}     path
+   * @return {Observable}
+   */
+  postParma(path: string): Observable < any > {
+    return this.http.post(path, {
+      headers: this.headers
+    })
+      .map(HttpService.checkForError)
+      .catch(err => Observable.throw(err))
+      .map(HttpService.getJson)
+  }
+
+  /**
    * HTTP PUT METHOD
    * @param  {string}     path
    * @param  {any}        body

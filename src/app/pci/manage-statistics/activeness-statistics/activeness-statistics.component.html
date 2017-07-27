@@ -1,1 +1,60 @@
-<h1>activeness statistics</h1>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="患者活跃度统计">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="userActivenessTable.queryKey">
+          </md-input-container>
+          <!--<div class="lib-input">-->
+            <!--<app-input-time ></app-input-time>-->
+          <!--</div>-->
+          <button md-icon-button color="primary" type="button" (click)="getUserActivenessStatistics(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset0()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
+        <div *ngIf="!userActivenessTable.lists&&userActivenessTable.loading">Loading...</div>
+        <div *ngIf="!userActivenessTable.lists&&!userActivenessTable.loading&&!!userActivenessTable.errorMessage" class="center">
+          {{userActivenessTable.errorMessage}}
+        </div>
+        <div *ngIf="userActivenessTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userActivenessTable"
+              (pageEmitter)="getUserActivenessStatistics($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="医生活跃度统计">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="doctorActivenessTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getDoctorActivenessStatistics(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset1()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
+        <div *ngIf="!doctorActivenessTable.lists&&doctorActivenessTable.loading">Loading...</div>
+        <div *ngIf="!doctorActivenessTable.lists&&!doctorActivenessTable.loading&&!!doctorActivenessTable.errorMessage" class="center">
+          {{doctorActivenessTable.errorMessage}}
+        </div>
+        <div *ngIf="doctorActivenessTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="doctorActivenessTable"
+              (pageEmitter)="getDoctorActivenessStatistics($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>
+

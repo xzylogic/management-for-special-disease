@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
+import { ContainerConfig } from '../../../../libs';
+import { TableOption } from '../../../../libs/dtable/dtable.entity';
 import { LectureService } from '../_service/lecture.service';
 import { LectureAuditingTableService } from '../_service/lecture-auditing-table.service';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-lecture-sign',
   templateUrl: './lecture-sign.component.html',
 })
 export class LectureSignComponent implements OnInit {
+  containerConfig: ContainerConfig;
+  lectureDetailTable: TableOption;
+
+  id: number;
   // modalTitle: string = '讲座报名/签到人数明细';
   // @Input() data: any;
   // @Input() enable: boolean;
@@ -32,59 +40,65 @@ export class LectureSignComponent implements OnInit {
   //   name: "已取消"
   // }];
   //
-  // signStatus: any;
-  // joinStatus: any;
+  signStatus: any;
+  joinStatus: any;
   //
   // lectureAuditingTable: TableOption = new TableOption();
 
   constructor(
-    private _lectureService: LectureService,
-    private _lectureAuditingTableService: LectureAuditingTableService
+    private lectureService: LectureService,
+    private lectureAuditingTableService: LectureAuditingTableService,
+    private router: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    // this.getLectureAuditingTitles();
-    // this.getLectureAuditings(0);
+    this.containerConfig = this.lectureService.lectureDdetailConfig();
+    this.lectureDetailTable = new TableOption({
+      titles: this.lectureAuditingTableService.setTitles(),
+      ifPage: true
+    });
+    this.router.queryParams.subscribe(params => {
+      this.id = +params['id'];
+      if (!this.id) {
+        this.lectureDetailTable.loading = false;
+        this.lectureDetailTable.errorMessage = ERRMSG.nullMsg;
+      } else {
+        this.getLectureAuditings(this.id, 0);
+      }
+    });
   }
 
-  ngAfterViewInit() {
-    // $('#joinStatus').dropdown();
-    // $('#signStatus').dropdown();
-  }
 
   // getLectureAuditingTitles() {
   //     this.lectureAuditingTable.titles = this._lectureAuditingTableService.setTitles();
   //   }
   //
-  // getLectureAuditings(page: number) {
-  //   this.lectureAuditingTable.currentPage = page;
-  //   this._lectureService.getApply(
-  //       this.data.value.id,
-  //       this.signStatus || '',
-  //       this.joinStatus || "",
-  //       page,
-  //       0
-  //       )
-  //     .subscribe(
-  //        data => {
-  //         this.lectureAuditingTable.loading = false;
-  //         if (data.data && data.data.length === 0 && data.code === 0) {
-  //           this.lectureAuditingTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.code === 0) {
-  //           this.lectureAuditingTable.totalPage = data.data.totalPages;
-  //           this.lectureAuditingTable.lists = data.data.content;
-  //           for (var i = 0; i < this.lectureAuditingTable.lists.length; ++i) {
-  //             this.lectureAuditingTable.lists[i].joinDate = this.getTime(this.lectureAuditingTable.lists[i].joinDate);
-  //           }
-  //         } else {
-  //           this.lectureAuditingTable.errorMessage = "空空如也～";
-  //         }
-  //       },err =>{
-  //         this.lectureAuditingTable.loading = false;
-  //         this.lectureAuditingTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
+  getLectureAuditings(id, page: number) {
+    this.lectureDetailTable.reset(page);
+    this.lectureService.getApply(
+        id,
+        this.signStatus || '',
+        this.joinStatus || '',
+        page,
+        0
+        )
+      .subscribe(
+         res => {
+          this.lectureDetailTable.loading = false;
+          if (res.data && res.data.length === 0 && res.code === 0) {
+            this.lectureDetailTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.code === 0) {
+            this.lectureDetailTable.totalPage = res.data.totalPages;
+            this.lectureDetailTable.lists = res.data.content;
+          } else {
+            this.lectureDetailTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.lectureDetailTable.loading = false;
+          this.lectureDetailTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
   //
   // //时间转换
   //  getTime(time){

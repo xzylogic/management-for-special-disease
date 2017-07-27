@@ -1,1 +1,45 @@
-<h1>download statistics</h1>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="全部来源统计">
+        <div *ngIf="!mainTable.lists&&mainTable.loading">Loading...</div>
+        <div *ngIf="!mainTable.lists&&!mainTable.loading&&!!mainTable.errorMessage" class="center">
+          {{mainTable.errorMessage}}
+        </div>
+        <div *ngIf="mainTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="mainTable"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="用户渠道来源统计">
+        <div *ngIf="!userTable.lists&&userTable.loading">Loading...</div>
+        <div *ngIf="!userTable.lists&&!userTable.loading&&!!userTable.errorMessage" class="center">
+          {{userTable.errorMessage}}
+        </div>
+        <div *ngIf="userTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userTable"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="医生渠道来源统计">
+        <div *ngIf="!doctorTable.lists&&doctorTable.loading">Loading...</div>
+        <div *ngIf="!doctorTable.lists&&!doctorTable.loading&&!!doctorTable.errorMessage" class="center">
+          {{doctorTable.errorMessage}}
+        </div>
+        <div *ngIf="doctorTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="doctorTable"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>

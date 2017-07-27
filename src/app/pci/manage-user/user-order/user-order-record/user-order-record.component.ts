@@ -1,104 +1,77 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+
+import { ContainerConfig, HintDialog } from '../../../../libs';
 
 import { UserOrderService } from '../_service/user-order.service';
 import { ServiceRecordFormService } from '../_service/service-record-form.service';
-import { ServiceRecordTableService } from '../_service/service-record-table.service';
+import { UserOrder } from '../_entity/user-order.entity';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-user-order-record',
-  template: `
-    <h1>user order record</h1>
-  `
+  templateUrl: './user-order-record.component.html'
 })
 export class UserOrderRecordComponent implements OnInit {
-  // modalTitle: string = '使用情况';
-  // orderRecordTable: TableOption = new TableOption();
-  // orderRecordForms: any[];
-  // serviceList: any;
-  // errorMessage: string;
-  //
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter < any > = new EventEmitter();
+  containerConfig: ContainerConfig;
+  @select(['userOrder', 'data']) userOrder: Observable<UserOrder>;
+  errMsg = '';
+  form: any;
+  serviceList: any;
+  state: boolean;
+
 
   constructor(
-    private _userOrderService: UserOrderService,
-    private _serviceRecordFormService: ServiceRecordFormService,
-    private _serviceRecordTableService: ServiceRecordTableService
+    private userOrderService: UserOrderService,
+    private serviceRecordFormService: ServiceRecordFormService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    // this.setOrderRecordForm();
-    // this.getOrderRecordTitles();
-    // if (this.data) {
-    //   this.getOrderRecord();
-    // } else {
-    //   this.orderRecordTable.errorMessage = "空空如也～";
-    // }
+    this.userOrder.subscribe(data => {
+      this.userOrderService.getOrderRecordServiceList(Number(data.id)).subscribe(res => {
+        if (res.code === 0 && res.data) {
+          this.serviceList = res.data;
+          this.containerConfig = this.userOrderService.userOrderEditConfig();
+          this.form = this.serviceRecordFormService.setForm(
+            res.data
+          );
+        } else {
+          this.errMsg = res.msg || ERRMSG.nullMsg;
+        }
+      }, err => {
+        this.errMsg = ERRMSG.netErrMsg;
+      });
+    })
   }
 
-  // refresh() {
-  //   if (this.data) {
-  //     this.orderRecordTable.loading = true;
-  //     this.getOrderRecord();
-  //   } else {
-  //     this.orderRecordTable.errorMessage = "空空如也～";
-  //   }
-  // }
-  //
-  // getOrderRecordTitles() {
-  //   this.orderRecordTable.titles = this._serviceRecordTableService.setTitles();
-  // }
-  //
-  // getOrderRecord() {
-  //   this._userOrderService.getOrderRecordList(this.data.id)
-  //     .subscribe(
-  //       data => {
-  //         this.orderRecordTable.loading = false;
-  //         if (data.data && data.data.length === 0 && data.code === 0) {
-  //           this.orderRecordTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.code === 0) {
-  //           this.orderRecordTable.lists = data.data;
-  //         }
-  //       }, err => {
-  //         this.orderRecordTable.loading = false;
-  //         this.orderRecordTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // setOrderRecordForm() {
-  //   this._userOrderService.getOrderRecordServiceList(this.data.id)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.serviceList = data.data;
-  //           this.orderRecordForms = this._serviceRecordFormService.setForm(this.serviceList);
-  //         }
-  //       })
-  // }
-  //
-  // getValues(data) {
-  //   let name = '';
-  //   this.serviceList.forEach(obj => {
-  //     if (obj.id === parseInt(data.serviceId)) {
-  //       name = obj.name;
-  //     }
-  //   })
-  //   this._userOrderService.orderRecordCreate(data.serviceId, name)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.errorMessage = null;
-  //           this.getOrderRecord();
-  //         } else {
-  //           this.errorMessage = '保存失败！';
-  //         }
-  //       }, err => {
-  //         this.errorMessage = '啊哦！接口报错了～';
-  //       })
-  //
-  // }
+  getValues(data) {
+    let name = '';
+    this.serviceList.forEach(obj => {
+      if (obj.id === parseInt(data.serviceId)) {
+        name = obj.name;
+      }
+    });
+    this.userOrderService.orderRecordCreate(data.serviceId, name)
+      .subscribe(
+        res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/user-order']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          HintDialog(ERRMSG.saveError, this.dialog);
+        })
+
+  }
   //
   // gotoHandle(data) {
   //   if (data.key === 'del') {

@@ -1,18 +1,35 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+
+import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
-  downloadStatistics: 'api/operational/pv'
+  downloadStatistics: 'api/operational/pv' // 渠道来源统计
 };
 
 @Injectable()
 export class DownloadStatisticsService {
+  constructor(
+    @Inject('app') private app,
+    @Inject('http') private httpService
+  ) {
+  }
+
+  downloadConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '数据统计',
+      subTitle: '渠道来源统计',
+      ifHome: true,
+      homeRouter: '/download-statistics',
+      currentRouter: '/download-statistics'
+    });
+  }
 
   // constructor(private _apiService: ApiService) {
   // }
   //
-  // getDownloadStatistics(start, end, flag) {
-  //   return this._apiService.get(
-  //     `${PATH.downloadStatistics}?startTime=${start}&endTime=${end}&product=${flag}`
-  //   );
-  // }
+  getDownloadStatistics(start, end, flag) {
+    return this.httpService.get(
+      `${this.app.pci.BASE_URL}${PATH.downloadStatistics}?startTime=${start}&endTime=${end}&product=${flag}`
+    );
+  }
 }

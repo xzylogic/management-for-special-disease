@@ -1,1 +1,70 @@
-<h1>user certification</h1>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="已认证">
+        <div *ngIf="!userCertificationTable.lists&&userCertificationTable.loading">Loading...</div>
+        <div *ngIf="!userCertificationTable.lists&&!userCertificationTable.loading&&!!userCertificationTable.errorMessage" class="center">
+          {{userCertificationTable.errorMessage}}
+        </div>
+        <div *ngIf="userCertificationTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userCertificationTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getUserCertifications($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="未认证">
+        <div *ngIf="!userUnCertificationTable.lists&&userUnCertificationTable.loading">Loading...</div>
+        <div *ngIf="!userUnCertificationTable.lists&&!userUnCertificationTable.loading&&!!userUnCertificationTable.errorMessage" class="center">
+          {{userUnCertificationTable.errorMessage}}
+        </div>
+        <div *ngIf="userUnCertificationTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userUnCertificationTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getUserUncertifications($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="申请中">
+        <div *ngIf="!userCertificatingTable.lists&&userCertificatingTable.loading">Loading...</div>
+        <div *ngIf="!userCertificatingTable.lists&&!userCertificatingTable.loading&&!!userCertificatingTable.errorMessage" class="center">
+          {{userCertificatingTable.errorMessage}}
+        </div>
+        <div *ngIf="userCertificatingTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userCertificatingTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getUserCertificatings($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="申请失败">
+        <div *ngIf="!userCertificationFailureTable.lists&&userCertificationFailureTable.loading">Loading...</div>
+        <div *ngIf="!userCertificationFailureTable.lists&&!userCertificationFailureTable.loading&&!!userCertificationFailureTable.errorMessage" class="center">
+          {{userCertificationFailureTable.errorMessage}}
+        </div>
+        <div *ngIf="userCertificationFailureTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userCertificationFailureTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getUserCertificationFailures($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+    <div class="count">
+      <md-chip color="accent" selected="true">32</md-chip>
+    </div>
+  </div>
+</app-container>
+

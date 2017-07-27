@@ -1,1 +1,34 @@
-<h1>period statistics</h1>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="患者活跃度统计">
+        <div *ngIf="!userPeriodTable.lists&&userPeriodTable.loading">Loading...</div>
+        <div *ngIf="!userPeriodTable.lists&&!userPeriodTable.loading&&!!userPeriodTable.errorMessage" class="center">
+          {{userPeriodTable.errorMessage}}
+        </div>
+        <div *ngIf="userPeriodTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="userPeriodTable"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="医生活跃度统计">
+        <div *ngIf="!doctorPeriodTable.lists&&doctorPeriodTable.loading">Loading...</div>
+        <div *ngIf="!doctorPeriodTable.lists&&!doctorPeriodTable.loading&&!!doctorPeriodTable.errorMessage" class="center">
+          {{doctorPeriodTable.errorMessage}}
+        </div>
+        <div *ngIf="doctorPeriodTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="doctorPeriodTable"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>
+
+

@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { ContainerConfig } from '../../../../libs';
+
 const PATH = {
   userActivenessStatistics: 'api/statistics/activity/user', // 患者日活跃度统计
   doctorActivenessStatistics: 'api/statistics/activity/doctor', // 医生日活跃度统计
-  userPeriodStatistics: 'api/statistics/login/log/user', // 患者时间段内活跃度统计
-  doctorPeriodStatistics: 'api/statistics/login/log/doctor', // 医生时间段内活跃度统计
 };
 
 @Injectable()
@@ -14,6 +14,16 @@ export class ActivenessStatisticsService {
     @Inject('app') private app,
     @Inject('http') private httpService
   ) {
+  }
+
+  activenessConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '数据统计',
+      subTitle: '日活跃度统计',
+      ifHome: true,
+      homeRouter: '/activeness-statistics',
+      currentRouter: '/activeness-statistics'
+    });
   }
 
   getUserActiveness(obj: { page: number, size: number, key ?: string, date ?: string }) {

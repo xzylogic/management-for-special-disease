@@ -1,165 +1,266 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+
+
 import { UserOrderService } from './_service/user-order.service';
 import { UserOrderTableService } from './_service/user-order-table.service';
+import { UserOrder } from './_entity/user-order.entity';
+import {
+  TableOption, ContainerConfig, DialogOptions,
+  ActionDialog, HintDialog
+} from '../../../libs';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-user-order',
-  templateUrl: './user-order.component.html'
+  templateUrl: './user-order.component.html',
+  styleUrls: ['./user-order.component.css']
 })
 export class UserOrderComponent implements OnInit {
-  // title = '患者订单管理';
-  // subTitle = '患者订单列表';
-  //
-  // userOrderTable: TableOption;
-  // userOrderRefundTable: TableOption;
-  // userOrderServicingTable: TableOption;
-  // userOrderThirdTable: TableOption;
-  //
-  // refundCount: number;
-  // thirdCount: number;
-  //
-  // userOrder: any;
-  // enableRecord: boolean;
-  // enableRefund: boolean;
-  // enableProcess: boolean;
-  //
-  // titleShow: string = '提示信息';
-  // message: string;
-  // enableShow: boolean;
+  containerConfig: ContainerConfig;
+  userOrderTable: TableOption;
+  userOrderRefundTable: TableOption;
+  userOrderServicingTable: TableOption;
+  userOrderThirdTable: TableOption;
+  @select(['userOrder', 'tab']) tab: Observable<number>;
+  @select(['userOrder', 'page']) page: Observable<Array<number>>;
 
   constructor(
-    private _userOrderService: UserOrderService,
-    private _userOrderTableService: UserOrderTableService
+    @Inject('action') private action,
+    private userOrderService: UserOrderService,
+    private userOrderTableService: UserOrderTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('userOrder', new UserOrder());
   }
 
   ngOnInit() {
-    // this.refresh();
+    this.containerConfig = this.userOrderService.userOrderConfig();
+    this.userOrderTable = new TableOption({
+      titles: this.userOrderTableService.setTitles(),
+      ifPage: true
+    });
+    this.userOrderRefundTable = new TableOption({
+      titles: this.userOrderTableService.setRefundTitles(),
+      ifPage: true
+    });
+    this.userOrderServicingTable = new TableOption({
+      titles: this.userOrderTableService.setServicingTitles(),
+      ifPage: true
+    });
+    this.userOrderThirdTable = new TableOption({
+      titles: this.userOrderTableService.setThirdTitles(),
+      ifPage: true
+    });
+    this.reset();
   }
 
-  // refresh() {
-  //   this.userOrderTable = new TableOption();
-  //   this.userOrderRefundTable = new TableOption();
-  //   this.userOrderServicingTable = new TableOption();
-  //   this.userOrderThirdTable = new TableOption();
-  //   this.getUserOrderTitles();
-  //   this.getUserOrderRefundTitles();
-  //   this.getUserOrderServicingTitles();
-  //   this.getUserOrderThirdTitles();
-  //   this.getUserOrders(0);
-  //   this.getUserRefundOrders(0);
-  //   this.getUserServicingOrders(0);
-  //   this.getUserThirdOrders(0);
-  //   this.getUserOrderCount();
-  // }
+  reset() {
+    this.reset0();
+    this.reset1();
+    this.reset2();
+    this.reset3();
+  }
+
+  reset0() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserOrders(page[0]);
+    });
+  }
+
+  reset1() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserRefundOrders(page[1]);
+    });
+  }
+
+  reset2() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserServicingOrders(page[2]);
+    });
+  }
+
+  reset3() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserThirdOrders(page[3]);
+    });
+  }
+
+  getUserOrders(page: number) {
+    this.action.pageChange('userOrder', [page, this.userOrderRefundTable.currentPage, this.userOrderServicingTable.currentPage, this.userOrderThirdTable.currentPage]);
+    this.userOrderTable.reset(page);
+    this.userOrderService.getUserOrders(page, this.userOrderTable.size)
+      .subscribe(
+        data => {
+          this.userOrderTable.loading = false;
+          if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+            this.userOrderTable.errorMessage = ERRMSG.nullMsg;
+          } else if (data.data && data.data.content && data.code === 0) {
+            this.userOrderTable.totalPage = data.data.totalPages;
+            this.userOrderTable.lists = data.data.content;
+          } else {
+            this.userOrderTable.errorMessage = data.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userOrderTable.loading = false;
+          this.userOrderTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
   //
-  // getUserOrderCount() {
-  //   this._userOrderService.getUserOrderCount()
-  //     .subscribe(
-  //       data => {
-  //         if (data.data && data.code === 0) {
-  //           this._sidebarService.setCount(data.data.refundSum + data.data.thirdSum, 'usergroup', 'userorder');
-  //         }
-  //       })
-  // }
-  //
-  // getUserOrderTitles() {
-  //   this.userOrderTable.titles = this._userOrderTableService.setTitles();
-  // }
-  //
-  // getUserOrderRefundTitles() {
-  //   this.userOrderRefundTable.titles = this._userOrderTableService.setRefundTitles();
-  // }
-  //
-  // getUserOrderServicingTitles() {
-  //   this.userOrderServicingTable.titles = this._userOrderTableService.setServicingTitles();
-  // }
-  //
-  // getUserOrderThirdTitles() {
-  //   this.userOrderThirdTable.titles = this._userOrderTableService.setThirdTitles();
-  // }
-  //
-  // getUserOrders(page: number) {
-  //   this.userOrderTable.currentPage = page;
-  //   this._userOrderService.getUserOrders(page, this.userOrderTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.userOrderTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.userOrderTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.userOrderTable.totalPage = data.data.totalPages;
-  //           this.userOrderTable.lists = data.data.content;
-  //         } else {
-  //           this.userOrderTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.userOrderTable.loading = false;
-  //         this.userOrderTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // getUserRefundOrders(page: number) {
-  //   this.userOrderRefundTable.currentPage = page;
-  //   this._userOrderService.getUserOrderRefunds(page, this.userOrderRefundTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.userOrderRefundTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.userOrderRefundTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.userOrderRefundTable.totalPage = data.data.totalPages;
-  //           this.userOrderRefundTable.lists = data.data.content;
-  //           this.refundCount = data.data.totalElements;
-  //         } else {
-  //           this.userOrderRefundTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.userOrderRefundTable.loading = false;
-  //         this.userOrderRefundTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // getUserServicingOrders(page: number) {
-  //   this.userOrderServicingTable.currentPage = page;
-  //   this._userOrderService.getUserOrderServicings(page, this.userOrderServicingTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.userOrderServicingTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.userOrderServicingTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.userOrderServicingTable.totalPage = data.data.totalPages;
-  //           this.userOrderServicingTable.lists = data.data.content;
-  //         } else {
-  //           this.userOrderServicingTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.userOrderServicingTable.loading = false;
-  //         this.userOrderServicingTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // getUserThirdOrders(page: number) {
-  //   this.userOrderThirdTable.currentPage = page;
-  //   this._userOrderService.getUserOrderThirds(page, this.userOrderThirdTable.size)
-  //     .subscribe(
-  //       data => {
-  //         this.userOrderThirdTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.userOrderThirdTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.userOrderThirdTable.totalPage = data.data.totalPages;
-  //           this.userOrderThirdTable.lists = data.data.content;
-  //           this.thirdCount = data.data.totalElements;
-  //         } else {
-  //           this.userOrderThirdTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.userOrderThirdTable.loading = false;
-  //         this.userOrderThirdTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
+  getUserRefundOrders(page: number) {
+    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, page, this.userOrderServicingTable.currentPage, this.userOrderThirdTable.currentPage]);
+    this.userOrderRefundTable.reset(page);
+    this.userOrderService.getUserOrderRefunds(page, this.userOrderRefundTable.size)
+      .subscribe(
+        data => {
+          this.userOrderRefundTable.loading = false;
+          if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+            this.userOrderRefundTable.errorMessage = ERRMSG.nullMsg;
+          } else if (data.data && data.data.content && data.code === 0) {
+            this.userOrderRefundTable.totalPage = data.data.totalPages;
+            this.userOrderRefundTable.lists = data.data.content;
+            // this.refundCount = data.data.totalElements;
+          } else {
+            this.userOrderRefundTable.errorMessage = data.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userOrderRefundTable.loading = false;
+          this.userOrderRefundTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserServicingOrders(page: number) {
+    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, this.userOrderRefundTable.currentPage, page, this.userOrderThirdTable.currentPage]);
+    this.userOrderServicingTable.reset(page);
+    this.userOrderService.getUserOrderServicings(page, this.userOrderServicingTable.size)
+      .subscribe(
+        data => {
+          this.userOrderServicingTable.loading = false;
+          if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+            this.userOrderServicingTable.errorMessage = ERRMSG.nullMsg;
+          } else if (data.data && data.data.content && data.code === 0) {
+            this.userOrderServicingTable.totalPage = data.data.totalPages;
+            this.userOrderServicingTable.lists = data.data.content;
+          } else {
+            this.userOrderServicingTable.errorMessage = data.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userOrderServicingTable.loading = false;
+          this.userOrderServicingTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserThirdOrders(page: number) {
+    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, this.userOrderRefundTable.currentPage, this.userOrderServicingTable.currentPage, page]);
+    this.userOrderThirdTable.reset(page);
+    this.userOrderService.getUserOrderThirds(page, this.userOrderThirdTable.size)
+      .subscribe(
+        data => {
+          this.userOrderThirdTable.loading = false;
+          if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+            this.userOrderThirdTable.errorMessage = ERRMSG.nullMsg;
+          } else if (data.data && data.data.content && data.code === 0) {
+            this.userOrderThirdTable.totalPage = data.data.totalPages;
+            this.userOrderThirdTable.lists = data.data.content;
+            // this.thirdCount = data.data.totalElements;
+          } else {
+            this.userOrderThirdTable.errorMessage = data.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userOrderThirdTable.loading = false;
+          this.userOrderThirdTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+
+  gotoHandle(res) {
+    const order = <UserOrder>res.value;
+    if (res.key === 'usage') {
+      this.action.dataChange('userOrder', order);
+      this.router.navigate(['/user-order/edit']);
+    }
+    if (res.key === 'refund') {
+      const config = new DialogOptions({
+        title: `您确定要退款${order.purchaser}？`,
+        message: '',
+        buttons: [{
+          key: 'topass',
+          value: '确定',
+          color: 'primary'
+        }, {
+          key: 'tocancel',
+          value: '取消',
+          color: ''
+        }]
+      });
+      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+        if (result.key === 'topass') {
+          this.toReimburse(order.id);
+        }
+      });
+    }
+    if (res.key === 'thirdProcess') {
+      const config = new DialogOptions({
+        title: `您确定要处理${order.purchaser}的服务？`,
+        message: '',
+        buttons: [{
+          key: 'torefuse',
+          value: '确定',
+          color: 'primary'
+        }, {
+          key: 'tocancel',
+          value: '取消',
+          color: ''
+        }],
+      });
+      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+        if (result.key === 'torefuse') {
+          this.getThrough(order.id);
+        }
+      });
+    }
+  }
+
+
+  toReimburse(id) {
+    this.userOrderService.userOrderRefund(id)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
+  }
+
+  getThrough(id) {
+    this.userOrderService.userOrderProcess(id)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
+  }
+
+
+
+  change(index) {
+    this.action.tabChange('userOrder', index);
+  }
   //
   // gotoHandle(data) {
   //   this.userOrder = data.value;

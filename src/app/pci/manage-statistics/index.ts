@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { createReducer } from '../_store/api/api.reducer';
 
 export const routes: Routes = [{
   path: 'activeness-statistics',
@@ -19,3 +20,11 @@ export const routes: Routes = [{
   path: 'father-statistics',
   loadChildren: 'app/pci/manage-statistics/father-statistics/father-statistics.module#FatherStatisticsModule'
 }];
+
+export const stores = {
+  activenessStatistics: createReducer('activenessStatistics', [0, 0], {}),
+  registerStatistics: createReducer('registerStatistics', [0, 0], {}),
+  periodStatistics: createReducer('periodStatistics', [0, 0], {}),
+  businessStatistics: createReducer('businessStatistics', [0, 0], {}),
+  downloadStatistics: createReducer('downloadStatistics', [0, 0, 0], {}),
+};

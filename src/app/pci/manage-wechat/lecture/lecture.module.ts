@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
 import { LectureComponent } from './lecture.component';
 import { LectureEditComponent } from './lecture-edit/lecture-edit.component';
@@ -15,10 +18,23 @@ const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
   component: LectureComponent
+}, {
+  path: 'edit',
+  component: LectureEditComponent,
+  canActivate: [AuthGuardService],
+}, {
+  path: 'detail',
+  component: LectureSignComponent,
+  canActivate: [AuthGuardService],
 }];
 
 @NgModule({
   imports: [
+    MdChipsModule,
+    MdTabsModule,
+    DTableModule,
+    LibModule,
+    DFormModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

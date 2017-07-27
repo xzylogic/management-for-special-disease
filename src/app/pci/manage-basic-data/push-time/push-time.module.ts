@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
 
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 import { PushTimeComponent } from './push-time.component';
 import { PushTimeEditComponent } from './push-time-edit/push-time-edit.component';
 
@@ -16,6 +19,11 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    FormsModule,
+    MdChipsModule,
+    MdTabsModule,
+    DTableModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

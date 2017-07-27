@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
 
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 import { FamilyAccountComponent } from './family-account.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
@@ -15,6 +18,12 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    FormsModule,
+    MdChipsModule,
+    MdTabsModule,
+    DTableModule,
+    DFormModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

@@ -1,65 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject} from '@angular/core';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
+import { ContainerConfig, TableOption } from '../../../../libs';
 import { UserService } from '../_service/user.service';
 import { UserIntegralDetailTableService } from '../_service/user-integral-detail-table.service';
+import { User } from '../_entity/user.entity';
+import { ERRMSG } from '../../../_store/static';
+
 
 @Component({
   selector: 'app-integral-detail',
   templateUrl: './integral-detail.component.html',
 })
 export class IntegralDetailComponent implements OnInit {
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter < any > = new EventEmitter();
-  //
-  // IntegralDetailTable: TableOption = new TableOption();
-  //
-  // modalTitle: string;
+  containerConfig: ContainerConfig;
+  userIntegralTable: TableOption;
+  @select(['user', 'tab']) tab: Observable<number>;
+  @select(['user', 'data']) user: Observable<User>;
+  @select(['user', 'page']) page: Observable<Array<number>>;
 
   constructor(
-    private _integraldetailTableService: UserIntegralDetailTableService,
-    private _userService: UserService
+    @Inject('action') private action,
+    private integraldetailTableService: UserIntegralDetailTableService,
+    private userService: UserService,
   ) {
   }
 
   ngOnInit() {
-    // this.getIntegralDetailTable(0);
-    // this.getIntegralDetailTitles();
+    this.containerConfig = this.userService.userIntegralConfig();
+    this.userIntegralTable = new TableOption({
+      titles: this.integraldetailTableService.setUserTitles(),
+      ifPage: true
+    });
+    this.getIntegralDetailTable(0)
   }
 
-  // getIntegralDetailTitles() {
-  //   this.modalTitle = this.data.value.name+"积分明细";
-  //   this.IntegralDetailTable.titles = this._integraldetailTableService.setTitles();
-  // }
-  //
-  // getIntegralDetailTable(page:number){
-  //    this.IntegralDetailTable.errorMessage = '';
-  //    this.IntegralDetailTable.loading = true;
-  //    this.IntegralDetailTable.lists = null;
-  //    this.IntegralDetailTable.currentPage = page;
-  //    this._userService.userIntegralDetail(this.data.value.id,page).subscribe(
-  //       data =>{
-  //         this.IntegralDetailTable.loading = false;
-  //         if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-  //           this.IntegralDetailTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.IntegralDetailTable.totalPage = data.data.totalPages;
-  //           this.IntegralDetailTable.lists = data.data.content;
-  //         } else {
-  //           this.IntegralDetailTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err =>{
-  //         this.IntegralDetailTable.loading = false;
-  //         this.IntegralDetailTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // refresh(){
-  //   this.getIntegralDetailTable(0);
-  // }
-  //
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
+
+  getIntegralDetailTable(page: number) {
+      this.user.subscribe(res => {
+        this.userService.userIntegralDetail(Number(res.id), page).subscribe(
+          data => {
+            this.userIntegralTable.loading = false;
+            if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+              this.userIntegralTable.errorMessage = ERRMSG.nullMsg;
+            } else if (data.data && data.data.content && data.code === 0) {
+              this.userIntegralTable.totalPage = data.data.totalPages;
+              this.userIntegralTable.lists = data.data.content;
+            } else {
+              this.userIntegralTable.errorMessage = ERRMSG.nullMsg;
+            }
+          }, err => {
+            this.userIntegralTable.errorMessage = ERRMSG.nullMsg;
+          })
+      });
+  }
 }

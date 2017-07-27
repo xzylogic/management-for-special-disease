@@ -1,42 +1,55 @@
 form{
-	font-size: 16px;
+  font-size: 16px;
+  width:1000px;
+  margin:0 auto;
 }
 .right{
-	text-align: right;
+  text-align: center;
 }
 .com{
-	margin-top:20px;
+  margin-top:20px;
 }
 .link{
-	margin-top: 210px;
+  margin-top: 170px;
 }
 .time{
-	margin-top:98px;
+  margin-top:98px;
 }
 input{
-	display: inline-block;
+  display: inline-block;
 }
 .doctor{
-	display: inline-block;
-	margin-left: 30px;
+  display: inline-block;
+  margin-left: 30px;
+}
+.three{
+  float: left;
+  width:30%;
+}
+.nine{
+  float: left;
+  width:70%;
 }
 .radio input{
-	  cursor: pointer;
-    width: 17px;
-    height: 17px;
-    
+  cursor: pointer;
+  width: 17px;
+  height: 17px;
+
+}
+textarea{
+  width:100%;
 }
 .radio{
-	height: 20px;
-	clear: both;
+  height: 20px;
+  clear: both;
 }
 .radio span{
-	display: inline-block;
-	height: 20px;
-	line-height: 20px;
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
 }
 .error-message{
-	color: red;
+  color: red;
 }
 .radio-group {
   display: inline-flex;
@@ -51,34 +64,31 @@ input{
   margin: 15px 0;
 }*/
 .float-left{
-	float: left;
-	width: 30%;
+  float: left;
+  width: 30%;
 }
 .float-right{
-	float: left;
-	width: 70%;
+  float: left;
+  width: 70%;
 }
 .skip-url{
-	margin-top: 10px;
+  margin-top: 10px;
 }
 .skip-app{
-	margin-top: 20px;
+  margin-top: 35px;
 }
 .option{
-	display: inline-block;
-	width: 50%;
-	float: left;
+  display: inline-block;
+  width: 50%;
+  float: left;
 }
 .number{
-	display: inline;
-	float: right;
+  display: inline;
+  float: right;
 }
 .number input{
-	width: 100px;
-}
-.number span{
-	line-height: 38px;
+  width: 100px;
 }
 .sendtime{
-	margin-top: 150px;
+  margin-top: 150px;
 }

@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdTabsModule } from '@angular/material';
+
+import { DTableModule, DFormModule, LibModule } from '../../libs';
 
 import { OperationPushComponent } from './operation-push.component';
 import { OperationPushEditComponent } from './operation-push-edit/operation-push-edit.component';
@@ -12,10 +16,19 @@ const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
   component: OperationPushComponent
+}, {
+  path: 'edit',
+  component: OperationPushEditComponent,
+  canActivate: [AuthGuardService],
 }];
 
 @NgModule({
   imports: [
+    MdTabsModule,
+    DTableModule,
+    DFormModule,
+    FormsModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
