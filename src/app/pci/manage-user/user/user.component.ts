@@ -16,6 +16,7 @@ import { ERRMSG } from '../../_store/static';
 export class UserComponent implements OnInit {
   containerConfig: ContainerConfig;
   userTable: TableOption;
+  queryBind: any;
   @select(['user', 'tab']) tab: Observable<number>;
   @select(['user', 'page']) page: Observable<Array<number>>;
 
@@ -39,15 +40,17 @@ export class UserComponent implements OnInit {
 
   reset() {
     this.userTable.queryKey = '';
-    this.userTable.queryBind = false;
-    this.getUsers(0);
+    this.queryBind = '';
+    this.page.subscribe((page: Array<number>) => {
+      this.getUsers(page[0]);
+    });
   }
 
   getUsers(page: number) {
-    this.action.pageChange('user', [page, this.userTable.currentPage, this.userTable.currentPage]);
+    this.action.pageChange('user', [page]);
     this.userTable.reset(page);
     this.userService.getUsers(
-      this.userTable.queryKey, this.userTable.queryBind, page, this.userTable.size)
+      this.userTable.queryKey, this.queryBind, page, this.userTable.size)
       .subscribe(res => {
         this.userTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -57,14 +60,12 @@ export class UserComponent implements OnInit {
           // this.userTable.totalElements = data.data.totalElements;
           this.formatUser(res.data.content);
           this.userTable.lists = res.data.content;
-          for (let i = 0; i < this.userTable.lists.length; ++i) {
-            this.userTable.lists[i].lastOperationDate = this.getDate(this.userTable.lists[i].lastOperationDate);
-          }
         } else {
           this.userTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
       }, err => {
         console.log(err);
+        this.userTable.loading = false;
         this.userTable.errorMessage = ERRMSG.netErrMsg;
       })
   }
@@ -77,8 +78,8 @@ export class UserComponent implements OnInit {
   // 转换
   formatUser(list: Array<any>) {
     list.forEach(data => {
-      data.hospitalId = data.hospital && data.hospital.id || '';
-      data.hospitalName = data.hospital && data.hospital.name || '';
+      // data.hospitalId = data.hospital && data.hospital.id || '';
+      // data.hospitalName = data.hospital && data.hospital.name || '';
       if (data.sex === 0) {
         data.sexName = '男';
       }
@@ -86,22 +87,6 @@ export class UserComponent implements OnInit {
         data.sexName = '女';
       }
     })
-  }
-
-  // 时间转换
-  getDate(time) {
-    if (time) {
-      let d = new Date(time);
-      var date = (d.getFullYear()) + '-' +
-        (d.getMonth() + 1) + '-' +
-        (d.getDate()) + ' ' +
-        (d.getHours()) + ':' +
-        (d.getMinutes()) + ':' +
-        (d.getSeconds());
-    } else {
-      date = '';
-    }
-    return date;
   }
 
   newData() {

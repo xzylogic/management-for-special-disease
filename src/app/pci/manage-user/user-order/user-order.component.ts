@@ -10,13 +10,14 @@ import { UserOrderTableService } from './_service/user-order-table.service';
 import { UserOrder } from './_entity/user-order.entity';
 import {
   TableOption, ContainerConfig, DialogOptions,
-  ImageDialog, ActionDialog, HintDialog, MessageDialog
+  ActionDialog, HintDialog
 } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-user-order',
-  templateUrl: './user-order.component.html'
+  templateUrl: './user-order.component.html',
+  styleUrls: ['./user-order.component.css']
 })
 export class UserOrderComponent implements OnInit {
   containerConfig: ContainerConfig;
@@ -55,19 +56,42 @@ export class UserOrderComponent implements OnInit {
       titles: this.userOrderTableService.setThirdTitles(),
       ifPage: true
     });
-    this.refresh();
+    this.reset();
   }
 
-  refresh() {
-    this.getUserOrders(0);
-    this.getUserRefundOrders(0);
-    this.getUserServicingOrders(0);
-    this.getUserThirdOrders(0);
-    // this.getUserOrderCount();
+  reset() {
+    this.reset0();
+    this.reset1();
+    this.reset2();
+    this.reset3();
+  }
+
+  reset0() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserOrders(page[0]);
+    });
+  }
+
+  reset1() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserRefundOrders(page[1]);
+    });
+  }
+
+  reset2() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserServicingOrders(page[2]);
+    });
+  }
+
+  reset3() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserThirdOrders(page[3]);
+    });
   }
 
   getUserOrders(page: number) {
-    this.action.pageChange('user-order', [page, this.userOrderRefundTable.currentPage, this.userOrderServicingTable.currentPage, this.userOrderThirdTable.currentPage]);
+    this.action.pageChange('userOrder', [page, this.userOrderRefundTable.currentPage, this.userOrderServicingTable.currentPage, this.userOrderThirdTable.currentPage]);
     this.userOrderTable.reset(page);
     this.userOrderService.getUserOrders(page, this.userOrderTable.size)
       .subscribe(
@@ -82,12 +106,13 @@ export class UserOrderComponent implements OnInit {
             this.userOrderTable.errorMessage = data.msg || ERRMSG.otherMsg;
           }
         }, err => {
-          this.userOrderTable.errorMessage = ERRMSG.nullMsg;
+          this.userOrderTable.loading = false;
+          this.userOrderTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
   //
   getUserRefundOrders(page: number) {
-    this.action.pageChange('user-order', [page, this.userOrderTable.currentPage, this.userOrderServicingTable.currentPage, this.userOrderThirdTable.currentPage]);
+    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, page, this.userOrderServicingTable.currentPage, this.userOrderThirdTable.currentPage]);
     this.userOrderRefundTable.reset(page);
     this.userOrderService.getUserOrderRefunds(page, this.userOrderRefundTable.size)
       .subscribe(
@@ -103,12 +128,13 @@ export class UserOrderComponent implements OnInit {
             this.userOrderRefundTable.errorMessage = data.msg || ERRMSG.otherMsg;
           }
         }, err => {
-          this.userOrderRefundTable.errorMessage = ERRMSG.nullMsg;
+          this.userOrderRefundTable.loading = false;
+          this.userOrderRefundTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
 
   getUserServicingOrders(page: number) {
-    this.action.pageChange('user-order', [page, this.userOrderTable.currentPage, this.userOrderRefundTable.currentPage, this.userOrderThirdTable.currentPage]);
+    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, this.userOrderRefundTable.currentPage, page, this.userOrderThirdTable.currentPage]);
     this.userOrderServicingTable.reset(page);
     this.userOrderService.getUserOrderServicings(page, this.userOrderServicingTable.size)
       .subscribe(
@@ -123,12 +149,13 @@ export class UserOrderComponent implements OnInit {
             this.userOrderServicingTable.errorMessage = data.msg || ERRMSG.otherMsg;
           }
         }, err => {
-          this.userOrderServicingTable.errorMessage = ERRMSG.nullMsg;
+          this.userOrderServicingTable.loading = false;
+          this.userOrderServicingTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
 
   getUserThirdOrders(page: number) {
-    this.action.pageChange('user-order', [page, this.userOrderTable.currentPage, this.userOrderRefundTable.currentPage, this.userOrderServicingTable.currentPage]);
+    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, this.userOrderRefundTable.currentPage, this.userOrderServicingTable.currentPage, page]);
     this.userOrderThirdTable.reset(page);
     this.userOrderService.getUserOrderThirds(page, this.userOrderThirdTable.size)
       .subscribe(
@@ -144,7 +171,8 @@ export class UserOrderComponent implements OnInit {
             this.userOrderThirdTable.errorMessage = data.msg || ERRMSG.otherMsg;
           }
         }, err => {
-          this.userOrderThirdTable.errorMessage = ERRMSG.nullMsg;
+          this.userOrderThirdTable.loading = false;
+          this.userOrderThirdTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
 
@@ -203,7 +231,7 @@ export class UserOrderComponent implements OnInit {
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);
-          this.refresh();
+          this.reset();
         } else {
           HintDialog(res.msg || '操作失败', this.dialog);
         }
@@ -218,7 +246,7 @@ export class UserOrderComponent implements OnInit {
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);
-          this.refresh();
+          this.reset();
         } else {
           HintDialog(res.msg || '操作失败', this.dialog);
         }

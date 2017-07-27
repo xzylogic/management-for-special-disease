@@ -41,6 +41,7 @@ export class UserEditComponent implements OnInit {
             );
           } else {
             this.containerConfig = this.userService.userEditConfig(false);
+            console.log(data);
             this.form = this.userFormService.setForm(
               res.data.hospitalList,
               data
@@ -57,6 +58,7 @@ export class UserEditComponent implements OnInit {
   }
 
   getValues(value) {
+    console.log(value);
     if (this.state === null) {
       this.userService.userCreate(value)
         .subscribe(res => {

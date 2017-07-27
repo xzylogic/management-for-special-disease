@@ -1,1 +1,37 @@
-<h1>register statistics</h1>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="患者统计">
+        <div *ngIf="!userTable.lists&&userTable.loading">Loading...</div>
+        <div *ngIf="!userTable.lists&&!userTable.loading&&!!userTable.errorMessage" class="center">
+          {{userTable.errorMessage}}
+        </div>
+        <div *ngIf="userTable.lists">
+          <div  style="text-align:center;font-size:16px;"><strong>患者注册总数：{{userRegisterCount}}</strong></div>
+          <div class="content__table">
+            <app-lib-table
+              [table]="userTable"
+              (pageEmitter)="getUsers($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="医生统计">
+        <div *ngIf="!doctorTable.lists&&doctorTable.loading">Loading...</div>
+        <div *ngIf="!doctorTable.lists&&!doctorTable.loading&&!!doctorTable.errorMessage" class="center">
+          {{doctorTable.errorMessage}}
+        </div>
+        <div *ngIf="doctorTable.lists">
+          <div style="text-align:center;font-size:16px;"><strong>医生注册总数：{{doctorRegisterCount}}&nbsp;&nbsp;&nbsp;&nbsp;审核通过总数：{{doctorValidateCount}}</strong></div>
+          <div class="content__table">
+            <app-lib-table
+              [table]="doctorTable"
+              (pageEmitter)="getDoctors($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>
+

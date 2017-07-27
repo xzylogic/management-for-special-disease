@@ -50,7 +50,7 @@ export class UserOrderService {
 
 
   getUserOrders(page: number, size: number) {
-    return this.httpService.get(`http://10.2.102.87:8082/${PATH.userOrderList}?page=${page}&size=${size}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderList}?page=${page}&size=${size}`);
   }
 
   queryUserOrder(queryString: string, page: number, size: number) {
@@ -66,7 +66,7 @@ export class UserOrderService {
   }
 
   getUserOrderThirds(page: number, size: number) {
-    return this.httpService.get(`http://10.2.102.87:8082/${PATH.userOrderThirdList}?page=${page}&size=${size}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderThirdList}?page=${page}&size=${size}`);
   }
 
   userOrderRefund(id: number) {

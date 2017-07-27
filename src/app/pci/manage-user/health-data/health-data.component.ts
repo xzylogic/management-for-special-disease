@@ -1,212 +1,185 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject} from '@angular/core';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+
 import { HealthDataService } from './_service/health-data.service';
 import { HealthDataTableService } from './_service/health-data-table.service';
+import {
+  TableOption, ContainerConfig
+} from '../../../libs';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-health-data',
   templateUrl: './health-data.component.html',
   styleUrls: ['./health-data.component.css']
 })
-export class HealthDataComponent implements OnInit, AfterViewInit {
+export class HealthDataComponent implements OnInit {
 
-  // title = '患者管理';
-  // subTitle = '患者体征数据管理';
-  //
-  // pressureTable: TableOption = new TableOption;
-  // sugarTable: TableOption = new TableOption;
-  // rateTable: TableOption = new TableOption;
-  // weightTable: TableOption = new TableOption;
-  //
-  // //把分页的数据拼起来导出全部用
-  // allPressureTable: TableOption = new TableOption;
-  // allSugarTable: TableOption = new TableOption;
-  // allRateTable: TableOption = new TableOption;
-  // allWeightTable: TableOption = new TableOption;
-  //
-  // pressureQueryKey: string = '';
-  // pressureQueryBind: string = '';
-  // sugarQueryKey: string = '';
-  // sugarQueryBind: string = '';
-  // rateQueryKey: string = '';
-  // rateQueryBind: string = '';
-  // weightQueryKey: string = '';
-  // weightQueryBind: string = '';
-  //
-  // pressureFinish: boolean = false;
-  // sugarFinish: boolean = false;
-  // rateFinish: boolean = false;
-  // weightFinish: boolean = false;
-  //
+  containerConfig: ContainerConfig;
+  pressureTable: TableOption;
+  sugarTable: TableOption;
+  rateTable: TableOption;
+  weightTable: TableOption;
+
+  @select(['healthData', 'tab']) tab: Observable<number>;
+  @select(['healthData', 'page']) page: Observable<Array<number>>;
+
+  queryBind: any = '';
+
   constructor(
-    private _userService: HealthDataService,
-    private _userTableService: HealthDataTableService
+    @Inject('action') private action,
+    private healthDataService: HealthDataService,
+    private healthDataTableService: HealthDataTableService
   ) {
   }
 
-  //
   ngOnInit() {
-    //   this.setTitles();
-    //   this.getPressureData(0);
-    //   this.getSugarData(0);
-    //   this.getRateData(0);
-    //   this.getWeightData(0);
-    //
-    //   //初始化各个excel输出的jquery函数，此举为保证点击后jquery函数有效，只需初始化一次
-    //   this.pressureExcel();
-    //   this.sugarExcel();
-    //   this.rateExcel();
-    //   this.weightExcel();
+    this.containerConfig = this.healthDataService.UserHealthDataConfig();
+    this.pressureTable = new TableOption({
+      titles: this.healthDataTableService.setTitles(),
+      ifPage: true
+    });
+    this.sugarTable = new TableOption({
+      titles: this.healthDataTableService.setTitles(),
+      ifPage: true
+    });
+    this.rateTable = new TableOption({
+      titles: this.healthDataTableService.setTitles(),
+      ifPage: true
+    });
+    this.weightTable = new TableOption({
+      titles: this.healthDataTableService.setTitles(),
+      ifPage: true
+    });
+    this.reset();
   }
 
-  //
-  ngAfterViewInit() {
-    //   $('#list_pressure').dropdown();
-    //   $('#list_rate').dropdown();
-    //   $('#list_sugar').dropdown();
-    //   $('#list_weight').dropdown();
+  reset () {
+    this.reset0();
+    this.reset1();
+    this.reset2();
+    this.reset3();
   }
 
-  //
-  // setTitles() {
-  //   this.pressureTable.titles = this._userTableService.setTitles();
-  //   this.sugarTable.titles = this._userTableService.setTitles();
-  //   this.rateTable.titles = this._userTableService.setTitles();
-  //   this.weightTable.titles = this._userTableService.setTitles();
-  // }
-  //
-  // clearPressure() {
-  //   this.pressureQueryKey = '';
-  //   this.pressureQueryBind = '';
-  //   $('.text').text('筛选状态');
-  //   $('.text').addClass('default');
-  //   this.getPressureData(0);
-  // }
-  //
-  // clearSugar() {
-  //   this.sugarQueryKey = '';
-  //   this.sugarQueryBind = '';
-  //   $('.text').text('筛选状态');
-  //   $('.text').addClass('default');
-  //   this.getSugarData(0);
-  // }
-  //
-  // clearRate() {
-  //   this.rateQueryKey = '';
-  //   this.rateQueryBind = '';
-  //   $('.text').text('筛选状态');
-  //   $('.text').addClass('default');
-  //   this.getRateData(0);
-  // }
-  //
-  // clearWeight() {
-  //   this.weightQueryKey = '';
-  //   this.weightQueryBind = '';
-  //   $('.text').text('筛选状态');
-  //   $('.text').addClass('default');
-  //   this.getWeightData(0);
-  // }
-  //
-  // refresh(){
-  //   $('.text').text('筛选状态');
-  //   $('.text').addClass('default');
-  //   this.getPressureData(0);
-  //   this.getSugarData(0);
-  //   this.getRateData(0);
-  //   this.getWeightData(0);
-  // }
-  //
-  // getPressureData(page: number) {
-  //   this.pressureTable.lists = null;
-  //   this.pressureTable.loading = true;
-  //   this.pressureTable.errorMessage = '';
-  //   this.pressureTable.currentPage = page;
-  //   this._userService.getData(page, this.pressureQueryKey, this.pressureQueryBind)
-  //     .subscribe(
-  //       data => {
-  //         this.pressureTable.loading = false;
-  //         if (data.data && data.data.pressure && data.data.pressure.totalElements === 0 && data.code === 0) {
-  //           this.pressureTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.pressure && data.code === 0) {
-  //           this.pressureTable.totalPage = data.data.pressure.totalPages;
-  //           this.pressureTable.lists = data.data.pressure.content;
-  //         } else {
-  //           this.pressureTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.pressureTable.loading = false;
-  //         this.pressureTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       });
-  // }
-  //
-  // getSugarData(page: number) {
-  //   this.sugarTable.lists = null;
-  //   this.sugarTable.loading = true;
-  //   this.sugarTable.errorMessage = '';
-  //   this.sugarTable.currentPage = page;
-  //   this._userService.getData(page, this.sugarQueryKey, this.sugarQueryBind)
-  //     .subscribe(
-  //       data => {
-  //         this.sugarTable.loading = false;
-  //         if (data.data && data.data.sugar && data.data.sugar.totalElements === 0 && data.code === 0) {
-  //           this.sugarTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.sugar && data.code === 0) {
-  //           this.sugarTable.totalPage = data.data.sugar.totalPages;
-  //           this.sugarTable.lists = data.data.sugar.content;
-  //         } else {
-  //           this.sugarTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.sugarTable.loading = false;
-  //         this.sugarTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       });
-  // }
-  //
-  // getRateData(page: number) {
-  //   this.rateTable.lists = null;
-  //   this.rateTable.loading = true;
-  //   this.rateTable.errorMessage = '';
-  //   this.rateTable.currentPage = page;
-  //   this._userService.getData(page, this.rateQueryKey, this.rateQueryBind)
-  //     .subscribe(
-  //       data => {
-  //         this.rateTable.loading = false;
-  //         if (data.data && data.data.sugar && data.data.heartRate.totalElements === 0 && data.code === 0) {
-  //           this.rateTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.heartRate && data.code === 0) {
-  //           this.rateTable.totalPage = data.data.sugar.totalPages;
-  //           this.rateTable.lists = data.data.heartRate.content;
-  //         } else {
-  //           this.rateTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.rateTable.loading = false;
-  //         this.rateTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       });
-  // }
-  //
-  // getWeightData(page: number) {
-  //   this.weightTable.lists = null;
-  //   this.weightTable.loading = true;
-  //   this.weightTable.errorMessage = '';
-  //   this.weightTable.currentPage = page;
-  //   this._userService.getData(page, this.weightQueryKey, this.weightQueryBind)
-  //     .subscribe(
-  //       data => {
-  //         this.weightTable.loading = false;
-  //         if (data.data && data.data.weight && data.data.weight.totalElements === 0 && data.code === 0) {
-  //           this.weightTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.heartRate && data.code === 0) {
-  //           this.weightTable.totalPage = data.data.weight.totalPages;
-  //           this.weightTable.lists = data.data.weight.content;
-  //         } else {
-  //           this.weightTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.weightTable.loading = false;
-  //         this.weightTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       });
-  // }
-  //
+  reset0() {
+    this.queryBind = '';
+    this.pressureTable.queryKey = '';
+    console.log(this.queryBind);
+    this.page.subscribe((page: Array<number>) => {
+      this.PressureData(page[0]);
+    });
+  }
+
+  reset1() {
+    this.queryBind = '';
+    this.pressureTable.queryKey = '';
+    this.page.subscribe((page: Array<number>) => {
+      this.getSugarData(page[1]);
+    });
+  }
+
+  reset2() {
+    this.queryBind = '';
+    this.pressureTable.queryKey = '';
+    this.page.subscribe((page: Array<number>) => {
+      this.getRateData(page[2]);
+    });
+  }
+
+  reset3() {
+    this.queryBind = '';
+    this.pressureTable.queryKey = '';
+    this.page.subscribe((page: Array<number>) => {
+      this.getWeightData(page[3]);
+    });
+  }
+
+  PressureData(page: number) {
+    this.action.pageChange('healthData', [page, this.sugarTable.currentPage, this.rateTable.currentPage, this.weightTable.currentPage]);
+    this.pressureTable.reset(page);
+    this.healthDataService.getData(page, this.pressureTable.queryKey, this.queryBind)
+      .subscribe(
+        res => {
+          this.pressureTable.loading = false;
+          if (res.data && res.data.pressure && res.data.pressure.totalElements === 0 && res.code === 0) {
+            this.pressureTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.pressure && res.code === 0) {
+            this.pressureTable.totalPage = res.data.pressure.totalPages;
+            this.pressureTable.lists = res.data.pressure.content;
+          } else {
+            this.pressureTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.pressureTable.errorMessage = ERRMSG.nullMsg;
+        });
+  }
+
+  getSugarData(page: number) {
+    this.action.pageChange('healthData', [this.pressureTable.currentPage, page, this.rateTable.currentPage, this.weightTable.currentPage]);
+    this.sugarTable.reset(page);
+    this.healthDataService.getData(page, this.sugarTable.queryKey, this.queryBind)
+      .subscribe(
+        res => {
+          this.sugarTable.loading = false;
+          if (res.data && res.data.sugar && res.data.sugar.totalElements === 0 && res.code === 0) {
+            this.sugarTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.sugar && res.code === 0) {
+            this.sugarTable.totalPage = res.data.sugar.totalPages;
+            this.sugarTable.lists = res.data.sugar.content;
+          } else {
+            this.sugarTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.sugarTable.errorMessage = ERRMSG.netErrMsg;
+        });
+  }
+
+  getRateData(page: number) {
+    this.action.pageChange('healthData', [this.pressureTable.currentPage, this.sugarTable.currentPage, page, this.weightTable.currentPage]);
+    this.rateTable.reset(page);
+    this.healthDataService.getData(page, this.rateTable.queryKey, this.queryBind)
+      .subscribe(
+        res => {
+          this.rateTable.loading = false;
+          if (res.data && res.data.sugar && res.data.heartRate.totalElements === 0 && res.code === 0) {
+            this.rateTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.heartRate && res.code === 0) {
+            this.rateTable.totalPage = res.data.sugar.totalPages;
+            this.rateTable.lists = res.data.heartRate.content;
+          } else {
+            this.rateTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.rateTable.errorMessage = ERRMSG.netErrMsg;
+        });
+  }
+
+  getWeightData(page: number) {
+    this.action.pageChange('healthData', [this.pressureTable.currentPage, this.rateTable.currentPage, this.sugarTable.currentPage, page]);
+    this.weightTable.reset(page);
+    this.healthDataService.getData(page, this.weightTable.queryKey, this.queryBind)
+      .subscribe(
+        res => {
+          this.weightTable.loading = false;
+          if (res.data && res.data.weight && res.data.weight.totalElements === 0 && res.code === 0) {
+            this.weightTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.heartRate && res.code === 0) {
+            this.weightTable.totalPage = res.data.weight.totalPages;
+            this.weightTable.lists = res.data.weight.content;
+          } else {
+            this.weightTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.weightTable.loading = false;
+          this.weightTable.errorMessage = ERRMSG.netErrMsg;
+        });
+  }
+
+  change(index) {
+    this.action.tabChange('healthData', index);
+  }
+
   // //打印excel;
   // printPressure(){
   //   let totalPages: any;

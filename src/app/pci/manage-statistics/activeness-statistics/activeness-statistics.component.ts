@@ -1,50 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
-import { TableOption } from '../../../libs';
 import { ActivenessStatisticsService } from './_service/activeness-statistics.service';
 import { ActivenessStatisticsTableService } from './_service/activeness-statistics-table.service';
+import {
+  TableOption, ContainerConfig
+} from '../../../libs';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-activeness-statistics',
   templateUrl: 'activeness-statistics.component.html'
 })
 export class ActivenessStatisticsComponent implements OnInit {
+  containerConfig: ContainerConfig;
+  userActivenessTable: TableOption;
+  doctorActivenessTable: TableOption;
+  @select(['activenessStatistics', 'tab']) tab: Observable<number>;
+  @select(['activenessStatistics', 'page']) page: Observable<Array<number>>;
   // title = '数据统计';
   // subTitle = '日活跃度统计';
   //
-  userActivenessTable: TableOption;
+  // userActivenessTable: TableOption;
   // doctorActivenessTable: TableOption;
   //
-  // userStatistics: any;
-  // doctorStatistics: any;
+  userStatistics: any;
+  doctorStatistics: any;
   //
   // queryUserKey: string;
-  // queryUserDate: any;
+  queryUserDate: any;
   // queryDoctorKey: string;
-  // queryDoctorDate: any;
+  queryDoctorDate: any;
 
   constructor(
-    private _activenessStatisticsService: ActivenessStatisticsService,
-    private _activenessStatisticsTableService: ActivenessStatisticsTableService
+    @Inject('action') private action,
+    private activenessStatisticsService: ActivenessStatisticsService,
+    private activenessStatisticsTableService: ActivenessStatisticsTableService
   ) {
   }
 
   ngOnInit() {
-    // this.refresh();
-    // this.date();
+    this.containerConfig = this.activenessStatisticsService.activenessConfig();
+    this.userActivenessTable = new TableOption({
+      titles: this.activenessStatisticsTableService.setUserTitles(),
+      ifPage: true
+    });
+    this.doctorActivenessTable = new TableOption({
+      titles: this.activenessStatisticsTableService.setDoctorTitles(),
+      ifPage: true
+    });
+    this.reset();
   }
 
-  // refresh() {
-  //   let date = new Date();
-  //   let Y = date.getFullYear().toString();
-  //   let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1).toString();
-  //   let D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate().toString();
-  //   this.queryUserDate = `${Y}-${M}-${D}`;
-  //   this.queryDoctorDate = `${Y}-${M}-${D}`;
-  //   this.getUserActivenessStatistics(0);
-  //   this.getDoctorActivenessStatistics(0);
-  // }
-  //
+  reset() {
+    let date = new Date();
+    let Y = date.getFullYear().toString();
+    let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1).toString();
+    let D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate().toString();
+    this.queryUserDate = `${Y}-${M}-${D}`;
+    this.queryDoctorDate = `${Y}-${M}-${D}`;
+    this.reset0();
+    this.reset1();
+  }
+
+  reset0() {
+    this.userActivenessTable.queryKey = '';
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserActivenessStatistics(page[0]);
+    });
+  }
+
+  reset1() {
+    this.doctorActivenessTable.queryKey = '';
+    this.page.subscribe((page: Array<number>) => {
+      this.getDoctorActivenessStatistics(page[1]);
+    });
+  }
+
+
   // resetUser() {
   //   this.queryUserKey = null;
   //   this.queryUserDate = null;
@@ -74,77 +108,77 @@ export class ActivenessStatisticsComponent implements OnInit {
   //   this.doctorActivenessTable.titles = this._activenessStatisticsTableService.setDoctorTitles();
   // }
   //
-  // getUserActivenessStatistics(page: number) {
-  //   this.userActivenessTable = new TableOption();
-  //   this.userStatistics = null;
-  //   this.getUserActivenessTitles();
-  //   this.userActivenessTable.currentPage = page;
-  //   let option: any = { page: page, size: this.userActivenessTable.size };
-  //   if (this.queryUserKey) {
-  //     option.key = this.queryUserKey;
-  //   }
-  //   if (this.queryUserDate) {
-  //     option.date = this.queryUserDate;
-  //   }
-  //   this._activenessStatisticsService.getUserActiveness(option)
-  //     .subscribe(
-  //       data => {
-  //         this.userActivenessTable.loading = false;
-  //         if (data.data && data.data.list && data.data.list.content && data.data.list.content.length === 0 && data.code === 0) {
-  //           this.userActivenessTable.errorMessage = "当前数据为空哦～";
-  //         } else if (data.data && data.data.list && data.data.list.content && data.code === 0) {
-  //           this.userActivenessTable.totalPage = data.data.list.totalPages;
-  //           this.userActivenessTable.lists = data.data.list.content;
-  //           if (data.data.statistics) {
-  //             this.userStatistics = {};
-  //             this.userStatistics.loginTotal = data.data.statistics.loginTotal;
-  //             this.userStatistics.loginCount = data.data.statistics.loginCount;
-  //             this.userStatistics.loginRate = data.data.statistics.loginRate;
-  //             this.userStatistics.loginAverage = data.data.statistics.loginAverage;
-  //           }
-  //         } else {
-  //           this.userActivenessTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.userActivenessTable.loading = false;
-  //         this.userActivenessTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // getDoctorActivenessStatistics(page: number) {
-  //   this.doctorActivenessTable = new TableOption();
-  //   this.doctorStatistics = null;
-  //   this.getDoctorActivenessTitles();
-  //   this.doctorActivenessTable.currentPage = page;
-  //   let option: any = { page: page, size: this.doctorActivenessTable.size };
-  //   if (this.queryDoctorKey) {
-  //     option.key = this.queryDoctorKey;
-  //   }
-  //   if (this.queryDoctorDate) {
-  //     option.date = this.queryDoctorDate;
-  //   }
-  //   this._activenessStatisticsService.getDoctorActiveness(option)
-  //     .subscribe(
-  //       data => {
-  //         this.doctorActivenessTable.loading = false;
-  //         if (data.data && data.data.list && data.data.list.content && data.data.list.content.length === 0 && data.code === 0) {
-  //           this.doctorActivenessTable.errorMessage = "当前数据为空哦～";
-  //         } else if (data.data && data.data.list && data.data.list.content && data.code === 0) {
-  //           this.doctorActivenessTable.totalPage = data.data.list.totalPages;
-  //           this.doctorActivenessTable.lists = data.data.list.content;
-  //           if (data.data.statistics) {
-  //             this.doctorStatistics = {};
-  //             this.doctorStatistics.loginTotal = data.data.statistics.loginTotal;
-  //             this.doctorStatistics.loginCount = data.data.statistics.loginCount;
-  //             this.doctorStatistics.loginRate = data.data.statistics.loginRate;
-  //             this.doctorStatistics.loginAverage = data.data.statistics.loginAverage;
-  //           }
-  //         } else {
-  //           this.doctorActivenessTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.doctorActivenessTable.loading = false;
-  //         this.doctorActivenessTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
+  getUserActivenessStatistics(page: number) {
+    this.action.pageChange('activenessStatistics', [page, this.doctorActivenessTable.currentPage]);
+    this.userActivenessTable.reset(page);
+    const option: any = { page: page, size: this.userActivenessTable.size };
+    if (this.userActivenessTable.queryKey) {
+      option.key = this.userActivenessTable.queryKey;
+    }
+    if (this.queryUserDate) {
+      option.date = this.queryUserDate;
+    }
+    this.activenessStatisticsService.getUserActiveness(option)
+      .subscribe(
+        res => {
+          this.userActivenessTable.loading = false;
+          if (res.data && res.data.list && res.data.list.content && res.data.list.content.length === 0 && res.code === 0) {
+            this.userActivenessTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.list && res.data.list.content && res.code === 0) {
+            this.userActivenessTable.totalPage = res.data.list.totalPages;
+            this.userActivenessTable.lists = res.data.list.content;
+            if (res.data.statistics) {
+              this.userStatistics = {};
+              this.userStatistics.loginTotal = res.data.statistics.loginTotal;
+              this.userStatistics.loginCount = res.data.statistics.loginCount;
+              this.userStatistics.loginRate = res.data.statistics.loginRate;
+              this.userStatistics.loginAverage = res.data.statistics.loginAverage;
+            }
+          } else {
+            this.userActivenessTable.errorMessage = ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userActivenessTable.loading = false;
+          this.userActivenessTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getDoctorActivenessStatistics(page: number) {
+    this.action.pageChange('activenessStatistics', [this.userActivenessTable.currentPage, page]);
+    this.doctorActivenessTable.reset(page);
+    const option: any = { page: page, size: this.doctorActivenessTable.size };
+    if (this.doctorActivenessTable.queryKey) {
+      option.key = this.doctorActivenessTable.queryKey;
+    }
+    if (this.queryDoctorDate) {
+      option.date = this.queryDoctorDate;
+    }
+    this.activenessStatisticsService.getDoctorActiveness(option)
+      .subscribe(
+        res => {
+          this.doctorActivenessTable.loading = false;
+          if (res.data && res.data.list && res.data.list.content && res.data.list.content.length === 0 && res.code === 0) {
+            this.doctorActivenessTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.data.list && res.data.list.content && res.code === 0) {
+            this.doctorActivenessTable.totalPage = res.data.list.totalPages;
+            this.doctorActivenessTable.lists = res.data.list.content;
+            if (res.data.statistics) {
+              this.doctorStatistics = {};
+              this.doctorStatistics.loginTotal = res.data.statistics.loginTotal;
+              this.doctorStatistics.loginCount = res.data.statistics.loginCount;
+              this.doctorStatistics.loginRate = res.data.statistics.loginRate;
+              this.doctorStatistics.loginAverage = res.data.statistics.loginAverage;
+            }
+          } else {
+            this.doctorActivenessTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.doctorActivenessTable.loading = false;
+          this.doctorActivenessTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  change(index) {
+    this.action.tabChange('activenessStatistics', index);
+  }
 }

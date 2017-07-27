@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { ContainerConfig } from '../../../../libs';
+
 const PATH = {
   downloadOrigin: 'api/operational/channel',
 };
@@ -7,22 +9,35 @@ const PATH = {
 @Injectable()
 export class DownloadOriginService {
 
-  constructor(@Inject('http') private httpService) {
+  constructor(
+    @Inject('app') private app,
+    @Inject('http') private httpService
+  ) {
+  }
+
+  downloadOriginConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '渠道来源维护',
+      ifHome: true,
+      homeRouter: '/download-origin',
+      currentRouter: '/download-origin'
+    });
   }
 
   getDownloadOrigin() {
-    return this.httpService.get(`${PATH.downloadOrigin}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.downloadOrigin}`);
   }
 
   downloadOriginCreate(data) {
-    return this.httpService.post(`${PATH.downloadOrigin}`, data);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.downloadOrigin}`, data);
   }
 
   downloadOriginUpdate(id, data) {
-    return this.httpService.put(`${PATH.downloadOrigin}/${id}`, data);
+    return this.httpService.put(`${this.app.pci.BASE_URL}${PATH.downloadOrigin}/${id}`, data);
   }
 
   downloadOriginDel(id) {
-    return this.httpService.del(`${PATH.downloadOrigin}/${id}`);
+    return this.httpService.del(`${this.app.pci.BASE_URL}${PATH.downloadOrigin}/${id}`);
   }
 }

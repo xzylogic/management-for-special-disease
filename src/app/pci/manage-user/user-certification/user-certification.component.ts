@@ -1,116 +1,176 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject} from '@angular/core';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+
+
 import { UserCertificationService } from './_service/user-certification.service';
 import { UserCertificationTableService } from './_service/user-certification-table.service';
+import {
+  TableOption, ContainerConfig, ImageDialog,
+} from '../../../libs';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-user-certification',
   templateUrl: './user-certification.component.html'
 })
 export class UserCertificationComponent implements OnInit {
-  // title = '患者订单管理';
-  // subTitle = '患者订单列表';
-  //
-  // userCertificationTable: TableOption = new TableOption();
-  // userUncertificationTable: TableOption = new TableOption();
-  // userCertificatingTable: TableOption = new TableOption();
-  // userCertificationFailureTable: TableOption = new TableOption();
-  //
-  // titleShow: string = '提示信息';
-  // message: string;
-  // enableShow: boolean;
-  //
-  // certificatingCount: number;
-  // failureCount: number;
-  //
-  // imgUrls: Array<any>;
-  // enableImg: boolean;
+
+  containerConfig: ContainerConfig;
+  userCertificationTable: TableOption;
+  userUnCertificationTable: TableOption;
+  userCertificatingTable: TableOption;
+  userCertificationFailureTable: TableOption;
+
+  @select(['userCertification', 'tab']) tab: Observable<number>;
+  @select(['userCertification', 'page']) page: Observable<Array<number>>;
+
 
   constructor(
-    private _userCertificationService: UserCertificationService,
-    private _userCertificationTableService: UserCertificationTableService
+    @Inject('action') private action,
+    private dialog: MdDialog,
+    private userCertificationService: UserCertificationService,
+    private userCertificationTableService: UserCertificationTableService
   ) {
   }
 
   ngOnInit() {
-    // this.getUserCertificationTitles();
-    // this.getUserUncertificationTitles();
-    // this.getUserCertificatingTitles();
-    // this.getUserCertificationFailureTitles();
-    // this.refresh();
+    this.containerConfig = this.userCertificationService.UserCertificationConfig();
+    this.userCertificationTable = new TableOption({
+      titles: this.userCertificationTableService.setCertificationTitles(),
+      ifPage: true
+    });
+    this.userUnCertificationTable = new TableOption({
+      titles: this.userCertificationTableService.setUncertificationTitles(),
+      ifPage: true
+    });
+    this.userCertificatingTable = new TableOption({
+      titles: this.userCertificationTableService.setCertificatingTitles(),
+      ifPage: true
+    });
+    this.userCertificationFailureTable = new TableOption({
+      titles: this.userCertificationTableService.setCertificationFailureTitles(),
+      ifPage: true
+    });
+    this.reset();
   }
 
-  refresh() {
-    // this.getUserCertifications(0);
-    // this.getUserUncertifications(0);
-    // this.getUserCertificatings(0);
-    // this.getUserCertificationFailures(0);
-    // this.getCertificationCount();
+  reset() {
+    this.reset0();
+    this.reset1();
+    this.reset2();
+    this.reset3();
   }
 
-  // getUserCertificationTitles() {
-  //   this.userCertificationTable.titles = this._userCertificationTableService.setCertificationTitles();
-  // }
-  //
-  // getUserUncertificationTitles() {
-  //   this.userUncertificationTable.titles = this._userCertificationTableService.setUncertificationTitles();
-  // }
-  //
-  // getUserCertificatingTitles() {
-  //   this.userCertificatingTable.titles = this._userCertificationTableService.setCertificatingTitles();
-  // }
-  //
-  // getUserCertificationFailureTitles() {
-  //   this.userCertificationFailureTable.titles = this._userCertificationTableService.setCertificationFailureTitles();
-  // }
-  //
-  // getUserCertifications(page: number) {
-  //   this.userCertificationTable.currentPage = page;
-  //   this._userCertificationService.getUserCertifications(page, this.userCertificationTable.size)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.userCertificationTable.totalPage = data.data.totalPages;
-  //           this.userCertificationTable.lists = data.data.content;
-  //         }
-  //       })
-  // }
-  //
-  // getUserUncertifications(page: number) {
-  //   this.userUncertificationTable.currentPage = page;
-  //   this._userCertificationService.getUserUncertifications(page, this.userUncertificationTable.size)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.userUncertificationTable.totalPage = data.data.totalPages;
-  //           this.userUncertificationTable.lists = data.data.content;
-  //         }
-  //       })
-  // }
-  //
-  // getUserCertificatings(page: number) {
-  //   this.userCertificatingTable.currentPage = page;
-  //   this._userCertificationService.getUserCertificatings(page, this.userCertificatingTable.size)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.userCertificatingTable.totalPage = data.data.totalPages;
-  //           this.userCertificatingTable.lists = data.data.content;
-  //         }
-  //       })
-  // }
-  //
-  // getUserCertificationFailures(page: number) {
-  //   this.userCertificationFailureTable.currentPage = page;
-  //   this._userCertificationService.getUserCertificationFailures(page, this.userCertificationFailureTable.size)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.userCertificationFailureTable.totalPage = data.data.totalPages;
-  //           this.userCertificationFailureTable.lists = data.data.content;
-  //         }
-  //       })
-  // }
-  //
+  reset0() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserCertifications(page[0]);
+    });
+  }
+
+  reset1() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserUncertifications(page[1]);
+    });
+  }
+
+  reset2() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserCertificatings(page[2]);
+    });
+  }
+
+  reset3() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getUserCertificationFailures(page[3]);
+    });
+  }
+
+  getUserCertifications(page: number) {
+    this.action.pageChange('userCertification', [page, this.userUnCertificationTable.currentPage, this.userCertificatingTable.currentPage, this.userCertificationFailureTable.currentPage]);
+    this.userCertificationTable.reset(page);
+    this.userCertificationService.getUserCertifications(page, this.userCertificationTable.size)
+      .subscribe(
+        res => {
+          this.userCertificationTable.loading = false;
+          if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+            this.userCertificationTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.code === 0 && res.data && res.data.content) {
+            this.userCertificationTable.totalPage = res.data.totalPages;
+            this.userCertificationTable.lists = res.data.content;
+          } else {
+            this.userCertificationTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userCertificationTable.loading = false;
+          this.userCertificationTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserUncertifications(page: number) {
+    this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, page, this.userCertificatingTable.currentPage, this.userCertificationFailureTable.currentPage]);
+    this.userUnCertificationTable.reset(page);
+    this.userCertificationService.getUserUncertifications(page, this.userUnCertificationTable.size)
+      .subscribe(
+        res => {
+          this.userUnCertificationTable.loading = false;
+          if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+            this.userUnCertificationTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.code === 0 && res.data && res.data.content) {
+            this.userUnCertificationTable.totalPage = res.data.totalPages;
+            this.userUnCertificationTable.lists = res.data.content;
+          } else {
+            this.userUnCertificationTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userCertificationTable.loading = false;
+          this.userUnCertificationTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserCertificatings(page: number) {
+    this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, this.userUnCertificationTable.currentPage, page, this.userCertificationFailureTable.currentPage]);
+    this.userCertificatingTable.reset(page);
+    this.userCertificationService.getUserCertificatings(page, this.userCertificatingTable.size)
+      .subscribe(
+        res => {
+          this.userCertificatingTable.loading = false;
+          if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+            this.userCertificatingTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.code === 0 && res.data && res.data.content) {
+            this.userCertificatingTable.totalPage = res.data.totalPages;
+            this.userCertificatingTable.lists = res.data.content;
+          } else {
+            this.userCertificatingTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userCertificationTable.loading = false;
+          this.userCertificatingTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserCertificationFailures(page: number) {
+    this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, this.userUnCertificationTable.currentPage, page, this.userCertificatingTable.currentPage]);
+    this.userCertificationFailureTable.reset(page);
+    this.userCertificationService.getUserCertificationFailures(page, this.userCertificationFailureTable.size)
+      .subscribe(
+        res => {
+          this.userCertificationFailureTable.loading = false;
+          if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+            this.userCertificationFailureTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.code === 0 && res.data && res.data.content) {
+            this.userCertificationFailureTable.totalPage = res.data.totalPages;
+            this.userCertificationFailureTable.lists = res.data.content;
+          } else {
+            this.userCertificationFailureTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userCertificationTable.loading = false;
+          this.userCertificationFailureTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
   // getCertificationCount() {
   //   this._userCertificationService.getCertificationCount()
   //     .subscribe(
@@ -123,11 +183,13 @@ export class UserCertificationComponent implements OnInit {
   //       })
   // }
   //
-  // gotoHandle(data) {
-  //   if (data.key === 'idCardImageUrl') {
-  //     this.imgUrls = [];
-  //     this.imgUrls.push(data.value[data.key]);
-  //     this.enableImg = true;
-  //   }
-  // }
+  gotoHandle(res) {
+    if (res.key === 'idCardImageUrl') {
+      ImageDialog(res.value.name, res.value.avatarUrl, this.dialog);
+    }
+  }
+
+  change(index) {
+    this.action.tabChange('userCertification', index);
+  }
 }

@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+
+import { DTableModule, LibModule } from '../../../libs';
 
 import { UserCertificationComponent } from './user-certification.component';
 
@@ -15,6 +18,10 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    MdChipsModule,
+    MdTabsModule,
+    DTableModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

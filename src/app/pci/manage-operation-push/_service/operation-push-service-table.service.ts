@@ -36,8 +36,18 @@ export class OperationPushTableService {
         key: 'state'
       }),
       new TableTitle({
+        name: '发送',
+        key: 'send',
+        controlType: ControlType.button
+      }),
+      new TableTitle({
         name: '编辑',
-        key: 'status',
+        key: 'edit',
+        controlType: ControlType.button
+      }),
+      new TableTitle({
+        name: '删除',
+        key: 'del',
         controlType: ControlType.button
       })
     ];

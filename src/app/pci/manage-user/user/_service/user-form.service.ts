@@ -63,7 +63,7 @@ export class UserFormService {
       new FormDropdown({
         key: 'sex',
         label: '性别',
-        value: data && data.sex || '',
+        value: data && data.sex || 0,
         required: true,
         options: [
           { id: 0, name: '男' },

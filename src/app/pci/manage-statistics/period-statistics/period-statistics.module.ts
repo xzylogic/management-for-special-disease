@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MdTabsModule } from '@angular/material';
+
+import { DTableModule, LibModule } from '../../../libs';
 
 import { PeriodStatisticsComponent } from './period-statistics.component';
 import { AuthGuardService } from '../../_service/auth-guard.service';
@@ -14,6 +17,9 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    MdTabsModule,
+    DTableModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

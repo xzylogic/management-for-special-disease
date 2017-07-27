@@ -1,1 +1,23 @@
-<h1>download origin</h1>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="addition">
+    <button md-raised-button (click)="newData()">新增渠道</button>
+  </div>
+  <div class="content">
+    <md-tab-group dynamicHeight="true">
+      <md-tab label="渠道来源列表">
+        <div *ngIf="!downloadOriginTable.lists&&downloadOriginTable.loading">Loading...</div>
+        <div *ngIf="!downloadOriginTable.lists&&!downloadOriginTable.loading&&!!downloadOriginTable.errorMessage" class="center">
+          {{downloadOriginTable.errorMessage}}
+        </div>
+        <div *ngIf="downloadOriginTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="downloadOriginTable"
+              (handleEmmit)="gotoHandle($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>

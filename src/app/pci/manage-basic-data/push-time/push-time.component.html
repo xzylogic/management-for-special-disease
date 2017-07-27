@@ -1,1 +1,20 @@
-<h1>push time</h1>
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true">
+      <md-tab label="推送时间维护">
+        <div *ngIf="!pushTimeTable.lists&&pushTimeTable.loading">Loading...</div>
+        <div *ngIf="!pushTimeTable.lists&&!pushTimeTable.loading&&!!pushTimeTable.errorMessage" class="center">
+          {{pushTimeTable.errorMessage}}
+        </div>
+        <div *ngIf="pushTimeTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="pushTimeTable"
+              (handleEmmit)="gotoHandle($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>

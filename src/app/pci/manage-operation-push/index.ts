@@ -7,5 +7,5 @@ export const routes: Routes = [{
 }];
 
 export const stores = {
-  operationPush: createReducer('operationPush', [0], {})
+  operationPush: createReducer('operationPush', [0, 0], {})
 };

@@ -1,23 +1,46 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
+import { ContainerConfig, HintDialog } from '../../../../libs';
 import { LectureService } from '../_service/lecture.service';
 import { LectureFormService } from '../_service/lecture-form.service';
+import { Lecture } from '../_entity/lecture.entity';
+import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-lecture-edit',
-  template: `
-    <h1>lecture edit</h1>
-  `
+  templateUrl: './lecture-edit.component.html'
 })
 export class LectureEditComponent implements OnInit {
+  containerConfig: ContainerConfig;
+  @select(['lecture', 'data']) lecture: Observable<Lecture>;
+  form: any;
+  errMsg = '';
 
   constructor(
-    private _lectureService: LectureService,
-    private _lectureFormService: LectureFormService,
+    private lectureService: LectureService,
+    private lectureFormService: LectureFormService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
+    this.lecture.subscribe(data => {
+      console.log(data);
+      if (data.adminId) {
+        this.containerConfig = this.lectureService.lectureEditConfig(true);
+        this.form = this.lectureFormService.setLectureForm();
+      } else {
+        this.containerConfig = this.lectureService.lectureEditConfig(false);
+        this.form = this.lectureFormService.setLectureForm(
+          data
+        );
+      }
+    });
     // this.setLectureForm();
   }
 
@@ -68,58 +91,55 @@ export class LectureEditComponent implements OnInit {
   // }
   //
   // //提交保存信息
-  // getValue(data) {
-  //   data.joinLimitDate = this.getlectureTime(data.joinLimitDate);
-  //   data.date = this.getlectureTime(data.date);
-  //   if (data.joinLimitCount) {
-  //     data.joinLimit = true;
-  //   } else {
-  //     data.joinLimit = false;
-  //   }
-  //
-  //   if (data.onlineDate) {
-  //     data.onlineDate = this.getlectureTime(data.onlineDate);
-  //   } else {
-  //     data.onlineDate = 0;
-  //   }
-  //   //修改讲座
-  //   if (this.data) {
-  //     this._lectureService.lectureEdit(data)
-  //       .subscribe(
-  //         data => {
-  //           if (data.code === 0) {
-  //             this.handleEmit.emit("讲座修改成功！");
-  //             this.close();
-  //           } else {
-  //             if (data.msg) {
-  //               this.errorMessage = data.msg;
-  //             } else {
-  //               this.errorMessage = "操作失败！";
-  //             }
-  //           }
-  //         }, err => {
-  //           this.errorMessage = "啊哦！访问出错啦～";
-  //         })
-  //   } else {
-  //     this._lectureService.lectureCreate(data)
-  //       .subscribe(
-  //         data => {
-  //           if (data.code === 0) {
-  //             this.handleEmit.emit("新增讲座成功！");
-  //             this.close();
-  //           } else {
-  //             if (data.msg) {
-  //               this.errorMessage = data.msg;
-  //             } else {
-  //               this.errorMessage = "操作失败！";
-  //             }
-  //           }
-  //         }, err => {
-  //           this.errorMessage = "啊哦！访问出错啦～";
-  //         })
-  //   }
-  // }
-  //
+  getValues(data) {
+    console.log(data);
+    // data.joinLimitDate = this.getlectureTime(data.joinLimitDate);
+    // data.date = this.getlectureTime(data.date);
+    // if (data.joinLimitCount) {
+    //   data.joinLimit = true;
+    // } else {
+    //   data.joinLimit = false;
+    // }
+    //
+    // if (data.onlineDate) {
+    //   data.onlineDate = this.getlectureTime(data.onlineDate);
+    // } else {
+    //   data.onlineDate = 0;
+    // }
+    // 修改讲座
+    if (data.id) {
+      this.lectureService.lectureEdit(data)
+        .subscribe(
+          res => {
+            if (res.code === 0) {
+              HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+                this.router.navigate(['/lecture']);
+              });
+            } else {
+              HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+            }
+          }, err => {
+            console.log(err);
+            HintDialog(ERRMSG.saveError, this.dialog);
+          });
+    } else {
+      this.lectureService.lectureCreate(data)
+        .subscribe(
+          res => {
+            if (res.code === 0) {
+              HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+                this.router.navigate(['/lecture']);
+              });
+            } else {
+              HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+            }
+          }, err => {
+            console.log(err);
+            HintDialog(ERRMSG.saveError, this.dialog);
+          });
+    }
+  }
+
   // //关闭模态框
   // close() {
   //   this.enable = !this.enable;

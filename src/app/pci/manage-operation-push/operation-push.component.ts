@@ -1,8 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
 
-import { TableOption } from '../../libs/dtable/dtable.entity';
 import { OperationPushService } from './_service/operation-push-service.service';
 import { OperationPushTableService } from './_service/operation-push-service-table.service';
+import { Operation } from './_entity/operationPush.entity';
+import {
+  TableOption, ContainerConfig, DialogOptions,
+  ImageDialog, ActionDialog, HintDialog, MessageDialog
+} from '../../libs';
+import { ERRMSG } from '../_store/static';
 
 @Component({
   selector: 'app-operation-push',
@@ -10,172 +19,194 @@ import { OperationPushTableService } from './_service/operation-push-service-tab
   styleUrls: ['./operation-push.component.css']
 })
 export class OperationPushComponent implements OnInit {
-
-  // title = '运营消息推送';
-  // subTitle = '运营推送';
-  //
-  // titleShow: string;
-  // message: string;
-  // enableShow: boolean;
-  // errorMessage:string;
-  //
-  // sendShow:boolean;
-  // sendMessage:string;
-  //
-  // operationpush:any;
-  // enableEdit: boolean;
-  //
-  // enableProcess: boolean;
-  // processMessage: string;
-  // processData: any;
-
-  // operationPushTable: TableOption = new TableOption();
-  // operationPushDoctorTable: TableOption = new TableOption();
+  containerConfig: ContainerConfig;
+  operationPushTable: TableOption;
+  operationPushDoctorTable: TableOption;
+  @select(['operationPush', 'tab']) tab: Observable<number>;
+  @select(['operationPush', 'page']) page: Observable<Array<number>>;
 
   constructor(
+    @Inject('action') private action,
     private operationpushservice: OperationPushService,
-    private operationpushtableservice: OperationPushTableService
+    private operationpushtableservice: OperationPushTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('operation', new Operation());
   }
 
   ngOnInit() {
-    // this.refresh();
+    this.containerConfig = this.operationpushservice.operationPushConfig();
+    this.operationPushTable = new TableOption({
+      titles: this.operationpushtableservice.setTitles(),
+      ifPage: true
+    });
+    this.operationPushDoctorTable = new TableOption({
+      titles: this.operationpushtableservice.setTitles(),
+      ifPage: true
+    });
+    this.reset();
   }
 
-  // refresh(){
-  //   this.getOperationPushTitles()
-  //   this.getOperationPushUser(0);
-  //   this.getOperationPushDoctor(0);
-  // }
-  //
-  // getOperationPushTitles(){
-  // 	this.operationPushTable.titles = this._operationpushtableservice.setTitles();
-  // }
-  //
-  // getOperationPushUser(page:number){
-  //   this.operationPushTable.errorMessage = '';
-  //   this.operationPushTable.loading = true;
-  //   this.operationPushTable.lists = null;
-  //   this.operationPushTable.currentPage = page;
-  // 	this._operationpushservice.getOperationPush(0,page).subscribe(
-  // 		data => {
-  // 			this.operationPushTable.loading = false;
-  // 				if (data.data && data.data.length === 0 && data.code === 0) {
-  //           this.operationPushTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.code === 0) {
-  //           this.operationPushTable.totalPage = data.data.totalPages;
-  //           this.operationPushTable.lists = data.data.content;
-  //           for (var i = 0; i < this.operationPushTable.lists.length; ++i) {
-  //           	this.operationPushTable.lists[i].state =this.getStatus(this.operationPushTable.lists[i].status);
-  //           }
-  //         } else {
-  //           this.operationPushTable.errorMessage = "空空如也～";
-  //         }
-  // 		},err =>{
-  // 			this.operationPushTable.loading = false;
-  //       this.operationPushTable.errorMessage = "啊哦！接口访问出错啦～";
-  // 		})
-  // }
-  //
-  // getOperationPushDoctor(page:number){
-  // 	this._operationpushservice.getOperationPush(1,page).subscribe(
-  // 		data => {
-  // 			this.operationPushDoctorTable.loading = false;
-  // 				if (data.data && data.data.length === 0 && data.code === 0) {
-  //           this.operationPushDoctorTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.code === 0) {
-  //           this.operationPushDoctorTable.lists = data.data.content;
-  //         } else {
-  //           this.operationPushDoctorTable.errorMessage = "空空如也～";
-  //         }
-  // 		},err =>{
-  // 			this.operationPushDoctorTable.loading = false;
-  //       this.operationPushDoctorTable.errorMessage = "啊哦！接口访问出错啦～";
-  // 		})
-  // }
-  //
-  // gotoHandle(value,data) {
-  //     if (value === "edit") {
-  //       this.operationpush = data;
-  //       this.enableEdit = true;
-  //     } else if (value === "send") {
-  //       this.processData = data;
-  //       this.processData.key = value;
-  //       this.processMessage = '你确定要发送？';
-  //       this.enableProcess = true;
-  //     } else if ( value === "delete"){
-  //     	this.processData = data;
-  //       this.processData.key = value;
-  //       this.processMessage = '你确定要删除？';
-  //       this.enableProcess = true;
-  //     }
-  // }
-  //
-  //
-  // newOperationPush(){
-  // 	this.operationpush = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  // getStatus(status){
-  // 	if(status == "1"){
-  // 		return "已发送";
-  // 	}else{
-  // 		return "待发送";
-  // 	}
-  // }
-  //
-  // //确定发送,删除
-  // process() {
-  //   if(this.processData.key === "send"){
-  //      this.enableProcess = false;
-  //      this.sendMessage = "正在发送，请稍后...";
-  //      this.sendShow = true;
-  //      this._operationpushservice.OperationPushSend(this.processData.id)
-  //       .subscribe(
-  //         data => {
-  //           this.sendShow = false;
-  //           if (data.code === 0) {
-  //             this.titleShow = "提示信息"
-  //             this.message = "操作成功";
-  //             this.enableShow = true;
-  //             this.refresh();
-  //           } else {
-  //             this.titleShow = "提示信息"
-  //             this.message = "操作失败";
-  //             this.enableShow = true;
-  //           }
-  //         }, err => {
-  //           this.sendShow = false;
-  //           this.titleShow = "提示信息"
-  //           this.message = "啊哦！访问出错啦～";
-  //           this.enableShow = true;
-  //       })
-  //   }else{
-  //     this._operationpushservice.OperationPushDelete(this.processData.id)
-  //       .subscribe(
-  //         data => {
-  //           this.enableProcess = false;
-  //           if (data.code === 0) {
-  //             this.titleShow = "提示信息"
-  //             this.message = "操作成功";
-  //             this.enableShow = true;
-  //             this.refresh();
-  //           } else {
-  //             this.titleShow = "提示信息"
-  //             this.message = "操作失败";
-  //             this.enableShow = true;
-  //           }
-  //         }, err => {
-  //           this.enableProcess = false;
-  //           this.titleShow = "提示信息"
-  //           this.message = "啊哦！访问出错啦～";
-  //           this.enableShow = true;
-  //       })
-  //   }
-  //
-  // }
-  //
+  reset() {
+    this.reset0();
+    this.reset1();
+  }
+
+  reset0() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getOperationPushUser(page[0]);
+    });
+  }
+
+  reset1() {
+    this.page.subscribe((page: Array<number>) => {
+      this.getOperationPushDoctor(page[1]);
+    });
+  }
+
+  getOperationPushUser(page: number) {
+    this.operationPushTable.errorMessage = '';
+    this.operationPushTable.loading = true;
+    this.operationPushTable.lists = null;
+    this.operationPushTable.currentPage = page;
+  	this.operationpushservice.getOperationPush(0, page).subscribe(
+  		res => {
+  			this.operationPushTable.loading = false;
+  				if (res.data && res.data.length === 0 && res.code === 0) {
+            this.operationPushTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.code === 0) {
+            this.operationPushTable.totalPage = res.data.totalPages;
+            this.operationPushTable.lists = res.data.content;
+            for ( let i = 0; i < this.operationPushTable.lists.length; ++i) {
+            	this.operationPushTable.lists[i].state = this.getStatus(this.operationPushTable.lists[i].status);
+            }
+          } else {
+            this.operationPushTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+  		}, err => {
+  			this.operationPushTable.loading = false;
+        this.operationPushTable.errorMessage = ERRMSG.netErrMsg;
+  		})
+  }
+
+  getOperationPushDoctor(page: number) {
+  	this.operationpushservice.getOperationPush(1, page).subscribe(
+  		res => {
+  			this.operationPushDoctorTable.loading = false;
+  				if (res.data && res.data.length === 0 && res.code === 0) {
+            this.operationPushDoctorTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.code === 0) {
+            this.operationPushDoctorTable.lists = res.data.content;
+            for ( let i = 0; i < this.operationPushDoctorTable.lists.length; ++i) {
+              this.operationPushDoctorTable.lists[i].state = this.getStatus(this.operationPushDoctorTable.lists[i].status);
+            }
+          } else {
+            this.operationPushDoctorTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+  		}, err => {
+  			this.operationPushDoctorTable.loading = false;
+        this.operationPushDoctorTable.errorMessage = ERRMSG.netErrMsg;
+  		})
+  }
+
+  newData() {
+    this.action.dataChange('operation', new Operation());
+    this.router.navigate(['/operation-push/edit']);
+  }
+
+  gotoHandle(res) {
+    const operation = <Operation>res.value;
+    if (res.key === 'edit') {
+      this.action.dataChange('operation', operation);
+      this.router.navigate(['/operation-push/edit']);
+    }
+    if (res.key === 'send') {
+      const config = new DialogOptions({
+        title: `您确定要发送${operation.content}？`,
+        message: '',
+        buttons: [{
+          key: 'topass',
+          value: '确定',
+          color: 'primary'
+        }, {
+          key: 'tocancel',
+          value: '取消',
+          color: ''
+        }]
+      });
+      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+        if (result && result.key === 'topass') {
+          this.process(operation.id, res.key);
+        }
+      });
+    }
+    if (res.key === 'del') {
+      const config = new DialogOptions({
+        title: `您确定要删除${operation.content}？`,
+        message: '',
+        buttons: [{
+          key: 'topass',
+          value: '确定',
+          color: 'primary'
+        }, {
+          key: 'tocancel',
+          value: '取消',
+          color: ''
+        }]
+      });
+      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+        if (result && result.key === 'topass') {
+          this.process(operation.id, res.key);
+        }
+      });
+    }
+  }
+
+  getStatus(status) {
+    if (status === '1' ) {
+      return  '已发送';
+  	} else {
+  		return  '待发送';
+  	}
+  }
+
+  change(index) {
+    this.action.tabChange('operationPush', index);
+  }
+
+  // 确定发送,删除
+  process(id, key) {
+    if (key === 'send') {
+       this.operationpushservice.OperationPushSend(id)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog('操作成功', this.dialog);
+            this.reset();
+          } else {
+            HintDialog(res.msg || '操作失败', this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog('操作失败', this.dialog);
+        });
+    } else {
+      this.operationpushservice.OperationPushDelete(id)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog('操作成功', this.dialog);
+            this.reset();
+          } else {
+            HintDialog(res.msg || '操作失败', this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog('操作失败', this.dialog);
+        });
+    }
+
+  }
+
   // //取消发送、删除
   // processCancel() {
   //   this.processData = null;

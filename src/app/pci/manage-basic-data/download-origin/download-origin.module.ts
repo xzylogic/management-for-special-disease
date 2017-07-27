@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
 
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 import { DownloadOriginComponent } from './download-origin.component';
 import { DownloadOriginEditComponent } from './download-origin-edit/download-origin-edit.component';
 
@@ -12,16 +15,17 @@ import { DownloadOriginFormService } from './_service/download-origin-form.servi
 const routes: Routes = [{
   path: '',
   component: DownloadOriginComponent,
-  canActivate: [AuthGuardService],
-  children: [{
-    path: 'edit',
-    component: DownloadOriginEditComponent,
-    canActivate: [AuthGuardService],
-  }]
+  canActivate: [AuthGuardService]
 }];
 
 @NgModule({
   imports: [
+    FormsModule,
+    MdChipsModule,
+    MdTabsModule,
+    DTableModule,
+    DFormModule,
+    LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

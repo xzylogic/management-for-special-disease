@@ -44,7 +44,7 @@ export class UserTableService {
       }),
       new TableTitle({
         name: '手术医院',
-        key: 'hospitalName',
+        key: 'hospital',
         minwidth: 80
       }),
       new TableTitle({
@@ -55,6 +55,7 @@ export class UserTableService {
       new TableTitle({
         name: '最后手术时间',
         key: 'lastOperationDate',
+        controlType: ControlType.date,
         minwidth: 100
       }),
       new TableTitle({
