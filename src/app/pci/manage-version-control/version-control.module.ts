@@ -8,15 +8,30 @@ import { AuthGuardService } from '../_service/auth-guard.service';
 import { VersionControlService } from './_service/version-control.service';
 import { VersionControlFormService } from './_service/version-control-form.service';
 import { VersionControlTableService } from './_service/version-control-table.service';
+import { DTableModule } from '../../libs/dtable/dtable.module';
+import { DFormModule } from '../../libs/dform/dform.module';
+import { LibModule } from '../../libs/common/lib.module';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
   component: VersionControlComponent
+}, {
+  path: 'edit',
+  canActivate: [AuthGuardService],
+  component: VersionControlEditComponent
 }];
 
 @NgModule({
   imports: [
+    DTableModule,
+    DFormModule,
+    LibModule,
+    MdTabsModule,
+    MdChipsModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

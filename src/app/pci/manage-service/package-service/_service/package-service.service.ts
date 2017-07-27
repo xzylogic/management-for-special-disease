@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   packageServiceList: 'opt/combinatorials/list', // 套餐包列表
@@ -15,6 +16,27 @@ export class PackageServiceService {
     @Inject('http') private httpService
   ) {
   }
+
+  packageServiceConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '服务维护',
+      subTitle: '套餐包维护',
+      ifHome: true,
+      homeRouter: '/basic-service',
+      currentRouter: '/package-service'
+    });
+  }
+
+  packageServiceEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '套餐包维护',
+      subTitle: tag ? '新增套餐包' : '编辑套餐包',
+      ifHome: false,
+      homeRouter: '/package-service',
+      currentRouter: '/package-service/edit'
+    });
+  }
+
 
   /**
    * [getPackageServices description]

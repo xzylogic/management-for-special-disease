@@ -10,16 +10,17 @@ import { AuthGuardService } from '../../_service/auth-guard.service';
 import { FlowerGradeService } from './_service/flower-grade.service';
 import { FlowerGradeFormService } from './_service/flower-grade-form.service';
 import { FlowerGradeTableService } from './_service/flower-grade-table.service';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{
   path: '',
   component: FlowerGradeComponent,
-  canActivate: [AuthGuardService],
-  children: [{
+  canActivate: [AuthGuardService]},
+  {
     path: 'edit',
     component: FlowerGradeEditComponent,
     canActivate: [AuthGuardService]
-  }]
 }];
 
 @NgModule({
@@ -27,6 +28,9 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
+    MdTabsModule,
+    MdChipsModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

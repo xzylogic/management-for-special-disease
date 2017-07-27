@@ -5,7 +5,10 @@ import { FormBase, FormText, FormTextarea, FormFile, FormDropdown, FormEditor } 
 @Injectable()
 export class CommodityFormService {
 
-  constructor(@Inject('admin') private admin) {
+  constructor(
+    @Inject('app') private app,
+    @Inject('auth') private auth
+  ) {
   }
 
   setForm(data?: any) {
@@ -17,7 +20,7 @@ export class CommodityFormService {
           key: 'id',
           label: 'ID',
           value: data && data.id || '',
-          type: 'hidden',
+          readonly: true,
           required: true,
           order: 0
         })
@@ -29,7 +32,7 @@ export class CommodityFormService {
         key: 'avatar',
         label: '商品小图',
         value: data && data.avatar || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: true,
         order: 1
       }),
@@ -37,7 +40,7 @@ export class CommodityFormService {
         key: 'pictures',
         label: '详情图片',
         value: data && data.pictures || [],
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         multiple: true,
         required: false,
         order: 2
@@ -110,8 +113,8 @@ export class CommodityFormService {
       new FormText({
         key: 'createUserId',
         label: '当前登录用户ID',
-        value: this.admin.getId(),
-        type: 'hidden',
+        value: this.auth.getAdminId(),
+        readonly: true,
         required: false,
         order: 10
       })

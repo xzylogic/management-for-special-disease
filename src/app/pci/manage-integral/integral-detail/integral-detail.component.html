@@ -1,1 +1,67 @@
-<h1>integral detail</h1>
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <!--<div class="addition">-->
+    <!--<button md-raised-button (click)="integralManage()">积分规则维护</button>-->
+    <!--<button md-raised-button (click)="sendIntegral()">赠送积分给用户</button>-->
+  <!--</div>-->
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="患者端">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="姓名/手机号/项目搜索" name="queryKey"
+                   [(ngModel)]="integralDetailUserTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getIntegralDetailUsers(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset0()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
+        <div *ngIf="!integralDetailUserTable.lists&&integralDetailUserTable.loading">Loading...</div>
+        <div
+          *ngIf="!integralDetailUserTable.lists&&!integralDetailUserTable.loading&&!!integralDetailUserTable.errorMessage"
+          class="center">
+          {{integralDetailUserTable.errorMessage}}
+        </div>
+        <div *ngIf="integralDetailUserTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="integralDetailUserTable"
+              (pageEmitter)="getIntegralDetailUsers($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="医生端">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="姓名/手机号/项目搜索" name="queryKey"
+                   [(ngModel)]="integralDetailDoctorTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getIntegralDetailDoctors(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset1()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
+        <div *ngIf="!integralDetailDoctorTable.lists&&integralDetailDoctorTable.loading">Loading...</div>
+        <div
+          *ngIf="!integralDetailDoctorTable.lists&&!integralDetailDoctorTable.loading&&!!integralDetailDoctorTable.errorMessage"
+          class="center">
+          {{integralDetailDoctorTable.errorMessage}}
+        </div>
+        <div *ngIf="integralDetailDoctorTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="integralDetailDoctorTable"
+              (pageEmitter)="getIntegralDetailDoctors($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>
+

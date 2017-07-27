@@ -1,56 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
-import { TableOption } from '../../../libs';
+import { TableOption, ContainerConfig  } from '../../../libs';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { Drug } from '../drug/_entity/drug.entity';
 import { HealthOrganizationService } from './_service/health-organization.service';
 import { HealthOrganizationTableService } from './_service/health-organization-table.service';
+import { ERRMSG } from '../../_store/static';
+import { HealthOrganization } from './_entity/health-organization.entity';
 
 @Component({
   selector: 'app-health-organization',
   templateUrl: './health-organization.component.html'
 })
 export class HealthOrganizationComponent implements OnInit {
-
-  // healthOrganizationTable: TableOption = new TableOption();
+  containerConfig: ContainerConfig;
+  healthOrganizationTable: TableOption;
+  @select(['drug', 'tab']) tab: Observable<number>;
+  @select(['drug', 'page']) page: Observable<Array<number>>;
 
   constructor(
-    private _healthOrganizationService: HealthOrganizationService,
-    private _healthOrganizationTableService: HealthOrganizationTableService
+    @Inject('action') private action,
+    private healthOrganizationService: HealthOrganizationService,
+    private healthOrganizationTableService: HealthOrganizationTableService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
+    action.dataChange('healthOrganizationService', new Drug());
   }
 
   ngOnInit() {
-    // this.getHealthOrganizationTitles();
-    // this.getHealthOrganizations();
+    this.containerConfig = this.healthOrganizationService.healthOrganizationConfig();
+    this.healthOrganizationTable = new TableOption({
+      titles: this.healthOrganizationTableService.setTitles(),
+      ifPage: true
+    });
+    this.page.subscribe((page: Array<number>) => {
+      this.getHealthOrganization();
+    });
   }
 
-  refresh() {
-    // this.getHealthOrganizations();
+  getHealthOrganization() {
+    this.healthOrganizationService.getHealthOrganizations()
+      .subscribe(res => {
+        this.healthOrganizationTable.loading = false;
+        if (res.code === 0 && res.data && res.data.length === 0) {
+          this.healthOrganizationTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data) {
+          this.healthOrganizationTable.totalPage = res.data.totalPages;
+          this.healthOrganizationTable.lists = res.data;
+        } else {
+          this.healthOrganizationTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.healthOrganizationTable.loading = false;
+        console.log(err);
+        this.healthOrganizationTable.errorMessage = ERRMSG.netErrMsg;
+      })
   }
 
-  // getHealthOrganizationTitles() {
-  //   this.healthOrganizationTable.titles = this._healthOrganizationTableService.setTitles();
-  // }
-  //
-  // getHealthOrganizations() {
-  //   this._healthOrganizationService.getHealthOrganizations()
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.healthOrganizationTable.lists = data.data;
-  //         }
-  //       }
-  //     )
-  // }
-  // //编辑机构
-  // gotoHandle(data) {
-  //   this.organization = data;
-  //   this.enableEdit = true;
-  // }
-  // //新增机构
-  // newHealthOrganization() {
-  //   this.organization = null;
-  //   this.enableEdit = true;
-  // }
+  newData() {
+    this.action.dataChange('healthOrganization', new HealthOrganization());
+    this.router.navigate(['/health-organization/edit']);
+  }
+
+  gotoHandle(res) {
+    const healthOrganization = <Drug>res.value;
+    if (res.key === 'editThirdParty') {
+      this.action.dataChange('healthOrganization', healthOrganization);
+      this.router.navigate(['/health-organization/edit']);
+    }
+  }
   // //返回服务器信息
   // handleSuccess(data){
   //   this.titleShow = '提示信息';

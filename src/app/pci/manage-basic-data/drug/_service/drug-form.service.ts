@@ -17,7 +17,7 @@ export class DrugFormService {
           label: 'id',
           value: data && data.id || '',
           required: true,
-          type: 'hidden',
+          readonly: true,
           order: 0
         }));
     }

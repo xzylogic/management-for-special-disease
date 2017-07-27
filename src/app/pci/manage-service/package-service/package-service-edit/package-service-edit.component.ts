@@ -1,84 +1,74 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { PackageServiceService } from '../_service/package-service.service';
 import { PackageServiceFormService } from '../_service/package-service-form.service';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { Observable } from 'rxjs/Observable';
+import { select } from '@angular-redux/store';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { PackageService } from '../_entity/package-service.entity';
+import { ERRMSG } from '../../../_store/static';
+import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-package-service-edit',
-  template: `
-    <h1>app-package-service-edit</h1>
-  `,
+  templateUrl: './package-service-edit.component.html',
 })
 export class PackageServiceEditComponent implements OnInit {
 
+  containerConfig: ContainerConfig;
+  @select(['packageService', 'data']) packageService: Observable<PackageService>;
+  errMsg = '';
+  form: any;
+  packageServiceId: number;
+
   constructor(
-    private _packageServiceService: PackageServiceService,
-    private _packageServiceFormService: PackageServiceFormService
+    private packageServiceService: PackageServiceService,
+    private packageServiceFormService: PackageServiceFormService,
+    private dialog: MdDialog,
+    private router: Router,
+    @Inject('auth') private auth
   ) {
   }
 
   ngOnInit() {
-    // this.setPackageForm();
+    // this.packageService.subscribe(res => {
+        this.packageServiceService.getServiceOptionD().subscribe(data => {
+          console.log(data);
+          // this.packageServiceService.getServiceOptionT().subscribe(obj => {
+          //     this.packageServiceId = res.id;
+          //     if (res.id === 0) {
+          //       this.containerConfig = this.packageServiceService.packageServiceEditConfig(true);
+          //       this.form = this.packageServiceFormService.setForm(data.doctorPackages, obj.thirdPackages);
+          //     } else {
+          //       this.containerConfig = this.packageServiceService.packageServiceEditConfig(false);
+          //       this.form = this.packageServiceFormService.setForm(data.doctorPackages, obj.thirdPackages, data);
+          //     }
+          //   }
+          // );
+        });
+      // },
+      // err => {
+      //   console.log(err);
+      //   this.errMsg = ERRMSG.netErrMsg;
+      // });
   }
 
-  //  setPackageForm(){
-  //  	if(this.data){
-  //        this.modalTitle = "编辑套餐包";
-  //        this.formDatas = this._packageServiceFormService.setForm(
-  //        	this.DoctorServiceList,
-  //        	this.HealthServiceList,
-  //        	this.data.value
-  //        	);
-  //      }else{
-  //        this.modalTitle = "新增套餐包";
-  //        this.formDatas = this._packageServiceFormService.setForm(
-  //        	this.DoctorServiceList,
-  //        	this.HealthServiceList
-  //        	);
-  //      }
-  //  }
-  //
-  //  //提交保存信息
-  //  getValue(data){
-  //    if(this.data){
-  //      this._packageServiceService.packageServiceSave(data)
-  //      .subscribe(
-  //          data => {
-  //            if (data.code === 0) {
-  //              this.handleEmit.emit("套餐包修改成功！");
-  //              this.close();
-  //            } else {
-  //              if (data.msg) {
-  //                this.errorMessage = data.msg;
-  //              } else {
-  //                this.errorMessage = "操作失败！";
-  //              }
-  //            }
-  //          }, err => {
-  //            this.errorMessage = "啊哦！访问出错啦～";
-  //          })
-  //    }else{
-  //      this._packageServiceService.packageServiceSave(data)
-  //      .subscribe(
-  //          data => {
-  //            if (data.code === 0) {
-  //              this.handleEmit.emit("新增套餐包成功！");
-  //              this.close();
-  //            } else {
-  //              if (data.msg) {
-  //                this.errorMessage = data.msg;
-  //              } else {
-  //                this.errorMessage = "操作失败！";
-  //              }
-  //            }
-  //          }, err => {
-  //            this.errorMessage = "啊哦！访问出错啦～";
-  //          })
-  //    }
-  //  }
-  //
-  // //关闭模态框
-  // close() {
-  //    this.enable = !this.enable;
-  //    this.enableChange.emit(this.enable);
-  //  }
+  getValues(value) {
+    this.packageServiceService.packageServiceSave(value)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+            this.router.navigate(['/package-service']);
+          });
+        } else {
+          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.saveError, this.dialog);
+      });
+  }
+
+
 }

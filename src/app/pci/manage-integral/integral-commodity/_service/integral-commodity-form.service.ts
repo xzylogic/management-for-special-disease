@@ -5,7 +5,10 @@ import { FormBase, FormText, FormFile, FormDropdown, FormTextarea } from '../../
 @Injectable()
 export class IntegralCommodityFormService {
 
-  constructor(@Inject('auth') private admin) {
+  constructor(
+    @Inject('app') private app,
+    @Inject('auth') private auth
+  ) {
   }
 
   setForm(data?: any) {
@@ -17,7 +20,7 @@ export class IntegralCommodityFormService {
           key: 'goodsId',
           label: 'ID',
           value: data && data.id || '',
-          type: 'hidden',
+          readonly: true,
           required: false,
           order: 0
         })
@@ -29,7 +32,7 @@ export class IntegralCommodityFormService {
         key: 'picUrl',
         label: '商品图片',
         value: data && data.picUrl || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: true,
         order: 1
       }),
@@ -105,8 +108,8 @@ export class IntegralCommodityFormService {
       new FormText({
         key: 'operator',
         label: '操作人',
-        value: this.admin.getAdminName(),
-        type: 'hidden',
+        value: this.auth.getAdminName(),
+        readonly: true,
         required: false,
         order: 9
       })

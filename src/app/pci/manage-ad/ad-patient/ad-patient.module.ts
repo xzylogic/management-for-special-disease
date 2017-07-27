@@ -10,16 +10,17 @@ import { AuthGuardService } from '../../_service/auth-guard.service';
 import { AdPatientService } from './_service/ad-patient.service';
 import { AdPatientFormService } from './_service/ad-patient-form.service';
 import { AdPatientTableService } from './_service/ad-patient-table.service';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{
   path: '',
   component: AdPatientComponent,
   canActivate: [AuthGuardService],
-  children: [{
-    path: 'edit',
-    component: AdPatientEditComponent,
-    canActivate: [AuthGuardService]
-  }]
+}, {
+  path: 'edit',
+  component: AdPatientEditComponent,
+  canActivate: [AuthGuardService]
 }];
 
 @NgModule({
@@ -27,6 +28,9 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
+    MdTabsModule,
+    MdChipsModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

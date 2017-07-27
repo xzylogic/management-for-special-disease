@@ -8,15 +8,30 @@ import { AuthGuardService } from '../../_service/auth-guard.service';
 import { IntegralCommodityService } from './_service/integral-commodity.service';
 import { IntegralCommodityFormService } from './_service/integral-commodity-form.service';
 import { IntegralCommodityTableService } from './_service/integral-commodity-table.service';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { LibModule } from '../../../libs/common/lib.module';
+import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
   component: IntegralCommodityComponent
+}, {
+  path: 'edit',
+  canActivate: [AuthGuardService],
+  component: IntegralCommodityEditComponent
 }];
 
 @NgModule({
   imports: [
+    DTableModule,
+    DFormModule,
+    LibModule,
+    MdTabsModule,
+    MdChipsModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

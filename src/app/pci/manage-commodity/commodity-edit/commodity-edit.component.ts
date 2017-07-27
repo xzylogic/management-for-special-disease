@@ -2,68 +2,82 @@ import { Component, OnInit } from '@angular/core';
 
 import { CommodityService } from '../_service/commodity.service';
 import { CommodityFormService } from '../_service/commodity-form.service';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { Commodity } from '../_entity/commodity.entity';
+import { ERRMSG } from '../../_store/static';
+import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-commodity-edit',
-  template: `
-    <h1>commodity</h1>
-  `,
+  templateUrl: './commodity-edit.component.html'
 })
 export class CommodityEditComponent implements OnInit {
 
+  containerConfig: ContainerConfig;
+  @select(['commodity', 'data']) commodity: Observable<Commodity>;
+  errMsg = '';
+  form: any;
+  commodityId: number;
+
   constructor(
-    private _commodityFormService: CommodityFormService,
-    private _commodityService: CommodityService
+    private commodityService: CommodityService,
+    private commodityFormService: CommodityFormService,
+    private dialog: MdDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-    // this.setCommodityForm();
+    this.commodity.subscribe(data => {
+        this.commodityId = data.id;
+        if (data.id === 0) {
+          this.containerConfig = this.commodityService.commodityEditConfig(true);
+          this.form = this.commodityFormService.setForm();
+        } else {
+          this.containerConfig = this.commodityService.commodityEditConfig(false);
+          this.form = this.commodityFormService.setForm(data);
+        }
+      },
+      err => {
+        console.log(err);
+        this.errMsg = ERRMSG.netErrMsg;
+      });
   }
 
-  // setCommodityForm() {
-  //   if (this.data) {
-  //     this.modalTitle = "编辑商品信息";
-  //     // console.log(this.data);
-  //     this.formDatas = this._commodityFormService.setForm(this.data);
-  //   } else {
-  //     this.modalTitle = "新增商品信息";
-  //     this.formDatas = this._commodityFormService.setForm();
-  //   }
-  //
-  // }
-  //
-  // getValue(data) {
-  //    if(this.data){
-  //     this._commodityService.commodityUpdate(data)
-  //     .subscribe(
-  //       data => {
-  //         if(data.code === 0){
-  //           this.close();
-  //           this.handleEmit.emit("修改成功！");
-  //         }else{
-  //           this.errorMessage = "修改失败～请重新操作！";
-  //         };
-  //       },err =>{
-  //         this.errorMessage = "啊哦！接口访问出错啦～";
-  //     })
-  //   }else{
-  //     this._commodityService.commodityCreate(data)
-  //     .subscribe(
-  //       data => {
-  //         if(data.code === 0){
-  //           this.close();
-  //           this.handleEmit.emit("添加成功！");
-  //         }else{
-  //           this.errorMessage = "添加失败～请重新操作！";          }
-  //       },err =>{
-  //         this.errorMessage = "啊哦！接口访问出错啦～";
-  //     })
-  //   }
-  // }
-  //
-  // close() {
-  //   this.enable = !this.enable;
-  //   this.enableChange.emit(this.enable);
-  // }
+  getValues(value) {
+    console.log(value);
+    if (this.commodityId !== 0) {
+      this.commodityService.commodityUpdate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/commodity']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    } else {
+      this.commodityService.commodityCreate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/commodity']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    }
+  }
 }

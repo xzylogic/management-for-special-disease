@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
   hospitalList: 'api/hospital/all', // 医院列表
@@ -15,10 +16,29 @@ export class HospitalService {
   ) {
   }
 
+  hospitalConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '医院维护',
+      ifHome: true,
+      homeRouter: '/BasicData',
+      currentRouter: '/hospital'
+    });
+  }
+
+  hospitalEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '医院维护',
+      subTitle: tag ? '新增医院' : '编辑医院',
+      ifHome: false,
+      homeRouter: '/hospital',
+      currentRouter: '/hospital/edit'
+    });
+  }
   /**
    * 获取医院列表
    */
-  getHospitals() {
+  getHospital() {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.hospitalList}`);
   }
 

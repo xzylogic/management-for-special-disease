@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { FormBase, FormText, FormFile } from '../../../../libs';
 
 @Injectable()
 export class HealthOrganizationFormService {
+  constructor(
+    @Inject('app') private app,
+    @Inject('http') private http
+  ) {
+  }
 
   setForm(thirdParty?: any) {
 
@@ -16,7 +21,7 @@ export class HealthOrganizationFormService {
           label: '机构ID',
           value: thirdParty && thirdParty.id || '',
           required: true,
-          type: 'hidden',
+          readonly: true,
           order: 0
         })
       );
@@ -27,7 +32,7 @@ export class HealthOrganizationFormService {
         key: 'imageUrl',
         label: '机构图片',
         value: thirdParty && thirdParty.imageUrl || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: true,
         order: 1
       })

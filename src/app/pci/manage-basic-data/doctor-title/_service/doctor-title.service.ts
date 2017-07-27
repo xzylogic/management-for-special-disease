@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   positionalTitleList: 'api/doctortitle/all', // 职称列表
@@ -14,6 +15,15 @@ export class DoctorTitleService {
     @Inject('http') private httpService
   ) {
   }
+    doctorTitleConfig(): ContainerConfig {
+      return new ContainerConfig({
+        title: '基础数据维护',
+        subTitle: '职称数据维护',
+        ifHome: true,
+        homeRouter: '/BasicData',
+        currentRouter: '/doctorTitle'
+      });
+    }
 
   /**
    * 获取职称列表

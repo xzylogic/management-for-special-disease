@@ -13,6 +13,7 @@ import { FormText } from '../../_entity';
                [formControlName]="data.key"
                [(ngModel)]="value"
                [readonly]="data.readonly"
+               (change)="change()"
         >
         <md-error>{{data.errMsg}}</md-error>
       </md-input-container>
@@ -23,6 +24,7 @@ import { FormText } from '../../_entity';
                [formControlName]="data.key"
                [(ngModel)]="value"
                [readonly]="data.readonly"
+               (change)="change()"
         >
         <md-hint align="end">{{value.length}} / {{data.maxlength}}</md-hint>
       </md-input-container>
@@ -39,5 +41,9 @@ export class LibInputTextComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  change() {
+    this.valueChange.emit(this.value);
   }
 }

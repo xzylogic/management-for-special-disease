@@ -1,163 +1,190 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { IntegralCommodityService } from './_service/integral-commodity.service';
 import { IntegralCommodityTableService } from './_service/integral-commodity-table.service';
+import { ContainerConfig } from '../../../libs';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { IntegralCommodity } from './_entity/integralCommodity.entity';
+import { ERRMSG } from '../../_store/static';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
 
 @Component({
   selector: 'app-integral-commodity',
   templateUrl: './integral-commodity.component.html'
 })
 export class IntegralCommodityComponent implements OnInit {
-  // title = '积分管理';
-  // subTitle = '积分商品维护';
-  //
-  // integralCommodityTable: TableOption = new TableOption();
-  //
-  // integralCommodity: any;
-  // enableEdit: boolean;
-  //
-  // message: string;
-  // enableShow: boolean;
-  //
-  // statusIdx: number;
-  //
-  // delData: any;
-  //
-  // enableOperate: boolean;
+  containerConfig: ContainerConfig;
+  integralCommodityTable: TableOption;
+  @select(['integralCommodity', 'tab']) tab: Observable<number>;
+  @select(['integralCommodity', 'page']) page: Observable<Array<number>>;
 
   constructor(
+    @Inject('action') private action,
     private integralCommodityService: IntegralCommodityService,
-    private integralCommodityTableService: IntegralCommodityTableService
+    private integralCommodityTableService: IntegralCommodityTableService,
+    private dialog: MdDialog,
+    private router: Router,
   ) {
+    action.dataChange('integralCommodity', new IntegralCommodity());
   }
 
   ngOnInit() {
-    // this.getIntegralCommodityTitles();
-    // this.getIntegralCommodity(0);
+    this.containerConfig = this.integralCommodityService.integralCommodityConfig();
+    this.integralCommodityTable = new TableOption({
+      titles: this.integralCommodityTableService.setTitles(),
+      ifPage: true
+    });
+    this.reset();
   }
 
-  // getIntegralCommodityTitles() {
-  //   this.integralCommodityTable.titles = this._integralCommodityTableService.setTitles();
-  // }
+  reset() {
+    this.integralCommodityTable.queryKey = '';
+    this.page.subscribe((page: Array<number>) => {
+      this.getIntegralCommodity(page[0]);
+    });
+  }
+
+  getIntegralCommodity(page: number) {
+    this.action.pageChange('integralCommodity', [page]);
+    this.integralCommodityTable.reset(page);
+    this.integralCommodityService.getIntegralCommodity(page)
+      .subscribe(res => {
+        this.integralCommodityTable.loading = false;
+        if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+          this.integralCommodityTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data && res.data.content) {
+          this.integralCommodityTable.totalPage = res.data.totalPages;
+          console.log(res.data.content);
+          this.formatCommodity(res.data.content, true);
+          this.integralCommodityTable.lists = res.data.content;
+        } else {
+          this.integralCommodityTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.integralCommodityTable.loading = false;
+        console.log(err);
+        this.integralCommodityTable.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
+
+  formatCommodity(list: Array<any>, state: boolean) {
+    list.forEach(data => {
+      data.goodsStatusName = data.goodsStatus ? '下架' : '上架';
+      data.updown = data.goodsStatus ? '上架' : '下架';
+      if (data.goodsType === 0) {
+        data.goodsTypeName = '客户端';
+      } else if (data.goodsType === 1) {
+        data.goodsTypeName = '医生端';
+      } else if (data.goodsType === 2) {
+        data.goodsTypeName = '全部';
+      }
+    });
+  }
+
+  change(index) {
+    this.action.tabChange('integralCommodity', index);
+  }
+
+  newData() {
+    this.action.dataChange('integralCommodity', new IntegralCommodity());
+    this.router.navigate(['/integral-commodity/edit']);
+  }
+
   //
-  // refresh(){
-  //   this.getIntegralCommodity(0);
-  // }
-  //
-  // getIntegralCommodity(flag: number) {
-  //   this.integralCommodityTable.currentPage = flag;
-  //   this._integralCommodityService.getIntegralCommodity(flag)
-  //     .subscribe(
-  //       data => {
-  //         this.integralCommodityTable.loading = false;
-  //         // console.log(data.data);
-  //         if (data.data && data.data.content && data.data.length === 0 && data.code === 0) {
-  //           this.integralCommodityTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.data.content && data.code === 0) {
-  //           this.formatCommodity(data.data.content);
-  //           this.integralCommodityTable.lists = data.data.content;
-  //           this.integralCommodityTable.totalPage = data.data.totalPages;
-  //           // console.log(data.data.content);
-  //         } else {
-  //           this.integralCommodityTable.errorMessage = "空空如也～";
-  //         }
-  //       }, err => {
-  //         this.integralCommodityTable.loading = false;
-  //         this.integralCommodityTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  //
-  // gotoHandle(data) {
-  //   if (data.key == 'edit') {
-  //     this.integralCommodity = data.value;
-  //     // console.log(this.commodity);
-  //     this.enableEdit = true;
-  //   }
-  //   if (data.key == 'updown') {
-  //     this.delData = data.value;
-  //     this.enableOperate = true;
-  //     if(data.value.goodsStatus){
-  //       this.message = "确定上架该数据？";
-  //       this.statusIdx = 0;
-  //       data.value.updown = '上架';
-  //     }else{
-  //       this.message = "确定下架该数据？";
-  //       this.statusIdx = 1;
-  //       data.value.updown = '下架';
-  //     }
-  //   }
-  //   if (data.key == 'del'){
-  //     this.delData = data.value;
-  //     this.enableOperate = true;
-  //     this.message = "确定删除该数据？";
-  //     this.statusIdx == 2;
-  //   }
-  // }
-  //
-  // formatCommodity(list: Array < any > ) {
-  //   list.forEach(data => {
-  //     data.goodsStatusName = data.goodsStatus ? '下架' : '上架';
-  //     data.updown = data.goodsStatus ? '上架' : '下架';
-  //     if(data.goodsType == 0){
-  //       data.goodsTypeName = '客户端';
-  //     }else if(data.goodsType == 1){
-  //       data.goodsTypeName = '医生端';
-  //     }else if(data.goodsType == 2){
-  //       data.goodsTypeName = '全部';
-  //     }
-  //   });
-  // }
-  //
-  // newIntegralCommodity(){
-  //   this.integralCommodity = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  // handleSuccess(data) {
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.getIntegralCommodity(0);
-  // }
-  //
-  // operate() {
-  //   // console.log(this.delData);
-  //   if(this.statusIdx !== 0 && this.statusIdx !== 1){
-  //     this.statusIdx = 2;
-  //   }
-  //   this._integralCommodityService.updateIntegralStatus(this.delData.id, this.statusIdx)
-  //     .catch(
-  //       err => {
-  //         this.delOperate();
-  //         this.message = "操作失败";
-  //         this.enableShow = true;
-  //         return Observable.throw(err);
-  //       })
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.delOperate();
-  //           this.message = "操作成功";
-  //           this.statusIdx = null;
-  //           this.enableShow = true;
-  //           this.getIntegralCommodity(0);
-  //         } else {
-  //           this.delOperate();
-  //
-  //           if (data.msg) {
-  //             this.message = data.msg;
-  //           } else {
-  //              console.log(this.delData.id);
-  //             this.message = "操作失败";
-  //           }
-  //           this.enableShow = true;
-  //         }
-  //       })
-  // }
-  //
-  //
-  // delOperate() {
-  //   this.delData = null;
-  //   this.enableOperate = false;
-  // }
+  gotoHandle(res) {
+    const integralCommodity = <IntegralCommodity>res.value;
+
+    if (res.key === 'edit') {
+      this.action.dataChange('integralCommodity', integralCommodity);
+      this.router.navigate(['/integral-commodity/edit']);
+    } else if (res.key === 'updown') {
+      if (res.value.goodsStatus === 1) {
+        const config = new DialogOptions({
+          title: `您确定要上架${integralCommodity.title}？`,
+          message: '',
+          buttons: [{
+            key: 'topass',
+            value: '确定',
+            color: 'primary'
+          }, {
+            key: 'tocancel',
+            value: '取消',
+            color: ''
+          }]
+        });
+        ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+          if (result.key === 'topass') {
+            ERRMSG.statusSuccess = '上架成功!';
+            ERRMSG.statusError = '上架失败!';
+            this.status(res.value.id, 0);
+          }
+        });
+      } else if (res.value.goodsStatus === 0) {
+        const config = new DialogOptions({
+          title: `您确定要下架${integralCommodity.title}？`,
+          message: '',
+          buttons: [{
+            key: 'topass',
+            value: '确定',
+            color: 'primary'
+          }, {
+            key: 'tocancel',
+            value: '取消',
+            color: ''
+          }]
+        });
+        ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+          if (result.key === 'topass') {
+            ERRMSG.statusSuccess = '下架成功!';
+            ERRMSG.statusError = '下架失败!';
+            this.status(res.value.id, 1);
+          }
+        });
+      }
+    } else if (res.key === 'del') {
+      const config = new DialogOptions({
+        title: `您确定要删除${integralCommodity.title}？`,
+        message: '',
+        buttons: [{
+          key: 'topass',
+          value: '确定',
+          color: 'primary'
+        }, {
+          key: 'tocancel',
+          value: '取消',
+          color: ''
+        }]
+      });
+      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+        if (result.key === 'topass') {
+          this.status(res.value.id, 2);
+          ERRMSG.statusSuccess = '删除成功！';
+          ERRMSG.statusError = '删除失败！';
+        }
+      });
+    }
+  }
+
+  status(id: number, status: number) {
+    this.integralCommodityService.updateIntegralStatus(id, status)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(ERRMSG.statusSuccess, this.dialog).afterClosed().subscribe(() => {
+            this.page.subscribe((page: Array<number>) => {
+              this.getIntegralCommodity(0);
+            });
+          });
+        } else {
+          HintDialog(res.msg || ERRMSG.statusError, this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.statusError, this.dialog);
+      });
+  }
 }

@@ -1,9 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { FormBase, FormText, FormFile, FormDropdown, FormCheckbox, FormTextarea } from '../../../../libs';
 
 @Injectable()
 export class PackageServiceFormService {
+
+  constructor(
+    @Inject('app') private app,
+    @Inject('auth') private auth
+  ) {
+  }
 
   setForm(doctorPackages, thirdPackages, data?: any) {
 
@@ -15,7 +21,7 @@ export class PackageServiceFormService {
           key: 'combinatorialId',
           label: '用户ID',
           value: data && data.id || '',
-          type: 'hidden',
+          readonly: true,
           required: true,
           order: 0
         })
@@ -34,7 +40,7 @@ export class PackageServiceFormService {
         key: 'iconUrl',
         label: '套餐图片',
         value: data && data.iconUrl || '',
-        url: '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
         required: false,
         order: 1
       }),
@@ -64,7 +70,7 @@ export class PackageServiceFormService {
       new FormDropdown({
         key: 'enable',
         label: '状态',
-        value: data && (data.enable == 0 ? data.enable : data.enable || ''),
+        value: data && (data.enable === 0 ? data.enable : data.enable || ''),
         required: true,
         options: [
           {id: true, name: '启用'},
@@ -81,9 +87,9 @@ export class PackageServiceFormService {
       }),
       new FormText({
         key: 'operator',
-        label: '套餐价格',
-        type: 'hidden',
-        value: JSON.parse(window.sessionStorage.getItem('pci_login_token')).name || '',
+        label: '操作人',
+        readonly: true,
+        value: this.auth.getAdminName(),
         order: 12
       })
     );

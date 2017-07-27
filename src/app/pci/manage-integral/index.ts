@@ -15,5 +15,5 @@ export const routes: Routes = [{
 export const stores = {
   integralCommodity: createReducer('integralCommodity', [0], {}),
   integralOrder: createReducer('integralOrder', [0], {}),
-  integralDetail: createReducer('integralDetail', [0], {})
+  integralDetail: createReducer('integralDetail', [0, 0], {})
 };

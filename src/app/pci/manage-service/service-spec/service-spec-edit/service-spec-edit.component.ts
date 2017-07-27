@@ -1,118 +1,166 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { ServiceSpecService } from '../_service/service-spec.service';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { MdDialog } from '@angular/material';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ERRMSG } from '../../../_store/static';
+import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
+import { Subject } from 'rxjs/Subject';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { ServiceSpec } from '../_entity/service-spec.entity';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
 
 @Component({
   selector: 'app-service-spec-edit',
-  templateUrl: 'service-spec-edit.component.html',
-  styleUrls: ['service-spec-edit.component.scss']
+  templateUrl: 'service-spec-edit.component.html'
 })
 export class ServiceSpecEditComponent implements OnInit {
-  // @Input() data: any;
-  // @Input() enable: boolean;
-  // @Output() enableChange: EventEmitter <any> = new EventEmitter();
-  // @Output() handleEmit: EventEmitter <any> = new EventEmitter();
-  //
-  // modalTitle: string;
-  // errorMessage: string;
-  //
-  // name: string;
-  // specificationIdx: string;
-  // price: string;
-  // count: string;
-  // serviceName: string;
-  // serviceId: number;
-  // operator: string;
-  // enabled: boolean;
-  //
-  // searchStream: Subject<string> = new Subject<string>();
-  // results$: Array<string>;
+  containerConfig: ContainerConfig;
+  @select(['serviceSpec', 'data']) serviceSpec: Observable<ServiceSpec>;
+  form: FormGroup;
+  config: any;
+  errMsg = '';
+  serviceSpecId: number;
+  serviceId: number;
+  serviceName: string;
+  thirdServiceList: any;
+  searchStream: Subject<string> = new Subject<string>();
+  thirdList: Array<string>;
 
-  // specType = [{
-  //   id: 0,
-  //   name: '第三方服务'
-  // }, {
-  //   id: 1,
-  //   name: '组合套餐'
-  // }];
+  modalTitle: string;
+  errorMessage: string;
 
-  constructor(private _serviceSpecService: ServiceSpecService) {
+  constructor(
+    @Inject('app') private app,
+    @Inject('auth') private auth,
+    private serviceSpecService: ServiceSpecService,
+    private dialog: MdDialog,
+    private router: Router,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit() {
-    // if(this.data) {
-    //   this.name = this.data.name;
-    //   this.specificationIdx = this.data.specificationIdx;
-    //   this.price = this.data.price;
-    //   this.count = this.data.count;
-    //   this.serviceName = this.data.serviceName;
-    //   this.serviceId = this.data.serviceId;
-    //   this.operator = this.data.operator;
-    //   this.enabled = this.data.enable;
+    this.containerConfig = this.serviceSpecService.serviceSpecEditConfig(true);
+    this.serviceSpec.subscribe(data => {
+      console.log(data);
+      if (data && data.id > 0) {
+        this.serviceSpecId = data.id;
+        this.createForm( data);
+        this.containerConfig = this.serviceSpecService.serviceSpecEditConfig(false);
+      }else {
+        this.createForm( data);
+      }
+    });
+    this.cdr.detectChanges();
+  }
+    createForm(data) {
+      this.form = this.fb.group({
+        name: new FormControl({value: ''}, Validators.required),
+        specificationIdx: new FormControl({value: ''}, Validators.required),
+        price: new FormControl({value: ''}, Validators.required),
+        count: new FormControl({value: ''}, Validators.required),
+        serviceId: new FormControl({value: ''}, Validators.required),
+        serviceName: new FormControl({value: ''}, Validators.required),
+        enable: new FormControl({value: ''}),
+      });
+      this.config = {
+        name: new FormText({
+          type: 'text',
+          label: '规格名称',
+          key: 'name',
+          value: data.name || ''
+        }),
+        specificationIdx: new FormDropdown( {
+          label: '所属类型',
+          key: 'specificationIdx',
+          options: [{
+            id: 0,
+            name: '供第三方服务'}, {
+            id: 1,
+            name: '供组合服务'}],
+          value: data.specificationIdx === 0 ? data.specificationIdx : data.specificationIdx || ''
+        }),
+        price: new FormText({
+          label: '价格',
+          key: 'price',
+          value: data.price || ''
+        }),
+        count: new FormText({
+          type: 'text',
+          label: '库存数量',
+          key: 'count',
+          value: data.count || ''
+        }),
+        serviceId: new FormText({
+          label: '所属第三方服务',
+          key: 'serviceId',
+          value: data.serviceId || 1,
+          // options: [],
+        }),
+        enable: new FormDropdown({
+          label: '状态',
+          key: 'enable',
+          options: [{
+            id: true,
+            name: '启用'}, {
+            id: false,
+            name: '禁用'}],
+          value: data.enable === false ? data.enable : data.enable || ''
+        })
+      }
+    this.searchStream.debounceTime(500).distinctUntilChanged().subscribe(searchText => {
+      this.loadData(this.serviceName);
+    });
   }
 
-  // this.searchStream
-  //   .debounceTime(500)
-  //   .distinctUntilChanged()
-  //   .subscribe(searchText => {
-  //     this.loadData(this.serviceName);
-  //   });
-// }
+  loadData(key) {
+    if (key) {
+      this.serviceSpecService.searchThird(key)
+        .subscribe(res => {
+          if (res.code === 0 && res.data && res.data.length !== 0) {
+            this.thirdList = res.data;
+          }
+        });
+    }
+  }
 
-// ngAfterViewInit() {
-// $('#enable').dropdown();
-// $('#specType').dropdown();
-// }
+  getValues(value) {
+    delete value.serviceName;
+    value.serviceId = this.serviceId;
+    value.operator = this.auth.getAdminName();
+    if (this.serviceSpec) {
+      value.id = this.serviceSpecId;
+    }else {
+      delete value.id;
+    }
+    this.serviceSpecService.serviceSpecUpdate(value)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+            this.router.navigate(['/service-spec']);
+          });
+        } else {
+          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.saveError, this.dialog);
+      });
+  }
 
-// //提交保存信息
-// getValue(data) {
-//   delete data.serviceName;
-//   if (this.data) {
-//     data.id = this.data.id;
-//   }
-//   // console.log(data);
-//   this._serviceSpecService.serviceSpecUpdate(data)
-//     .subscribe(
-//     data => {
-//       if (data.code === 0) {
-//         this.handleEmit.emit("保存成功！");
-//         this.close();
-//       } else {
-//         if (data.msg) {
-//           this.errorMessage = data.msg;
-//         } else {
-//           this.errorMessage = "操作失败！";
-//         }
-//       }
-//     }, err => {
-//       this.errorMessage = "啊哦！访问出错啦～";
-//     });
-// }
-//
-// search($event) {
-//   // this.serviceId = null;
-//   this.searchStream.next(this.serviceName);
-// }
-//
-// loadData(key) {
-//   if(key) {
-//     this._serviceSpecService.searchThird(key)
-//       .subscribe(res => {
-//         if(res.code === 0 && res.data && res.data.length !== 0) {
-//           this.results$ = res.data;
-//         }
-//       });
-//   }
-// }
-//
-// selected(data) {
-//   this.serviceName = data.name;
-//   this.serviceId = data.id;
-//   this.results$ = [];
-// }
-//
-// //关闭模态框
-// close() {
-//   this.enable = !this.enable;
-//   this.enableChange.emit(this.enable);
-// }
+  search($event) {
+    this.searchStream.next(this.serviceName);
+  }
+
+  selected(data) {
+    this.serviceName = data.name;
+    this.serviceId = data.id;
+    this.thirdList = [];
+  }
 }

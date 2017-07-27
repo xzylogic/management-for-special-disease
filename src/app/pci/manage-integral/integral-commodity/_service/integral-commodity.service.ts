@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   integralCommodityList: 'opt/integral/goods/list', // 积分商品维护列表
@@ -15,15 +16,35 @@ export class IntegralCommodityService {
   ) {
   }
 
+  integralCommodityConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '积分管理',
+      subTitle: '积分商品维护',
+      ifHome: true,
+      homeRouter: '/integral-detail',
+      currentRouter: '/integral-commodity'
+    });
+  }
+
+  integralCommodityEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '积分商品维护',
+      subTitle: tag ? '新增商品' : '编辑商品信息',
+      ifHome: false,
+      homeRouter: '/integral-commodity',
+      currentRouter: '/integral-commodity/edit'
+    });
+  }
+
   /**
    * 获取积分商品维护列表
    * @param {number} flag   [description]
    */
   getIntegralCommodity(flag: number) {
     if (flag) {
-      return this.httpService.get(`${PATH.integralCommodityList}?flag=${flag}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralCommodityList}?flag=${flag}`);
     } else {
-      return this.httpService.get(`${PATH.integralCommodityList}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralCommodityList}`);
     }
   }
 
@@ -31,13 +52,13 @@ export class IntegralCommodityService {
    * 新增更新商品
    */
   integralCommodityUpdate(body: any) {
-    return this.httpService.post(`${PATH.integralCommodityEdit}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.integralCommodityEdit}`, body);
   }
 
   /**
    * 更新商品状态
    */
   updateIntegralStatus(goodsId: number, idx: number) {
-    return this.httpService.get(`${PATH.integralCommodityStatus}/${goodsId}/${idx}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralCommodityStatus}/${goodsId}/${idx}`);
   }
 }

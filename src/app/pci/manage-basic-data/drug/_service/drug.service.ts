@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   drugList: 'api/medicine/list', // 药品列表
@@ -14,6 +15,26 @@ export class DrugService {
     @Inject('app') private app,
     @Inject('http') private httpService
   ) {
+  }
+
+  drugConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '基础数据维护',
+      subTitle: '药品维护',
+      ifHome: true,
+      homeRouter: '/BasicData',
+      currentRouter: '/drug'
+    });
+  }
+
+  drugEditConfig(tag: boolean): ContainerConfig {
+    return new ContainerConfig({
+      title: '药品维护',
+      subTitle: tag ? '新增药品' : '编辑药品',
+      ifHome: false,
+      homeRouter: '/drug',
+      currentRouter: '/drug/edit'
+    });
   }
 
   /**
