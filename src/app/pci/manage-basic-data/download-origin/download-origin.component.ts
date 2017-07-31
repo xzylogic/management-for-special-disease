@@ -5,7 +5,7 @@ import { DownloadOriginService } from './_service/download-origin.service';
 import { DownloadOriginTableService } from './_service/download-origin-table.service';
 import {
   TableOption, ContainerConfig, DialogOptions,
-   ActionDialog, HintDialog
+  ActionDialog, HintDialog
 } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
@@ -39,11 +39,12 @@ export class DownloadOriginComponent implements OnInit {
   }
 
   getDownloadOrigins() {
+    this.downloadOriginTable.reset();
     this.downloadOriginService.getDownloadOrigin()
       .subscribe(
-         res => {
+        res => {
           this.downloadOriginTable.loading = false;
-          if (res.data  && res.data.length === 0 && res.code === 0) {
+          if (res.data && res.data.length === 0 && res.code === 0) {
             this.downloadOriginTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.data && res.code === 0) {
             this.downloadOriginTable.lists = res.data;
@@ -52,6 +53,7 @@ export class DownloadOriginComponent implements OnInit {
           }
         }, err => {
           this.downloadOriginTable.loading = false;
+          console.log(err);
           this.downloadOriginTable.errorMessage = ERRMSG.netErrMsg;
         })
   }

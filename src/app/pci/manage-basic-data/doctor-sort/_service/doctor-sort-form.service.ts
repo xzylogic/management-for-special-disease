@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { FormBase, FormText } from '../../../../libs';
+import { FormBase, FormText, FormHidden } from '../../../../libs';
 
 @Injectable()
 export class DoctorSortFormService {
@@ -10,7 +10,7 @@ export class DoctorSortFormService {
     const forms: FormBase<any> [] = [];
 
     forms.push(
-      new FormText({
+      new FormHidden({
         key: 'doctorId',
         label: '职称ID',
         value: data && data.id || '',

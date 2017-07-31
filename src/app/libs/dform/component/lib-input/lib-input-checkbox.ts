@@ -17,7 +17,7 @@ import { FormCheckbox } from '../../_entity';
           </md-checkbox>
         </section>
         <span class="input_span">{{data.label}}</span>
-        <input type="hidden" [formControlName]="data.key" [(ngModel)]="value">
+        <input type="hidden" [formControlName]="data.key" [(ngModel)]="value" (change)="change()">
       </div>
     </div>
   `,
@@ -53,5 +53,9 @@ export class LibInputCheckboxComponent implements OnInit {
         this.value.splice(index, 1);
       }
     }
+  }
+
+  change() {
+    this.valueChange.emit(this.value);
   }
 }

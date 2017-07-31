@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdDialogModule, MdButtonModule, MdInputModule } from '@angular/material';
+import { MdButtonModule, MdDialogModule, MdInputModule } from '@angular/material';
 
 import { DialogComponent } from './dialog.component';
 import { DialogImgComponent } from './dialog-img.component';
@@ -15,8 +15,8 @@ export * from './dialog-img.component';
     CommonModule,
     FormsModule,
     MdDialogModule,
-    MdButtonModule,
-    MdInputModule
+    MdInputModule,
+    MdButtonModule
   ],
   declarations: [
     DialogComponent,
@@ -30,8 +30,8 @@ export * from './dialog-img.component';
     CommonModule,
     FormsModule,
     MdDialogModule,
-    MdButtonModule,
     MdInputModule,
+    MdButtonModule,
     DialogComponent,
     DialogImgComponent
   ]

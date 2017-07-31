@@ -13,7 +13,7 @@ import { HintDialog } from '../../../dmodal';
       <div class="input_container">
         <input class="input_content" #file type="file" (change)="uploadChange($event)">
         <span class="input_span">{{data.label}}</span>
-        <input type="hidden" [formControlName]="data.key" [(ngModel)]="value">
+        <input type="hidden" [formControlName]="data.key" [(ngModel)]="value" (change)="change()">
         <div class="upload_container">
           <div class="upload_content" *ngIf="!data.multiple&&value">
             <img class="image" [src]="value">
@@ -101,5 +101,9 @@ export class LibInputFileComponent implements OnInit {
       }
       HintDialog('删除照片成功！', this.dialog);
     }
+  }
+
+  change() {
+    this.valueChange.emit(this.value);
   }
 }

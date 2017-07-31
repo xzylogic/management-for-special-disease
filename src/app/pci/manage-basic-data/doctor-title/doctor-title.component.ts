@@ -1,17 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MdDialog } from '@angular/material';
 
-import { TableOption } from '../../../libs/dtable/dtable.entity';
+import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
 import { DoctorTitleService } from './_service/doctor-title.service';
 import { DoctorTitleTableService } from './_service/doctor-title-table.service';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
-import { Observable } from 'rxjs/Observable';
-import { select } from '@angular-redux/store';
-import { MdDialog } from '@angular/material';
-import { Router } from '@angular/router';
 import { DoctorTitle } from './_entity/doctor-title.entity';
 import { ERRMSG } from '../../_store/static';
-import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
-import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-doctor-title',
@@ -20,31 +14,26 @@ import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.com
 export class DoctorTitleComponent implements OnInit {
   containerConfig: ContainerConfig;
   doctorTitleTable: TableOption;
-  @select(['doctorTitle', 'tab']) tab: Observable<number>;
-  @select(['doctorTitle', 'page']) page: Observable<Array<number>>;
   doctorTitleId: number;
+
   constructor(
-    @Inject('action') private action,
     private doctorTitleService: DoctorTitleService,
     private doctorTitleTableService: DoctorTitleTableService,
-    private dialog: MdDialog,
-    private router: Router
+    private dialog: MdDialog
   ) {
-    action.dataChange('doctorTitleService', new DoctorTitle());
   }
 
   ngOnInit() {
     this.containerConfig = this.doctorTitleService.doctorTitleConfig();
     this.doctorTitleTable = new TableOption({
       titles: this.doctorTitleTableService.setTitles(),
-      ifPage: true
+      ifPage: false
     });
-    this.page.subscribe((page: Array<number>) => {
-      this.getDoctorTitle();
-    });
+    this.getDoctorTitle();
   }
 
   getDoctorTitle() {
+    this.doctorTitleTable.reset();
     this.doctorTitleService.getDoctorTitles()
       .subscribe(res => {
         this.doctorTitleTable.loading = false;
@@ -68,24 +57,24 @@ export class DoctorTitleComponent implements OnInit {
       title: `新增职称`,
       message: '',
       buttons: [{
-        key: 'toconfirm',
+        key: 'confirm',
         value: '确定',
         color: 'primary'
       }, {
-        key: 'tocancel',
+        key: 'cancel',
         value: '取消',
         color: ''
       }],
       forms: [{
         key: 'name',
-        label: '',
+        label: '职称名称',
         value: ''
       }]
     });
     ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-      if (result.key === 'toconfirm' && result.value[0]) {
+      if (result && result.key === 'confirm' && result.value[0]) {
         const obj: any = {name: result.value[0].value};
-        this.new(obj);
+        this.newForm(obj);
       }
     });
   }
@@ -98,30 +87,30 @@ export class DoctorTitleComponent implements OnInit {
         title: `编辑科室`,
         message: '',
         buttons: [{
-          key: 'toconfirm',
+          key: 'confirm',
           value: '确定',
           color: 'primary'
         }, {
-          key: 'tocancel',
+          key: 'cancel',
           value: '取消',
           color: ''
         }],
         forms: [{
           key: 'name',
-          label: '',
+          label: '职称名称',
           value: doctorTitle.name
         }]
       });
       ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-        if (result.key === 'toconfirm' && result.value[0]) {
+        if (result && result.key === 'confirm' && result.value[0]) {
           const obj: any = {id: doctorTitle.id, name: result.value[0].value};
-          this.edit(obj);
+          this.editForm(obj);
         }
       });
     }
   }
 
-  edit(value) {
+  editForm(value) {
     this.doctorTitleService.doctorTitleEdit(value)
       .subscribe(res => {
         if (res.code === 0) {
@@ -137,7 +126,7 @@ export class DoctorTitleComponent implements OnInit {
       });
   }
 
-  new(value) {
+  newForm(value) {
     this.doctorTitleService.doctorTitleCreate(value)
       .subscribe(res => {
         if (res.code === 0) {

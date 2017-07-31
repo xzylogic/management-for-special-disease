@@ -13,7 +13,6 @@ export class ApiAction {
   }
 
   tabChange(key, tab: number) {
-    console.log(new TabChangeAction(tab));
     this.ngRedux.dispatch({type: ApiAction.TAB_CHANGE + key, payload: tab});
   }
 

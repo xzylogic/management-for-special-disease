@@ -15,7 +15,8 @@ const ZH = require('flatpickr/dist/l10n/zh.js').zh;
         <input class="input_content"
                [placeholder]="data.placeholder"
                [formControlName]="data.key"
-               [(ngModel)]="value" #date
+               [(ngModel)]="value"
+               (change)="change()" #date
         >
         <span class="input_span">{{data.label}}</span>
       </div>
@@ -42,5 +43,9 @@ export class LibInputDateComponent implements OnInit, AfterViewInit {
       'locale': ZH,
       'defaultDate': this.value || ''
     });
+  }
+
+  change() {
+    this.valueChange.emit(this.value);
   }
 }

@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MdTabsModule } from '@angular/material';
 
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
+import { DTableModule, LibModule } from '../../../libs';
 import { DownloadOriginComponent } from './download-origin.component';
-import { DownloadOriginEditComponent } from './download-origin-edit/download-origin-edit.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { DownloadOriginService } from './_service/download-origin.service';
@@ -21,16 +20,13 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     FormsModule,
-    MdChipsModule,
     MdTabsModule,
     DTableModule,
-    DFormModule,
     LibModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
-    DownloadOriginComponent,
-    DownloadOriginEditComponent
+    DownloadOriginComponent
   ],
   providers: [
     DownloadOriginService,

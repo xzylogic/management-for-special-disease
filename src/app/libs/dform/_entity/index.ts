@@ -9,3 +9,4 @@ export * from './form-radio';
 export * from './form-text';
 export * from './form-textarea';
 export * from './form-time';
+export * from './form-hidden';

@@ -1,16 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
-import { TableOption } from '../../../libs/dtable/dtable.entity';
-import { Observable } from 'rxjs/Observable';
-import { select } from '@angular-redux/store';
+import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
-import { Router } from '@angular/router';
+
+import { ContainerConfig, TableOption, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
 import { DepartmentService } from './_service/department.service';
 import { DepartmentTableService } from './_service/department-table.service';
 import { Department } from './_entity/department.entity';
 import { ERRMSG } from '../../_store/static';
-import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
-import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-department',
@@ -19,31 +14,26 @@ import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.com
 export class DepartmentComponent implements OnInit {
   containerConfig: ContainerConfig;
   departmentTable: TableOption;
-  @select(['department', 'tab']) tab: Observable<number>;
-  @select(['department', 'page']) page: Observable<Array<number>>;
   departmentId: number;
+
   constructor(
-    @Inject('action') private action,
     private departmentService: DepartmentService,
     private departmentTableService: DepartmentTableService,
-    private dialog: MdDialog,
-    private router: Router
+    private dialog: MdDialog
   ) {
-    action.dataChange('departmentService', new Department());
   }
 
   ngOnInit() {
     this.containerConfig = this.departmentService.departmentConfig();
     this.departmentTable = new TableOption({
       titles: this.departmentTableService.setTitles(),
-      ifPage: true
+      ifPage: false
     });
-    this.page.subscribe((page: Array<number>) => {
-      this.getDepartment();
-    });
+    this.getDepartment();
   }
 
   getDepartment() {
+    this.departmentTable.reset();
     this.departmentService.getDepartments()
       .subscribe(res => {
         this.departmentTable.loading = false;
@@ -67,26 +57,26 @@ export class DepartmentComponent implements OnInit {
       title: `新增科室`,
       message: '',
       buttons: [{
-        key: 'toconfirm',
+        key: 'confirm',
         value: '确定',
         color: 'primary'
       }, {
-        key: 'tocancel',
+        key: 'cancel',
         value: '取消',
         color: ''
       }],
       forms: [{
         key: 'name',
-        label: '',
+        label: '科室名称',
         value: ''
       }]
     });
-      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-        if (result.key === 'toconfirm' && result.value[0]) {
-          const obj: any = {name: result.value[0].value};
-          this.new(obj);
-        }
-      });
+    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result && result.key === 'confirm' && result.value[0]) {
+        const obj: any = {name: result.value[0].value};
+        this.newForm(obj);
+      }
+    });
   }
 
   gotoHandle(res) {
@@ -97,30 +87,30 @@ export class DepartmentComponent implements OnInit {
         title: `编辑科室`,
         message: '',
         buttons: [{
-          key: 'toconfirm',
+          key: 'confirm',
           value: '确定',
           color: 'primary'
         }, {
-          key: 'tocancel',
+          key: 'cancel',
           value: '取消',
           color: ''
         }],
         forms: [{
           key: 'name',
-          label: '',
+          label: '科室名称',
           value: department.name
         }]
       });
-        ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-          if (result.key === 'toconfirm' && result.value[0]) {
-            const obj: any = {id: department.id, name: result.value[0].value};
-            this.edit(obj);
-          }
-        });
+      ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+        if (result && result.key === 'confirm' && result.value[0]) {
+          const obj: any = {id: department.id, name: result.value[0].value};
+          this.editForm(obj);
+        }
+      });
     }
   }
 
-  edit(value) {
+  editForm(value) {
     this.departmentService.departmentEdit(value)
       .subscribe(res => {
         if (res.code === 0) {
@@ -136,7 +126,7 @@ export class DepartmentComponent implements OnInit {
       });
   }
 
-  new(value) {
+  newForm(value) {
     this.departmentService.departmentCreate(value)
       .subscribe(res => {
         if (res.code === 0) {

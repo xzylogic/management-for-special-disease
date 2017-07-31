@@ -11,10 +11,11 @@ const Flatpickr = require('flatpickr');
   template: `
     <div [formGroup]="form">
       <div class="input_container">
-        <input class="input_content" 
-               [placeholder]="data.placeholder" 
-               [formControlName]="data.key" 
-               [(ngModel)]="value" #time
+        <input class="input_content"
+               [placeholder]="data.placeholder"
+               [formControlName]="data.key"
+               [(ngModel)]="value"
+               (change)="change()" #time
         >
         <span class="input_span">{{data.label}}</span>
       </div>
@@ -43,5 +44,9 @@ export class LibInputTimeComponent implements OnInit, AfterViewInit {
       'noCalendar': true,
       'defaultDate': this.value || ''
     });
+  }
+
+  change() {
+    this.valueChange.emit(this.value);
   }
 }

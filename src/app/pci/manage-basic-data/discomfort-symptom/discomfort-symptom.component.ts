@@ -58,6 +58,7 @@ export class DiscomfortSymptomComponent implements OnInit {
   }
 
   getDiscomfortSymptoms() {
+    this.discomfortSymptomTable.reset();
     this.discomfortSymptomService.getDiscomfortSymptoms(this.discomfortSymptomTable.queryKey)
       .subscribe(res => {
         this.discomfortSymptomTable.loading = false;

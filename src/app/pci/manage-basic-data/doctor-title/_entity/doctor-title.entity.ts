@@ -1,6 +1,3 @@
-/**
- * Created by zhanglin on 2017/7/18.
- */
 export class DoctorTitle {
   id: number;
   name: string;

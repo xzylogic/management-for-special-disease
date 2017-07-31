@@ -46,11 +46,8 @@ export const routes: Routes = [{
 }];
 
 export const stores = {
-  department: createReducer('department', [0], {}),
   discomfortSymptom: createReducer('discomfortSymptom', [0], {}),
   doctorSort: createReducer('doctorSort', [0], {}),
-  doctorTitle: createReducer('doctorTitle', [0], {}),
-  downloadOrigin: createReducer('downloadOrigin', [0], {}),
   drug: createReducer('drug', [0], {}),
   flowerGrade: createReducer('flowerGrade', [0], {}),
   followUpPlan: createReducer('followUpPlan', [0], {}),

@@ -4,6 +4,7 @@ import { MdToolbarModule } from '@angular/material';
 
 import { LibInputModule, LibDialogModule } from '../../libs';
 import { LoginComponent } from './login.component';
+import { LibDialogEditModule } from '../../libs/dmodal/dialog/dialog-edit.module';
 
 const routes: Routes = [{
   path: 'login',
@@ -14,6 +15,7 @@ const routes: Routes = [{
   imports: [
     LibInputModule,
     LibDialogModule,
+    LibDialogEditModule,
     MdToolbarModule,
     RouterModule.forChild(routes),
   ],

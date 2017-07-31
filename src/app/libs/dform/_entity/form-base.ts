@@ -11,9 +11,8 @@
  * dropdown - 文本下拉框
  * file - 文件上传
  */
-import { ERRMSG } from '../../../pci/_store/static';
 
-export enum FormType { text, date, time, datetime, textarea, editor, radio, checkbox, dropdown, file }
+export enum FormType { text, date, time, datetime, textarea, editor, radio, checkbox, dropdown, file, hidden }
 
 export class FormBase<T> {
   value: T; // 默认值

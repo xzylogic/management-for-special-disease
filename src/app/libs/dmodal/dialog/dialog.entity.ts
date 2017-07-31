@@ -1,3 +1,5 @@
+import { FormBase } from '../../dform/_entity/form-base';
+
 export class DialogButton {
   key: string; // 记录button的键值
   value: string; // button显示文本
@@ -21,5 +23,15 @@ export class DialogOptions {
     this.message = obj && obj.message || '';
     this.buttons = obj && obj.buttons || [];
     this.forms = obj && obj.forms || [];
+  }
+}
+
+export class DialogEdit {
+  title: string;
+  form: Array<any>;
+
+  constructor(obj?: DialogEdit) {
+    this.title = obj && obj.title || '';
+    this.form = obj && obj.form || null;
   }
 }

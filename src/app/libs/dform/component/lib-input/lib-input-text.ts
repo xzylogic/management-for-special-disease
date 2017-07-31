@@ -13,6 +13,7 @@ import { FormText } from '../../_entity';
                [formControlName]="data.key"
                [(ngModel)]="value"
                [readonly]="data.readonly"
+               (keyup)="change()"
                (change)="change()"
         >
         <md-error>{{data.errMsg}}</md-error>
@@ -24,6 +25,7 @@ import { FormText } from '../../_entity';
                [formControlName]="data.key"
                [(ngModel)]="value"
                [readonly]="data.readonly"
+               (keyup)="change()"
                (change)="change()"
         >
         <md-hint align="end">{{value.length}} / {{data.maxlength}}</md-hint>

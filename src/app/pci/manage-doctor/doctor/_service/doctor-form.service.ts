@@ -88,7 +88,7 @@ export class DoctorFormService {
         label: '头像',
         value: data && data.avatarUrl || '',
         required: false,
-        url: `${this.app.pci.BASE_URL}api/upload`,
+        url: this.app.pci.UPLOAD_URL,
         order: 2
       }),
       new FormFile({

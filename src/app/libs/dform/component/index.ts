@@ -10,3 +10,4 @@ export * from './lib-input/lib-input-radio';
 export * from './lib-input/lib-input-text';
 export * from './lib-input/lib-input-textarea';
 export * from './lib-input/lib-input-time';
+export * from './lib-input/lib-input-hidden';

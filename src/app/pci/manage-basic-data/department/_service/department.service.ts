@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@angular/core';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
-  departmentList: 'api/department/all', //科室列表
-  departmentCreate: 'api/department/edit', //新建科室
-  departmentEdit: 'api/department/edit', //编辑科室
+  departmentList: 'api/department/all', // 科室列表
+  departmentCreate: 'api/department/edit', // 新建科室
+  departmentEdit: 'api/department/edit', // 编辑科室
 };
 
 @Injectable()
@@ -32,7 +32,7 @@ export class DepartmentService {
 
   /**
    * 新建医院
-   * @param {[type]} body [description]
+   * @param {[type]} data [description]
    */
   departmentCreate(data) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.departmentCreate}`, data);
@@ -40,7 +40,7 @@ export class DepartmentService {
 
   /**
    * 编辑医院
-   * @param {[type]} body [description]
+   * @param {[type]} data [description]
    */
   departmentEdit(data) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.departmentEdit}`, data);

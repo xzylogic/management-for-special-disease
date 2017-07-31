@@ -54,11 +54,11 @@ export class TableOption {
     this._loading = true;
   }
 
-  reset(page): void {
+  reset(page?): void {
     this._lists = null;
     this._loading = true;
     this._errorMessage = '';
-    this._currentPage = page;
+    this._currentPage = page || 0;
   }
 
   get titles(): TableTitle[] {

@@ -5,7 +5,25 @@ import { DialogOptions } from './dialog.entity';
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: './dialog.component.html'
+  template: `
+    <h1 md-dialog-title>{{option.title}}</h1>
+    <div md-dialog-content>
+      {{option.message}}
+      <div *ngIf="option.forms.length!=0">
+        <md-input-container *ngFor="let item of option.forms" style="width: 100%">
+          <textarea mdInput [placeholder]="item.label" [(ngModel)]="item.value"></textarea>
+        </md-input-container>
+      </div>
+    </div>
+    <div md-dialog-actions style="float: right;">
+      <div style="margin: 20px 0">
+        <button *ngFor="let btn of option.buttons" color="{{btn.color}}" md-raised-button style="margin-left: 15px"
+                (click)="dialogRef.close({key:btn.key,value:option.forms || ''})">
+          {{btn.value}}
+        </button>
+      </div>
+    </div>
+  `
 })
 export class DialogComponent {
   option: DialogOptions = new DialogOptions();

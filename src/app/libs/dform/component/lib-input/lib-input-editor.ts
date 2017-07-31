@@ -14,7 +14,7 @@ import { FormText } from '../../_entity';
                       [options]="editorOptions"
         ></quill-editor>
         <span class="input_span">{{data.label}}</span>
-      </div> 
+      </div>
     </div>
   `,
   styleUrls: ['./lib-input.scss']

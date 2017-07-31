@@ -12,10 +12,11 @@ const ZH = require('flatpickr/dist/l10n/zh.js').zh;
   template: `
     <div [formGroup]="form">
       <div class="input_container">
-        <input class="input_content" 
-               [placeholder]="data.placeholder" 
-               [formControlName]="data.key" 
-               [(ngModel)]="value" #datetime
+        <input class="input_content"
+               [placeholder]="data.placeholder"
+               [formControlName]="data.key"
+               [(ngModel)]="value"
+               (change)="change()" #datetime
         >
         <span class="input_span">{{data.label}}</span>
       </div>
@@ -44,5 +45,9 @@ export class LibInputDatetimeComponent implements OnInit, AfterViewInit {
       'time_24hr': true,
       'defaultDate': this.value || ''
     });
+  }
+
+  change() {
+    this.valueChange.emit(this.value);
   }
 }
