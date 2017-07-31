@@ -8,7 +8,6 @@ import { AdPatientEditComponent } from './ad-patient-edit/ad-patient-edit.compon
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { AdPatientService } from './_service/ad-patient.service';
-import { AdPatientFormService } from './_service/ad-patient-form.service';
 import { AdPatientTableService } from './_service/ad-patient-table.service';
 import { MdChipsModule, MdTabsModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +38,6 @@ const routes: Routes = [{
   ],
   providers: [
     AdPatientService,
-    AdPatientFormService,
     AdPatientTableService
   ]
 })

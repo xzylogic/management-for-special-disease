@@ -2,20 +2,19 @@ import { Injectable, Inject } from '@angular/core';
 import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
-  adList: 'api/banner', //GET
-  adNew: 'api/banner', //POST
-  adDelete: 'api/banner', //DELETE
-  adEdit: 'api/banner', //PUT
-  adStatus: 'api/banner', //PUT, /api/banner/{id}/status
-}
+  adList: 'api/banner', // GET
+  adNew: 'api/banner', // POST
+  adDelete: 'api/banner', // DELETE
+  adEdit: 'api/banner', // PUT
+  adStatus: 'api/banner', // PUT, /api/banner/{id}/status
+};
 
 @Injectable()
 export class AdPatientService {
 
   constructor(
     @Inject('app') private app,
-    @Inject('http') private httpService,
-    @Inject('auth') private authService
+    @Inject('http') private httpService
   ) {
   }
 
@@ -32,7 +31,7 @@ export class AdPatientService {
   adPatientEditConfig(tag: boolean): ContainerConfig {
     return new ContainerConfig({
       title: '广告位管理-患者端',
-      subTitle: tag ? '新增广告位' : '编辑广告位',
+      subTitle: tag ? '编辑广告位' : '新增广告位',
       ifHome: false,
       homeRouter: '/ad-patient',
       currentRouter: '/ad-patient/edit'
@@ -42,7 +41,6 @@ export class AdPatientService {
   /**
    * 获取广告列表
    * @param {number} page   [description]
-   * @param {number} size   [description]
    */
   getAdList(page: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.adList}?type=0&size=10&page=${page}`);

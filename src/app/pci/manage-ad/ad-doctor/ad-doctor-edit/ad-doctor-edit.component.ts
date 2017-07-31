@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { AdDoctor } from '../_entity/ad-doctor.entity';
+import { Observable } from 'rxjs/Observable';
+import { select } from '@angular-redux/store';
+import { MdDialog } from '@angular/material';
+
+import { ContainerConfig, HintDialog } from '../../../../libs';
 import { AdDoctorService } from '../_service/ad-doctor.service';
 import { AdDoctorFormService } from '../_service/ad-doctor-form.service';
+import { AdDoctor } from '../_entity/ad-doctor.entity';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-ad-doctor-edit',
@@ -19,7 +19,7 @@ export class AdDoctorEditComponent implements OnInit {
   @select(['adDoctor', 'data']) adDoctor: Observable<AdDoctor>;
   errMsg = '';
   form: any;
-  doctorId: number;
+  id: number;
 
   constructor(
     private adDoctorService: AdDoctorService,
@@ -32,26 +32,25 @@ export class AdDoctorEditComponent implements OnInit {
 
   ngOnInit() {
     this.adDoctor.subscribe(data => {
-        this.doctorId = data.id;
-        if (data.id === 0) {
-          this.containerConfig = this.adDoctorService.adDoctorEditConfig(true);
-          this.form = this.adDoctorFormService.setAdDoctorForm();
-        } else {
-          this.containerConfig = this.adDoctorService.adDoctorEditConfig(false);
-          this.form = this.adDoctorFormService.setAdDoctorForm(data);
-        }
-      },
-      err => {
-        console.log(err);
-        this.errMsg = ERRMSG.netErrMsg;
-      });
+      this.id = data.id || 0;
+      if (this.id > 0) {
+        this.containerConfig = this.adDoctorService.adDoctorEditConfig(true);
+        this.form = this.adDoctorFormService.setAdDoctorForm(data);
+      } else {
+        this.containerConfig = this.adDoctorService.adDoctorEditConfig(false);
+        this.form = this.adDoctorFormService.setAdDoctorForm();
+      }
+    }, err => {
+      console.log(err);
+      this.errMsg = ERRMSG.netErrMsg;
+    });
   }
 
   getValues(value) {
-    if (this.doctorId !== 0) {
+    if (this.id > 0) {
       value['type'] = 1;
       value['admin'] = this.auth.getAdminName();
-      this.adDoctorService.adEdit(this.doctorId, value)
+      this.adDoctorService.adEdit(this.id, value)
         .subscribe(res => {
           if (res.code === 0) {
             HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {

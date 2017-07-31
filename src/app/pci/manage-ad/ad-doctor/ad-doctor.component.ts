@@ -1,16 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
-import { TableOption } from '../../../libs/dtable/dtable.entity';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { select } from '@angular-redux/store';
+import { MdDialog } from '@angular/material';
+
+import { ContainerConfig, TableOption, ActionDialog, HintDialog, DialogOptions } from '../../../libs';
 import { AdDoctorService } from './_service/ad-doctor.service';
 import { AdDoctorTableService } from './_service/ad-doctor-table.service';
 import { AdDoctor } from './_entity/ad-doctor.entity';
 import { ERRMSG } from '../../_store/static';
-import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
-import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
 
 @Component({
   selector: 'app-ad-doctor',
@@ -19,8 +17,7 @@ import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
 export class AdDoctorComponent implements OnInit {
   containerConfig: ContainerConfig;
   adDoctorTable: TableOption;
-  @select(['AdDoctor', 'tab']) tab: Observable<number>;
-  @select(['AdDoctor', 'page']) page: Observable<Array<number>>;
+  @select(['adDoctor', 'page']) page: Observable<Array<number>>;
 
   constructor(
     @Inject('action') private action,
@@ -30,7 +27,7 @@ export class AdDoctorComponent implements OnInit {
     private dialog: MdDialog,
     private router: Router
   ) {
-    action.dataChange('adDoctorService', new AdDoctor());
+    action.dataChange('adDoctor', new AdDoctor());
   }
 
   ngOnInit() {
@@ -40,12 +37,12 @@ export class AdDoctorComponent implements OnInit {
       ifPage: true
     });
     this.page.subscribe((page: Array<number>) => {
-      this.getAdDoctor(0);
+      this.getAdDoctor(page[0]);
     });
   }
 
   getAdDoctor(page: number) {
-    this.action.pageChange('adDoctorService', [page]);
+    this.action.pageChange('adDoctor', [page]);
     this.adDoctorService.getAdList(page)
       .subscribe(res => {
         this.adDoctorTable.loading = false;
@@ -54,7 +51,6 @@ export class AdDoctorComponent implements OnInit {
         } else if (res.code === 0 && res.data && res.data.content) {
           this.adDoctorTable.totalPage = res.data.totalPages;
           this.adDoctorTable.lists = res.data.content;
-          console.log(this.adDoctorTable.lists);
         } else {
           this.adDoctorTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
@@ -72,12 +68,11 @@ export class AdDoctorComponent implements OnInit {
 
   gotoHandle(res) {
     const adDoctor = <AdDoctor>res.value;
-    console.log(res);
     if (res.key === 'edit') {
       this.action.dataChange('adDoctor', adDoctor);
       this.router.navigate(['/ad-doctor/edit']);
     }
-    else if (res.key === 'del') {
+    if (res.key === 'del') {
       const config = new DialogOptions({
         title: `您确定要删除${adDoctor.title}？`,
         message: '',
@@ -92,15 +87,14 @@ export class AdDoctorComponent implements OnInit {
         }]
       });
       ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-        if (result.key === 'topass') {
+        if (result && result.key === 'topass') {
           this.delete(res.value.id);
         }
       });
-    }
-    else if (res.key === 'updown') {
+    } else if (res.key === 'updown') {
       if (!res.value.status) {
         const config = new DialogOptions({
-          title: `您确定要上架${adDoctor.title}？`,
+          title: `您确定要上架广告：${adDoctor.title}？`,
           message: '',
           buttons: [{
             key: 'topass',
@@ -113,15 +107,13 @@ export class AdDoctorComponent implements OnInit {
           }]
         });
         ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-          if (result.key === 'topass') {
+          if (result && result.key === 'topass') {
             this.updown(res.value.id);
-            ERRMSG.updownSuccess = '上架成功';
-            ERRMSG.updownError = '上架失败';
           }
         });
-      }else {
+      } else {
         const config = new DialogOptions({
-          title: `您确定要下架${adDoctor.title}？`,
+          title: `您确定要下架广告：${adDoctor.title}？`,
           message: '',
           buttons: [{
             key: 'topass',
@@ -136,8 +128,6 @@ export class AdDoctorComponent implements OnInit {
         ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
           if (result.key === 'topass') {
             this.updown(res.value.id);
-            ERRMSG.updownSuccess = '下架成功';
-            ERRMSG.updownError = '下架失败';
           }
         });
       }
@@ -148,9 +138,9 @@ export class AdDoctorComponent implements OnInit {
     this.adDoctorService.adDelete(id)
       .subscribe(res => {
         if (res.code === 0) {
-          HintDialog(ERRMSG.deleteSuccess, this.dialog).afterClosed().subscribe(() => {
+          HintDialog(res.msg || ERRMSG.deleteSuccess, this.dialog).afterClosed().subscribe(() => {
             this.page.subscribe((page: Array<number>) => {
-              this.getAdDoctor(0);
+              this.getAdDoctor(page[0]);
             });
           });
         } else {
@@ -158,7 +148,7 @@ export class AdDoctorComponent implements OnInit {
         }
       }, err => {
         console.log(err);
-        HintDialog(ERRMSG.deleteError, this.dialog);
+        HintDialog(ERRMSG.netErrMsg, this.dialog);
       });
   }
 
@@ -166,17 +156,17 @@ export class AdDoctorComponent implements OnInit {
     this.adDoctorService.adStatus(id)
       .subscribe(res => {
         if (res.code === 0) {
-          HintDialog(ERRMSG.updownSuccess, this.dialog).afterClosed().subscribe(() => {
+          HintDialog(res.msg || ERRMSG.handleSuccess, this.dialog).afterClosed().subscribe(() => {
             this.page.subscribe((page: Array<number>) => {
-              this.getAdDoctor(0);
+              this.getAdDoctor(page[0]);
             });
           });
         } else {
-          HintDialog(res.msg || ERRMSG.updownError, this.dialog);
+          HintDialog(res.msg || ERRMSG.handleError, this.dialog);
         }
       }, err => {
         console.log(err);
-        HintDialog(ERRMSG.updownError, this.dialog);
+        HintDialog(ERRMSG.netErrMsg, this.dialog);
       });
   }
 }

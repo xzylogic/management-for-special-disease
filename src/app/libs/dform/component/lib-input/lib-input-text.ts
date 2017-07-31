@@ -18,7 +18,7 @@ import { FormText } from '../../_entity';
         >
         <md-error>{{data.errMsg}}</md-error>
       </md-input-container>
-      <md-input-container *ngIf="data.maxlength">
+      <md-input-container *ngIf="data.maxlength" style="width: 100%">
         <input mdInput [type]="data.type"
                [maxlength]="data.maxlength"
                [placeholder]="data.label"
