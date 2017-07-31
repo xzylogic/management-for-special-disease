@@ -37,7 +37,7 @@ const routes: Routes = [{
   ],
   providers: [
     OperationPushService,
-    OperationPushTableService
+    OperationPushTableService,
   ]
 })
 export class OperationPushModule {
