@@ -1,9 +1,15 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 
 import { BusinessStatisticsService } from './_service/business-statistics.service';
 import { BusinessStatisticsTableService } from './_service/business-statistics-table.service';
 import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
+import { MdAnchor } from '@angular/material';
+
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
+type AOA = Array<Array<any>>;
 
 @Component({
   selector: 'app-business-statistics',
@@ -12,12 +18,16 @@ import { ERRMSG } from '../../_store/static';
 export class BusinessStatisticsComponent implements OnInit {
   containerConfig: ContainerConfig;
   businessUserTable: TableOption;
+  businessUserExport: AOA;
   businessDoctorTable: TableOption;
+  businessDoctorExport: AOA;
   queryUserDate: any;
   queryDoctorDate: any;
+  @ViewChild('userExport') userExport: MdAnchor;
 
   constructor(
     @Inject('search') private search,
+    @Inject('common') private common,
     private businessservice: BusinessStatisticsService,
     private businesstableService: BusinessStatisticsTableService
   ) {
@@ -48,6 +58,7 @@ export class BusinessStatisticsComponent implements OnInit {
           this.businessUserTable.loading = false;
           if (res.data && res.code === 0) {
             this.businessUserTable.lists = res.data.userData;
+            this.businessUserExport = this.common.toArray(<Array<Object>>this.businessUserTable.lists);
           } else {
             this.businessUserTable.errorMessage = ERRMSG.otherMsg;
           }
@@ -67,6 +78,7 @@ export class BusinessStatisticsComponent implements OnInit {
           this.businessDoctorTable.loading = false;
           if (res.data && res.code === 0) {
             this.businessDoctorTable.lists = res.data.doctorData;
+            this.businessDoctorExport = this.common.toArray(<Array<Object>>this.businessDoctorTable.lists);
           } else {
             this.businessDoctorTable.errorMessage = ERRMSG.otherMsg;
           }
@@ -77,23 +89,18 @@ export class BusinessStatisticsComponent implements OnInit {
         })
   }
 
-  // userExcel(){
-  //   $('.userExcel').on('click', function(){
-  //       let myDate = new Date();
-  //       let $this = $(this);
-  //       let table = $("#userExcel")[0];
-  //       $this.attr('download', '肾移植管家业务数据统计-患者端-'+myDate.toLocaleDateString()+'.xls');
-  //       ExcellentExport.excel(this, table);
-  //   });
-  // }
-  //
-  // doctorExcel(){
-  //   $('.doctorExcel').on('click', function(){
-  //       let myDate = new Date();
-  //       let $this = $(this);
-  //       let table = $("#doctorExcel")[0];
-  //       $this.attr('download', '肾移植管家业务数据统计-医生端-'+myDate.toLocaleDateString()+'.xls');
-  //       ExcellentExport.excel(this, table);
-  //   });
-  // }
+  export(data: AOA, type) {
+    if (data) {
+      /* generate worksheet */
+      const ws = XLSX.utils.aoa_to_sheet(data);
+      /* generate workbook and add the worksheet */
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, this.queryUserDate);
+      /* save to file */
+      const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+      const fileName = type ? `肾移植管家业务数据统计-患者端-${this.queryUserDate}.xlsx`
+        : `肾移植管家业务数据统计-医生端-${this.queryDoctorDate}.xlsx`;
+      saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+    }
+  }
 }

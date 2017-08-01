@@ -7,6 +7,7 @@
           <button md-icon-button color="primary" type="button" (click)="getUserData()">
             <md-icon>search</md-icon>
           </button>
+          <button md-button (click)="export(businessUserExport, true)">导出</button>
         </form>
         <div *ngIf="!businessUserTable.lists&&businessUserTable.loading">Loading...</div>
         <div *ngIf="!businessUserTable.lists&&!businessUserTable.loading&&!!businessUserTable.errorMessage"
@@ -27,6 +28,7 @@
           <button md-icon-button color="primary" type="button" (click)="getDoctorData()">
             <md-icon>search</md-icon>
           </button>
+          <button md-button (click)="export(businessDoctorExport, false)">导出</button>
         </form>
         <div *ngIf="!businessDoctorTable.lists&&businessDoctorTable.loading">Loading...</div>
         <div *ngIf="!businessDoctorTable.lists&&!businessDoctorTable.loading&&!!businessDoctorTable.errorMessage"

@@ -6,8 +6,10 @@
       </md-input-container>
       <md-select placeholder="申请状态" [(ngModel)]="queryStatus" name="queryStatus" style="margin: 0 1em">
         <md-option [value]="">全部</md-option>
-        <md-option [value]="'true'">同意</md-option>
-        <md-option [value]="'false'">申请中</md-option>
+        <md-option [value]="'0'">未添加</md-option>
+        <md-option [value]="'1'">申请中</md-option>
+        <md-option [value]="'2'">已添加</md-option>
+        <md-option [value]="'3'">已拒绝</md-option>
       </md-select>
       <button md-icon-button color="primary" type="button" (click)="getRelationships(0)">
         <md-icon>search</md-icon>

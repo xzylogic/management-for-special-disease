@@ -48,7 +48,7 @@ export class RelationshipTableService {
       }),
       new TableTitle({
         name: '加入小组',
-        key: 'status'
+        key: 'groupName'
       }),
       new TableTitle({
         name: '是否赠送服务',

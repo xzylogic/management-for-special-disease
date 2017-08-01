@@ -13,6 +13,12 @@ import {
 } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
+import * as moment from 'moment';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
+type AOA = Array<Array<any>>;
+
 @Component({
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
@@ -29,6 +35,7 @@ export class DoctorComponent implements OnInit {
 
   constructor(
     @Inject('action') private action,
+    @Inject('common') private common,
     private doctorService: DoctorService,
     private doctorTableService: DoctorTableService,
     private dialog: MdDialog,
@@ -161,6 +168,9 @@ export class DoctorComponent implements OnInit {
       data.departmentName = data.department && data.department.name || '';
       data.doctorTitleId = data.doctorTitle && data.doctorTitle.id || '';
       data.doctorTitleName = data.doctorTitle && data.doctorTitle.name || '';
+      delete data.hospital;
+      delete data.department;
+      delete data.doctorTitle;
     })
   }
 
@@ -269,5 +279,30 @@ export class DoctorComponent implements OnInit {
 
   change(index) {
     this.action.tabChange('doctor', index);
+  }
+
+  export() {
+    let exportList;
+    this.doctorService.getAuditedDoctors('', 0, 99999)
+      .subscribe(res => {
+        if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
+          this.formatDoctor(res.data.content, true);
+          exportList = this.common.toArray(res.data.content);
+          /* generate worksheet */
+          const ws = XLSX.utils.aoa_to_sheet(exportList);
+          /* generate workbook and add the worksheet */
+          const wb = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+          /* save to file */
+          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+          const fileName = `全程心管家医生信息列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+        } else {
+          HintDialog('导出数据错误，请重新尝试', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('导出数据错误，请重新尝试', this.dialog);
+      });
   }
 }
