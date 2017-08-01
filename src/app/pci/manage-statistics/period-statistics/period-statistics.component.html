@@ -1,7 +1,13 @@
-<app-container [config]="containerConfig"  *ngIf="containerConfig">
+<app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+    <md-tab-group dynamicHeight="true">
       <md-tab label="患者活跃度统计">
+        <form style="padding: 0 16px">
+          <app-search [type]="'1'" [label]="'请选择日期'" [(value)]="queryUserDate" #f></app-search>
+          <button md-icon-button color="primary" type="button" (click)="getUserQueryResult()">
+            <md-icon>search</md-icon>
+          </button>
+        </form>
         <div *ngIf="!userPeriodTable.lists&&userPeriodTable.loading">Loading...</div>
         <div *ngIf="!userPeriodTable.lists&&!userPeriodTable.loading&&!!userPeriodTable.errorMessage" class="center">
           {{userPeriodTable.errorMessage}}
@@ -15,8 +21,15 @@
         </div>
       </md-tab>
       <md-tab label="医生活跃度统计">
+        <form style="padding: 0 16px">
+          <app-search [type]="'1'" [label]="'请选择日期'" [(value)]="queryDoctorDate"></app-search>
+          <button md-icon-button color="primary" type="button" (click)="getDoctorQueryResult()">
+            <md-icon>search</md-icon>
+          </button>
+        </form>
         <div *ngIf="!doctorPeriodTable.lists&&doctorPeriodTable.loading">Loading...</div>
-        <div *ngIf="!doctorPeriodTable.lists&&!doctorPeriodTable.loading&&!!doctorPeriodTable.errorMessage" class="center">
+        <div *ngIf="!doctorPeriodTable.lists&&!doctorPeriodTable.loading&&!!doctorPeriodTable.errorMessage"
+             class="center">
           {{doctorPeriodTable.errorMessage}}
         </div>
         <div *ngIf="doctorPeriodTable.lists">

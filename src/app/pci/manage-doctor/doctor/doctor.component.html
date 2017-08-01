@@ -85,8 +85,8 @@
         </div>
       </md-tab>
     </md-tab-group>
-    <div class="count">
-      <md-chip color="accent" selected="true">32</md-chip>
+    <div class="count" *ngIf="count">
+      <md-chip color="accent" selected="true">{{count}}</md-chip>
     </div>
   </div>
 </app-container>

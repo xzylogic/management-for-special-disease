@@ -1,6 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit } from '@angular/core';
 
 import { RegisterStatisticsService } from './_service/register-statistics.service';
 import { RegisterStatisticsTableService } from './_service/register-statistics-table.service';
@@ -15,14 +13,11 @@ export class RegisterStatisticsComponent implements OnInit {
   containerConfig: ContainerConfig;
   userTable: TableOption;
   doctorTable: TableOption;
-  @select(['registerStatistics', 'tab']) tab: Observable<number>;
-  @select(['registerStatistics', 'page']) page: Observable<Array<number>>;
   userRegisterCount: number;
   doctorRegisterCount: number;
   doctorValidateCount: number;
 
   constructor(
-    @Inject('action') private action,
     private registerStatisticsService: RegisterStatisticsService,
     private registerStatisticsTableService: RegisterStatisticsTableService
   ) {}
@@ -46,17 +41,13 @@ export class RegisterStatisticsComponent implements OnInit {
   }
 
   reset0() {
-    this.page.subscribe((page: Array<number>) => {
-      this.getUsers(page[0]);
+      this.getUsers(0);
       this.getUserCount();
-    });
   }
 
   reset1() {
-    this.page.subscribe((page: Array<number>) => {
-      this.getDoctors(page[1]);
+      this.getDoctors(0);
       this.getDoctorCount();
-    });
   }
 
   getUserCount() {
@@ -83,7 +74,6 @@ export class RegisterStatisticsComponent implements OnInit {
   }
 
   getUsers(page: number) {
-    this.action.pageChange('registerStatistics', [page, this.doctorTable.currentPage]);
     this.userTable.reset(page);
     this.registerStatisticsService.getUsers(page, this.userTable.size)
       .subscribe(
@@ -99,12 +89,12 @@ export class RegisterStatisticsComponent implements OnInit {
           }
         }, err => {
           this.userTable.loading = false;
+          console.log(err);
           this.userTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
 
   getDoctors(page: number) {
-    this.action.pageChange('registerStatistics', [page, this.userTable.currentPage]);
     this.userTable.reset(page);
     this.registerStatisticsService.getDoctors(page, this.doctorTable.size)
       .subscribe(
@@ -120,11 +110,8 @@ export class RegisterStatisticsComponent implements OnInit {
           }
         }, err => {
           this.doctorTable.loading = false;
+          console.log(err);
           this.doctorTable.errorMessage = ERRMSG.netErrMsg;
         })
-  }
-
-  change(index) {
-    this.action.tabChange('registerStatistics', index);
   }
 }

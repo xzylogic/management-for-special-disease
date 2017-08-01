@@ -25,6 +25,7 @@ export class DoctorComponent implements OnInit {
   failureTable: TableOption;
   @select(['doctor', 'tab']) tab: Observable<number>;
   @select(['doctor', 'page']) page: Observable<Array<number>>;
+  count: number;
 
   constructor(
     @Inject('action') private action,
@@ -113,6 +114,7 @@ export class DoctorComponent implements OnInit {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
           this.auditingTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data && res.data.content) {
+          this.count = res.data.totalElements;
           this.auditingTable.totalPage = res.data.totalPages;
           this.formatDoctor(res.data.content, false);
           this.auditingTable.lists = res.data.content;

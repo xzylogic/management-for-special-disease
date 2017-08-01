@@ -4,19 +4,30 @@ import { RouterModule } from '@angular/router';
 import { MdIconModule } from '@angular/material';
 
 import { ContainerComponent } from './container';
+import { SearchComponent } from './search/search.component';
+import { FormsModule } from '@angular/forms';
+import { SearchService } from './search/search.service';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     MdIconModule,
     RouterModule
   ],
   declarations: [
-    ContainerComponent
+    ContainerComponent,
+    SearchComponent
+  ],
+  providers: [
+    SearchService,
+    {provide: 'search', useClass: SearchService},
   ],
   exports: [
     MdIconModule,
-    ContainerComponent
+    FormsModule,
+    ContainerComponent,
+    SearchComponent
   ]
 })
 export class LibModule {

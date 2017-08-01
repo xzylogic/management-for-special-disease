@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { TableTitle } from '../../../../libs';
 
-
 @Injectable()
 export class DownloadStatisticsTableService {
 

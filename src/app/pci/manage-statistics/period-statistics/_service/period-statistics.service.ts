@@ -26,14 +26,11 @@ export class PeriodStatisticsService {
     });
   }
 
-  // constructor(private _apiService: ApiService) {
-  // }
-  //
-  getUserResult(option: { startTime: string, endTime: string }) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userPeriodStatistics}?startTime=${option.startTime}&endTime=${option.endTime}`);
+  getUserResult(startTime, endTime) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userPeriodStatistics}?startTime=${startTime}&endTime=${endTime}`);
   }
 
-  getDoctorResult(option: { startTime: string, endTime: string }) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorPeriodStatistics}?startTime=${option.startTime}&endTime=${option.endTime}`);
+  getDoctorResult(startTime, endTime) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorPeriodStatistics}?startTime=${startTime}&endTime=${endTime}`);
   }
 }

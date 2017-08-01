@@ -1,5 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 
+const PATH = {
+  count: 'opt/config/count'
+};
+
 @Injectable()
 export class NavigationService {
 
@@ -16,5 +20,9 @@ export class NavigationService {
 
   setCount(tag, group, key) {
     this.mainAction.updateNav({key: key, group: group, tag: tag})
+  }
+
+  getCount() {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.count}`)
   }
 }
