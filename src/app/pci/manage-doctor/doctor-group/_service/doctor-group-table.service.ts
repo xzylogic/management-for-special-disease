@@ -53,9 +53,37 @@ export class DoctorGroupTableService {
         name: '服务明细',
         key: 'show',
         controlType: ControlType.button
+      }),
+      new TableTitle({
+        name: '已开通服务',
+        key: 'serviceList',
+        option: '查看',
+        controlType: ControlType.button,
       })
     ];
 
+    return Titles;
+  }
+
+  setServiceListTitles() {
+    const Titles: TableTitle[] = [
+      new TableTitle({
+        name: '已开通服务',
+        key: 'name'
+      }),
+      new TableTitle({
+        name: '价格',
+        key: 'priceUnit'
+      }),
+      new TableTitle({
+        name: '有效期',
+        key: 'cycleNumber'
+      }),
+      new TableTitle({
+        name: '服务详情',
+        key: 'description',
+      })
+    ];
     return Titles;
   }
 }

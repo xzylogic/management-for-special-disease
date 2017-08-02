@@ -139,6 +139,9 @@ export class DoctorGroupComponent implements OnInit {
     if (res.key === 'show') {
       this.router.navigate(['/doctor-group/service'], {queryParams: {id: doctorGroup.id}});
     }
+    if (res.key === 'serviceList') {
+      this.router.navigate(['/doctor-group/service-list'], {queryParams: {id: doctorGroup.id}});
+    }
     if (res.key === 'auditing') {
       HintDialog('确定审核通过？', this.dialog).afterClosed().subscribe(result => {
         if (result && result.key === 'confirm') {

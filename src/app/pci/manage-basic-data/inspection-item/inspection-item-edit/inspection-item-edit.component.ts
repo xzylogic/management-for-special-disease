@@ -5,16 +5,15 @@ import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
-import { ContainerConfig, FormDropdown, FormText, HintDialog } from '../../../../libs';
+import { ContainerConfig, FormDropdown, FormText, FormRadio, HintDialog } from '../../../../libs';
 
 import { InspectionItemService } from '../_service/inspection-item.service';
 import { InspectionItem } from '../_entity/inspection-item.entity';
-import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
 import { ERRMSG } from '../../../_store/static';
 
 @Component({
   selector: 'app-inspection-item-edit',
-  templateUrl: 'inspection-item-edit.component.html'
+  templateUrl: './inspection-item-edit.component.html'
 })
 export class InspectionItemEditComponent implements OnInit {
   containerConfig: ContainerConfig;

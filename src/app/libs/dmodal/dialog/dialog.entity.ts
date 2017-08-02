@@ -1,5 +1,3 @@
-import { FormBase } from '../../dform/_entity/form-base';
-
 export class DialogButton {
   key: string; // 记录button的键值
   value: string; // button显示文本

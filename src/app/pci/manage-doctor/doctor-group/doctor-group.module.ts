@@ -14,6 +14,7 @@ import { DoctorGroupFormService } from './_service/doctor-group-form.service';
 import { DoctorGroupTableService } from './_service/doctor-group-table.service';
 import { AuditingServiceTableService } from './_service/auditing-service-table.service';
 import { ServiceDetailTableService } from './_service/service-detail-table.service';
+import { ServiceListComponent } from './service-list/service-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -26,6 +27,10 @@ const routes: Routes = [{
 }, {
   path: 'service',
   component: ServiceDetailComponent,
+  canActivate: [AuthGuardService]
+}, {
+  path: 'service-list',
+  component: ServiceListComponent,
   canActivate: [AuthGuardService]
 }];
 
@@ -41,7 +46,8 @@ const routes: Routes = [{
   declarations: [
     DoctorGroupComponent,
     DoctorGroupEditComponent,
-    ServiceDetailComponent
+    ServiceDetailComponent,
+    ServiceListComponent
   ],
   providers: [
     DoctorGroupService,

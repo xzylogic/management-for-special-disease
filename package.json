@@ -4,18 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve -p 4203 --sourcemaps false --progress false",
-    "serve-pci": "ng serve -p 4201 -e pci-test",
-    "serve-kidney": "ng serve -p 4202 -e kidney-test",
-    "clean": "rm -rf dist && rm -rf management-pci && rm -rf management-kidney",
-    "to-pci": "mkdir management-pci && cp -r dist/** management-pci",
-    "to-kidney": "mkdir management-kidney && cp -r dist/** management-kidney",
-    "to-all": "mkdir management && cp dist/** management",
-    "build-test-pci": "npm run clean && ng build -aot -prod -e pci-test -bh /management-pci/ && npm run to-pci",
-    "build-test-kidney": "npm run clean && ng build -aot -prod -e pci-test -bh /management-kidney/ && npm run to-kidney",
-    "build-test": "npm run clean && ng build -aot -prod -e pci-test -bh /management/ && npm run to-all",
-    "build-pci": "npm run clean && ng build -aot -prod -e pci-test -bh /management-pci/ && npm run to-pci",
-    "build-kidney": "npm run clean && ng build -aot -prod -e pci-test -bh /management-kidney/ && npm run to-kidney",
-    "build": "npm run clean && ng build -aot -prod -e pci-test -bh /management/ && npm run to-all"
+    "clean": "rm -rf dist",
+    "build-pci": "npm run clean && ng build -aot -prod -e pci -bh /management-pci/ && cp -rf WEB-INF dist",
+    "build": "npm run build-pci"
   },
   "private": true,
   "dependencies": {

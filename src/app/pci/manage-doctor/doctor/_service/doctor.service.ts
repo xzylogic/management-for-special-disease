@@ -11,6 +11,8 @@ const PATH = {
   doctorAuditingUpdate: 'api/doctor/auditing/update', // 编辑审核失败医生
   doctorAuditing: 'api/doctor/auditing', // 医生审核
   integralDetail: 'opt/integral/records/list', // 积分明细
+  serviceDetail: 'api/doctor/orderServiceDetails',
+  serviceList: 'api/doctor/listService'
 };
 
 @Injectable()
@@ -59,6 +61,26 @@ export class DoctorService {
       ifHome: false,
       homeRouter: '/doctor',
       currentRouter: '/doctor/integral'
+    });
+  }
+
+  serviceListConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生信息管理',
+      subTitle: '医生开通的服务',
+      ifHome: false,
+      homeRouter: '/doctor',
+      currentRouter: '/doctor/service-list'
+    });
+  }
+
+  serviceDetailConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生信息管理',
+      subTitle: '医生服务明细',
+      ifHome: false,
+      homeRouter: '/doctor',
+      currentRouter: '/doctor/service-detail'
     });
   }
 
@@ -139,12 +161,19 @@ export class DoctorService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetail}/${traderId}/1?flag=${page}`);
   }
 
-
   /**
    * 编辑短信提醒医生
    * @param {any} body [description]
    */
   sendMessage(body: any) {
     return this.httpService.post(`${PATH.sendMessage}`, body);
+  }
+
+  getServiceDetail(id, page, size) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.serviceDetail}?page=${page}&size=${size}&doctorId=${id}`);
+  }
+
+  getServiceList(id) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.serviceList}/${id}`);
   }
 }

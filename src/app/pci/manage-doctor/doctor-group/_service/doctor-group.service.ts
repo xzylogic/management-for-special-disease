@@ -9,6 +9,7 @@ const PATH = {
   doctorGroupUpdateDesc: 'opt/doctorGroups/saveDoctorGroupDesc', // 保存医生小组介绍
   doctorGroupCountAuditing: 'opt/doctorPackages/countNoPassDoctorPackages', // 计算没有审核的服务数量
   auditingServiceSuccess: '/opt/doctorPackages/audit', // 审核服务
+  serviceList: 'api/doctor/groupServiceList'
 };
 
 @Injectable()
@@ -47,6 +48,16 @@ export class DoctorGroupService {
       ifHome: false,
       homeRouter: '/doctor-group',
       currentRouter: '/doctor-group/service'
+    });
+  }
+
+  serviceListConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '医生小组管理',
+      subTitle: '医生小组已开通的服务',
+      ifHome: false,
+      homeRouter: '/doctor-group',
+      currentRouter: '/doctor-group/service-list'
     });
   }
 
@@ -100,5 +111,9 @@ export class DoctorGroupService {
    */
   serviceAuditingSuccess(id: number) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.auditingServiceSuccess}?pid=${id}&index=1`, {});
+  }
+
+  getServiceList(id) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.serviceList}/${id}`);
   }
 }
