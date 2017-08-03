@@ -71,6 +71,23 @@ export let NAVBARS = [
     ]
   }),
   new Navbar({
+    key: 'doctorpersonal',
+    title: '医生个人服务管理',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'greenchannel',
+        title: '绿色通道管理',
+        link: '/green-channel'
+      }),
+      new Navbar({
+        key: 'reservationbed',
+        title: '预约床位管理',
+        link: '/reservation-bed'
+      })
+    ]
+  }),
+  new Navbar({
     key: 'usergroup',
     title: '患者管理',
     ifSub: true,
@@ -122,6 +139,11 @@ export let NAVBARS = [
         key: 'integralCommodity',
         title: '积分商品维护',
         link: '/integral-commodity'
+      }),
+      new Navbar({
+        key: 'integralProportion',
+        title: '积分比例维护',
+        link: '/integral-proportion'
       })
     ]
   }),
@@ -236,7 +258,22 @@ export let NAVBARS = [
         key: 'downloadorigin',
         title: '下载渠道维护',
         link: '/download-origin'
-      })
+      }),
+      new Navbar({
+        key: 'purchaseEntrance',
+        title: '购药入口维护',
+        link: '/purchase-entrance'
+      }),
+      new Navbar({
+        key: 'counselingProblem',
+        title: '咨询问题引导维护',
+        link: '/counseling-problem'
+      }),
+      new Navbar({
+        key: 'recommendRadius',
+        title: '定位推荐半径维护',
+        link: '/recommend-radius'
+      }),
     ]
   }),
   new Navbar({

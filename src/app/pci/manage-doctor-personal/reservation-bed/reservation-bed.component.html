@@ -1,0 +1,84 @@
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="content">
+    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <md-tab label="已同意">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="agreeTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getAgreeReservationBed(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset0()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
+        <div *ngIf="!agreeTable.lists&&agreeTable.loading">Loading...</div>
+        <div *ngIf="!agreeTable.lists&&!agreeTable.loading&&!!agreeTable.errorMessage" class="center">
+          {{agreeTable.errorMessage}}
+        </div>
+        <div *ngIf="agreeTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="agreeTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getAgreeReservationBed($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="待处理">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="pendingTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getPendingReservationBed(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset1()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
+        <div *ngIf="!pendingTable.lists&&pendingTable.loading">Loading...</div>
+        <div *ngIf="!pendingTable.lists&&!pendingTable.loading&&!!pendingTable.errorMessage" class="center">
+          {{pendingTable.errorMessage}}
+        </div>
+        <div *ngIf="pendingTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="pendingTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getPendingReservationBed($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+      <md-tab label="已拒绝">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="rejectedTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getRejectedReservationBed(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset2()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
+        <div *ngIf="!rejectedTable.lists&&rejectedTable.loading">Loading...</div>
+        <div *ngIf="!rejectedTable.lists&&!rejectedTable.loading&&!!rejectedTable.errorMessage" class="center">
+          {{rejectedTable.errorMessage}}
+        </div>
+        <div *ngIf="rejectedTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="rejectedTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getRejectedReservationBed($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>

@@ -59,7 +59,6 @@ export class IntegralCommodityComponent implements OnInit {
           this.integralCommodityTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data && res.data.content) {
           this.integralCommodityTable.totalPage = res.data.totalPages;
-          console.log(res.data.content);
           this.formatCommodity(res.data.content, true);
           this.integralCommodityTable.lists = res.data.content;
         } else {

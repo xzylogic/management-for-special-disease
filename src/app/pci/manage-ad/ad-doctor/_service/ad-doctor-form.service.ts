@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 
-import { FormBase, FormText, FormFile, FormHidden } from '../../../../libs';
+import { FormBase, FormText, FormFile } from '../../../../libs';
 
 @Injectable()
 export class AdDoctorFormService {
