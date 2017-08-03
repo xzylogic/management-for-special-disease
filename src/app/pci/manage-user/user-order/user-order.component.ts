@@ -4,7 +4,6 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
-
 import { UserOrderService } from './_service/user-order.service';
 import { UserOrderTableService } from './_service/user-order-table.service';
 import { UserOrder } from './_entity/user-order.entity';
@@ -21,12 +20,15 @@ import { ERRMSG } from '../../_store/static';
 })
 export class UserOrderComponent implements OnInit {
   containerConfig: ContainerConfig;
-  userOrderTable: TableOption;
+
+  userOrderAllTable: TableOption;
+  userOrderUnpayTable: TableOption;
+  userOrderApplyTable: TableOption;
+  userOrderRefundingTable: TableOption;
   userOrderRefundTable: TableOption;
-  userOrderServicingTable: TableOption;
+  userOrderSuccessTable: TableOption;
+  userOrderCancelTable: TableOption;
   userOrderThirdTable: TableOption;
-  @select(['userOrder', 'tab']) tab: Observable<number>;
-  @select(['userOrder', 'page']) page: Observable<Array<number>>;
 
   constructor(
     @Inject('action') private action,
@@ -40,16 +42,32 @@ export class UserOrderComponent implements OnInit {
 
   ngOnInit() {
     this.containerConfig = this.userOrderService.userOrderConfig();
-    this.userOrderTable = new TableOption({
+    this.userOrderAllTable = new TableOption({
       titles: this.userOrderTableService.setTitles(),
+      ifPage: true
+    });
+    this.userOrderUnpayTable = new TableOption({
+      titles: this.userOrderTableService.setUnpayTitles(),
+      ifPage: true
+    });
+    this.userOrderApplyTable = new TableOption({
+      titles: this.userOrderTableService.setApplyTitles(),
+      ifPage: true
+    });
+    this.userOrderRefundingTable = new TableOption({
+      titles: this.userOrderTableService.setRefundingTitles(),
       ifPage: true
     });
     this.userOrderRefundTable = new TableOption({
       titles: this.userOrderTableService.setRefundTitles(),
       ifPage: true
     });
-    this.userOrderServicingTable = new TableOption({
-      titles: this.userOrderTableService.setServicingTitles(),
+    this.userOrderSuccessTable = new TableOption({
+      titles: this.userOrderTableService.setSuccessTitles(),
+      ifPage: true
+    });
+    this.userOrderCancelTable = new TableOption({
+      titles: this.userOrderTableService.setCancelTitles(),
       ifPage: true
     });
     this.userOrderThirdTable = new TableOption({
@@ -64,57 +82,139 @@ export class UserOrderComponent implements OnInit {
     this.reset1();
     this.reset2();
     this.reset3();
+    this.reset4();
+    this.reset5();
+    this.reset6();
+    this.reset7();
   }
 
   reset0() {
-    this.page.subscribe((page: Array<number>) => {
-      this.getUserOrders(page[0]);
-    });
+    this.userOrderAllTable.queryKey = '';
+    this.getUserOrdersAll(0);
   }
 
   reset1() {
-    this.page.subscribe((page: Array<number>) => {
-      this.getUserRefundOrders(page[1]);
-    });
+    this.userOrderUnpayTable.queryKey = '';
+    this.getUserOrdersUnpay(0);
   }
 
   reset2() {
-    this.page.subscribe((page: Array<number>) => {
-      this.getUserServicingOrders(page[2]);
-    });
+    this.userOrderApplyTable.queryKey = '';
+    this.getUserOrdersApply(0);
   }
 
   reset3() {
-    this.page.subscribe((page: Array<number>) => {
-      this.getUserThirdOrders(page[3]);
-    });
+    this.userOrderRefundingTable.queryKey = '';
+    this.getUserOrdersRefunding(0);
   }
 
-  getUserOrders(page: number) {
-    this.action.pageChange('userOrder', [page, this.userOrderRefundTable.currentPage, this.userOrderServicingTable.currentPage, this.userOrderThirdTable.currentPage]);
-    this.userOrderTable.reset(page);
-    this.userOrderService.getUserOrders(page, this.userOrderTable.size)
+  reset4() {
+    this.userOrderRefundTable.queryKey = '';
+    this.getUserOrdersRefund(0);
+  }
+
+  reset5() {
+    this.userOrderSuccessTable.queryKey = '';
+    this.getUserOrdersSuccess(0);
+  }
+
+  reset6() {
+    this.userOrderCancelTable.queryKey = '';
+    this.getUserOrdersCancel(0);
+  }
+
+  reset7() {
+    this.userOrderThirdTable.queryKey = '';
+    this.getUserOrdersThird(0);
+  }
+
+  getUserOrdersAll(page: number) {
+    this.userOrderAllTable.reset(page);
+    this.userOrderService.getUserOrdersAll(page, this.userOrderAllTable.size, this.userOrderAllTable.queryKey)
       .subscribe(
         data => {
-          this.userOrderTable.loading = false;
+          this.userOrderAllTable.loading = false;
           if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-            this.userOrderTable.errorMessage = ERRMSG.nullMsg;
+            this.userOrderAllTable.errorMessage = ERRMSG.nullMsg;
           } else if (data.data && data.data.content && data.code === 0) {
-            this.userOrderTable.totalPage = data.data.totalPages;
-            this.userOrderTable.lists = data.data.content;
+            this.userOrderAllTable.totalPage = data.data.totalPages;
+            this.userOrderAllTable.lists = data.data.content;
           } else {
-            this.userOrderTable.errorMessage = data.msg || ERRMSG.otherMsg;
+            this.userOrderAllTable.errorMessage = data.msg || ERRMSG.otherMsg;
           }
         }, err => {
-          this.userOrderTable.loading = false;
-          this.userOrderTable.errorMessage = ERRMSG.netErrMsg;
+          this.userOrderAllTable.loading = false;
+          console.log(err);
+          this.userOrderAllTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
-  //
-  getUserRefundOrders(page: number) {
-    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, page, this.userOrderServicingTable.currentPage, this.userOrderThirdTable.currentPage]);
+
+  getUserOrdersUnpay(page: number) {
+    this.userOrderUnpayTable.reset(page);
+    this.userOrderService.getUserOrdersUnpay(page, this.userOrderUnpayTable.size, this.userOrderUnpayTable.queryKey)
+      .subscribe(
+        data => {
+          this.userOrderUnpayTable.loading = false;
+          if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+            this.userOrderUnpayTable.errorMessage = ERRMSG.nullMsg;
+          } else if (data.data && data.data.content && data.code === 0) {
+            this.userOrderUnpayTable.totalPage = data.data.totalPages;
+            this.userOrderUnpayTable.lists = data.data.content;
+          } else {
+            this.userOrderUnpayTable.errorMessage = data.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userOrderUnpayTable.loading = false;
+          console.log(err);
+          this.userOrderUnpayTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserOrdersApply(page: number) {
+    this.userOrderApplyTable.reset(page);
+    this.userOrderService.getUserOrdersApply(page, this.userOrderApplyTable.size, this.userOrderApplyTable.queryKey)
+      .subscribe(
+        data => {
+          this.userOrderApplyTable.loading = false;
+          if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+            this.userOrderApplyTable.errorMessage = ERRMSG.nullMsg;
+          } else if (data.data && data.data.content && data.code === 0) {
+            this.userOrderApplyTable.totalPage = data.data.totalPages;
+            this.userOrderApplyTable.lists = data.data.content;
+          } else {
+            this.userOrderApplyTable.errorMessage = data.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userOrderApplyTable.loading = false;
+          console.log(err);
+          this.userOrderApplyTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserOrdersRefunding(page: number) {
+    this.userOrderRefundingTable.reset(page);
+    this.userOrderService.getUserOrdersRefunding(page, this.userOrderRefundingTable.size, this.userOrderRefundingTable.queryKey)
+      .subscribe(
+        data => {
+          this.userOrderRefundingTable.loading = false;
+          if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+            this.userOrderRefundingTable.errorMessage = ERRMSG.nullMsg;
+          } else if (data.data && data.data.content && data.code === 0) {
+            this.userOrderRefundingTable.totalPage = data.data.totalPages;
+            this.userOrderRefundingTable.lists = data.data.content;
+          } else {
+            this.userOrderRefundingTable.errorMessage = data.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userOrderRefundingTable.loading = false;
+          console.log(err);
+          this.userOrderRefundingTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserOrdersRefund(page: number) {
     this.userOrderRefundTable.reset(page);
-    this.userOrderService.getUserOrderRefunds(page, this.userOrderRefundTable.size)
+    this.userOrderService.getUserOrdersRefund(page, this.userOrderRefundTable.size, this.userOrderRefundTable.queryKey)
       .subscribe(
         data => {
           this.userOrderRefundTable.loading = false;
@@ -123,41 +223,61 @@ export class UserOrderComponent implements OnInit {
           } else if (data.data && data.data.content && data.code === 0) {
             this.userOrderRefundTable.totalPage = data.data.totalPages;
             this.userOrderRefundTable.lists = data.data.content;
-            // this.refundCount = data.data.totalElements;
           } else {
             this.userOrderRefundTable.errorMessage = data.msg || ERRMSG.otherMsg;
           }
         }, err => {
           this.userOrderRefundTable.loading = false;
+          console.log(err);
           this.userOrderRefundTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
 
-  getUserServicingOrders(page: number) {
-    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, this.userOrderRefundTable.currentPage, page, this.userOrderThirdTable.currentPage]);
-    this.userOrderServicingTable.reset(page);
-    this.userOrderService.getUserOrderServicings(page, this.userOrderServicingTable.size)
+  getUserOrdersSuccess(page: number) {
+    this.userOrderSuccessTable.reset(page);
+    this.userOrderService.getUserOrdersSuccess(page, this.userOrderSuccessTable.size, this.userOrderSuccessTable.queryKey)
       .subscribe(
         data => {
-          this.userOrderServicingTable.loading = false;
+          this.userOrderSuccessTable.loading = false;
           if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
-            this.userOrderServicingTable.errorMessage = ERRMSG.nullMsg;
+            this.userOrderSuccessTable.errorMessage = ERRMSG.nullMsg;
           } else if (data.data && data.data.content && data.code === 0) {
-            this.userOrderServicingTable.totalPage = data.data.totalPages;
-            this.userOrderServicingTable.lists = data.data.content;
+            this.userOrderSuccessTable.totalPage = data.data.totalPages;
+            this.userOrderSuccessTable.lists = data.data.content;
           } else {
-            this.userOrderServicingTable.errorMessage = data.msg || ERRMSG.otherMsg;
+            this.userOrderSuccessTable.errorMessage = data.msg || ERRMSG.otherMsg;
           }
         }, err => {
-          this.userOrderServicingTable.loading = false;
-          this.userOrderServicingTable.errorMessage = ERRMSG.netErrMsg;
+          this.userOrderSuccessTable.loading = false;
+          console.log(err);
+          this.userOrderSuccessTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
 
-  getUserThirdOrders(page: number) {
-    this.action.pageChange('userOrder', [this.userOrderTable.currentPage, this.userOrderRefundTable.currentPage, this.userOrderServicingTable.currentPage, page]);
+  getUserOrdersCancel(page: number) {
+    this.userOrderCancelTable.reset(page);
+    this.userOrderService.getUserOrdersCancel(page, this.userOrderCancelTable.size, this.userOrderCancelTable.queryKey)
+      .subscribe(
+        data => {
+          this.userOrderCancelTable.loading = false;
+          if (data.data && data.data.content && data.data.content.length === 0 && data.code === 0) {
+            this.userOrderCancelTable.errorMessage = ERRMSG.nullMsg;
+          } else if (data.data && data.data.content && data.code === 0) {
+            this.userOrderCancelTable.totalPage = data.data.totalPages;
+            this.userOrderCancelTable.lists = data.data.content;
+          } else {
+            this.userOrderCancelTable.errorMessage = data.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.userOrderCancelTable.loading = false;
+          console.log(err);
+          this.userOrderCancelTable.errorMessage = ERRMSG.netErrMsg;
+        })
+  }
+
+  getUserOrdersThird(page: number) {
     this.userOrderThirdTable.reset(page);
-    this.userOrderService.getUserOrderThirds(page, this.userOrderThirdTable.size)
+    this.userOrderService.getUserOrdersThird(page, this.userOrderThirdTable.size, this.userOrderThirdTable.queryKey)
       .subscribe(
         data => {
           this.userOrderThirdTable.loading = false;
@@ -166,16 +286,15 @@ export class UserOrderComponent implements OnInit {
           } else if (data.data && data.data.content && data.code === 0) {
             this.userOrderThirdTable.totalPage = data.data.totalPages;
             this.userOrderThirdTable.lists = data.data.content;
-            // this.thirdCount = data.data.totalElements;
           } else {
             this.userOrderThirdTable.errorMessage = data.msg || ERRMSG.otherMsg;
           }
         }, err => {
           this.userOrderThirdTable.loading = false;
+          console.log(err);
           this.userOrderThirdTable.errorMessage = ERRMSG.netErrMsg;
         })
   }
-
 
   gotoHandle(res) {
     const order = <UserOrder>res.value;
@@ -225,7 +344,6 @@ export class UserOrderComponent implements OnInit {
     }
   }
 
-
   toReimburse(id) {
     this.userOrderService.userOrderRefund(id)
       .subscribe(res => {
@@ -255,82 +373,4 @@ export class UserOrderComponent implements OnInit {
         HintDialog('操作失败', this.dialog);
       });
   }
-
-
-
-  change(index) {
-    this.action.tabChange('userOrder', index);
-  }
-  //
-  // gotoHandle(data) {
-  //   this.userOrder = data.value;
-  //   if (data.key === 'usage') {
-  //     this.enableRecord = true;
-  //   } else if (data.key === 'refund') {
-  //     this.enableRefund = true;
-  //
-  //   } else if (data.key === 'thirdProcess') {
-  //     this.enableProcess = true;
-  //   }
-  // }
-  //
-  // processRefund() {
-  //   this._userOrderService.userOrderRefund(this.userOrder.id)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.message = '操作成功！';
-  //           this.enableShow = true;
-  //           this.refresh();
-  //           this.refundCancel();
-  //         } else {
-  //           if (data.msg) {
-  //             this.message = data.msg;
-  //           } else {
-  //             this.message = '操作失败！';
-  //           }
-  //           this.enableShow = true;
-  //           this.refundCancel();
-  //         }
-  //       }, err => {
-  //         this.message = '接口访问出错！';
-  //         this.enableShow = true;
-  //         this.refundCancel();
-  //       })
-  // }
-  //
-  // refundCancel() {
-  //   this.userOrder = null;
-  //   this.enableRefund = false;
-  // }
-  //
-  // processThird() {
-  //   this._userOrderService.userOrderProcess(this.userOrder.id)
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.message = '操作成功！';
-  //           this.enableShow = true;
-  //           this.refresh();
-  //           this.processCancel();
-  //         } else {
-  //           if (data.msg) {
-  //             this.message = data.msg;
-  //           } else {
-  //             this.message = '操作失败！';
-  //           }
-  //           this.enableShow = true;
-  //           this.processCancel();
-  //         }
-  //       }, err => {
-  //         this.message = '接口访问出错！';
-  //         this.enableShow = true;
-  //         this.processCancel();
-  //       })
-  // }
-  //
-  // processCancel() {
-  //   this.userOrder = null;
-  //   this.enableProcess = false;
-  // }
 }
