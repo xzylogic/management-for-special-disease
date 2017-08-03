@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
-
 
 import { UserCertificationService } from './_service/user-certification.service';
 import { UserCertificationTableService } from './_service/user-certification-table.service';
@@ -25,7 +24,6 @@ export class UserCertificationComponent implements OnInit {
 
   @select(['userCertification', 'tab']) tab: Observable<number>;
   @select(['userCertification', 'page']) page: Observable<Array<number>>;
-
 
   constructor(
     @Inject('action') private action,
@@ -64,24 +62,28 @@ export class UserCertificationComponent implements OnInit {
   }
 
   reset0() {
+    this.userCertificationTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUserCertifications(page[0]);
     });
   }
 
   reset1() {
+    this.userUnCertificationTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUserUncertifications(page[1]);
     });
   }
 
   reset2() {
+    this.userCertificatingTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUserCertificatings(page[2]);
     });
   }
 
   reset3() {
+    this.userCertificationFailureTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUserCertificationFailures(page[3]);
     });
@@ -90,7 +92,7 @@ export class UserCertificationComponent implements OnInit {
   getUserCertifications(page: number) {
     this.action.pageChange('userCertification', [page, this.userUnCertificationTable.currentPage, this.userCertificatingTable.currentPage, this.userCertificationFailureTable.currentPage]);
     this.userCertificationTable.reset(page);
-    this.userCertificationService.getUserCertifications(page, this.userCertificationTable.size)
+    this.userCertificationService.getUserCertifications(page, this.userCertificationTable.size, this.userCertificationTable.queryKey)
       .subscribe(
         res => {
           this.userCertificationTable.loading = false;
@@ -111,7 +113,7 @@ export class UserCertificationComponent implements OnInit {
   getUserUncertifications(page: number) {
     this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, page, this.userCertificatingTable.currentPage, this.userCertificationFailureTable.currentPage]);
     this.userUnCertificationTable.reset(page);
-    this.userCertificationService.getUserUncertifications(page, this.userUnCertificationTable.size)
+    this.userCertificationService.getUserUncertifications(page, this.userUnCertificationTable.size, this.userUnCertificationTable.queryKey)
       .subscribe(
         res => {
           this.userUnCertificationTable.loading = false;
@@ -132,7 +134,7 @@ export class UserCertificationComponent implements OnInit {
   getUserCertificatings(page: number) {
     this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, this.userUnCertificationTable.currentPage, page, this.userCertificationFailureTable.currentPage]);
     this.userCertificatingTable.reset(page);
-    this.userCertificationService.getUserCertificatings(page, this.userCertificatingTable.size)
+    this.userCertificationService.getUserCertificatings(page, this.userCertificatingTable.size, this.userCertificatingTable.queryKey)
       .subscribe(
         res => {
           this.userCertificatingTable.loading = false;
@@ -153,7 +155,7 @@ export class UserCertificationComponent implements OnInit {
   getUserCertificationFailures(page: number) {
     this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, this.userUnCertificationTable.currentPage, page, this.userCertificatingTable.currentPage]);
     this.userCertificationFailureTable.reset(page);
-    this.userCertificationService.getUserCertificationFailures(page, this.userCertificationFailureTable.size)
+    this.userCertificationService.getUserCertificationFailures(page, this.userCertificationFailureTable.size, this.userCertificationFailureTable.queryKey)
       .subscribe(
         res => {
           this.userCertificationFailureTable.loading = false;

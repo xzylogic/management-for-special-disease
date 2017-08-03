@@ -167,7 +167,7 @@ export class GreenChannelComponent implements OnInit {
           new FormDate({
             key: 'date',
             label: '可就诊时间',
-            value: '',
+            value: res && res.value && res.value.TreatmentTime || '',
             required: true,
             order: 0
           }),
@@ -194,7 +194,7 @@ export class GreenChannelComponent implements OnInit {
         ]
       });
       EditDialog(config, this.dialog).afterClosed().subscribe(result => {
-        if (result && result.key) {
+        if (result) {
           this.editInfo(result.status, res.value.orderId, result.date);
         }
       });

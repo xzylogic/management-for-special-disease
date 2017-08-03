@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "ng serve -p 4203 --sourcemaps false --progress false",
+    "start": "ng serve -p 4203 --progress false",
     "clean": "rm -rf dist",
     "build-pci": "npm run clean && ng build -aot -prod -e pci -bh /management-pci/ && cp -rf WEB-INF dist",
     "build": "npm run build-pci"
