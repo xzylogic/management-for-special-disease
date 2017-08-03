@@ -7,7 +7,7 @@ import { FormText } from '../../_entity';
   selector: 'app-input-hidden',
   template: `
     <div [formGroup]="form" style="width: 0;height: 0;visibility: hidden">
-      <input mdInput [type]="'hidden'" [formControlName]="data.key" [(ngModel)]="value">
+      <input [type]="'hidden'" [formControlName]="data.key" [(ngModel)]="value">
     </div>
   `
 })
