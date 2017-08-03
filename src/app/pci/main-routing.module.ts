@@ -7,6 +7,7 @@ import { routes as basicDataRoutes } from './manage-basic-data';
 import { routes as commodityRoutes } from './manage-commodity';
 import { routes as dataCollectionRoutes } from '../shared/manage-data-collection';
 import { routes as doctorRoutes } from './manage-doctor';
+import { routes as doctorPersonalRoutes } from './manage-doctor-personal';
 import { routes as healthNewsRoutes } from './manage-health-news';
 import { routes as integralRoutes } from './manage-integral';
 import { routes as operationPushRoutes } from './manage-operation-push';
@@ -31,6 +32,7 @@ import { routes as wechatRoutes } from './manage-wechat';
         ...commodityRoutes,
         ...dataCollectionRoutes,
         ...doctorRoutes,
+        ...doctorPersonalRoutes,
         ...healthNewsRoutes,
         ...integralRoutes,
         ...operationPushRoutes,

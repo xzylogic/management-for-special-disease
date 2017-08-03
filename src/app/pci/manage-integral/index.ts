@@ -10,10 +10,14 @@ export const routes: Routes = [{
 }, {
   path: 'integral-detail',
   loadChildren: 'app/pci/manage-integral/integral-detail/integral-detail.module#IntegralDetailModule'
+}, {
+  path: 'integral-proportion',
+  loadChildren: 'app/pci/manage-integral/integral-proportion/integral-proportion.module#IntegralProportionModule'
 }];
 
 export const stores = {
   integralCommodity: createReducer('integralCommodity', [0], {}),
   integralOrder: createReducer('integralOrder', [0], {}),
-  integralDetail: createReducer('integralDetail', [0, 0], {})
+  integralDetail: createReducer('integralDetail', [0, 0], {}),
+  integralProportion: createReducer('integralProportion', [0], {})
 };

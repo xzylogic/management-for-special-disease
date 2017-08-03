@@ -10,6 +10,7 @@ export class IntegralCommodity {
   recordTime: string;
   recommendValue: number;
   goodsStatusName: string;
+  freight: number;
 
   constructor(obj?: IntegralCommodity) {
     this.id = obj && obj.id || 0;
@@ -20,5 +21,6 @@ export class IntegralCommodity {
     this.recordTime = obj && obj.recordTime || '';
     this.recommendValue = obj && obj.recommendValue || 0;
     this.goodsStatusName = obj && obj.goodsStatusName || '';
+    this.freight = obj && obj.freight || 0;
  }
 }

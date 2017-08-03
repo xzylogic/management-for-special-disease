@@ -1,8 +1,4 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
-  <!--<div class="addition">-->
-    <!--<button md-raised-button (click)="integralManage()">积分规则维护</button>-->
-    <!--<button md-raised-button (click)="sendIntegral()">赠送积分给用户</button>-->
-  <!--</div>-->
   <div class="content">
     <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <md-tab label="患者端">

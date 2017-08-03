@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "ng serve -p 4203 --sourcemaps false --progress false",
+    "start": "ng serve -p 4203 --sourcemaps false  --progress false",
     "serve-pci": "ng serve -p 4201 -e pci-test",
     "serve-kidney": "ng serve -p 4202 -e kidney-test",
     "clean": "rm -rf dist && rm -rf management-pci && rm -rf management-kidney",

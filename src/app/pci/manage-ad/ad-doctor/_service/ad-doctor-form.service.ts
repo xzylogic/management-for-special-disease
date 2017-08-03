@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 
 import { FormBase, FormText, FormFile } from '../../../../libs';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
 
 @Injectable()
 export class AdDoctorFormService {
@@ -12,7 +13,6 @@ export class AdDoctorFormService {
   }
 
   setAdDoctorForm(forms ?: any) {
-    const disable = false;
     const readonly = false;
     const ad: FormBase<any> [] = [];
 
@@ -40,12 +40,19 @@ export class AdDoctorFormService {
     );
 
     ad.push(
-      new FormText({
+      new FormDropdown({
         key: 'linkUrl',
         label: '广告链接',
-        value: forms && forms.linkUrl || '',
+        value: forms && (forms.linkUrl === 0 ? forms.linkUrl : forms.linkUrl || ''),
         required: true,
-        order: 3
+        options: [{
+          id: 0,
+          name: '跳转到网页'
+        }, {
+          id: 1,
+          name: '跳转到APP页面'
+        }],
+        order: 3,
       })
     );
 

@@ -34,8 +34,16 @@ export class IntegralCommodityTableService {
         minwidth: 70
       }),
       new TableTitle({
+        name: '库存',
+        key: 'stock'
+      }),
+      new TableTitle({
         name: '推荐值',
         key: 'recommendValue'
+      }),
+      new TableTitle({
+        name: '邮费',
+        key: 'freight'
       }),
       new TableTitle({
         name: '状态',
