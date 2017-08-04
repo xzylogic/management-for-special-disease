@@ -33,45 +33,49 @@ export class BasicServiceEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.containerConfig = this.basicServiceService.basicServiceEditConfig(true);
     this.basicService.subscribe(data => {
-      if (data && data.id > 0) {
+      if (data && data.serviceNumbers && data.id > 0) {
+        this.containerConfig = this.basicServiceService.basicServiceEditConfig(true);
         this.id = data.id;
         this.numbers = data.serviceNumbers;
         this.createForm(data);
+      } else {
+        this.containerConfig = this.basicServiceService.basicServiceEditConfig(false);
+        this.createForm();
       }
     });
     this.cdr.detectChanges();
   }
 
-  createForm(data) {
+  createForm(data?) {
     this.form = this.fb.group({
       iconUrl: new FormControl({value: ''}, Validators.required),
       name: new FormControl({value: ''}, Validators.required),
       times: new FormControl({value: ''}, Validators.required),
       enable: new FormControl({value: ''}, Validators.required),
       unitId: new FormControl({value: ''}, Validators.required),
-      numbers: new FormControl({value: ''}, Validators.required),
-      description: new FormControl({value: ''}),
+      numbers: new FormControl({value: ''}),
+      content: new FormControl({value: ''}),
+      operationalRemark: new FormControl({value: ''}),
     });
     this.config = {
       iconUrl: new FormFile({
         label: '服务图片',
         key: 'iconUrl',
         url: this.app.pci.UPLOAD_URL,
-        value: data.iconUrl || ''
+        value: data && data.iconUrl || ''
       }),
       name: new FormText({
         type: 'text',
         label: '服务名称',
         key: 'name',
-        value: data.name || ''
+        value: data && data.name || ''
       }),
       times: new FormText({
         type: 'number',
         label: '咨询次数',
         key: 'times',
-        value: data.times || ''
+        value: data && data.times || ''
       }),
       enable: new FormRadio({
         label: '状态',
@@ -83,36 +87,47 @@ export class BasicServiceEditComponent implements OnInit {
           id: false,
           name: '禁用'
         }],
-        value: data.enable
+        value: data && (data.enable == false ? data.enable : data.enable || '')
       }),
       unitId: new FormRadio({
         label: '单位',
         key: 'unitId',
         options: [{
           id: 1,
-          name: '鲜花／月'
+          name: '朵花／月'
+        }, {
+          id: 5,
+          name: '朵花／天'
+        }, {
+          id: 6,
+          name: '朵花／年'
         }, {
           id: 2,
           name: '天'
         }, {
-          id: 3,
-          name: '朵花／次'
-        }, {
           id: 4,
           name: '年'
+        }, {
+          id: 3,
+          name: '朵花／次'
         }],
-        value: data.unitId || 1
+        value: data && data.unitId || 1
       }),
       numbers: new FormText({
         type: 'text',
-        label: '服务时长',
+        label: '服务时长/价格',
         key: 'numbers',
-        value: data.numbers || ''
+        value: data && data.numbers || ''
       }),
-      description: new FormTextarea({
-        label: '服务说明',
-        key: 'description',
-        value: data.description || ''
+      content: new FormTextarea({
+        label: '服务描述',
+        key: 'content',
+        value: data && data.content || ''
+      }),
+      operationalRemark: new FormTextarea({
+        label: '运营说明',
+        key: 'operationalRemark',
+        value: data && data.operationalRemark || ''
       }),
     }
   }
@@ -121,32 +136,50 @@ export class BasicServiceEditComponent implements OnInit {
     if (this.numbers.indexOf(number) < 0) {
       this.numbers.push(number);
       this.numbers.sort((a, b) => a - b);
+      this.cdr.detectChanges();
     }
   }
 
   delNumber(number) {
     const i = this.numbers.indexOf(number);
     this.numbers.splice(i, 1);
+    this.cdr.detectChanges();
   }
 
   getValues(value) {
-    value.id = this.id;
     if (typeof value.numbers === 'object') {
       value.numbers = value.numbers.join(',');
     }
-    console.log(value);
-    this.basicServiceService.basicServiceUpdate(value)
-      .subscribe(res => {
-        if (res.code === 0) {
-          HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
-            this.router.navigate(['/basic-service']);
-          });
-        } else {
-          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
-        }
-      }, err => {
-        console.log(err);
-        HintDialog(ERRMSG.saveError, this.dialog);
-      });
+    if (this.id) {
+      value.servicePackageId = this.id;
+      this.basicServiceService.basicServiceUpdate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/basic-service']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    } else {
+      value.serviceType = 1;
+      this.basicServiceService.basicServiceCreate(value)
+        .subscribe(res => {
+          if (res.code === 0) {
+            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+              this.router.navigate(['/basic-service']);
+            });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    }
   }
 }

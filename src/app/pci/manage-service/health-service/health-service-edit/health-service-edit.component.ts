@@ -33,7 +33,7 @@ export class HealthServiceEditComponent implements OnInit {
     });
     this.healthServiceService.getOrganization().subscribe(res => {
         if (res.code === 0 && res.data) {
-          this.healthServiceService.getHealthService(this.healthServiceId ).subscribe(data => {
+          this.healthServiceService.getHealthService(this.healthServiceId).subscribe(data => {
             this.healthservice = data.data;
             this.healthservice.pictures = [];
             if (this.healthservice.healthBanner) {
@@ -67,7 +67,7 @@ export class HealthServiceEditComponent implements OnInit {
       }
       delete value.pictures;
     }
-    if (this.healthServiceId !== 0) {
+    if (this.healthServiceId > 0) {
       this.healthServiceService.healthServiceUpdate(value)
         .subscribe(res => {
           if (res.code === 0) {

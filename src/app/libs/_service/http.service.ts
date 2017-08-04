@@ -81,7 +81,7 @@ export class HttpService {
    * @param  {string}     path
    * @return {Observable}
    */
-  postParma(path: string): Observable < any > {
+  postParma(path: string): Observable<any> {
     return this.http.post(path, {
       headers: this.headers
     })
@@ -110,6 +110,21 @@ export class HttpService {
    */
   del(path: string): Observable<any> {
     return this.http.delete(path, {headers: this.headers})
+      .map(HttpService.checkForError)
+      .catch(err => Observable.throw(err))
+      .map(HttpService.getJson);
+  }
+
+  /**
+   * HTTP DELETE METHOD
+   * @param  {string}     path
+   * @return {Observable}
+   */
+  delParam(path: string, body): Observable<any> {
+    return this.http.delete(path, {
+      body: body,
+      headers: this.headers
+    })
       .map(HttpService.checkForError)
       .catch(err => Observable.throw(err))
       .map(HttpService.getJson);

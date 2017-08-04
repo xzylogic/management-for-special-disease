@@ -40,7 +40,7 @@ export class TableOption {
   constructor(obj?: {
     titles: TableTitle[],
     size?: number,
-    ifPage?: boolean,
+    ifPage?: boolean
   }) {
     this._titles = obj && obj.titles || null;
     this._size = obj && obj.size || 20;
@@ -51,7 +51,6 @@ export class TableOption {
     this._errorMessage = '';
     this._queryKey = '';
     this._queryBind = false;
-    this._loading = true;
   }
 
   reset(page?): void {

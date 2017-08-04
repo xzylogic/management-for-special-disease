@@ -164,7 +164,7 @@ export let NAVBARS = [
     subBars: [
       new Navbar({
         key: 'basicservice',
-        title: '基础服务维护',
+        title: '医生小组服务维护',
         link: '/basic-service'
       }),
       new Navbar({

@@ -41,7 +41,7 @@ export class LibInputRadioComponent implements OnInit {
     console.log(this.value);
     if (this.data) {
       this.data.options.forEach(obj => {
-        if (obj.id == this.value) {
+        if (obj.id === this.value) {
           obj.checked = true;
         }
       })

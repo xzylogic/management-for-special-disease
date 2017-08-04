@@ -4,6 +4,7 @@ import { ContainerConfig } from '../../../../libs/common/container/container.com
 const PATH = {
   basicServiceList: 'opt/servicePackages/list', // 医生小组服务包列表
   basicServiceUpdate: 'opt/servicePackages/modify', // 医生小组服务包修改
+  basicServiceCreate: 'opt/servicePackages/save', // 医生小组服务包新增
 };
 
 @Injectable()
@@ -18,7 +19,7 @@ export class BasicServiceService {
   basicServiceConfig() {
     return new ContainerConfig({
       title: '服务维护',
-      subTitle: '基础服务维护',
+      subTitle: '医生小组服务维护',
       ifHome: true,
       homeRouter: '/basic-service',
       currentRouter: '/basic-service'
@@ -28,7 +29,7 @@ export class BasicServiceService {
   basicServiceEditConfig(flag) {
     return new ContainerConfig({
       title: '服务维护',
-      subTitle: flag ? '编辑基础服务' : '新增基础服务',
+      subTitle: flag ? '编辑医生小组服务' : '新增医生小组服务',
       ifHome: true,
       homeRouter: '/basic-service',
       currentRouter: '/basic-service/edit'
@@ -39,7 +40,7 @@ export class BasicServiceService {
    * 获取基础服务列表
    */
   getBasicServices() {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.basicServiceList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.basicServiceList}?type=1`);
   }
 
   /**
@@ -48,5 +49,13 @@ export class BasicServiceService {
    */
   basicServiceUpdate(body: any) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.basicServiceUpdate}`, body);
+  }
+
+  /**
+   * 更新基础服务
+   * @param {any} body [description]
+   */
+  basicServiceCreate(body: any) {
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.basicServiceCreate}`, body);
   }
 }
