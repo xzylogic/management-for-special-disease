@@ -12,6 +12,7 @@ import {
   ActionDialog, HintDialog
 } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
+import { ShowOrderDetail } from './order-detail/order-detail.component';
 
 @Component({
   selector: 'app-user-order',
@@ -341,6 +342,9 @@ export class UserOrderComponent implements OnInit {
           this.getThrough(order.id);
         }
       });
+    }
+    if (res.key === 'detail') {
+      ShowOrderDetail(order, this.dialog);
     }
   }
 
