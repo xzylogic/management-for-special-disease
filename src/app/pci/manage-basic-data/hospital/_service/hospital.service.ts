@@ -39,20 +39,20 @@ export class HospitalService {
    * 获取医院列表
    */
   getHospital() {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.hospitalList}`);
+    return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.hospitalList}`);
   }
 
   /**
    * 新建医院
    */
   hospitalCreate(data) {
-    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.hospitalCreate}`, data);
+    return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.hospitalCreate}`, data);
   }
 
   /**
    * 编辑医院
    */
   hospitalEdit(data) {
-    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.hospitalEdit}`, data);
+    return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.hospitalEdit}`, data);
   }
 }

@@ -1,13 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA} from '@angular/material';
+import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
+import { Router } from '@angular/router';
 
 import { TableOption } from '../../../libs';
 import { HospitalService } from './_service/hospital.service';
 import { HospitalTableService } from './_service/hospital-table.service';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
-import { Router } from '@angular/router';
 import { Hospital } from './_entity/hospital.entity';
 import { ERRMSG } from '../../_store/static';
 
@@ -15,6 +16,7 @@ import { ERRMSG } from '../../_store/static';
   selector: 'app-hospital',
   templateUrl: './hospital.component.html'
 })
+
 export class HospitalComponent implements OnInit {
   containerConfig: ContainerConfig;
   hospitalTable: TableOption;
@@ -43,7 +45,6 @@ export class HospitalComponent implements OnInit {
   }
 
   getHospital() {
-    // this.action.pageChange('packageService', [page]);
     this.hospitalService.getHospital()
       .subscribe(res => {
         this.hospitalTable.loading = false;
@@ -51,7 +52,7 @@ export class HospitalComponent implements OnInit {
           this.hospitalTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data) {
           this.hospitalTable.totalPage = res.data.totalPages;
-          this.hospitalTable.lists = res.data;
+          this.hospitalTable.lists = res.data.content;
         } else {
           this.hospitalTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
@@ -73,50 +74,60 @@ export class HospitalComponent implements OnInit {
       this.action.dataChange('hospital', hospital);
       this.router.navigate(['/hospital/edit']);
     }
+    if (res.key === 'geography') {
+      const config = new MdDialogConfig();
+      config.data = hospital;
+      this.dialog.open(DialogComponent, config);
+    }
+  }
+}
+
+@Component({
+  selector: 'app-community-123',
+  templateUrl: './hospital-dialog.html',
+})
+export class DialogComponent implements OnInit {
+  option: any;
+  opts: any;
+  offlineOpts: OfflineOptions;
+  constructor(
+    @Inject(MD_DIALOG_DATA) public data: any,
+    public dialogRef: MdDialogRef<DialogComponent>
+  ) {
+    this.option = this.data
   }
 
-  // getHospitalTitles() {
-  //   this.hospitalTable.titles = this._hospitalTableService.setTitles();
-  // }
-  //
-  // getHospitals() {
-  //   this._hospitalService.getHospitals()
-  //     .subscribe(
-  //        data => {
-  //         this.hospitalTable.loading = false;
-  //         if (data.data && data.data.length === 0 && data.code === 0) {
-  //           this.hospitalTable.errorMessage = "该数据为空哦～";
-  //         } else if (data.data && data.code === 0) {
-  //           this.hospitalTable.lists = data.data;
-  //         } else {
-  //           this.hospitalTable.errorMessage = "空空如也～";
-  //         }
-  //       },err =>{
-  //         this.hospitalTable.loading = false;
-  //         this.hospitalTable.errorMessage = "啊哦！接口访问出错啦～";
-  //       })
-  // }
-  // //编辑医院
-  // gotoHandle(data) {
-  //   this.hospital = data;
-  //   this.enableEdit = true;
-  // }
-  // //刷新页面
-  // refresh(){
-  //   this.getHospitals();
-  // }
-  //
-  // //新增医院
-  // newHospital(){
-  //   this.hospital = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  //  //返回服务器信息
-  // handleSuccess(data){
-  //   this.titleShow = '提示信息';
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.refresh();
-  // }
+  ngOnInit() {
+    this.opts = {
+      center: {
+        longitude: this.option && this.option.longitude || '',
+        latitude: this.option && this.option.latitude || '',
+      },
+      zoom: 15,
+      markers: [{
+        longitude: this.option && this.option.longitude || '',
+        latitude: this.option && this.option.latitude || '',
+        title: this.option && this.option.name || '',
+        content: this.option && this.option.hospitalAdress || '',
+        autoDisplayInfoWindow: true,
+        enableDragging: true
+      }],
+      geolocationCtrl: {
+        anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_RIGHT
+      },
+      scaleCtrl: {
+        anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_LEFT
+      },
+      overviewCtrl: {
+        isOpen: true
+      },
+      navCtrl: {
+        type: NavigationControlType.BMAP_NAVIGATION_CONTROL_LARGE
+      }
+    };
+    this.offlineOpts = {
+      retryInterval: 5000,
+      txt: 'NO-NETWORK'
+    };
+  }
 }

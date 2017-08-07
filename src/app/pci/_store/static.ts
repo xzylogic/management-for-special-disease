@@ -122,6 +122,11 @@ export let NAVBARS = [
         key: 'integralCommodity',
         title: '积分商品维护',
         link: '/integral-commodity'
+      }),
+      new Navbar({
+        key: 'missionIntegral',
+        title: '任务积分维护',
+        link: '/mission-integral'
       })
     ]
   }),
@@ -141,8 +146,13 @@ export let NAVBARS = [
     ifSub: true,
     subBars: [
       new Navbar({
+        key: 'doctorservice',
+        title: '医生个人服务维护',
+        link: '/doctor-service'
+      }),
+      new Navbar({
         key: 'basicservice',
-        title: '基础服务维护',
+        title: '医生小组服务维护',
         link: '/basic-service'
       }),
       new Navbar({
@@ -169,8 +179,13 @@ export let NAVBARS = [
     subBars: [
       new Navbar({
         key: 'hospital',
-        title: '医院数据维护',
+        title: '医院维护',
         link: '/hospital'
+      }),
+      new Navbar({
+        key: 'community',
+        title: '小区维护',
+        link: '/community'
       }),
       new Navbar({
         key: 'departmant',
@@ -295,6 +310,23 @@ export let NAVBARS = [
         key: 'ad-patient',
         title: '广告位管理-患者端',
         link: '/ad-patient'
+      })
+    ]
+  }),
+  new Navbar({
+    key: 'discountcoupon',
+    title: '优惠券管理',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'dc-list',
+        title: '优惠券列表',
+        link: '/dc-list'
+      }),
+      new Navbar({
+        key: 'dc-issue',
+        title: '优惠券发放记录',
+        link: '/dc-issue'
       })
     ]
   }),

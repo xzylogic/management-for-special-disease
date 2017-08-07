@@ -20,6 +20,7 @@ import { app } from '../../environments/environment';
 import { StoreModule } from './store.module';
 import { MainAction } from './_store/main.action';
 import { ApiAction } from './_store/api/api.action';
+import { CommonService } from './_service/common.service';
 
 @NgModule({
   imports: [
@@ -45,9 +46,11 @@ import { ApiAction } from './_store/api/api.action';
     NavigationService,
     MainAction,
     ApiAction,
+    CommonService,
     {provide: 'http', useClass: HttpService},
     {provide: 'auth', useClass: AuthService},
     {provide: 'nav', useClass: NavigationService},
+    {provide: 'common', useClass: CommonService},
     {provide: 'main', useClass: MainAction},
     {provide: 'action', useClass: ApiAction},
     {provide: 'app', useValue: app},

@@ -43,6 +43,9 @@ export const routes: Routes = [{
 }, {
   path: 'download-origin',
   loadChildren: 'app/pci/manage-basic-data/download-origin/download-origin.module#DownloadOriginModule'
+}, {
+  path: 'community',
+  loadChildren: 'app/pci/manage-basic-data/community/community.module#CommunityModule'
 }];
 
 export const stores = {
@@ -55,4 +58,5 @@ export const stores = {
   hospital: createReducer('hospital', [0], {}),
   inspectionItem: createReducer('inspectionItem', [0], {}),
   pushTime: createReducer('pushTime', [0], {}),
+  community: createReducer('community', [0], {})
 };

@@ -18,7 +18,7 @@ export class BasicServiceService {
   basicServiceConfig() {
     return new ContainerConfig({
       title: '服务维护',
-      subTitle: '基础服务维护',
+      subTitle: '医生小组服务维护',
       ifHome: true,
       homeRouter: '/basic-service',
       currentRouter: '/basic-service'
@@ -27,7 +27,7 @@ export class BasicServiceService {
 
   basicServiceEditConfig(flag) {
     return new ContainerConfig({
-      title: '服务维护',
+      title: '医生小组服务维护',
       subTitle: flag ? '编辑基础服务' : '新增基础服务',
       ifHome: true,
       homeRouter: '/basic-service',
@@ -39,7 +39,7 @@ export class BasicServiceService {
    * 获取基础服务列表
    */
   getBasicServices() {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.basicServiceList}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.basicServiceList}?type=1`);
   }
 
   /**

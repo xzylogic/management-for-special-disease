@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
 import { LectureService } from './_service/lecture.service';
@@ -25,6 +24,7 @@ export class LectureComponent implements OnInit {
 
   constructor(
     @Inject('action') private action,
+    @Inject('auth') private authService,
     private lectureService: LectureService,
     private lectureTableService: LectureTableService,
     private dialog: MdDialog,
@@ -56,6 +56,7 @@ export class LectureComponent implements OnInit {
               this.lectureTable.lists = res.data.content;
               for (let i = 0; i < this.lectureTable.lists.length; ++i) {
                 this.lectureTable.lists[i].state = this.getStatus(this.lectureTable.lists[i].status);
+                this.lectureTable.lists[i].edit = this.getEdit(this.lectureTable.lists[i].status);
               }
             } else {
               this.lectureTable.errorMessage = res.msg || ERRMSG.otherMsg;
@@ -76,6 +77,14 @@ export class LectureComponent implements OnInit {
     }
   }
 
+  getEdit(value) {
+    if (value === 2) {
+      return ' ';
+    } else {
+      return '编辑'
+    }
+  }
+
   newData() {
     this.action.dataChange('lecture', new Lecture());
     this.router.navigate(['/lecture/edit']);
@@ -92,7 +101,6 @@ export class LectureComponent implements OnInit {
       this.router.navigate(['/lecture/edit']);
     }
     if (res === 'joinCount') {
-      // this.action.dataChange('doctor', doctor);
       this.router.navigate(['/lecture/detail'], {queryParams: {id: lecture.id}});
     }
     if (res === 'del') {
@@ -111,17 +119,37 @@ export class LectureComponent implements OnInit {
       });
       ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result && result.key === 'topass') {
-          // this.toPassAuditing(doctor.id);
+          const data = {
+            id: '',
+            admin: '',
+            status: 3,
+          };
+          data.id = lecture.id;
+          data.admin = this.authService.getAdminId();
+          this.toDeleteLecture(data);
         }
       });
     }
     if (res === 'state') {
-      this.operationLecture(lecture.name, list.state)
+      const data = {
+        id: '',
+        admin: '',
+        status: 0
+      };
+      if (list.status === 1) {
+        data.status = 2;
+      }
+      if (list.status === 2) {
+        data.status = 1;
+      }
+      data.id = lecture.id;
+      data.admin = this.authService.getAdminId();
+      this.operationLecture(lecture.name, list.state, data)
     }
   }
 
   // 讲座上下线
-  operationLecture(name, state) {
+  operationLecture(name, state, data) {
 
     const config = new DialogOptions({
       title: `您确定要${state}讲座${name}？`,
@@ -138,12 +166,12 @@ export class LectureComponent implements OnInit {
     });
     ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
       if (result && result.key === 'topass') {
-        // this.toRefuseAuditing(doctor.id);
+        this.toOperationLecture(data);
       }
     });
   }
 
-  toRefuseAuditing(data) {
+  toDeleteLecture(data) {
     this.lectureService.lectureStatus(data)
       .subscribe(res => {
         if (res.code === 0) {
@@ -157,62 +185,19 @@ export class LectureComponent implements OnInit {
         HintDialog('操作失败', this.dialog);
       });
   }
-  //   //刷新页面
-  // refresh() {
-  //   this.getLectures();
-  // }
-  //
-  // //新增讲座
-  // newlecture() {
-  //   this.Lecture = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  //
-  // //确定上线、下线、删除
-  // process() {
-  //   var data = {
-  //     id: "",
-  //     admin: "",
-  //     status: ""
-  //   }
-  //   data.id = this.processData.value.id;
-  //   data.status = this.processData.key;
-  //   data.admin = this.admin.getId();
-  //   this._lectureService.lectureStatus(data)
-  //     .subscribe(
-  //       data => {
-  //         this.enableProcess = false;
-  //         if (data.code === 0) {
-  //           this.titleShow = "提示信息"
-  //           this.message = "操作成功";
-  //           this.enableShow = true;
-  //           this.refresh();
-  //         } else {
-  //           this.titleShow = "提示信息"
-  //           this.message = "操作失败";
-  //           this.enableShow = true;
-  //         }
-  //       }, err => {
-  //         this.enableProcess = false;
-  //         this.titleShow = "提示信息"
-  //         this.message = "啊哦！访问出错啦～";
-  //         this.enableShow = true;
-  //       })
-  // }
-  //
-  // //取消上线、下线、删除
-  // processCancel() {
-  //   this.processData = null;
-  //   this.processMessage = '';
-  //   this.enableProcess = false;
-  // }
-  //
-  // //返回服务器信息
-  // handleSuccess(data) {
-  //   this.titleShow = '提示信息';
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.refresh();
-  // }
+
+  toOperationLecture(data) {
+    this.lectureService.lectureStatus(data)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
+  }
 }

@@ -10,7 +10,6 @@ import { LectureSignComponent } from './lecture-sign/lecture-sign.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { LectureService } from './_service/lecture.service';
-import { LectureFormService } from './_service/lecture-form.service';
 import { LectureTableService } from './_service/lecture-table.service';
 import { LectureAuditingTableService } from './_service/lecture-auditing-table.service';
 
@@ -44,7 +43,6 @@ const routes: Routes = [{
   ],
   providers: [
     LectureService,
-    LectureFormService,
     LectureTableService,
     LectureAuditingTableService
   ]

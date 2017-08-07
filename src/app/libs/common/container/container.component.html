@@ -4,7 +4,7 @@
     <md-icon *ngIf="config.ifHome" class="location__item" [routerLink]="config.homeRouter">home</md-icon>
     <span class="location__item" [routerLink]="config.homeRouter">{{config.title}}</span>
     <span class="location__item span"> - </span>
-    <a class="location__item" [routerLink]="config.currentRouter">{{config.subTitle}}</a>
+    <a class="location__item">{{config.subTitle}}</a>
   </div>
   <div class="content__addition">
     <ng-content select=".addition"></ng-content>

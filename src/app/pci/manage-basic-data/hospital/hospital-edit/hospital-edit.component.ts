@@ -1,43 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Inject } from '@angular/core';
+import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HospitalService } from '../_service/hospital.service';
-import { ContainerConfig, HintDialog } from '../../../../libs';
+
+import { ContainerConfig, HintDialog, FormText, FormFile } from '../../../../libs';
+
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
-import { HospitalFormService } from '../../hospital/_service/hospital-form.service';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
 import { Hospital } from '../_entity/hospital.entity';
 
+declare var BMap: any;
+
 @Component({
   selector: 'app-hospital-edit',
-  templateUrl: './hospital-edit.component.html'
+  templateUrl: './hospital-edit.component.html',
+  styleUrls: ['./hospital-edit.component.css']
 })
 export class HospitalEditComponent implements OnInit {
   containerConfig: ContainerConfig;
   @select(['hospital', 'data']) hospital: Observable<Hospital>;
+  opts: any;
+  id: any;
+  map: any;
+  search: any;
+  offlineOpts: OfflineOptions;
   errMsg = '';
-  form: any;
+  form: FormGroup;
+  config: any;
   hospitalId: number;
+  baidu: any;
 
   constructor(
+    @Inject('app') private app,
     private hospitalService: HospitalService,
-    private hospitalFormService: HospitalFormService,
+    private fb: FormBuilder,
     private dialog: MdDialog,
     private router: Router
   ) {
   }
 
   ngOnInit() {
+    const self = this;
     this.hospital.subscribe(data => {
-        this.hospitalId = data.id;
         if (data.id === 0) {
           this.containerConfig = this.hospitalService.hospitalEditConfig(true);
-          this.form = this.hospitalFormService.setHospitalForm();
+          this.createForm();
+          setTimeout(function(){
+            self.getMapShow();
+          }, 200);
         } else {
           this.containerConfig = this.hospitalService.hospitalEditConfig(false);
-          this.form = this.hospitalFormService.setHospitalForm(data);
+          this.id = data.id;
+          this.createForm(data);
+          setTimeout(function(){
+            self.getMapShow(data);
+          }, 200);
         }
       },
       err => {
@@ -46,9 +66,113 @@ export class HospitalEditComponent implements OnInit {
       });
   }
 
+  createForm(data?) {
+    this.form = this.fb.group({
+      imageUrl: new FormControl(Validators.required),
+      name: new FormControl( Validators.required),
+      hospitalAddress: new FormControl( Validators.required),
+      longitude: new FormControl( Validators.required),
+      latitude: new FormControl( Validators.required),
+    });
+    this.config = {
+      imageUrl: new FormFile({
+        label: '医院图片',
+        key: 'imageUrl',
+        value: data && data.imageUrl || '',
+        url: `${this.app.pci.BASE_URL}api/upload`,
+      }),
+      name: new FormText({
+        label: '医院名称',
+        key: 'name',
+        value: data && data.name || ''
+      }),
+      hospitalAddress: new FormText({
+        label: '医院地点',
+        key: 'hospitalAddress',
+        value: data && data.hospitalAddress || ''
+      }),
+      longitude: new FormText({
+        label: '小区经度',
+        key: 'longitude',
+        value: data && data.longitude || ''
+      }),
+      latitude: new FormText({
+        label: '小区纬度',
+        key: 'latitude',
+        value: data && data.latitude || ''
+      }),
+    }
+  }
+
+  // 搜索地点
+  getSerah() {
+    const self = this;
+    this.search = this.config.hospitalAddress.value;
+    const local = new BMap.LocalSearch(this.map, {
+      renderOptions: { map: this.map }
+    });
+    local.search(this.search);
+    this.map.addEventListener('click', function(e){
+      const pt = e.point;
+      self.config.longitude.value = pt.lng;
+      self.config.latitude.value = pt.lat;
+    })
+  }
+
+  // 显示地图
+  getMap(data) {
+    this.opts = {
+      center: {
+        longitude: data && data.longitude || 121.506384,
+        latitude: data && data.latitude || 31.245229,
+      },
+      zoom: 15,
+      markers: [{
+        longitude: data && data.longitude || 121.506384,
+        latitude: data && data.latitude || 31.245229,
+        title: data && data.name || '东方明珠',
+        content: data && data.hospitalAddress || '上海市浦东区世纪大道1号 ',
+        autoDisplayInfoWindow: true,
+        enableDragging: true
+      }],
+      geolocationCtrl: {
+        anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_RIGHT
+      },
+      scaleCtrl: {
+        anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_LEFT
+      },
+      overviewCtrl: {
+        isOpen: true
+      },
+      navCtrl: {
+        type: NavigationControlType.BMAP_NAVIGATION_CONTROL_LARGE
+      }
+    };
+    this.offlineOpts = {
+      retryInterval: 5000,
+      txt: 'NO-NETWORK'
+    };
+  }
+
+  loadMap(map: any) {
+    console.log('map instance here', map);
+    this.map = map;
+  }
+
+  // 单机地图坐标, 打印信息
+  clickMarker(marker: any) {
+    console.log('The clicked marker is', marker.getPosition());
+  }
+
+// 延时200毫秒加载，防止地图无法显示
+  getMapShow(data?) {
+    this.getMap(data);
+    this.baidu = true;
+  }
+
   getValues(value) {
-    console.log(value);
-    if (this.hospitalId !== 0) {
+    if (this.id) {
+      value.id = this.id;
       this.hospitalService.hospitalEdit(value)
         .subscribe(res => {
           if (res.code === 0) {

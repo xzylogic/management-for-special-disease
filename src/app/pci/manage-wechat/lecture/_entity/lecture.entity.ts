@@ -16,7 +16,7 @@ export class Lecture {
 
   constructor(obj?: Lecture) {
     this.adminId = obj && obj.adminId || null;
-    this.id = obj && obj.id || '';
+    this.id = obj && obj.id || '0';
     this.contentImgUrl = obj && obj.contentImgUrl || '';
     this.signCodeUrl = obj && obj.signCodeUrl || '';
     this.imgUrl = obj && obj.imgUrl || '';

@@ -9,6 +9,7 @@ import { MainReducer } from './_store/main.reducer';
 import { createReducer } from './_store/api/api.reducer';
 
 import { stores as adStores } from './manage-ad';
+import { stores as couponStores} from './manage-coupon';
 import { stores as basicDataStores } from './manage-basic-data';
 import { stores as commodityStores } from './manage-commodity';
 import { stores as dataCollectionStores } from '../shared/manage-data-collection';
@@ -26,6 +27,7 @@ export const rootReducer = combineReducers({
   main: MainReducer,
   doctor: createReducer('doctor', [0, 0, 0], {}),
   ...adStores,
+  ...couponStores,
   ...basicDataStores,
   ...commodityStores,
   ...dataCollectionStores,

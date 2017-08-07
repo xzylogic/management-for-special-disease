@@ -10,6 +10,9 @@ export const routes: Routes = [{
 }, {
   path: 'integral-detail',
   loadChildren: 'app/pci/manage-integral/integral-detail/integral-detail.module#IntegralDetailModule'
+}, {
+  path: 'mission-integral',
+  loadChildren: 'app/pci/manage-integral/mission-Integral/mission-Integral.module#MissionIntegralModule'
 }];
 
 export const stores = {

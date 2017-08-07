@@ -83,7 +83,7 @@ export class PushTimeComponent implements OnInit {
       }]
     });
     ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-      if (result.key === 'confirm') {
+      if (result && result.key === 'confirm') {
         this.getValue({pushTime: result.value[0].value});
       }
     });

@@ -34,8 +34,6 @@ export class DoctorEditComponent implements OnInit {
       if (res.code === 0 && res.data) {
         this.doctor.subscribe(data => {
           this.state = data.state;
-          console.log(res.data);
-          console.log(data);
           if (data.id === 0) {
             this.containerConfig = this.doctorService.doctorEditConfig(true);
             this.form = this.doctorFormService.setForm(
