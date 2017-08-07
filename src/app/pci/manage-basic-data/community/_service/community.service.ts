@@ -43,7 +43,7 @@ export class CommunityService {
    */
   getCommunity(page: number, size: number) {
     return this.httpService.get(
-      `${this.app.pci.COMMON_URL}${PATH.communityQuery}?page=${page}&size=${size}`
+      `${this.app.pci.BASE_URL}${PATH.communityQuery}?page=${page}&size=${size}`
     );
   }
 
@@ -52,7 +52,7 @@ export class CommunityService {
    * @param {any} body [description]
    */
   addCommunity(body: any) {
-    return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.addCommunity}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.addCommunity}`, body);
   }
 
   /**
@@ -60,6 +60,6 @@ export class CommunityService {
    * @param {any} body [description]
    */
   updateCommunity(body: any) {
-    return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.updateCommunity}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.updateCommunity}`, body);
   }
 }
