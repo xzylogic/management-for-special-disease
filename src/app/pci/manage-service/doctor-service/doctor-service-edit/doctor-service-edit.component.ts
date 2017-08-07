@@ -49,11 +49,12 @@ export class DoctorServiceEditComponent implements OnInit {
     this.form = this.fb.group({
       iconUrl: new FormControl({value: ''}, Validators.required),
       name: new FormControl({value: ''}, Validators.required),
-      times: new FormControl({value: ''}, Validators.required),
+      // times: new FormControl({value: ''}, Validators.required),
       enable: new FormControl({value: ''}, Validators.required),
       unitId: new FormControl({value: ''}, Validators.required),
       numbers: new FormControl({value: ''}, Validators.required),
-      description: new FormControl({value: ''}),
+      content : new FormControl({value: ''}, Validators.required),
+      operationalRemark : new FormControl({value: ''}, Validators.required),
     });
     this.config = {
       iconUrl: new FormFile({
@@ -68,12 +69,12 @@ export class DoctorServiceEditComponent implements OnInit {
         key: 'name',
         value: data.name || ''
       }),
-      times: new FormText({
-        type: 'number',
-        label: '咨询次数',
-        key: 'times',
-        value: data.times || ''
-      }),
+      // times: new FormText({
+      //   type: 'number',
+      //   label: '咨询次数',
+      //   key: 'times',
+      //   value: data.times || ''
+      // }),
       enable: new FormRadio({
         label: '状态',
         key: 'enable',
@@ -110,10 +111,16 @@ export class DoctorServiceEditComponent implements OnInit {
         key: 'numbers',
         value: data.numbers || ''
       }),
-      description: new FormTextarea({
+      content: new FormTextarea({
+        label: '服务简介',
+        key: 'content',
+        value: data.content  || '',
+        maxlength: 42
+      }),
+      operationalRemark : new FormTextarea({
         label: '服务说明',
-        key: 'description',
-        value: data.description || ''
+        key: 'operationalRemark',
+        value: data.operationalRemark  || ''
       }),
     }
   }
@@ -130,11 +137,23 @@ export class DoctorServiceEditComponent implements OnInit {
     this.numbers.splice(i, 1);
   }
 
+  getStatus(value) {
+    value.serviceType = 0;
+    value.servicePackageId = this.id;
+    if (value.name === '绿色通道') {
+      value.dataType = 2;
+    } else if (value.name === '预约床位') {
+      value.dataType = 1;
+    } else {
+      value.dataType = 0;
+    }
+  }
+
   getValues(value) {
-    value.id = this.id;
     if (typeof value.numbers === 'object') {
       value.numbers = value.numbers.join(',');
     }
+    this.getStatus(value);
     this.doctorServiceService.doctorServiceUpdate(value)
       .subscribe(res => {
         if (res.code === 0) {

@@ -7,7 +7,8 @@ export class DoctorService {
   unitId: number;
   serviceNumbers: Array<any>;
   numbers: string | Array<string>;
-  description: string;
+  content: string;
+  operationalRemark: string;
 
   constructor(obj?: DoctorService) {
     this.id = obj && obj.id || 0;
@@ -18,7 +19,8 @@ export class DoctorService {
     this.unitId = obj && obj.unitId || 1;
     this.serviceNumbers = obj && obj.serviceNumbers || [];
     this.numbers = obj && obj.numbers || '';
-    this.description = obj && obj.description || '';
+    this.content = obj && obj.content || '';
+    this.operationalRemark = obj && obj.operationalRemark || '';
   }
 }
 
