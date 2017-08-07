@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdButtonModule, MdDialogModule, MdInputModule } from '@angular/material';
+import { MdButtonModule, MdDialog, MdDialogModule, MdInputModule } from '@angular/material';
 
 import { DialogComponent } from './dialog.component';
 import { DialogImgComponent } from './dialog-img.component';
@@ -34,6 +34,9 @@ export * from './dialog-img.component';
     MdButtonModule,
     DialogComponent,
     DialogImgComponent
+  ],
+  providers: [
+    MdDialog
   ]
 })
 export class LibDialogModule {

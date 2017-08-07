@@ -359,3 +359,5 @@ export const ERRMSG = {
   statusSuccess: '',
   statusError: '',
 };
+
+export type AOA = Array<Array<any>>;

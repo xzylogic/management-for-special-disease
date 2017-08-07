@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-type AOA = Array<Array<any>>;
+import { AOA } from '../_store/static';
 
 @Injectable()
 export class CommonService {
@@ -28,7 +27,6 @@ export class CommonService {
       exportList.push(values);
     });
     exportList.unshift(exportTitle);
-    console.log(exportList);
     return exportList;
   }
 }

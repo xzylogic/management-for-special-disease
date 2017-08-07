@@ -6,9 +6,6 @@ import { MdDialog } from '@angular/material';
 import { FormText, HintDialog } from '../../libs';
 import { Admin } from '../_store/main.state';
 import { ERRMSG } from '../_store/static';
-import { DialogEdit } from '../../libs/dmodal/dialog/dialog.entity';
-import { FormDropdown } from '../../libs/dform/_entity/form-dropdown';
-import { EditDialog } from '../../libs/dmodal/dialog/dialog-edit.component';
 
 @Component({
   selector: 'app-login',
@@ -71,41 +68,5 @@ export class LoginComponent implements OnInit {
           HintDialog(this.errorMsg, this.dialog);
         });
     }
-  }
-
-  edit() {
-    const config: DialogEdit = new DialogEdit({
-      title: 'edit something',
-      form: [new FormText({
-        key: 'name',
-        label: '医生姓名',
-        value: '',
-        required: true,
-        validated: true,
-        order: 1
-      }),
-        new FormDropdown({
-          key: 'hospitalId',
-          label: '所属医院',
-          value: '',
-          required: true,
-          options: [{
-            id: 1,
-            name: 'hospital1'
-          }, {
-            id: 2,
-            name: 'hospital2'
-          }, {
-            id: 3,
-            name: 'hospital3'
-          }],
-          order: 3
-        })]
-    });
-
-    EditDialog(config, this.dialog).afterClosed().subscribe(result => {
-      // if(result&&result.key)
-      console.log(result);
-    })
   }
 }

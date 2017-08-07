@@ -20,11 +20,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('init navigation');
     this.initSidebars();
-    this.setCount();
-    this.navService.setCount(100, 'doctorgroup', 'doctor');
-    this.navService.setCount(80, 'doctorgroup', 'doctoraccount');
   }
 
   ngAfterViewInit() {

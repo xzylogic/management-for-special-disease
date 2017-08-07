@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve -p 4203",
-    "clean": "rm -rf dist",
     "copy": "cp -rf WEB-INF dist",
+    "build-test": "ng build --prod --env=test --bh /management-pci/ && npm run copy",
     "build-pci": "ng build --prod --env=pci --bh /management-pci/",
     "build": "npm run build-pci && npm run copy"
   },
@@ -31,7 +31,6 @@
     "intl": "^1.2.5",
     "material-design-icons": "^3.0.1",
     "moment": "^2.18.1",
-    "ng-table-excel-export": "^1.0.0",
     "ngx-quill-editor": "^2.0.2",
     "redux": "^3.5.0",
     "redux-logger": "^3.0.6",

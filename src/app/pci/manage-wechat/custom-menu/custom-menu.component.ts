@@ -122,7 +122,7 @@ export class CustomMenuComponent implements OnInit {
       form: this.customMenuFormService.setForm(parentId || null, data || null)
     });
     EditDialog(config, this.dialog).afterClosed().subscribe(result => {
-      console.log(result);
+      // console.log(result);
       if (result) {
         this.getValue(result);
       }

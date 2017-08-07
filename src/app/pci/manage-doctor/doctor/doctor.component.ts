@@ -11,13 +11,11 @@ import {
   TableOption, ContainerConfig, DialogOptions,
   ImageDialog, ActionDialog, HintDialog, MessageDialog
 } from '../../../libs';
-import { ERRMSG } from '../../_store/static';
+import { ERRMSG, AOA } from '../../_store/static';
 
 import * as moment from 'moment';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-
-type AOA = Array<Array<any>>;
 
 @Component({
   selector: 'app-doctor',
@@ -36,12 +34,12 @@ export class DoctorComponent implements OnInit {
   constructor(
     @Inject('action') private action,
     @Inject('common') private common,
+    @Inject('nav') private navService,
     private doctorService: DoctorService,
     private doctorTableService: DoctorTableService,
     private dialog: MdDialog,
     private router: Router
   ) {
-    action.dataChange('doctor', new Doctor());
   }
 
   ngOnInit() {
@@ -122,6 +120,7 @@ export class DoctorComponent implements OnInit {
           this.auditingTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data && res.data.content) {
           this.count = res.data.totalElements;
+          this.navService.setCount(this.count, 'doctorgroup', 'doctor');
           this.auditingTable.totalPage = res.data.totalPages;
           this.formatDoctor(res.data.content, false);
           this.auditingTable.lists = res.data.content;
@@ -148,7 +147,6 @@ export class DoctorComponent implements OnInit {
           this.failureTable.totalPage = res.data.totalPages;
           this.formatDoctor(res.data.content, false);
           this.failureTable.lists = res.data.content;
-          console.log(this.failureTable.lists);
         } else {
           this.failureTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
@@ -180,7 +178,6 @@ export class DoctorComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    // console.log(res);
     const doctor = <Doctor>res.value;
     if (res.key === 'editAudited' || res.key === 'editAuditing') {
       this.action.dataChange('doctor', doctor);

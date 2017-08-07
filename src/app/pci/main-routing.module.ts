@@ -19,12 +19,15 @@ import { routes as wechatRoutes } from './manage-wechat';
 
 @NgModule({
   imports: [RouterModule.forChild([{
+      path: 'login',
+      loadChildren: 'app/pci/app-login/login.module#LoginModule'
+    }, {
       path: '',
       component: PciMainComponent,
       children: [
         {
           path: '',
-          redirectTo: '/green-channel',
+          redirectTo: '/activeness-statistics',
           pathMatch: 'full'
         },
         ...adRoutes,
