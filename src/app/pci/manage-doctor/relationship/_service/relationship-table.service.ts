@@ -45,6 +45,14 @@ export class RelationshipTableService {
       new TableTitle({
         name: '状态',
         key: 'status'
+      }),
+      new TableTitle({
+        name: '加入小组',
+        key: 'groupName'
+      }),
+      new TableTitle({
+        name: '是否赠送服务',
+        key: 'whetherToGiveFreeService'
       })
     ];
 

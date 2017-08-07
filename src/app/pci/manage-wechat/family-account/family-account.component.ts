@@ -1,28 +1,17 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit } from '@angular/core';
 
 import { FamilyAccountService } from './_service/family-account.service';
 import { FamilyAccountTableService } from './_service/family-account-table.service';
-import {
-  TableOption, ContainerConfig
-} from '../../../libs';
+import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-family-account',
-  templateUrl: 'family-account.component.html'
+  templateUrl: './family-account.component.html'
 })
 export class FamilyAccountComponent implements OnInit {
   containerConfig: ContainerConfig;
   familyAccountTable: TableOption;
-  @select(['familyAccount', 'page']) page: Observable<Array<number>>;
-  // title = '家庭账号维护';
-  // subTitle = '家庭账号列表';
-  //
-  // familyAccountTable: TableOption;
-  //
-  // queryKey: string = '';
 
   constructor(
     private familyAccountService: FamilyAccountService,
@@ -41,9 +30,7 @@ export class FamilyAccountComponent implements OnInit {
 
   reset() {
     this.familyAccountTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
-      this.getFamilyAccounts(page[0]);
-    });
+    this.getFamilyAccounts(0);
   }
 
   getFamilyAccounts(page: number) {
@@ -62,6 +49,7 @@ export class FamilyAccountComponent implements OnInit {
           }
         }, err => {
           this.familyAccountTable.loading = false;
+          console.log(err);
           this.familyAccountTable.errorMessage = ERRMSG.netErrMsg;
         });
   }

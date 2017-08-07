@@ -6,7 +6,6 @@ import {
   MdIconModule, MdSidenavModule, MdToolbarModule
 } from '@angular/material';
 
-import { LoginModule } from './app-login/login.module';
 import { PciRoutingModule } from './main-routing.module';
 import { PciMainComponent } from './main.component';
 import { NavigationComponent } from './navigation/navigtion.component';
@@ -17,6 +16,7 @@ import { NavigationService } from './_service/navigation.service';
 
 import { app } from '../../environments/environment';
 
+import { LibDialogModule } from '../libs/dmodal/dialog/dialog.module';
 import { StoreModule } from './store.module';
 import { MainAction } from './_store/main.action';
 import { ApiAction } from './_store/api/api.action';
@@ -31,9 +31,9 @@ import { CommonService } from './_service/common.service';
     MdButtonModule,
     MdIconModule,
     MdChipsModule,
-    LoginModule,
-    PciRoutingModule,
-    StoreModule
+    StoreModule,
+    LibDialogModule,
+    PciRoutingModule
   ],
   declarations: [
     PciMainComponent,

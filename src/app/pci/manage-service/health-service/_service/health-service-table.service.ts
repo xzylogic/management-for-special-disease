@@ -25,6 +25,14 @@ export class HealthServiceTableService {
         key: 'name'
       }),
       new TableTitle({
+        name: '服务次数',
+        key: 'name'
+      }),
+      new TableTitle({
+        name: '服务价格',
+        key: 'name'
+      }),
+      new TableTitle({
         name: '添加人',
         key: 'createdBy',
       }),

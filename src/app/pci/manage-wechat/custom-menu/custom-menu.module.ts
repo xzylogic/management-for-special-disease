@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import {
+  LibModule, LibDialogModule,
+  LibInputModule, DFormModule,
+  DTableModule
+} from '../../../libs';
+
 import { CustomMenuComponent } from './custom-menu.component';
-import { CustomMenuEditComponent } from './custom-menu-edit/custom-menu-edit.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { CustomMenuService } from './_service/custom-menu.service';
@@ -17,11 +22,15 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
+    LibModule,
+    LibDialogModule,
+    LibInputModule,
+    DFormModule,
+    DTableModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
-    CustomMenuComponent,
-    CustomMenuEditComponent
+    CustomMenuComponent
   ],
   providers: [
     CustomMenuService,

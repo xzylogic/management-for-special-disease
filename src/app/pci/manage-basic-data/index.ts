@@ -44,6 +44,15 @@ export const routes: Routes = [{
   path: 'download-origin',
   loadChildren: 'app/pci/manage-basic-data/download-origin/download-origin.module#DownloadOriginModule'
 }, {
+  path: 'purchase-entrance',
+  loadChildren: 'app/pci/manage-basic-data/purchase-entrance/purchase-entrance.module#PurchaseEntranceModule'
+}, {
+  path: 'counseling-problem',
+  loadChildren: 'app/pci/manage-basic-data/counseling-problem/counseling-problem.module#CounselingProblemModule'
+}, {
+  path: 'recommend-radius',
+  loadChildren: 'app/pci/manage-basic-data/recommend-radius/recommend-radius.module#RecommendRadiusModule'
+}, {
   path: 'community',
   loadChildren: 'app/pci/manage-basic-data/community/community.module#CommunityModule'
 }];
@@ -57,6 +66,8 @@ export const stores = {
   healthOrganization: createReducer('healthOrganization', [0], {}),
   hospital: createReducer('hospital', [0], {}),
   inspectionItem: createReducer('inspectionItem', [0], {}),
-  pushTime: createReducer('pushTime', [0], {}),
+  purchaseEntrance: createReducer('purchaseEntrance', [0], {}),
+  counselingProblem: createReducer('counselingProblem', [0], {}),
+  recommendRadius: createReducer('recommendRadius', [0], {}),
   community: createReducer('community', [0], {})
 };

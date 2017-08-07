@@ -21,8 +21,8 @@ export class IntegralDetailService {
       title: '积分管理',
       subTitle: '积分明细',
       ifHome: true,
-      homeRouter: '/integralDetail',
-      currentRouter: '/integralDetail'
+      homeRouter: '/integral-detail',
+      currentRouter: '/integral-detail'
     });
   }
 

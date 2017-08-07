@@ -1,16 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
-import { TableOption } from '../../../libs/dtable/dtable.entity';
+import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
-import { Router } from '@angular/router';
+
+import { ContainerConfig, TableOption, ActionDialog, HintDialog, DialogOptions } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 import { AdPatientService } from './_service/ad-patient.service';
 import { AdPatientTableService } from './_service/ad-patient-table.service';
 import { AdPatient } from './_entity/ad-patient.entity';
-import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
-import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
 
 @Component({
   selector: 'app-ad-patient',
@@ -19,8 +17,7 @@ import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
 export class AdPatientComponent implements OnInit {
   containerConfig: ContainerConfig;
   adPatientTable: TableOption;
-  @select(['AdPatient', 'tab']) tab: Observable<number>;
-  @select(['AdPatient', 'page']) page: Observable<Array<number>>;
+  @select(['adPatient', 'page']) page: Observable<Array<number>>;
 
   constructor(
     @Inject('action') private action,
@@ -30,7 +27,6 @@ export class AdPatientComponent implements OnInit {
     private router: Router,
     @Inject('auth') private auth
   ) {
-    action.dataChange('adPatientService', new AdPatient());
   }
 
   ngOnInit() {
@@ -40,12 +36,13 @@ export class AdPatientComponent implements OnInit {
       ifPage: true
     });
     this.page.subscribe((page: Array<number>) => {
-      this.getAdPatient(0);
+      this.getAdPatient(page[0]);
     });
   }
 
   getAdPatient(page: number) {
-    this.action.pageChange('packageService', [page]);
+    this.action.pageChange('adPatient', [page]);
+    this.adPatientTable.reset(page);
     this.adPatientService.getAdList(page)
       .subscribe(res => {
         this.adPatientTable.loading = false;
@@ -74,9 +71,10 @@ export class AdPatientComponent implements OnInit {
     if (res.key === 'edit') {
       this.action.dataChange('adPatient', adPatient);
       this.router.navigate(['/ad-patient/edit']);
-    }else if (res.key === 'del') {
+    }
+    if (res.key === 'del') {
       const config = new DialogOptions({
-        title: `您确定要删除${adPatient.title}？`,
+        title: `您确定要删除广告：${adPatient.title}？`,
         message: '',
         buttons: [{
           key: 'topass',
@@ -93,10 +91,11 @@ export class AdPatientComponent implements OnInit {
           this.delete(res.value.id);
         }
       });
-    } else if (res.key === 'updown') {
+    }
+    if (res.key === 'updown') {
       if (!res.value.status) {
         const config = new DialogOptions({
-          title: `您确定要上架${adPatient.title}？`,
+          title: `您确定要上架广告：${adPatient.title}？`,
           message: '',
           buttons: [{
             key: 'topass',
@@ -111,12 +110,10 @@ export class AdPatientComponent implements OnInit {
         ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
           if (result.key === 'topass') {
             this.updown(res.value.id);
-            ERRMSG.updownSuccess = '上架成功';
-            ERRMSG.updownError = '上架失败';
           }
         });
 
-      }else {
+      } else {
         const config = new DialogOptions({
           title: `您确定要下架${adPatient.title}？`,
           message: '',
@@ -133,8 +130,6 @@ export class AdPatientComponent implements OnInit {
         ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
           if (result.key === 'topass') {
             this.updown(res.value.id);
-            ERRMSG.updownSuccess = '下架成功';
-            ERRMSG.updownError = '下架失败';
           }
         });
 
@@ -148,7 +143,7 @@ export class AdPatientComponent implements OnInit {
         if (res.code === 0) {
           HintDialog(ERRMSG.deleteSuccess, this.dialog).afterClosed().subscribe(() => {
             this.page.subscribe((page: Array<number>) => {
-              this.getAdPatient(0);
+              this.getAdPatient(page[0]);
             });
           });
         } else {
@@ -156,7 +151,7 @@ export class AdPatientComponent implements OnInit {
         }
       }, err => {
         console.log(err);
-        HintDialog(ERRMSG.deleteError, this.dialog);
+        HintDialog(ERRMSG.netErrMsg, this.dialog);
       });
   }
 
@@ -164,17 +159,17 @@ export class AdPatientComponent implements OnInit {
     this.adPatientService.adStatus(id)
       .subscribe(res => {
         if (res.code === 0) {
-          HintDialog(ERRMSG.updownSuccess, this.dialog).afterClosed().subscribe(() => {
+          HintDialog(ERRMSG.handleSuccess, this.dialog).afterClosed().subscribe(() => {
             this.page.subscribe((page: Array<number>) => {
-              this.getAdPatient(0);
+              this.getAdPatient(page[0]);
             });
           });
         } else {
-          HintDialog(res.msg || ERRMSG.updownError, this.dialog);
+          HintDialog(res.msg || ERRMSG.handleError, this.dialog);
         }
       }, err => {
         console.log(err);
-        HintDialog(ERRMSG.updownError, this.dialog);
+        HintDialog(ERRMSG.netErrMsg, this.dialog);
       });
   }
 }

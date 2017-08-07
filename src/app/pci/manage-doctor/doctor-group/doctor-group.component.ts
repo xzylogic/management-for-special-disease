@@ -11,11 +11,32 @@ import { Router } from '@angular/router';
 import { ERRMSG } from '../../_store/static';
 import { DoctorGroup } from './_entity/doctor-group.entity';
 import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
-import { resetFakeAsyncZone } from '@angular/core/testing';
 
 @Component({
   selector: 'app-doctor-group',
-  templateUrl: './doctor-group.component.html'
+  templateUrl: './doctor-group.component.html',
+  styles: [`
+    .content {
+      position: relative;
+    }
+
+    .count {
+      position: absolute;
+      top: 10px;
+      left: 292px;
+    }
+
+    .count > md-chip {
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .count {
+        left: 220px;
+      }
+    }
+  `]
 })
 export class DoctorGroupComponent implements OnInit {
   containerConfig: ContainerConfig;
@@ -23,9 +44,11 @@ export class DoctorGroupComponent implements OnInit {
   auditingServiceTable: TableOption;
   @select(['doctorGroup', 'tab']) tab: Observable<number>;
   @select(['doctorGroup', 'page']) page: Observable<Array<number>>;
+  count: number;
 
   constructor(
     @Inject('action') private action,
+    @Inject('nav') private navService,
     private doctorGroupService: DoctorGroupService,
     private doctorGroupTableService: DoctorGroupTableService,
     private auditingServiceTableService: AuditingServiceTableService,
@@ -94,6 +117,8 @@ export class DoctorGroupComponent implements OnInit {
           if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
             this.auditingServiceTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
+            this.count = res.data.totalElements;
+            this.navService.setCount(this.count, 'doctorgroup', 'doctorgroup');
             this.auditingServiceTable.totalPage = res.data.totalPages;
             this.auditingServiceTable.lists = res.data.content;
           } else {
@@ -115,6 +140,9 @@ export class DoctorGroupComponent implements OnInit {
     }
     if (res.key === 'show') {
       this.router.navigate(['/doctor-group/service'], {queryParams: {id: doctorGroup.id}});
+    }
+    if (res.key === 'serviceList') {
+      this.router.navigate(['/doctor-group/service-list'], {queryParams: {id: doctorGroup.id}});
     }
     if (res.key === 'auditing') {
       HintDialog('确定审核通过？', this.dialog).afterClosed().subscribe(result => {

@@ -14,11 +14,11 @@ import { stores as basicDataStores } from './manage-basic-data';
 import { stores as commodityStores } from './manage-commodity';
 import { stores as dataCollectionStores } from '../shared/manage-data-collection';
 import { stores as doctorStores } from './manage-doctor';
+import { stores as doctorPersonalStores } from './manage-doctor-personal';
 import { stores as healthNewsStores } from './manage-health-news';
 import { stores as integralStores } from './manage-integral';
 import { stores as operationPushStores } from './manage-operation-push';
 import { stores as serviceStores } from './manage-service';
-import { stores as statisticsStores } from './manage-statistics';
 import { stores as userStores } from './manage-user';
 import { stores as versionControlStores } from './manage-version-control';
 import { stores as wechatStores } from './manage-wechat';
@@ -32,11 +32,11 @@ export const rootReducer = combineReducers({
   ...commodityStores,
   ...dataCollectionStores,
   ...doctorStores,
+  ...doctorPersonalStores,
   ...healthNewsStores,
   ...integralStores,
   ...operationPushStores,
   ...serviceStores,
-  ...statisticsStores,
   ...userStores,
   ...versionControlStores,
   ...wechatStores,

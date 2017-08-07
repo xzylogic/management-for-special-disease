@@ -20,10 +20,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('init navigation');
     this.initSidebars();
-    this.navService.setCount(100, 'doctorgroup', 'doctor');
-    this.navService.setCount(80, 'doctorgroup', 'doctoraccount');
   }
 
   ngAfterViewInit() {
@@ -43,41 +40,17 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setCount() {
-    // this.navService.getDoctorCount()
-    //   .subscribe(data => {
-    //     if (data.data && data.code === 0) {
-    //       let count = {key: 'doctor', group: 'doctorgroup', tag: data.data};
-    //       this.navService.setNavCount(count);
-    //     }
-    //   });
-    // this.navService.getDoctorAccountCount()
-    //   .subscribe(data => {
-    //     if (data.data && data.code === 0) {
-    //       let count = {key: 'doctoraccount', group: 'doctorgroup', tag: data.data.purchase + data.data.withdraw};
-    //       this.navService.setNavCount(count);
-    //     }
-    //   });
-    // this.navService.getUserCertificationCount()
-    //   .subscribe(data => {
-    //     if (data.data && data.code === 0) {
-    //       let count = {key: 'usercertification', group: 'usergroup', tag: data.data.auditing};
-    //       this.navService.setNavCount(count);
-    //     }
-    //   });
-    // this.navService.getDoctorGroupCount()
-    //   .subscribe(data => {
-    //     if (data.data && data.code === 0) {
-    //       let count = {key: 'doctorgroup', group: 'doctorgroup', tag: data.data};
-    //       this.navService.setNavCount(count);
-    //     }
-    //   });
-    // this.navService.getUserOrderCount()
-    //   .subscribe(data => {
-    //     if (data.data && data.code === 0) {
-    //       let count = {key: 'userorder', group: 'usergroup', tag: data.data.refundSum + data.data.thirdSum};
-    //       this.navService.setNavCount(count);
-    //     }
-    //   });
+    this.navService.getCount().subscribe(res => {
+      if (res.code === 0 && res.data) {
+        const count = res.data;
+        this.navService.setCount(count.doctorAuditing, 'doctorgroup', 'doctor');
+        this.navService.setCount(count.serviceAuditing, 'doctorgroup', 'doctorgroup');
+        this.navService.setCount(count.purchase + count.withdraw, 'doctorgroup', 'doctoraccount');
+        this.navService.setCount(count.refundSum + count.thirdSum, 'user', 'userorder');
+        this.navService.setCount(count.failure, 'user', 'usercertification');
+        this.navService.setCount(count.goods, 'integral', 'integralOrder');
+      }
+    });
   }
 
   toggleSub(sidebar) {

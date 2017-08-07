@@ -26,8 +26,7 @@ export class RelationshipService {
   }
 
   getRelationships(page, size, keyword, accept) {
-    return this.httpService.get(
-      `${this.app.pci.BASE_URL}${PATH.relationship}?page=${page}&size=${size}&keyword=${keyword || ''}&accept=${accept || ''}`
-    );
+    const param = `page=${page}&size=${size}&keyword=${keyword || ''}&accept=${accept || ''}`;
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.relationship}?${param}`);
   }
 }

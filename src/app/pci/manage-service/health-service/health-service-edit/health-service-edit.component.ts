@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 
+import { ContainerConfig, HintDialog } from '../../../../libs';
 import { HealthServiceService } from '../_service/health-service.service';
 import { HealthServiceFormService } from '../_service/health-service-form.service';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-health-service-edit',
@@ -36,7 +33,7 @@ export class HealthServiceEditComponent implements OnInit {
     });
     this.healthServiceService.getOrganization().subscribe(res => {
         if (res.code === 0 && res.data) {
-          this.healthServiceService.getHealthService(this.healthServiceId ).subscribe(data => {
+          this.healthServiceService.getHealthService(this.healthServiceId).subscribe(data => {
             this.healthservice = data.data;
             this.healthservice.pictures = [];
             if (this.healthservice.healthBanner) {
@@ -70,7 +67,7 @@ export class HealthServiceEditComponent implements OnInit {
       }
       delete value.pictures;
     }
-    if (this.healthServiceId !== 0) {
+    if (this.healthServiceId > 0) {
       this.healthServiceService.healthServiceUpdate(value)
         .subscribe(res => {
           if (res.code === 0) {

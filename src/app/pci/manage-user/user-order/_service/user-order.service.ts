@@ -3,11 +3,14 @@ import { Injectable, Inject } from '@angular/core';
 import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
-  userOrderList: 'opt/healthOrders/listAll', // 患者全部订单列表
-  userOrderQuery: 'opt/healthOrders/query', // 查询患者订单
-  userOrderRefundList: 'opt/healthOrders/listRefund', // 患者退款订单
-  userOrderServicingList: 'opt/healthOrders/listInvalids', // 患者服务中订单
-  userOrderThirdList: 'opt/healthOrders/listThirdServices', // 患者第三方服务订单
+  userOrderAllList: 'opt/healthOrders/listAll', // 全部订单
+  userOrderUnpayList: 'opt/healthOrders/nonPaymentOrder', // 待支付订单
+  userOrderApplyList: 'opt/healthOrders/applyingOrder', // 申请中订单
+  userOrderRefundingList: 'opt/healthOrders/refundingOrder', // 退款中订单
+  userOrderRefundList: 'opt/healthOrders/refundSuccessfullyOrder', // 退款成功订单
+  userOrderSuccessList: 'opt/healthOrders/paySuccessfullyOrder', // 购买成功订单
+  userOrderCancelList: 'opt/healthOrders/cancellationOrder', // 已取消订单
+  userOrderThirdList: 'opt/healthOrders/listThirdServices', // 未处理第三方订单
   userOrderRefundConfirm: 'opt/healthOrders/refund', // 确认退款
   userOrderThirdProcess: 'opt/healthOrders/processThirdService', // 处理第三方服务
   userOrderCount: 'opt/healthOrders/countOrders', // 患者订单统计
@@ -48,31 +51,55 @@ export class UserOrderService {
     });
   }
 
-
-  getUserOrders(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderList}?page=${page}&size=${size}`);
+  /**
+   * 获取患者订单列表
+   * @param {number} page
+   * @param {number} size
+   * @param {string} key
+   * @param {string} path
+   */
+  getUserOrders(page: number, size: number, key: string, path: string) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${path}?page=${page}&size=${size}&queryInfo=${key}`);
   }
 
-  queryUserOrder(queryString: string, page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderQuery}?pram=${queryString}&page=${page}&size=${size}`);
+  getUserOrdersAll(page: number, size: number, key: string) {
+    return this.getUserOrders(page, size, key, PATH.userOrderAllList);
   }
 
-  getUserOrderRefunds(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderRefundList}?page=${page}&size=${size}`);
+  getUserOrdersUnpay(page: number, size: number, key: string) {
+    return this.getUserOrders(page, size, key, PATH.userOrderUnpayList);
   }
 
-  getUserOrderServicings(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderServicingList}?page=${page}&size=${size}`);
+  getUserOrdersApply(page: number, size: number, key: string) {
+    return this.getUserOrders(page, size, key, PATH.userOrderApplyList);
   }
 
-  getUserOrderThirds(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderThirdList}?page=${page}&size=${size}`);
+  getUserOrdersRefunding(page: number, size: number, key: string) {
+    return this.getUserOrders(page, size, key, PATH.userOrderRefundingList);
   }
 
+  getUserOrdersRefund(page: number, size: number, key: string) {
+    return this.getUserOrders(page, size, key, PATH.userOrderRefundList);
+  }
+
+  getUserOrdersSuccess(page: number, size: number, key: string) {
+    return this.getUserOrders(page, size, key, PATH.userOrderSuccessList);
+  }
+
+  getUserOrdersCancel(page: number, size: number, key: string) {
+    return this.getUserOrders(page, size, key, PATH.userOrderCancelList);
+  }
+
+  getUserOrdersThird(page: number, size: number, key: string) {
+    return this.getUserOrders(page, size, key, PATH.userOrderThirdList);
+  }
+
+  // 处理退款
   userOrderRefund(id: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderRefundConfirm}?oid=${id}`);
   }
 
+  // 处理未处理第三方
   userOrderProcess(id: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userOrderThirdProcess}?oid=${id}`);
   }
@@ -82,7 +109,9 @@ export class UserOrderService {
   }
 
   orderRecordCreate(id: number, serviceName: string) {
-    return this.httpService.postParma(`${this.app.pci.BASE_URL}${PATH.orderRecordCreate}?id=${id}&serviceName=${serviceName}&operator=${this.authService.getAdminName()}`);
+    return this.httpService.postParma(
+      `${this.app.pci.BASE_URL}${PATH.orderRecordCreate}?id=${id}&serviceName=${serviceName}&operator=${this.authService.getAdminName()}`
+    );
   }
 
   orderRecordDel(id: number) {

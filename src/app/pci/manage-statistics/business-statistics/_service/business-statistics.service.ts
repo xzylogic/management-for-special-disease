@@ -24,7 +24,7 @@ export class BusinessStatisticsService {
     });
   }
 
-  getData(option: { startTime: string, endTime: string }) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.businessData}?start=${option.startTime}&end=${option.endTime}`);
-}
+  getData(startTime, endTime) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.businessData}?start=${startTime}&end=${endTime}`);
+  }
 }

@@ -1,7 +1,13 @@
-<app-container [config]="containerConfig"  *ngIf="containerConfig">
+<app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+    <md-tab-group dynamicHeight="true">
       <md-tab label="全部来源统计">
+        <form style="padding: 0 16px">
+          <app-search [type]="'1'" [label]="'请选择日期'" [(value)]="queryMainDate"></app-search>
+          <button md-icon-button color="primary" type="button" (click)="getMainQueryResult()">
+            <md-icon>search</md-icon>
+          </button>
+        </form>
         <div *ngIf="!mainTable.lists&&mainTable.loading">Loading...</div>
         <div *ngIf="!mainTable.lists&&!mainTable.loading&&!!mainTable.errorMessage" class="center">
           {{mainTable.errorMessage}}
@@ -15,6 +21,12 @@
         </div>
       </md-tab>
       <md-tab label="用户渠道来源统计">
+        <form style="padding: 0 16px">
+          <app-search [type]="'1'" [label]="'请选择日期'" [(value)]="queryUserDate"></app-search>
+          <button md-icon-button color="primary" type="button" (click)="getUserQueryResult()">
+            <md-icon>search</md-icon>
+          </button>
+        </form>
         <div *ngIf="!userTable.lists&&userTable.loading">Loading...</div>
         <div *ngIf="!userTable.lists&&!userTable.loading&&!!userTable.errorMessage" class="center">
           {{userTable.errorMessage}}
@@ -28,6 +40,12 @@
         </div>
       </md-tab>
       <md-tab label="医生渠道来源统计">
+        <form style="padding: 0 16px">
+          <app-search [type]="'1'" [label]="'请选择日期'" [(value)]="queryDoctorDate"></app-search>
+          <button md-icon-button color="primary" type="button" (click)="getDoctorQueryResult()">
+            <md-icon>search</md-icon>
+          </button>
+        </form>
         <div *ngIf="!doctorTable.lists&&doctorTable.loading">Loading...</div>
         <div *ngIf="!doctorTable.lists&&!doctorTable.loading&&!!doctorTable.errorMessage" class="center">
           {{doctorTable.errorMessage}}

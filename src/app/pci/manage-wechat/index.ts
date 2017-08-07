@@ -19,7 +19,5 @@ export const routes: Routes = [{
 }];
 
 export const stores = {
-  customMenu: createReducer('customMenu', [0], {}),
-  familyAccount: createReducer('familyAccount', [0], {}),
-  lecture: createReducer('lecture', [0], {}),
+  lecture: createReducer('lecture', [0], {})
 };

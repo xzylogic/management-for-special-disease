@@ -34,7 +34,7 @@
   <a class="item icon" (click)="getPrePage()">
     <md-icon>chevron_left</md-icon>
   </a>
-  <a class="item" *ngFor="let page of pageList" [class.active]="page-1 === table.currentPage"
+  <a class="item" *ngFor="let page of pageList" [class.active]="page-1==table.currentPage"
      (click)="getCurrentPage(page)">{{page}}</a>
   <a class="item icon" (click)="getNextPage()">
     <md-icon>chevron_right</md-icon>

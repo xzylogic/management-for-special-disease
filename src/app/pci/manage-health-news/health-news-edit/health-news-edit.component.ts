@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MdDialog } from '@angular/material';
+import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
-import { ContainerConfig, HintDialog } from '../../../libs';
+import {
+  ContainerConfig, HintDialog,
+  FormDropdown, FormText, FormRadio,
+  FormFile, FormTextarea, FormHidden,
+} from '../../../libs';
+
 import { HealthNewsService } from '../_service/health-news.service';
-import { HealthNewsFormService } from '../_service/health-news-form.service';
 import { HealthNews } from '../_entity/health-news.entity';
-import { ERRMSG } from 'app/pci/_store/static';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-health-news-edit',
@@ -19,35 +24,126 @@ export class HealthNewsEditComponent implements OnInit {
   @select(['healthNews', 'data']) healthNews: Observable<HealthNews>;
   errMsg = '';
   form: any;
-  state: boolean;
+  config: any;
+  id: any;
 
   constructor(
+    @Inject('app') private app,
+    @Inject('auth') private auth,
     private healthNewsService: HealthNewsService,
-    private healthNewsFormService: HealthNewsFormService,
     private dialog: MdDialog,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit() {
     this.healthNews.subscribe(data => {
-      if (data.id === 0 && data.typeList) {
-        this.state = false;
-        this.containerConfig = this.healthNewsService.healthNewsEditConfig(true);
-        this.form = this.healthNewsFormService.setForm(data.typeList);
-      } else if (data.typeList) {
-        this.state = true;
+      if (data.id > 0 && data.typeList) {
+        this.id = data.id;
         this.containerConfig = this.healthNewsService.healthNewsEditConfig(false);
-        this.form = this.healthNewsFormService.setForm(data.typeList, data);
-      } else {
-        this.router.navigate(['/health-news']);
+        this.createForm(data.typeList, data);
+      } else if (data.typeList) {
+        this.containerConfig = this.healthNewsService.healthNewsEditConfig(true);
+        this.createForm(data.typeList);
       }
+      this.cdr.detectChanges();
     });
   }
 
+  createForm(list, data?) {
+    this.form = this.fb.group({
+      articleTypeId: new FormControl('', Validators.required),
+      imageUrl: new FormControl('', Validators.required),
+      title: new FormControl('', Validators.required),
+      content: new FormControl(''),
+      type: new FormControl('', Validators.required),
+      link: new FormControl(''),
+      richText: new FormControl(''),
+      author: new FormControl(''),
+      ranking: new FormControl(''),
+      online: new FormControl(''),
+      adminId: new FormControl('')
+    });
+    this.config = {
+      articleTypeId: new FormDropdown({
+        key: 'articleTypeId',
+        label: '健康资讯分类',
+        options: list,
+        value: data && data.articleType || ''
+      }),
+      imageUrl: new FormFile({
+        key: 'imageUrl',
+        label: '资讯图片',
+        url: this.app.pci.UPLOAD_URL,
+        value: data && data.imageUrl || ''
+      }),
+      title: new FormText({
+        key: 'title',
+        label: '资讯标题',
+        value: data && data.title || ''
+      }),
+      content: new FormTextarea({
+        key: 'content',
+        label: '资讯简介',
+        value: data && data.content || ''
+      }),
+      type: new FormRadio({
+        label: '类型',
+        key: 'type',
+        options: [{
+          id: 0,
+          name: '链接'
+        }, {
+          id: 1,
+          name: '内容'
+        }],
+        value: data && (data.type == 0 ? data.type : data.type || '')
+      }),
+      link: new FormText({
+        key: 'link',
+        label: '资讯链接',
+        value: data && data.link || ''
+      }),
+      richText: new FormText({
+        key: 'richText',
+        label: '资讯内容',
+        value: data && data.richText || ''
+      }),
+      author: new FormText({
+        key: 'author',
+        label: '作者',
+        value: data && data.author || ''
+      }),
+      ranking: new FormText({
+        key: 'ranking',
+        label: '推荐值',
+        value: data && (data.ranking == 0 ? data.ranking : data.ranking || '')
+      }),
+      online: new FormRadio({
+        key: 'online',
+        label: '是否上架',
+        options: [{
+          id: true,
+          name: '上架'
+        }, {
+          id: false,
+          name: '下架'
+        }],
+        value: data && (data.online == 0 ? data.online : data.online || '')
+      }),
+      adminId: new FormHidden({
+        key: 'adminId',
+        label: '',
+        value: this.auth.getAdminId()
+      }),
+    }
+  }
+
   getValues(value) {
-    // console.log(value);
-    if (this.state) {
+    if (this.id) {
+      value.id = this.id;
       this.healthNewsService.healthNewsUpdate(value)
         .subscribe(res => {
           if (res.code === 0) {

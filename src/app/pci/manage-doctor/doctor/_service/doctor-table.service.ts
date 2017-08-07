@@ -64,6 +64,18 @@ export class DoctorTableService {
         controlType: ControlType.button,
       }),
       new TableTitle({
+        name: '已开通服务',
+        key: 'serviceList',
+        option: '查看',
+        controlType: ControlType.button,
+      }),
+      new TableTitle({
+        name: '服务明细',
+        key: 'serviceDetail',
+        option: '查看',
+        controlType: ControlType.button,
+      }),
+      new TableTitle({
         name: '编辑',
         key: 'editAudited',
         controlType: ControlType.button,
@@ -230,6 +242,58 @@ export class DoctorTableService {
       new TableTitle({
         name: '明细',
         key: 'integralTransaction'
+      })
+    ];
+    return Titles;
+  }
+
+  setServiceDetailTitles() {
+    const Titles: TableTitle[] = [
+      new TableTitle({
+        name: '购买人',
+        key: 'purchaser'
+      }),
+      new TableTitle({
+        name: '服务名称',
+        key: 'serviceName',
+      }),
+      new TableTitle({
+        name: '购买时间',
+        key: 'purchaseTime',
+        maxwidth: 70,
+        minwidth: 70
+      }),
+      new TableTitle({
+        name: '入院／就诊时间',
+        key: 'treatmentTime',
+        maxwidth: 70,
+        minwidth: 70
+      }),
+      new TableTitle({
+        name: '状态',
+        key: 'statusName'
+      })
+    ];
+    return Titles;
+  }
+
+  setServiceListTitles() {
+    const Titles: TableTitle[] = [
+      new TableTitle({
+        name: '已开通服务',
+        key: 'name'
+      }),
+      new TableTitle({
+        name: '价格',
+        key: 'price'
+      }),
+      new TableTitle({
+        name: '有效期',
+        key: 'cycleNumber'
+      }),
+      new TableTitle({
+        name: '服务详情',
+        key: 'description',
       })
     ];
     return Titles;

@@ -26,43 +26,17 @@ export class ActivenessStatisticsService {
     });
   }
 
-  getUserActiveness(obj: { page: number, size: number, key ?: string, date ?: string }) {
-    if (obj.date && !obj.key) {
-      return this.httpService.get(
-        `${this.app.pci.BASE_URL}${PATH.userActivenessStatistics}?date=${obj.date}&page=${obj.page}&size=${obj.size}`
-      );
-    } else if (!obj.date && obj.key) {
-      return this.httpService.get(
-        `${this.app.pci.BASE_URL}${PATH.userActivenessStatistics}?key=${obj.key}&page=${obj.page}&size=${obj.size}`
-      );
-    } else if (obj.date && obj.key) {
-      return this.httpService.get(
-        `${this.app.pci.BASE_URL}${PATH.userActivenessStatistics}?key=${obj.key}&date=${obj.date}&page=${obj.page}&size=${obj.size}`
-      );
-    } else {
-      return this.httpService.get(
-        `${this.app.pci.BASE_URL}${PATH.userActivenessStatistics}?page=${obj.page}&size=${obj.size}`
-      );
-    }
+  getUserActiveness(page, size, key, date) {
+    let query = `?page=${page}&size=${size}`;
+    query += key ? `&key=${key}` : '';
+    query += date ? `&date=${date}` : '';
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userActivenessStatistics}${query}`);
   }
 
-  getDoctorActiveness(obj: { page: number, size: number, key ?: string, date ?: string }) {
-    if (obj.date && !obj.key) {
-      return this.httpService.get(
-        `${this.app.pci.BASE_URL}${PATH.doctorActivenessStatistics}?date=${obj.date}&page=${obj.page}&size=${obj.size}`
-      );
-    } else if (!obj.date && obj.key) {
-      return this.httpService.get(
-        `${this.app.pci.BASE_URL}${PATH.doctorActivenessStatistics}?key=${obj.key}&page=${obj.page}&size=${obj.size}`
-      );
-    } else if (obj.date && obj.key) {
-      return this.httpService.get(
-        `${this.app.pci.BASE_URL}${PATH.doctorActivenessStatistics}?key=${obj.key}&date=${obj.date}&page=${obj.page}&size=${obj.size}`
-      );
-    } else {
-      return this.httpService.get(
-        `${this.app.pci.BASE_URL}${PATH.doctorActivenessStatistics}?page=${obj.page}&size=${obj.size}`
-      );
-    }
+  getDoctorActiveness(page, size, key, date) {
+    let query = `?page=${page}&size=${size}`;
+    query += key ? `&key=${key}` : '';
+    query += date ? `&date=${date}` : '';
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorActivenessStatistics}${query}`);
   }
 }

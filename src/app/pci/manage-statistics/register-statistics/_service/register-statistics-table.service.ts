@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ControlType, TableTitle } from '../../../../libs';
+import { TableTitle } from '../../../../libs';
 
 @Injectable()
 export class RegisterStatisticsTableService {

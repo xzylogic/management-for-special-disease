@@ -30,4 +30,5 @@ const routes: Routes = [{
     RegisterStatisticsTableService
   ]
 })
-export class RegisterStatisticsModule {}
+export class RegisterStatisticsModule {
+}

@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { MdTabsModule } from '@angular/material';
+import { MdInputModule, MdTabsModule } from '@angular/material';
 
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
+import { DTableModule, LibModule } from '../../../libs';
 
 import { ActivenessStatisticsComponent } from './activeness-statistics.component';
 
@@ -19,10 +18,9 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    FormsModule,
+    MdInputModule,
     MdTabsModule,
     DTableModule,
-    DFormModule,
     LibModule,
     RouterModule.forChild(routes)
   ],

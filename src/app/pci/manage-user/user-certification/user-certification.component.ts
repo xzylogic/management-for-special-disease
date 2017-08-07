@@ -1,19 +1,38 @@
-import { Component, OnInit, Inject} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
-
 import { UserCertificationService } from './_service/user-certification.service';
 import { UserCertificationTableService } from './_service/user-certification-table.service';
-import {
-  TableOption, ContainerConfig, ImageDialog,
-} from '../../../libs';
+import { TableOption, ContainerConfig, ImageDialog } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-user-certification',
-  templateUrl: './user-certification.component.html'
+  templateUrl: './user-certification.component.html',
+  styles: [`
+    .content {
+      position: relative;
+    }
+
+    .count {
+      position: absolute;
+      top: 10px;
+      left: 595px;
+    }
+
+    .count > md-chip {
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .count {
+        left: 289px;
+      }
+    }
+  `]
 })
 export class UserCertificationComponent implements OnInit {
 
@@ -26,9 +45,11 @@ export class UserCertificationComponent implements OnInit {
   @select(['userCertification', 'tab']) tab: Observable<number>;
   @select(['userCertification', 'page']) page: Observable<Array<number>>;
 
+  count: number;
 
   constructor(
     @Inject('action') private action,
+    @Inject('nav') private navService,
     private dialog: MdDialog,
     private userCertificationService: UserCertificationService,
     private userCertificationTableService: UserCertificationTableService
@@ -64,24 +85,28 @@ export class UserCertificationComponent implements OnInit {
   }
 
   reset0() {
+    this.userCertificationTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUserCertifications(page[0]);
     });
   }
 
   reset1() {
+    this.userUnCertificationTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUserUncertifications(page[1]);
     });
   }
 
   reset2() {
+    this.userCertificatingTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUserCertificatings(page[2]);
     });
   }
 
   reset3() {
+    this.userCertificationFailureTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUserCertificationFailures(page[3]);
     });
@@ -90,7 +115,7 @@ export class UserCertificationComponent implements OnInit {
   getUserCertifications(page: number) {
     this.action.pageChange('userCertification', [page, this.userUnCertificationTable.currentPage, this.userCertificatingTable.currentPage, this.userCertificationFailureTable.currentPage]);
     this.userCertificationTable.reset(page);
-    this.userCertificationService.getUserCertifications(page, this.userCertificationTable.size)
+    this.userCertificationService.getUserCertifications(page, this.userCertificationTable.size, this.userCertificationTable.queryKey)
       .subscribe(
         res => {
           this.userCertificationTable.loading = false;
@@ -104,14 +129,15 @@ export class UserCertificationComponent implements OnInit {
           }
         }, err => {
           this.userCertificationTable.loading = false;
+          console.log(err);
           this.userCertificationTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
   getUserUncertifications(page: number) {
     this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, page, this.userCertificatingTable.currentPage, this.userCertificationFailureTable.currentPage]);
     this.userUnCertificationTable.reset(page);
-    this.userCertificationService.getUserUncertifications(page, this.userUnCertificationTable.size)
+    this.userCertificationService.getUserUncertifications(page, this.userUnCertificationTable.size, this.userUnCertificationTable.queryKey)
       .subscribe(
         res => {
           this.userUnCertificationTable.loading = false;
@@ -125,14 +151,15 @@ export class UserCertificationComponent implements OnInit {
           }
         }, err => {
           this.userCertificationTable.loading = false;
+          console.log(err);
           this.userUnCertificationTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
   getUserCertificatings(page: number) {
     this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, this.userUnCertificationTable.currentPage, page, this.userCertificationFailureTable.currentPage]);
     this.userCertificatingTable.reset(page);
-    this.userCertificationService.getUserCertificatings(page, this.userCertificatingTable.size)
+    this.userCertificationService.getUserCertificatings(page, this.userCertificatingTable.size, this.userCertificatingTable.queryKey)
       .subscribe(
         res => {
           this.userCertificatingTable.loading = false;
@@ -146,20 +173,23 @@ export class UserCertificationComponent implements OnInit {
           }
         }, err => {
           this.userCertificationTable.loading = false;
+          console.log(err);
           this.userCertificatingTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
   getUserCertificationFailures(page: number) {
     this.action.pageChange('userCertification', [this.userCertificationTable.currentPage, this.userUnCertificationTable.currentPage, page, this.userCertificatingTable.currentPage]);
     this.userCertificationFailureTable.reset(page);
-    this.userCertificationService.getUserCertificationFailures(page, this.userCertificationFailureTable.size)
+    this.userCertificationService.getUserCertificationFailures(page, this.userCertificationFailureTable.size, this.userCertificationFailureTable.queryKey)
       .subscribe(
         res => {
           this.userCertificationFailureTable.loading = false;
           if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
             this.userCertificationFailureTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
+            this.count = res.data.totalElements;
+            this.navService.setCount(this.count, 'user', 'usercertification');
             this.userCertificationFailureTable.totalPage = res.data.totalPages;
             this.userCertificationFailureTable.lists = res.data.content;
           } else {
@@ -167,22 +197,11 @@ export class UserCertificationComponent implements OnInit {
           }
         }, err => {
           this.userCertificationTable.loading = false;
+          console.log(err);
           this.userCertificationFailureTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
-  // getCertificationCount() {
-  //   this._userCertificationService.getCertificationCount()
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.certificatingCount = data.data.auditing;
-  //           this.failureCount = data.data.failure;
-  //           this._sidebarService.setCount(this.certificatingCount + this.failureCount, 'usergroup', 'usercertification');
-  //         }
-  //       })
-  // }
-  //
   gotoHandle(res) {
     if (res.key === 'idCardImageUrl') {
       ImageDialog(res.value.name, res.value.avatarUrl, this.dialog);

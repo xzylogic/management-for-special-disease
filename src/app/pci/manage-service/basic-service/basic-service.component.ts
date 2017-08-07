@@ -38,11 +38,11 @@ export class BasicServiceComponent implements OnInit {
       .subscribe(res => {
         this.basicServiceTable.loading = false;
         if (res.data && res.data.length === 0 && res.code === 0) {
-          this.basicServiceTable.errorMessage = ERRMSG.nullMsg
+          this.basicServiceTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.data && res.code === 0) {
           this.basicServiceTable.lists = res.data;
         } else {
-          this.basicServiceTable.errorMessage = res.msg || ERRMSG.otherMsg
+          this.basicServiceTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
       }, err => {
         this.basicServiceTable.loading = false;
@@ -58,5 +58,9 @@ export class BasicServiceComponent implements OnInit {
       this.action.dataChange('basicService', basicService);
       this.router.navigate(['/basic-service/edit']);
     }
+  }
+
+  newData() {this.action.dataChange('basicService', {});
+    this.router.navigate(['/basic-service/edit']);
   }
 }

@@ -11,7 +11,11 @@ import {
   TableOption, ContainerConfig, DialogOptions,
   ImageDialog, ActionDialog, HintDialog, MessageDialog
 } from '../../../libs';
-import { ERRMSG } from '../../_store/static';
+import { ERRMSG, AOA } from '../../_store/static';
+
+import * as moment from 'moment';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-doctor',
@@ -25,15 +29,17 @@ export class DoctorComponent implements OnInit {
   failureTable: TableOption;
   @select(['doctor', 'tab']) tab: Observable<number>;
   @select(['doctor', 'page']) page: Observable<Array<number>>;
+  count: number;
 
   constructor(
     @Inject('action') private action,
+    @Inject('common') private common,
+    @Inject('nav') private navService,
     private doctorService: DoctorService,
     private doctorTableService: DoctorTableService,
     private dialog: MdDialog,
     private router: Router
   ) {
-    action.dataChange('doctor', new Doctor());
   }
 
   ngOnInit() {
@@ -113,6 +119,8 @@ export class DoctorComponent implements OnInit {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
           this.auditingTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data && res.data.content) {
+          this.count = res.data.totalElements;
+          this.navService.setCount(this.count, 'doctorgroup', 'doctor');
           this.auditingTable.totalPage = res.data.totalPages;
           this.formatDoctor(res.data.content, false);
           this.auditingTable.lists = res.data.content;
@@ -139,7 +147,6 @@ export class DoctorComponent implements OnInit {
           this.failureTable.totalPage = res.data.totalPages;
           this.formatDoctor(res.data.content, false);
           this.failureTable.lists = res.data.content;
-          console.log(this.failureTable.lists);
         } else {
           this.failureTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
@@ -159,6 +166,9 @@ export class DoctorComponent implements OnInit {
       data.departmentName = data.department && data.department.name || '';
       data.doctorTitleId = data.doctorTitle && data.doctorTitle.id || '';
       data.doctorTitleName = data.doctorTitle && data.doctorTitle.name || '';
+      delete data.hospital;
+      delete data.department;
+      delete data.doctorTitle;
     })
   }
 
@@ -168,15 +178,19 @@ export class DoctorComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    // console.log(res);
     const doctor = <Doctor>res.value;
     if (res.key === 'editAudited' || res.key === 'editAuditing') {
       this.action.dataChange('doctor', doctor);
       this.router.navigate(['/doctor/edit']);
     }
     if (res.key === 'integral') {
-      // this.action.dataChange('doctor', doctor);
       this.router.navigate(['/doctor/integral'], {queryParams: {id: doctor.id}});
+    }
+    if (res.key === 'serviceDetail') {
+      this.router.navigate(['/doctor/service-detail'], {queryParams: {id: doctor.id}});
+    }
+    if (res.key === 'serviceList') {
+      this.router.navigate(['/doctor/service-list'], {queryParams: {id: doctor.id}});
     }
     if (res.key === 'certificationUrl') {
       ImageDialog(doctor.name, doctor.avatarUrl, this.dialog);
@@ -267,5 +281,30 @@ export class DoctorComponent implements OnInit {
 
   change(index) {
     this.action.tabChange('doctor', index);
+  }
+
+  export() {
+    let exportList;
+    this.doctorService.getAuditedDoctors('', 0, 99999)
+      .subscribe(res => {
+        if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
+          this.formatDoctor(res.data.content, true);
+          exportList = this.common.toArray(res.data.content);
+          /* generate worksheet */
+          const ws = XLSX.utils.aoa_to_sheet(exportList);
+          /* generate workbook and add the worksheet */
+          const wb = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+          /* save to file */
+          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+          const fileName = `全程心管家医生信息列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+        } else {
+          HintDialog('导出数据错误，请重新尝试', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('导出数据错误，请重新尝试', this.dialog);
+      });
   }
 }

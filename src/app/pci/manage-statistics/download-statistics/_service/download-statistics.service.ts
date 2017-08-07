@@ -24,9 +24,6 @@ export class DownloadStatisticsService {
     });
   }
 
-  // constructor(private _apiService: ApiService) {
-  // }
-  //
   getDownloadStatistics(start, end, flag) {
     return this.httpService.get(
       `${this.app.pci.BASE_URL}${PATH.downloadStatistics}?startTime=${start}&endTime=${end}&product=${flag}`

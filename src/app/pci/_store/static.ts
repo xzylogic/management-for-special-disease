@@ -31,11 +31,11 @@ export let NAVBARS = [
         title: '渠道来源统计',
         link: '/download-statistics'
       }),
-      new Navbar({
-        key: 'fatherstatistics',
-        title: '父亲节统计',
-        link: '/father-statistics'
-      })
+      // new Navbar({
+      //   key: 'fatherstatistics',
+      //   title: '父亲节统计',
+      //   link: '/father-statistics'
+      // })
     ]
   }),
   new Navbar({
@@ -67,6 +67,23 @@ export let NAVBARS = [
         title: '医患关联管理',
         link: '/relationship',
         tag: 0
+      })
+    ]
+  }),
+  new Navbar({
+    key: 'doctorpersonal',
+    title: '医生个人服务管理',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'greenchannel',
+        title: '绿色通道管理',
+        link: '/green-channel'
+      }),
+      new Navbar({
+        key: 'reservationbed',
+        title: '预约床位管理',
+        link: '/reservation-bed'
       })
     ]
   }),
@@ -122,6 +139,11 @@ export let NAVBARS = [
         key: 'integralCommodity',
         title: '积分商品维护',
         link: '/integral-commodity'
+      }),
+      new Navbar({
+        key: 'integralProportion',
+        title: '积分比例维护',
+        link: '/integral-proportion'
       }),
       new Navbar({
         key: 'missionIntegral',
@@ -251,14 +273,29 @@ export let NAVBARS = [
         key: 'downloadorigin',
         title: '下载渠道维护',
         link: '/download-origin'
-      })
+      }),
+      new Navbar({
+        key: 'purchaseEntrance',
+        title: '购药入口维护',
+        link: '/purchase-entrance'
+      }),
+      new Navbar({
+        key: 'counselingProblem',
+        title: '咨询问题引导维护',
+        link: '/counseling-problem'
+      }),
+      new Navbar({
+        key: 'recommendRadius',
+        title: '定位推荐半径维护',
+        link: '/recommend-radius'
+      }),
     ]
   }),
-  new Navbar({
-    key: 'datacollection',
-    title: '病史资料录入',
-    link: '/data-collection'
-  }),
+  // new Navbar({
+  //   key: 'datacollection',
+  //   title: '病史资料录入',
+  //   link: '/data-collection'
+  // }),
   new Navbar({
     key: 'versioncontrol',
     title: '版本控制',
@@ -343,12 +380,16 @@ export const ERRMSG = {
   netErrMsg: '网络出错了，请稍后再试试吧！',
   otherMsg: '呀～发生未知错误，请关闭重试',
   inputErr: '输入数据错误，请重新输入！',
+  handleSuccess: '操作成功！',
+  handleError: '操作失败！',
   saveSuccess: '保存数据成功！',
   saveError: '保存数据失败！',
-  deleteSuccess: '删除成功！',
-  deleteError: '删除失败！',
+  deleteSuccess: '删除数据成功！',
+  deleteError: '删除数据失败！',
   updownSuccess: '上架成功！',
   updownError: '上架失败',
   statusSuccess: '',
   statusError: '',
 };
+
+export type AOA = Array<Array<any>>;

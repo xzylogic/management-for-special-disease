@@ -14,6 +14,8 @@ import { AuthGuardService } from '../../_service/auth-guard.service';
 import { DoctorService } from './_service/doctor.service';
 import { DoctorFormService } from './_service/doctor-form.service';
 import { DoctorTableService } from './_service/doctor-table.service';
+import { ServiceListComponent } from './service-list/service-list.component';
+import { ServiceDetailComponent } from './service-detail/service-detail.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,6 +32,14 @@ const routes: Routes = [{
 }, {
   path: 'integral',
   component: DoctorIntegralComponent,
+  canActivate: [AuthGuardService],
+}, {
+  path: 'service-list',
+  component: ServiceListComponent,
+  canActivate: [AuthGuardService],
+}, {
+  path: 'service-detail',
+  component: ServiceDetailComponent,
   canActivate: [AuthGuardService],
 }];
 
@@ -49,7 +59,9 @@ const routes: Routes = [{
     DoctorComponent,
     DoctorEditComponent,
     SendMessageComponent,
-    DoctorIntegralComponent
+    DoctorIntegralComponent,
+    ServiceListComponent,
+    ServiceDetailComponent
   ],
   providers: [
     DoctorService,
