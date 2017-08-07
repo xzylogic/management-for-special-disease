@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { PciMainComponent } from './main.component';
 
 import { routes as adRoutes } from './manage-ad';
+import { routes as couponRoutes } from './manage-coupon';
 import { routes as basicDataRoutes } from './manage-basic-data';
 import { routes as commodityRoutes } from './manage-commodity';
 import { routes as dataCollectionRoutes } from '../shared/manage-data-collection';
@@ -31,6 +32,7 @@ import { routes as wechatRoutes } from './manage-wechat';
           pathMatch: 'full'
         },
         ...adRoutes,
+        ...couponRoutes,
         ...basicDataRoutes,
         ...commodityRoutes,
         ...dataCollectionRoutes,

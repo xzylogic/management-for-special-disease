@@ -1,13 +1,13 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { TableOption } from '../../../libs';
 import { IntegralDetailService } from './_service/integral-detail.service';
 import { IntegralDetailTableService } from './_service/integral-detail-table.service';
-import { ContainerConfig } from '../../../libs/';
+import { ContainerConfig, FormRadio, DialogEdit, DialogOptions, ActionDialog, HintDialog, FormText, FormFile } from '../../../libs';
+import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
-import { Router } from '@angular/router';
 import { IntegralDetail } from './_entity/integralDetail.entity';
 import { ERRMSG } from '../../_store/static';
 
@@ -22,13 +22,12 @@ export class IntegralDetailComponent implements OnInit {
   @select(['integralDetail', 'tab']) tab: Observable<number>;
   @select(['integralDetail', 'page']) page: Observable<Array<number>>;
 
-
   constructor(
     @Inject('action') private action,
     private integralDetailService: IntegralDetailService,
     private integralDetailTableService: IntegralDetailTableService,
     private dialog: MdDialog,
-    private router: Router
+    @Inject('app') private app,
   ) {
     action.dataChange('integralDetail', new IntegralDetail());
   }
@@ -113,6 +112,119 @@ export class IntegralDetailComponent implements OnInit {
         console.log(err);
         this.integralDetailDoctorTable.errorMessage = ERRMSG.netErrMsg;
       })
+  }
+
+  integralManage() {
+    this.integralDetailService.getIntegralRule()
+      .subscribe(res => {
+        if (res.code === 0) {
+          this.IntegralRule(res.data);
+          console.log(res.data);
+        }
+      }, err => {
+        alert(err);
+      })
+  }
+
+  IntegralRule(data) {
+    const config = new DialogOptions({
+      title: `积分规则维护`,
+      message: '',
+      buttons: [{
+        key: 'confirm',
+        value: '确定',
+        color: 'primary'
+      }, {
+        key: 'cancel',
+        value: '取消',
+        color: ''
+      }],
+      forms: [
+        {
+          key: 'id',
+          label: 'id',
+          value: data.id || ''
+        }, {
+          key: 'rule',
+          label: '积分规则说明',
+          value: data.rule || ''
+        }]
+    });
+    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result && result.key === 'confirm') {
+        this.toIntegralRule(result.value);
+      }
+    });
+  }
+
+  sendIntegral() {
+    const config: DialogEdit = new DialogEdit({
+      title: '赠送积分',
+      form: [
+        new FormRadio({
+          key: 'type',
+          label: '选择APP',
+          value: '',
+          required: true,
+          options: [{
+            id: 1,
+            name: '患者端'
+          }, {
+            id: 0,
+            name: '医生端'
+          }],
+        }),
+        new FormText({
+          key: 'integral',
+          label: '赠送数量',
+          value: '',
+          required: true,
+        }),
+        new FormFile({
+          key: 'exEcl',
+          label: '上传表格',
+          value: '',
+          required: true,
+          url: `${this.app.pci.BASE_URL}api/analyticalXlsxBackIds`
+        }),
+      ]
+    });
+    EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.toPresentExp(result);
+      }
+    });
+  }
+
+  toPresentExp(data) {
+    this.integralDetailService.PresentExp(data)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
+  }
+
+  toIntegralRule(data) {
+    this.integralDetailService.integralRuleUpdate(data[0].value, data[1].value)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
   }
 
   change(index) {

@@ -13,6 +13,9 @@ export const routes: Routes = [{
 }, {
   path: 'integral-proportion',
   loadChildren: 'app/pci/manage-integral/integral-proportion/integral-proportion.module#IntegralProportionModule'
+}, {
+  path: 'mission-integral',
+  loadChildren: 'app/pci/manage-integral/mission-Integral/mission-Integral.module#MissionIntegralModule'
 }];
 
 export const stores = {

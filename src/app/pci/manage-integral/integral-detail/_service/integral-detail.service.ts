@@ -3,7 +3,10 @@ import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
   integralDetailList: 'opt/integral/records/listByParam', // 查询选项列表
-}
+  PresentExp: 'opt/integral/records/grant', // 积分赠送
+  getIntegralRule: 'opt/integral/records/getRule', // 获取积分规则
+  integralRuleEdit: 'opt/integral/records/rule', // 编辑积分规则
+};
 
 @Injectable()
 export class IntegralDetailService {
@@ -36,6 +39,29 @@ export class IntegralDetailService {
     } else {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}`);
     }
+  }
+
+  /**
+   * 获取积分规则
+   */
+  getIntegralRule() {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.getIntegralRule}`);
+  }
+
+  /**
+   * 积分规则修改
+   * @param {any} body [description]
+   */
+  integralRuleUpdate(id: number, rule: any) {
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.integralRuleEdit}?id=${id}&rule=${rule}`);
+  }
+
+  /**
+   * 积分赠送
+   * @param {any} body [description]
+   */
+  PresentExp(body: any ) {
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.PresentExp}`, body);
   }
 }
 

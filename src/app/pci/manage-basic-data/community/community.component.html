@@ -1,0 +1,25 @@
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="addition">
+    <button md-raised-button (click)="newData()">新增小区</button>
+  </div>
+  <div class="content">
+    <md-tab-group dynamicHeight="true">
+      <md-tab label="小区维护列表">
+        <div *ngIf="!communityTable.lists&&communityTable.loading">Loading...</div>
+        <div *ngIf="!communityTable.lists&&!communityTable.loading&&!!communityTable.errorMessage" class="center">
+          {{communityTable.errorMessage}}
+        </div>
+        <div *ngIf="communityTable.lists">
+          <div class="content__table">
+            <app-lib-table
+              [table]="communityTable"
+              (handleEmmit)="gotoHandle($event)"
+              (pageEmitter)="getCommunityList($event)"
+            ></app-lib-table>
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</app-container>
+

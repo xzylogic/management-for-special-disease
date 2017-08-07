@@ -6,17 +6,17 @@ import { MdDialog } from '@angular/material';
 
 import { OperationPushService } from './_service/operation-push-service.service';
 import { OperationPushTableService } from './_service/operation-push-service-table.service';
-import { Operation } from './_entity/operationPush.entity';
+import { OperationPush } from './_entity/operationPush.entity';
 import {
   TableOption, ContainerConfig, DialogOptions,
-  ImageDialog, ActionDialog, HintDialog, MessageDialog
+  ActionDialog, HintDialog, ControlType
 } from '../../libs';
 import { ERRMSG } from '../_store/static';
 
 @Component({
   selector: 'app-operation-push',
   templateUrl: './operation-push.component.html',
-  styleUrls: ['./operation-push.component.css']
+  styleUrls: ['./operation-push.component.scss']
 })
 export class OperationPushComponent implements OnInit {
   containerConfig: ContainerConfig;
@@ -25,6 +25,8 @@ export class OperationPushComponent implements OnInit {
   @select(['operationPush', 'tab']) tab: Observable<number>;
   @select(['operationPush', 'page']) page: Observable<Array<number>>;
 
+  controlType = ControlType;
+
   constructor(
     @Inject('action') private action,
     private operationpushservice: OperationPushService,
@@ -32,7 +34,7 @@ export class OperationPushComponent implements OnInit {
     private dialog: MdDialog,
     private router: Router
   ) {
-    action.dataChange('operation', new Operation());
+    action.dataChange('operationPush', new OperationPush());
   }
 
   ngOnInit() {
@@ -70,60 +72,64 @@ export class OperationPushComponent implements OnInit {
     this.operationPushTable.loading = true;
     this.operationPushTable.lists = null;
     this.operationPushTable.currentPage = page;
-  	this.operationpushservice.getOperationPush(0, page).subscribe(
-  		res => {
-  			this.operationPushTable.loading = false;
-  				if (res.data && res.data.length === 0 && res.code === 0) {
-            this.operationPushTable.errorMessage = ERRMSG.nullMsg;
-          } else if (res.data && res.code === 0) {
-            this.operationPushTable.totalPage = res.data.totalPages;
-            this.operationPushTable.lists = res.data.content;
-            for ( let i = 0; i < this.operationPushTable.lists.length; ++i) {
-            	this.operationPushTable.lists[i].state = this.getStatus(this.operationPushTable.lists[i].status);
+    this.operationpushservice.getOperationPush(0, page).subscribe(
+        res => {
+          this.operationPushTable.loading = false;
+            if (res.data && res.data.length === 0 && res.code === 0) {
+              this.operationPushTable.errorMessage = ERRMSG.nullMsg;
+            } else if (res.data && res.code === 0) {
+              this.operationPushTable.totalPage = res.data.totalPages;
+              this.operationPushTable.lists = res.data.content;
+              for ( let i = 0; i < this.operationPushTable.lists.length; ++i) {
+                this.operationPushTable.lists[i].state = this.getStatus(this.operationPushTable.lists[i].status);
+                this.operationPushTable.lists[i].send = this.getSend(this.operationPushTable.lists[i].status);
+                this.operationPushTable.lists[i].edit = this.getEdit(this.operationPushTable.lists[i].status);
+              }
+            } else {
+              this.operationPushTable.errorMessage = res.msg || ERRMSG.otherMsg;
             }
-          } else {
-            this.operationPushTable.errorMessage = res.msg || ERRMSG.otherMsg;
-          }
-  		}, err => {
-  			this.operationPushTable.loading = false;
-        this.operationPushTable.errorMessage = ERRMSG.netErrMsg;
-  		})
+        }, err => {
+          this.operationPushTable.loading = false;
+          this.operationPushTable.errorMessage = ERRMSG.netErrMsg;
+        })
   }
 
   getOperationPushDoctor(page: number) {
-  	this.operationpushservice.getOperationPush(1, page).subscribe(
-  		res => {
-  			this.operationPushDoctorTable.loading = false;
-  				if (res.data && res.data.length === 0 && res.code === 0) {
-            this.operationPushDoctorTable.errorMessage = ERRMSG.nullMsg;
-          } else if (res.data && res.code === 0) {
-            this.operationPushDoctorTable.lists = res.data.content;
-            for ( let i = 0; i < this.operationPushDoctorTable.lists.length; ++i) {
-              this.operationPushDoctorTable.lists[i].state = this.getStatus(this.operationPushDoctorTable.lists[i].status);
+      this.operationpushservice.getOperationPush(1, page).subscribe(
+        res => {
+          this.operationPushDoctorTable.loading = false;
+            if (res.data && res.data.length === 0 && res.code === 0) {
+              this.operationPushDoctorTable.errorMessage = ERRMSG.nullMsg;
+            } else if (res.data && res.code === 0) {
+              this.operationPushDoctorTable.lists = res.data.content;
+              for ( let i = 0; i < this.operationPushDoctorTable.lists.length; ++i) {
+                this.operationPushDoctorTable.lists[i].state = this.getStatus(this.operationPushDoctorTable.lists[i].status);
+                this.operationPushDoctorTable.lists[i].send = this.getSend(this.operationPushDoctorTable.lists[i].status);
+                this.operationPushDoctorTable.lists[i].edit = this.getEdit(this.operationPushDoctorTable.lists[i].status);
+              }
+            } else {
+              this.operationPushDoctorTable.errorMessage = res.msg || ERRMSG.otherMsg;
             }
-          } else {
-            this.operationPushDoctorTable.errorMessage = res.msg || ERRMSG.otherMsg;
-          }
-  		}, err => {
-  			this.operationPushDoctorTable.loading = false;
-        this.operationPushDoctorTable.errorMessage = ERRMSG.netErrMsg;
-  		})
+        }, err => {
+          this.operationPushDoctorTable.loading = false;
+          this.operationPushDoctorTable.errorMessage = ERRMSG.netErrMsg;
+        })
   }
 
   newData() {
-    this.action.dataChange('operation', new Operation());
+    this.action.dataChange('operationPush', new OperationPush());
     this.router.navigate(['/operation-push/edit']);
   }
 
-  gotoHandle(res) {
-    const operation = <Operation>res.value;
-    if (res.key === 'edit') {
-      this.action.dataChange('operation', operation);
+  gotoHandle(res, list) {
+    const operationPush = <OperationPush>list;
+    if (res === 'edit') {
+      this.action.dataChange('operationPush', operationPush);
       this.router.navigate(['/operation-push/edit']);
     }
-    if (res.key === 'send') {
+    if (res === 'send') {
       const config = new DialogOptions({
-        title: `您确定要发送${operation.content}？`,
+        title: `您确定要发送${operationPush.content}？`,
         message: '',
         buttons: [{
           key: 'topass',
@@ -137,13 +143,13 @@ export class OperationPushComponent implements OnInit {
       });
       ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result && result.key === 'topass') {
-          this.process(operation.id, res.key);
+          this.process(operationPush.id, res);
         }
       });
     }
-    if (res.key === 'del') {
+    if (res === 'del') {
       const config = new DialogOptions({
-        title: `您确定要删除${operation.content}？`,
+        title: `您确定要删除${operationPush.content}？`,
         message: '',
         buttons: [{
           key: 'topass',
@@ -157,18 +163,34 @@ export class OperationPushComponent implements OnInit {
       });
       ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result && result.key === 'topass') {
-          this.process(operation.id, res.key);
+          this.process(operationPush.id, res);
         }
       });
     }
   }
 
   getStatus(status) {
-    if (status === '1' ) {
-      return  '已发送';
-  	} else {
-  		return  '待发送';
-  	}
+      if (status === 1 ) {
+        return  '已发送';
+      } else {
+        return  '待发送';
+      }
+  }
+
+  getSend(status) {
+    if (status === 1 ) {
+      return  ' ';
+    } else {
+      return  '发送';
+    }
+  }
+
+  getEdit (status) {
+    if (status === 1 ) {
+      return  ' ';
+    } else {
+      return  '编辑';
+    }
   }
 
   change(index) {

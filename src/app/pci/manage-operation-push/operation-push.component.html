@@ -11,11 +11,30 @@
         </div>
         <div *ngIf="operationPushTable.lists">
           <div class="content__table">
-            <app-lib-table
-              [table]="operationPushTable"
-              (handleEmmit)="gotoHandle($event)"
-              (pageEmitter)="getOperationPushUser($event)"
-            ></app-lib-table>
+            <table class="table">
+              <thead>
+              <tr>
+                <th *ngFor="let title of operationPushTable.titles">{{title.name}}</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="operationPushTable.lists">
+              <tr *ngFor="let list of operationPushTable.lists">
+                <td *ngFor="let title of operationPushTable.titles" [ngSwitch]="title.controlType" data-title="{{title.name}}">
+                  <div *ngSwitchCase="controlType.text" [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"
+                       class="table__content">
+                    <span>{{list[title.key] == 0 ? list[title.key] : list[title.key] || ''}}</span>
+                  </div>
+                  <div *ngSwitchCase="controlType.date" [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"
+                       class="table__content">
+                    <span>{{list[title.key] | date:"yyyy/MM/dd HH:mm"}}</span>
+                  </div>
+                  <div *ngSwitchCase="controlType.button" [style.minWidth.px]="title.minwidth" class="table__content">
+                    <span (click)="gotoHandle(title.key,list)"  class="table__option">{{title.option || list[title.key] || title.name }}</span>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </md-tab>
@@ -26,11 +45,30 @@
         </div>
         <div *ngIf="operationPushDoctorTable.lists">
           <div class="content__table">
-            <app-lib-table
-              [table]="operationPushDoctorTable"
-              (handleEmmit)="gotoHandle($event)"
-              (pageEmitter)="getOperationPushDoctor($event)"
-            ></app-lib-table>
+            <table class="table">
+              <thead>
+              <tr>
+                <th *ngFor="let title of operationPushDoctorTable.titles">{{title.name}}</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="operationPushDoctorTable.lists">
+              <tr *ngFor="let list of operationPushDoctorTable.lists">
+                <td *ngFor="let title of operationPushDoctorTable.titles" [ngSwitch]="title.controlType" data-title="{{title.name}}">
+                  <div *ngSwitchCase="controlType.text" [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"
+                       class="table__content">
+                    <span>{{list[title.key] == 0 ? list[title.key] : list[title.key] || ''}}</span>
+                  </div>
+                  <div *ngSwitchCase="controlType.date" [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"
+                       class="table__content">
+                    <span>{{list[title.key] | date:"yyyy/MM/dd HH:mm"}}</span>
+                  </div>
+                  <div *ngSwitchCase="controlType.button" [style.minWidth.px]="title.minwidth" class="table__content">
+                    <span (click)="gotoHandle(title.key,list)"  class="table__option">{{title.option || list[title.key] || title.name }}</span>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </md-tab>

@@ -1,0 +1,28 @@
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="content">
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="getValues(form.value)">
+      <app-input-file [form]="form" [data]="config.iconUrl" [value]="config.iconUrl.value"></app-input-file>
+      <app-input-text [form]="form" [data]="config.name" [value]="config.name.value"></app-input-text>
+      <app-input-text [form]="form" [data]="config.times" [value]="config.times.value"></app-input-text>
+      <app-input-radio [form]="form" [data]="config.enable" [value]="config.enable.value"></app-input-radio>
+      <app-input-radio [form]="form" [data]="config.unitId" [value]="config.unitId.value"></app-input-radio>
+      <app-input-text [form]="form" [data]="config.numbers" [value]="numbers" class="hidden"></app-input-text>
+      <div style="padding-bottom: 1em">
+        <md-input-container>
+          <input mdInput placeholder="添加服务价钱" name="number" #number>
+        </md-input-container>
+        <button md-icon-button type="button" (click)="addNumber(number.value)">
+          <md-icon>add</md-icon>
+        </button>
+        <div>
+          <span *ngFor="let num of numbers" style="padding-right: 10px">
+            {{num}}<md-icon (click)="delNumber(num)" style="padding-left: 5px">close</md-icon>
+          </span>
+        </div>
+      </div>
+      <app-input-textarea [form]="form" [data]="config.description" [value]="config.description.value">></app-input-textarea>
+      <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
+      <button md-raised-button type="reset">重置</button>
+    </form>
+  </div>
+</app-container>

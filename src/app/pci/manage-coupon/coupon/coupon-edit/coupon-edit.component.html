@@ -1,0 +1,42 @@
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="content">
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="getValues(form.value)">
+      <app-input-text [form]="form" [data]="config.name" [value]="config.name.value"></app-input-text>
+      <div>
+        <span>优惠券面值</span>
+        <md-input-container class="example-full-width">
+          <input mdInput placeholder="订单满" disabled  [formControlName]="config.fullPrice.key" [(ngModel)]="config.fullPrice.value">
+        </md-input-container>
+        <span>元</span>
+        <md-input-container class="example-full-width">
+          <input mdInput placeholder="减" disabled  [formControlName]="config.price.key" [(ngModel)]="config.price.value">
+        </md-input-container>
+        <span>元</span>
+      </div>
+      <app-input-text [form]="form" [data]="config.code" [value]="config.code.value"></app-input-text>
+      <app-input-text [form]="form" [data]="config.grantNum" [value]="config.grantNum.value"></app-input-text>
+      <app-input-radio [form]="form" [data]="config.assignUser" [value]="config.assignUser.value" (valueChange)="getExecl($event)"></app-input-radio>
+      <!--<input class="input_content" #file type="file" (change)="uploadChange($event)">-->
+      <app-input-file *ngIf="exEcl" [form]="form" [data]="config.exEcl" [(value)]="config.exEcl.value"></app-input-file>
+      <app-input-radio [form]="form" [data]="config.useRange" [value]="config.useRange.value" (valueChange)="usableRange($event)"></app-input-radio>
+      <!--<app-input-dropdown *ngIf="service" [form]="form" [data]="config.service" [(value)]="config.service.value"></app-input-dropdown>-->
+      <div class="input_container" *ngIf="service">
+        <md-select style="width: 100%"
+                   [placeholder]="config.thirdPartyServiceId.label"
+                   [formControlName]="config.thirdPartyServiceId.key"
+                   [(ngModel)]="config.thirdPartyServiceId.value"
+        >
+          <md-option *ngFor="let opt of config.thirdPartyServiceId.options" [value]="opt.id">
+            {{opt.name}}
+          </md-option>
+        </md-select>
+      </div>
+      <app-input-dropdown [form]="form" [data]="config.organizationId" [(value)]="config.organizationId.value"></app-input-dropdown>
+      <app-input-date [form]="form" [data]="config.startDate" [(value)]="config.startDate.value"></app-input-date>
+      <app-input-date [form]="form" [data]="config.endDate" [(value)]="config.endDate.value"></app-input-date>
+      <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
+      <button md-raised-button type="reset">重置</button>
+    </form>
+  </div>
+</app-container>
+
