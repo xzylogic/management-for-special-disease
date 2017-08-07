@@ -5,7 +5,9 @@
   "scripts": {
     "start": "ng serve -p 4203",
     "copy": "cp -rf WEB-INF dist",
-    "build-test": "ng build --prod --env=test --bh /management-pci/ && npm run copy",
+    "old": "mkdir dist/old && cp old/** dist/old",
+    "old-test": "mkdir dist/old && cp old-test/** dist/old",
+    "build-test": "ng build --prod --env=test --bh /management-pci/ && npm run copy && npm run old-test",
     "build-pci": "ng build --prod --env=pci --bh /management-pci/",
     "build": "npm run build-pci && npm run copy"
   },

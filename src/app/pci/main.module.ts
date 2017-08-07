@@ -17,6 +17,7 @@ import { NavigationService } from './_service/navigation.service';
 import { app } from '../../environments/environment';
 
 import { LibDialogModule } from '../libs/dmodal/dialog/dialog.module';
+import { LibDialogEditModule } from '../libs/dmodal/dialog/dialog-edit.module';
 import { StoreModule } from './store.module';
 import { MainAction } from './_store/main.action';
 import { ApiAction } from './_store/api/api.action';
@@ -33,6 +34,7 @@ import { CommonService } from './_service/common.service';
     MdChipsModule,
     StoreModule,
     LibDialogModule,
+    LibDialogEditModule,
     PciRoutingModule
   ],
   declarations: [
