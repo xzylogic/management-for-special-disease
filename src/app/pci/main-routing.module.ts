@@ -24,7 +24,7 @@ import { routes as wechatRoutes } from './manage-wechat';
       children: [
         {
           path: '',
-          redirectTo: '/doctor',
+          redirectTo: '/green-channel',
           pathMatch: 'full'
         },
         ...adRoutes,

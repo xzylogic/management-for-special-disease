@@ -164,7 +164,7 @@ export class ReservationBedComponent implements OnInit {
           new FormDate({
             key: 'date',
             label: '可就诊时间',
-            value: '',
+            value: res && res.value && res.value.TreatmentTime || '',
             required: true,
             order: 0
           }),

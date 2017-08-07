@@ -46,6 +46,10 @@ export class IntegralCommodityTableService {
         key: 'freight'
       }),
       new TableTitle({
+        name: '客户端',
+        key: 'goodsTypeName'
+      }),
+      new TableTitle({
         name: '状态',
         key: 'goodsStatusName'
       }),

@@ -31,20 +31,20 @@ export class UserCertificationService {
     });
   }
 
-  getUserCertifications(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userCertificationList}?page=${page}&size=${size}`);
+  getUserCertifications(page: number, size: number, keyWord: string) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userCertificationList}?page=${page}&size=${size}&keyWord=${keyWord}`);
   }
 
-  getUserUncertifications(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userUnCertificationList}?page=${page}&size=${size}`);
+  getUserUncertifications(page: number, size: number, keyWord: string) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userUnCertificationList}?page=${page}&size=${size}&keyWord=${keyWord}`);
   }
 
-  getUserCertificatings(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userCertificatingList}?page=${page}&size=${size}`);
+  getUserCertificatings(page: number, size: number, keyWord: string) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userCertificatingList}?page=${page}&size=${size}&keyWord=${keyWord}`);
   }
 
-  getUserCertificationFailures(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userCertificationFailureList}?page=${page}&size=${size}`);
+  getUserCertificationFailures(page: number, size: number, keyWord: string) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userCertificationFailureList}?page=${page}&size=${size}&keyWord=${keyWord}`);
   }
 
   // getCertificationCount() {

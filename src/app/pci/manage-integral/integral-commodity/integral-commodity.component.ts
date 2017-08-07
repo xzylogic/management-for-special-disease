@@ -59,7 +59,7 @@ export class IntegralCommodityComponent implements OnInit {
           this.integralCommodityTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data && res.data.content) {
           this.integralCommodityTable.totalPage = res.data.totalPages;
-          this.formatCommodity(res.data.content, true);
+          this.formatCommodity(res.data.content);
           this.integralCommodityTable.lists = res.data.content;
         } else {
           this.integralCommodityTable.errorMessage = res.msg || ERRMSG.otherMsg;
@@ -71,17 +71,17 @@ export class IntegralCommodityComponent implements OnInit {
       })
   }
 
-  formatCommodity(list: Array<any>, state: boolean) {
+  formatCommodity(list: Array<any>) {
     list.forEach(data => {
-      data.goodsStatusName = data.goodsStatus ? '下架' : '上架';
-      data.updown = data.goodsStatus ? '上架' : '下架';
       if (data.goodsType === 0) {
-        data.goodsTypeName = '客户端';
+        data.goodsTypeName = '患者端';
       } else if (data.goodsType === 1) {
         data.goodsTypeName = '医生端';
       } else if (data.goodsType === 2) {
         data.goodsTypeName = '全部';
       }
+      data.goodsStatusName = data.goodsStatus ? '下架' : '上架';
+      data.updown = data.goodsStatus ? '上架' : '下架';
     });
   }
 
@@ -94,7 +94,6 @@ export class IntegralCommodityComponent implements OnInit {
     this.router.navigate(['/integral-commodity/edit']);
   }
 
-  //
   gotoHandle(res) {
     const integralCommodity = <IntegralCommodity>res.value;
 

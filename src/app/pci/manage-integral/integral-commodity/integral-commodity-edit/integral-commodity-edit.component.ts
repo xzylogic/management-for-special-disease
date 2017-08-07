@@ -10,6 +10,7 @@ import { IntegralCommodity } from '../_entity/integralCommodity.entity';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { FormDropdown, FormTextarea, FormText, FormFile, HintDialog, ContainerConfig } from '../../../../libs';
+import { FormEditor } from '../../../../libs/dform/_entity/form-editor';
 
 @Component({
   selector: 'app-integral-commodity-edit',
@@ -153,7 +154,7 @@ export class IntegralCommodityEditComponent implements OnInit {
         value: data && (data.freight === 0 ? data.freight : data.freight || ''),
         type: 'number'
       }),
-      introduction: new FormTextarea({
+      introduction: new FormEditor({
         key: 'introduction',
         label: '商品描述',
         value: data && data.introduction || ''

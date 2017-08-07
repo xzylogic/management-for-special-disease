@@ -2,6 +2,17 @@
   <div class="content">
     <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <md-tab label="已认证">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="userCertificationTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getUserCertifications(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset0()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
         <div *ngIf="!userCertificationTable.lists&&userCertificationTable.loading">Loading...</div>
         <div *ngIf="!userCertificationTable.lists&&!userCertificationTable.loading&&!!userCertificationTable.errorMessage" class="center">
           {{userCertificationTable.errorMessage}}
@@ -17,6 +28,17 @@
         </div>
       </md-tab>
       <md-tab label="未认证">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="userUnCertificationTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getUserUncertifications(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset1()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
         <div *ngIf="!userUnCertificationTable.lists&&userUnCertificationTable.loading">Loading...</div>
         <div *ngIf="!userUnCertificationTable.lists&&!userUnCertificationTable.loading&&!!userUnCertificationTable.errorMessage" class="center">
           {{userUnCertificationTable.errorMessage}}
@@ -32,6 +54,17 @@
         </div>
       </md-tab>
       <md-tab label="申请中">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="userCertificatingTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getUserCertificatings(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset2()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
         <div *ngIf="!userCertificatingTable.lists&&userCertificatingTable.loading">Loading...</div>
         <div *ngIf="!userCertificatingTable.lists&&!userCertificatingTable.loading&&!!userCertificatingTable.errorMessage" class="center">
           {{userCertificatingTable.errorMessage}}
@@ -47,6 +80,17 @@
         </div>
       </md-tab>
       <md-tab label="申请失败">
+        <form style="padding: 0 16px">
+          <md-input-container floatPlaceholder="never">
+            <input mdInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="userCertificationFailureTable.queryKey">
+          </md-input-container>
+          <button md-icon-button color="primary" type="button" (click)="getUserCertificationFailures(0)">
+            <md-icon>search</md-icon>
+          </button>
+          <button md-icon-button color="primary" type="button" (click)="reset3()">
+            <md-icon>autorenew</md-icon>
+          </button>
+        </form>
         <div *ngIf="!userCertificationFailureTable.lists&&userCertificationFailureTable.loading">Loading...</div>
         <div *ngIf="!userCertificationFailureTable.lists&&!userCertificationFailureTable.loading&&!!userCertificationFailureTable.errorMessage" class="center">
           {{userCertificationFailureTable.errorMessage}}
