@@ -5,9 +5,7 @@ import { MdDialog } from '@angular/material';
 
 import { UserCertificationService } from './_service/user-certification.service';
 import { UserCertificationTableService } from './_service/user-certification-table.service';
-import {
-  TableOption, ContainerConfig, ImageDialog,
-} from '../../../libs';
+import { TableOption, ContainerConfig, ImageDialog } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
@@ -107,7 +105,7 @@ export class UserCertificationComponent implements OnInit {
         }, err => {
           this.userCertificationTable.loading = false;
           this.userCertificationTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
   getUserUncertifications(page: number) {
@@ -128,7 +126,7 @@ export class UserCertificationComponent implements OnInit {
         }, err => {
           this.userCertificationTable.loading = false;
           this.userUnCertificationTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
   getUserCertificatings(page: number) {
@@ -149,7 +147,7 @@ export class UserCertificationComponent implements OnInit {
         }, err => {
           this.userCertificationTable.loading = false;
           this.userCertificatingTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
   getUserCertificationFailures(page: number) {
@@ -170,7 +168,7 @@ export class UserCertificationComponent implements OnInit {
         }, err => {
           this.userCertificationTable.loading = false;
           this.userCertificationFailureTable.errorMessage = ERRMSG.netErrMsg;
-        })
+        });
   }
 
   // getCertificationCount() {

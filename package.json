@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "ng serve -p 4203 --progress false",
+    "start": "ng serve -p 4203",
     "clean": "rm -rf dist",
     "build-pci": "npm run clean && ng build -aot -prod -e pci -bh /management-pci/ && cp -rf WEB-INF dist",
     "build": "npm run build-pci"
@@ -40,7 +40,7 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "^1.1.1",
+    "@angular/cli": "^1.2.7",
     "@angular/compiler-cli": "^4.2.6",
     "@angular/language-service": "^4.2.6",
     "@types/jasmine": "^2.5.45",
