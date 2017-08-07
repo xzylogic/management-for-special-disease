@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
 import { UserOrderService } from './_service/user-order.service';
@@ -30,6 +28,9 @@ export class UserOrderComponent implements OnInit {
   userOrderSuccessTable: TableOption;
   userOrderCancelTable: TableOption;
   userOrderThirdTable: TableOption;
+
+  count1: number;
+  count2: number;
 
   constructor(
     @Inject('action') private action,
@@ -107,6 +108,7 @@ export class UserOrderComponent implements OnInit {
   reset3() {
     this.userOrderRefundingTable.queryKey = '';
     this.getUserOrdersRefunding(0);
+    this.getCount();
   }
 
   reset4() {
@@ -127,6 +129,7 @@ export class UserOrderComponent implements OnInit {
   reset7() {
     this.userOrderThirdTable.queryKey = '';
     this.getUserOrdersThird(0);
+    this.getCount();
   }
 
   getUserOrdersAll(page: number) {
@@ -295,6 +298,15 @@ export class UserOrderComponent implements OnInit {
           console.log(err);
           this.userOrderThirdTable.errorMessage = ERRMSG.netErrMsg;
         })
+  }
+
+  getCount() {
+    this.userOrderService.getUserOrderCount().subscribe(res => {
+      if (res.code === 0) {
+        this.count1 = res.data.refundSum;
+        this.count2 = res.data.thirdSum;
+      }
+    })
   }
 
   gotoHandle(res) {

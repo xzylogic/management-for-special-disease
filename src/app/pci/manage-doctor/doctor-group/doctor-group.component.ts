@@ -48,6 +48,7 @@ export class DoctorGroupComponent implements OnInit {
 
   constructor(
     @Inject('action') private action,
+    @Inject('nav') private navService,
     private doctorGroupService: DoctorGroupService,
     private doctorGroupTableService: DoctorGroupTableService,
     private auditingServiceTableService: AuditingServiceTableService,
@@ -117,6 +118,7 @@ export class DoctorGroupComponent implements OnInit {
             this.auditingServiceTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
             this.count = res.data.totalElements;
+            this.navService.setCount(this.count, 'doctorgroup', 'doctorgroup');
             this.auditingServiceTable.totalPage = res.data.totalPages;
             this.auditingServiceTable.lists = res.data.content;
           } else {

@@ -13,7 +13,29 @@ import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-integral-order',
-  templateUrl: 'integral-order.component.html'
+  templateUrl: './integral-order.component.html',
+  styles: [`
+    .content {
+      position: relative;
+    }
+
+    .count {
+      position: absolute;
+      top: 10px;
+      left: 108px;
+    }
+
+    .count > md-chip {
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .count {
+        left: 60px;
+      }
+    }
+  `]
 })
 export class IntegralOrderComponent implements OnInit {
   containerConfig: ContainerConfig;
@@ -22,9 +44,11 @@ export class IntegralOrderComponent implements OnInit {
   @select(['integralOrder', 'tab']) tab: Observable<number>;
   @select(['integralOrder', 'page']) page: Observable<Array<number>>;
   processStatus: number;
+  count: number;
 
   constructor(
     @Inject('action') private action,
+    @Inject('nav') private navService,
     private integralOrderService: IntegralOrderService,
     private integralOrderTableService: IntegralOrderTableService,
     private dialog: MdDialog,
@@ -73,6 +97,8 @@ export class IntegralOrderComponent implements OnInit {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
           this.integralOrderTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data && res.data.content) {
+          this.count = res.data.totalElements;
+          this.navService.setCount(this.count, 'integral', 'integralOrder');
           this.integralOrderTable.totalPage = res.data.totalPages;
           this.integralOrderTable.lists = res.data.content;
         } else {

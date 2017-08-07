@@ -13,7 +13,40 @@ import { ActionDialog } from '../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-doctor-account',
-  templateUrl: './doctor-account.component.html'
+  templateUrl: './doctor-account.component.html',
+  styles: [`
+    .content {
+      position: relative;
+    }
+
+    .count1 {
+      position: absolute;
+      top: 10px;
+      left: 270px;
+    }
+
+    .count2 {
+      position: absolute;
+      top: 10px;
+      left: 432px;
+    }
+
+    .count1 > md-chip,
+    .count2 > md-chip {
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .count1 {
+        left: 150px;
+      }
+
+      .count2 {
+        left: 230px;
+      }
+    }
+  `]
 })
 export class DoctorAccountComponent implements OnInit {
   containerConfig: ContainerConfig;
@@ -22,9 +55,12 @@ export class DoctorAccountComponent implements OnInit {
   commodityExchangeTable: TableOption;
   @select(['doctorAccount', 'tab']) tab: Observable<number>;
   @select(['doctorAccount', 'page']) page: Observable<Array<number>>;
+  count1: number;
+  count2: number;
 
   constructor(
     @Inject('action') private action,
+    @Inject('nav') private navService,
     private doctorAccountService: DoctorAccountService,
     private doctorAccountTableService: DoctorAccountTableService,
     private dialog: MdDialog,
@@ -53,6 +89,7 @@ export class DoctorAccountComponent implements OnInit {
     this.reset0();
     this.reset1();
     this.reset2();
+    this.getCount();
   }
 
   reset0() {
@@ -139,6 +176,16 @@ export class DoctorAccountComponent implements OnInit {
         })
   }
 
+  getCount() {
+    this.doctorAccountService.getCount().subscribe(res => {
+      if (res.code === 0) {
+        this.count2 = res.data.purchase;
+        this.count1 = res.data.withdraw;
+        this.navService.setCount(this.count2 + this.count1, 'doctorgroup', 'doctoraccount');
+      }
+    })
+  }
+
   gotoHandle(res) {
     const data = res.value;
     if (res.key === 'totalRevenue') {
@@ -215,6 +262,7 @@ export class DoctorAccountComponent implements OnInit {
         res => {
           if (res.code === 0) {
             HintDialog(res.msg || '操作成功！', this.dialog);
+            this.reset();
           } else {
             HintDialog(res.msg || '操作失败～', this.dialog);
           }
@@ -243,6 +291,7 @@ export class DoctorAccountComponent implements OnInit {
         res => {
           if (res.code === 0) {
             HintDialog(res.msg || '操作成功！', this.dialog);
+            this.reset();
           } else {
             HintDialog(res.msg || '操作失败～', this.dialog);
           }

@@ -31,11 +31,11 @@ export let NAVBARS = [
         title: '渠道来源统计',
         link: '/download-statistics'
       }),
-      new Navbar({
-        key: 'fatherstatistics',
-        title: '父亲节统计',
-        link: '/father-statistics'
-      })
+      // new Navbar({
+      //   key: 'fatherstatistics',
+      //   title: '父亲节统计',
+      //   link: '/father-statistics'
+      // })
     ]
   }),
   new Navbar({

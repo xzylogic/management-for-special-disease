@@ -10,7 +10,29 @@ import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-user-certification',
-  templateUrl: './user-certification.component.html'
+  templateUrl: './user-certification.component.html',
+  styles: [`
+    .content {
+      position: relative;
+    }
+
+    .count {
+      position: absolute;
+      top: 10px;
+      left: 595px;
+    }
+
+    .count > md-chip {
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .count {
+        left: 289px;
+      }
+    }
+  `]
 })
 export class UserCertificationComponent implements OnInit {
 
@@ -23,8 +45,11 @@ export class UserCertificationComponent implements OnInit {
   @select(['userCertification', 'tab']) tab: Observable<number>;
   @select(['userCertification', 'page']) page: Observable<Array<number>>;
 
+  count: number;
+
   constructor(
     @Inject('action') private action,
+    @Inject('nav') private navService,
     private dialog: MdDialog,
     private userCertificationService: UserCertificationService,
     private userCertificationTableService: UserCertificationTableService
@@ -104,6 +129,7 @@ export class UserCertificationComponent implements OnInit {
           }
         }, err => {
           this.userCertificationTable.loading = false;
+          console.log(err);
           this.userCertificationTable.errorMessage = ERRMSG.netErrMsg;
         });
   }
@@ -125,6 +151,7 @@ export class UserCertificationComponent implements OnInit {
           }
         }, err => {
           this.userCertificationTable.loading = false;
+          console.log(err);
           this.userUnCertificationTable.errorMessage = ERRMSG.netErrMsg;
         });
   }
@@ -146,6 +173,7 @@ export class UserCertificationComponent implements OnInit {
           }
         }, err => {
           this.userCertificationTable.loading = false;
+          console.log(err);
           this.userCertificatingTable.errorMessage = ERRMSG.netErrMsg;
         });
   }
@@ -160,6 +188,8 @@ export class UserCertificationComponent implements OnInit {
           if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
             this.userCertificationFailureTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
+            this.count = res.data.totalElements;
+            this.navService.setCount(this.count, 'user', 'usercertification');
             this.userCertificationFailureTable.totalPage = res.data.totalPages;
             this.userCertificationFailureTable.lists = res.data.content;
           } else {
@@ -167,22 +197,11 @@ export class UserCertificationComponent implements OnInit {
           }
         }, err => {
           this.userCertificationTable.loading = false;
+          console.log(err);
           this.userCertificationFailureTable.errorMessage = ERRMSG.netErrMsg;
         });
   }
 
-  // getCertificationCount() {
-  //   this._userCertificationService.getCertificationCount()
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.certificatingCount = data.data.auditing;
-  //           this.failureCount = data.data.failure;
-  //           this._sidebarService.setCount(this.certificatingCount + this.failureCount, 'usergroup', 'usercertification');
-  //         }
-  //       })
-  // }
-  //
   gotoHandle(res) {
     if (res.key === 'idCardImageUrl') {
       ImageDialog(res.value.name, res.value.avatarUrl, this.dialog);

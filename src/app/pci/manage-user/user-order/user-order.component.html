@@ -1,10 +1,12 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="addition">
+    <button md-raised-button disabled>退款中</button>
     <div class="count await-refund">
-      <md-chip color="accent" selected="true">12</md-chip>
+      <md-chip color="accent" selected="true">{{count1}}</md-chip>
     </div>
+    <button md-raised-button disabled>未处理第三方服务</button>
     <div class="count untreated">
-      <md-chip color="accent" selected="true">25</md-chip>
+      <md-chip color="accent" selected="true">{{count2}}</md-chip>
     </div>
   </div>
   <div class="content">
