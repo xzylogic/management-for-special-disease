@@ -3,7 +3,7 @@
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="getValues(form.value)">
       <app-input-file [form]="form" [data]="config.iconUrl" [value]="config.iconUrl.value"></app-input-file>
       <app-input-text [form]="form" [data]="config.name" [value]="config.name.value"></app-input-text>
-      <app-input-text [form]="form" [data]="config.times" [value]="config.times.value"></app-input-text>
+      <!--<app-input-text [form]="form" [data]="config.times" [value]="config.times.value"></app-input-text>-->
       <app-input-radio [form]="form" [data]="config.enable" [value]="config.enable.value"></app-input-radio>
       <app-input-radio [form]="form" [data]="config.unitId" [value]="config.unitId.value"></app-input-radio>
       <app-input-text [form]="form" [data]="config.numbers" [value]="numbers" class="hidden"></app-input-text>
@@ -20,7 +20,8 @@
           </span>
         </div>
       </div>
-      <app-input-textarea [form]="form" [data]="config.description" [value]="config.description.value">></app-input-textarea>
+      <app-input-textarea [form]="form" [data]="config.content " [value]="config.content.value">></app-input-textarea>
+      <app-input-textarea [form]="form" [data]="config.operationalRemark " [value]="config.operationalRemark .value">></app-input-textarea>
       <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
       <button md-raised-button type="reset">重置</button>
     </form>
