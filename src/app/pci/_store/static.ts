@@ -291,11 +291,11 @@ export let NAVBARS = [
       }),
     ]
   }),
-  // new Navbar({
-  //   key: 'datacollection',
-  //   title: '病史资料录入',
-  //   link: '/old'
-  // }),
+  new Navbar({
+    key: 'datacollection',
+    title: '病史资料录入',
+    link: '/old'
+  }),
   new Navbar({
     key: 'versioncontrol',
     title: '版本控制',

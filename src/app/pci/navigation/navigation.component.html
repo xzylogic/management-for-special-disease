@@ -15,9 +15,15 @@
           <div class="nav__item" [class.open]="sidebar.open">
             <div class="nav__title">
               <a
-                *ngIf="!sidebar.ifSub"
+                *ngIf="!sidebar.ifSub&&sidebar.key!=='datacollection'"
                 routerLinkActive="active"
                 [routerLink]="[sidebar.link]"
+              >
+                {{sidebar.title}}
+              </a>
+              <a
+                *ngIf="!sidebar.ifSub&&sidebar.key==='datacollection'"
+                href="/management-pci/old"
               >
                 {{sidebar.title}}
               </a>
@@ -26,7 +32,7 @@
                 <md-icon>chevron_right</md-icon>
               </span>
               <md-chip-list *ngIf="sidebar.tag">
-                <md-chip color="accent" selected="true"> </md-chip>
+                <md-chip color="accent" selected="true"></md-chip>
               </md-chip-list>
             </div>
           </div>
