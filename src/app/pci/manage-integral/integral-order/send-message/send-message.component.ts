@@ -38,9 +38,11 @@ export class SendMessageComponent implements OnInit {
 
   constructor(
     private integralOrderService: IntegralOrderService,
+    private integralOrderFormService: IntegralOrderFormService,
     private dialog: MdDialog,
     private router: Router,
     private fb: FormBuilder,
+    private activeRouter: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     @Inject('auth') private auth
   ) {
@@ -145,7 +147,7 @@ export class SendMessageComponent implements OnInit {
         exchangeId: this.integralOrderId,
         courierId: value.expressName,
         trackingNum: value.expressNumber,
-        operator: this.auth.getName()
+        operator: this.auth.getAdminName()
       };
     }
     this.integralOrderService.editExpressNo(body).subscribe(res => {

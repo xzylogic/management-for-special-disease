@@ -90,8 +90,7 @@ export class IntegralOrderComponent implements OnInit {
   getIntegralOrder(page: number) {
     this.action.pageChange('integralOrder', [page, this.integralOrderTable.currentPage]);
     this.integralOrderTable.reset(page);
-    const option: any = {flag: page, type: 0};
-    this.integralOrderService.getIntegralOrder(option)
+    this.integralOrderService.getIntegralOrder(0, page)
       .subscribe(res => {
         this.integralOrderTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -114,8 +113,7 @@ export class IntegralOrderComponent implements OnInit {
   getIntegralOrdered(page: number) {
     this.action.pageChange('integralOrder', [this.integralOrderedTable.currentPage, page]);
     this.integralOrderedTable.reset(page);
-    const option: any = {flag: page, type: 1};
-    this.integralOrderService.getIntegralOrder(option)
+    this.integralOrderService.getIntegralOrder(1, page)
       .subscribe(res => {
         this.integralOrderedTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -123,7 +121,6 @@ export class IntegralOrderComponent implements OnInit {
         } else if (res.code === 0 && res.data && res.data.content) {
           this.integralOrderedTable.totalPage = res.data.totalPages;
           this.integralOrderedTable.lists = res.data.content;
-          console.log(this.integralOrderedTable.lists);
         } else {
           this.integralOrderedTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }
