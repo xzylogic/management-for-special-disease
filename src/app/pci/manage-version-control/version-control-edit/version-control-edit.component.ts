@@ -47,7 +47,6 @@ export class VersionControlEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
     if (this.versionControlId !== 0) {
       this.versionControlService.versionControlUpdate(value)
         .subscribe(res => {

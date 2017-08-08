@@ -191,7 +191,6 @@ export class IntegralDetailComponent implements OnInit {
     });
     EditDialog(config, this.dialog).afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.toPresentExp(result);
       }
     });

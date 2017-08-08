@@ -48,7 +48,6 @@ export class FlowerGradeEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
     if (this.flowerGradeId !== 0) {
       this.flowerGradeService.flowerGradeEdit(value.id, value.title, value.imgUrl, value.value)
         .subscribe(res => {

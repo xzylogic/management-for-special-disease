@@ -32,26 +32,25 @@ export class PackageServiceEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.packageService.subscribe(res => {
-        this.packageServiceService.getServiceOptionD().subscribe(data => {
-          console.log(data);
-          // this.packageServiceService.getServiceOptionT().subscribe(obj => {
-          //     this.packageServiceId = res.id;
-          //     if (res.id === 0) {
-          //       this.containerConfig = this.packageServiceService.packageServiceEditConfig(true);
-          //       this.form = this.packageServiceFormService.setForm(data.doctorPackages, obj.thirdPackages);
-          //     } else {
-          //       this.containerConfig = this.packageServiceService.packageServiceEditConfig(false);
-          //       this.form = this.packageServiceFormService.setForm(data.doctorPackages, obj.thirdPackages, data);
-          //     }
-          //   }
-          // );
-        });
-      // },
-      // err => {
-      //   console.log(err);
-      //   this.errMsg = ERRMSG.netErrMsg;
-      // });
+    this.packageServiceService.getServiceOptionD().subscribe(data => {
+        this.packageServiceService.getServiceOptionT().subscribe(obj => {
+            this.packageService.subscribe(res => {
+              this.packageServiceId = res.id;
+              if (res.id === 0) {
+                this.containerConfig = this.packageServiceService.packageServiceEditConfig(true);
+                this.form = this.packageServiceFormService.setForm(data.data, obj.data);
+              } else {
+                this.containerConfig = this.packageServiceService.packageServiceEditConfig(false);
+                this.form = this.packageServiceFormService.setForm(data.data, obj.data, res);
+              }
+            });
+          }
+        );
+      },
+      err => {
+        console.log(err);
+        this.errMsg = ERRMSG.netErrMsg;
+      });
   }
 
   getValues(value) {
@@ -69,6 +68,5 @@ export class PackageServiceEditComponent implements OnInit {
         HintDialog(ERRMSG.saveError, this.dialog);
       });
   }
-
 
 }

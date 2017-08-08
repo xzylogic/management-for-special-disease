@@ -40,15 +40,15 @@ export class IntegralOrderService {
   /**
    * 积分商品订单列表
    */
-  getIntegralOrder(obj: { idx?: number, flag?: number }) {
-    if (obj.idx && !obj.flag) {
-      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?idx=${obj.idx}`);
-    } else if (!obj.idx && obj.flag) {
-      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?flag=${obj.flag}`);
-    } else if (!obj.idx && !obj.flag) {
+  getIntegralOrder(idx?: number, flag?: number) {
+    if (idx && !flag) {
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?idx=${idx}`);
+    } else if (!idx && flag) {
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?flag=${flag}`);
+    } else if (!idx && !flag) {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}`);
     } else {
-      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?idx=${obj.idx}&flag=${obj.flag}`);
+      return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralOrderList}?idx=${idx}&flag=${flag}`);
     }
   }
 
