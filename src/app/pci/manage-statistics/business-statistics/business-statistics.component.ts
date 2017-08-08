@@ -98,8 +98,8 @@ export class BusinessStatisticsComponent implements OnInit {
       XLSX.utils.book_append_sheet(wb, ws, this.queryUserDate);
       /* save to file */
       const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-      const fileName = type ? `肾移植管家业务数据统计-患者端-${this.queryUserDate}.xlsx`
-        : `肾移植管家业务数据统计-医生端-${this.queryDoctorDate}.xlsx`;
+      const fileName = type ? `心血管家业务数据统计-患者端-${this.queryUserDate}.xlsx`
+        : `心血管家业务数据统计-医生端-${this.queryDoctorDate}.xlsx`;
       saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
     }
   }
