@@ -1,20 +1,21 @@
-/**
- * Created by zhanglin on 2017/7/31.
- */
 import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
-import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
+import {
+  TableOption, ContainerConfig,
+  DialogOptions, ActionDialog, HintDialog,
+  FormDate, FormDropdown
+} from '../../../libs';
+import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
+import { DialogEdit } from '../../../libs/dmodal/dialog/dialog.entity';
 import { ERRMSG } from '../../_store/static';
 import { GreenChannelService } from './_service/green-channel.service';
 import { GreenChannelTableService } from './_service/green-channel-table.service';
-import { FormDate } from '../../../libs/dform/_entity/form-date';
-import { FormDropdown } from '../../../libs/dform/_entity/form-dropdown';
 import { GreenChannel } from './_entity/green-channel.entity';
-import { DialogEdit } from '../../../libs/dmodal/dialog/dialog.entity';
-import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-green-channel',
@@ -160,7 +161,10 @@ export class GreenChannelComponent implements OnInit {
   }
 
   gotoHandle(res) {
+    console.log(res.value);
     if (res.key === 'edit') {
+      let mindate = new Date(res.value.applicationTime).valueOf();
+      let maxdate = mindate + 24 * 60 * 60 * 30 * 1000;
       const config: DialogEdit = new DialogEdit({
         title: `编辑`,
         form: [
@@ -169,8 +173,8 @@ export class GreenChannelComponent implements OnInit {
             label: '可就诊时间',
             value: res && res.value && res.value.TreatmentTime || '',
             options: {
-              minDate: 'today',
-              maxDate: '2017-09-01'
+              minDate: moment(mindate).format('YYYY-MM-DD'),
+              maxDate: moment(maxdate).format('YYYY-MM-DD')
             },
             required: true,
             order: 0
@@ -203,6 +207,8 @@ export class GreenChannelComponent implements OnInit {
         }
       });
     } else if (res.key === 'agree') {
+      let mindate = new Date(res.value.applicationTime).valueOf();
+      let maxdate = mindate + 24 * 60 * 60 * 30 * 1000;
       const config: DialogEdit = new DialogEdit({
         title: `选择就诊时间`,
         form: [
@@ -210,6 +216,10 @@ export class GreenChannelComponent implements OnInit {
             key: 'date',
             label: '',
             value: '',
+            options: {
+              minDate: moment(mindate).format('YYYY-MM-DD'),
+              maxDate: moment(maxdate).format('YYYY-MM-DD')
+            },
             required: true,
             validated: true,
           })
