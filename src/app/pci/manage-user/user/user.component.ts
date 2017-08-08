@@ -2,12 +2,18 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { MdDialog } from '@angular/material';
 
 import { UserService } from './_service/user.service';
 import { UserTableService } from './_service/user-table.service';
 import { User } from './_entity/user.entity';
-import { TableOption, ContainerConfig } from '../../../libs';
-import { ERRMSG } from '../../_store/static';
+import { TableOption, ContainerConfig, HintDialog} from '../../../libs';
+import { ERRMSG, AOA } from '../../_store/static';
+
+import * as moment from 'moment';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -22,8 +28,10 @@ export class UserComponent implements OnInit {
 
   constructor(
     @Inject('action') private action,
+    @Inject('common') private common,
     private userService: UserService,
     private userTableService: UserTableService,
+    private dialog: MdDialog,
     private router: Router
   ) {
      action.dataChange('user', new User());
@@ -36,6 +44,7 @@ export class UserComponent implements OnInit {
       ifPage: true
     });
     this.reset();
+    console.log(this.userTableService.setUserTitles());
   }
 
   reset() {
@@ -106,103 +115,27 @@ export class UserComponent implements OnInit {
     }
   }
 
-
-  // // 获取医院下拉框选项
-  // getHospitals() {
-  //   this._userService.getOptions()
-  //     .subscribe(
-  //       data => {
-  //         if (data.code === 0) {
-  //           this.hospitalTable.lists = data.data.content;
-  //         }
-  //       })
-  // }
-  //
-  // gotoHandle(data) {
-  //   if (data.key == 'edit') {
-  //     this.user = data.value;
-  //     this.enableEdit = true;
-  //   } else if (data.key == 'integral') {
-  //     this.integral = data;
-  //     this.enableDetail = true;
-  //   }
-  // }
-  //
-  // newUser() {
-  //   this.user = null;
-  //   this.enableEdit = true;
-  // }
-  //
-  // handleSuccess(data) {
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.getUsers(0);
-  // }
-  //
-  // getSex(sex) {
-  //   if (sex === 0) {
-  //     return '男';
-  //   }
-  //   if (sex === 1) {
-  //     return '女';
-  //   }
-  //   return null;
-  // }
-  //
-  // //打印excel;
-  // doctorVia(data) {
-  //   var size = 0;
-  //   let maxSize = Math.ceil(data / 200);
-  //   if (data <= 200) {
-  //     this.getUserLists(size);
-  //     this.success = true;
-  //   } else {
-  //     this.timer = setInterval(() => {
-  //       this.getUserLists(size);
-  //       this.page = size;
-  //       size++;
-  //       if (size == maxSize) {
-  //         clearInterval(this.timer);
-  //         this.success = true;
-  //       }
-  //     }, 200);
-  //   }
-  // }
-  //
-  // //分批次请求数据
-  // getUserLists(page) {
-  //   this._userService.getUsers(this.queryKey, this.queryBind, page, 200)
-  //     .subscribe(
-  //       data => {
-  //         for (var i = 0; i < data.data.content.length; ++i) {
-  //           this.lists.push(data.data.content[i]);
-  //         }
-  //         this.userAllTable.lists = this.lists;
-  //         this.formatUser(data.data.content);
-  //         for (let i = 0; i < this.userAllTable.lists.length; ++i) {
-  //           this.userAllTable.lists[i].lastOperationDate = this.getDate(this.userAllTable.lists[i].lastOperationDate);
-  //         }
-  //       })
-  // }
-  //
-  // export() {
-  //   let count = this.totalElements
-  //   this.exportShow = true;
-  //   this.success = false;
-  //   this.doctorVia(count);
-  // }
-  //
-  // doctorExcel() {
-  //   $('.userExcel').on('click', function () {
-  //     let myDate = new Date();
-  //     let $this = $(this);
-  //     let table = $('#table')[0];
-  //     $this.attr('download', '全程心管家患者信息列表-' + myDate.toLocaleDateString() + '.xls');
-  //     ExcellentExport.excel(this, table);
-  //   });
-  // }
-  //
-  // close() {
-  //   this.exportShow = !this.exportShow;
-  // }
+  export() {
+    let exportList;
+    this.userService.getUsers(this.userTable.queryKey, this.queryBind, 0, 99999)
+      .subscribe(res => {
+        if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
+          exportList = this.common.toArray(res.data.content);
+          /* generate worksheet */
+          const ws = XLSX.utils.aoa_to_sheet(exportList);
+          /* generate workbook and add the worksheet */
+          const wb = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+          /* save to file */
+          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+          const fileName = `全程心管家患者信息列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+        } else {
+          HintDialog('导出数据错误，请重新尝试', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('导出数据错误，请重新尝试', this.dialog);
+      });
+  }
 }

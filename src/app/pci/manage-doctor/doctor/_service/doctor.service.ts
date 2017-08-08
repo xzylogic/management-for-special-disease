@@ -4,7 +4,7 @@ import { ContainerConfig } from '../../../../libs';
 
 const PATH = {
   doctorQuery: 'api/doctor/query', // 查询选项列表
-  sendMessage: 'doctor/sendMsg', // 编辑短信提醒医生
+  sendMessage: 'api/doctor/sendMsg', // 编辑短信提醒医生
   doctorOptionList: 'api/doctor/option/list', // 查询选项列表
   doctorCreate: 'api/doctor/add', // 新增医生
   doctorAuditedUpdate: 'api/doctor/audited/update', // 编辑审核通过的医生

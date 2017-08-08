@@ -1,6 +1,6 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button>导出</button>
+    <button md-raised-button (click)="export()">导出</button>
     <button md-raised-button (click)="newData()" >新增患者</button>
   </div>
   <div class="content">

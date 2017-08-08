@@ -166,41 +166,42 @@ export class GreenChannelComponent implements OnInit {
       let mindate = new Date(res.value.applicationTime).valueOf();
       let maxdate = mindate + 24 * 60 * 60 * 30 * 1000;
       const config: DialogEdit = new DialogEdit({
-        title: `编辑`,
-        form: [
-          new FormDate({
-            key: 'date',
-            label: '可就诊时间',
-            value: res && res.value && res.value.TreatmentTime || '',
-            options: {
-              minDate: moment(mindate).format('YYYY-MM-DD'),
-              maxDate: moment(maxdate).format('YYYY-MM-DD')
-            },
-            required: true,
-            order: 0
-          }),
-          new FormDropdown({
-            key: 'status',
-            label: '状态',
-            value: '',
-            required: true,
-            options: [{
-              id: 0,
-              name: '已就诊'
-            }, {
-              id: 1,
-              name: '未就诊'
-            }, {
-              id: 2,
-              name: '已入院'
-            }, {
-              id: 3,
-              name: '未入院'
-            }],
-            order: 1
-          })
-        ]
-      });
+          title: `编辑`,
+          form: [
+            new FormDate({
+              key: 'date',
+              label: '可就诊时间',
+              value: res && res.value && res.value.TreatmentTime || '',
+              options: {
+                minDate: moment(mindate).format('YYYY-MM-DD'),
+                maxDate: moment(maxdate).format('YYYY-MM-DD')
+              },
+              required: true,
+              order: 0
+            }),
+            new FormDropdown({
+              key: 'status',
+              label: '状态',
+              value: '',
+              required: true,
+              options: [{
+                id: 0,
+                name: '已就诊'
+              }, {
+                id: 1,
+                name: '未就诊'
+              }, {
+                id: 2,
+                name: '已入院'
+              }, {
+                id: 3,
+                name: '未入院'
+              }],
+              order: 1
+            })
+          ]
+        })
+      ;
       EditDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result) {
           this.editInfo(result.status, res.value.orderId, result.date);
@@ -217,14 +218,14 @@ export class GreenChannelComponent implements OnInit {
             key: 'date',
             label: '',
             value: '',
-            options: {
-              minDate: moment(mindate).format('YYYY-MM-DD'),
-              maxDate: moment(maxdate).format('YYYY-MM-DD')
-            },
+            options:
+              {
+                minDate: moment(mindate).format('YYYY-MM-DD'),
+                maxDate: moment(maxdate).format('YYYY-MM-DD')
+              },
             required: true,
             validated: true,
-          })
-        ]
+          })]
       });
       EditDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result) {

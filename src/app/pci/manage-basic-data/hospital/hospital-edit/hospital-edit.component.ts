@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HospitalService } from '../_service/hospital.service';
@@ -38,7 +38,8 @@ export class HospitalEditComponent implements OnInit {
     private hospitalService: HospitalService,
     private fb: FormBuilder,
     private dialog: MdDialog,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -64,15 +65,16 @@ export class HospitalEditComponent implements OnInit {
         console.log(err);
         this.errMsg = ERRMSG.netErrMsg;
       });
+    this.cdr.detectChanges();
   }
 
   createForm(data?) {
     this.form = this.fb.group({
-      imageUrl: new FormControl(Validators.required),
-      name: new FormControl( Validators.required),
-      hospitalAddress: new FormControl( Validators.required),
-      longitude: new FormControl( Validators.required),
-      latitude: new FormControl( Validators.required),
+      imageUrl: new FormControl({value: ''}, Validators.required),
+      name: new FormControl({value: ''}, Validators.required),
+      hospitalAddress: new FormControl({value: ''}, Validators.required),
+      longitude: new FormControl({value: ''}, Validators.required),
+      latitude: new FormControl({value: ''}, Validators.required),
     });
     this.config = {
       imageUrl: new FormFile({
@@ -94,12 +96,14 @@ export class HospitalEditComponent implements OnInit {
       longitude: new FormText({
         label: '小区经度',
         key: 'longitude',
-        value: data && data.longitude || ''
+        value: data && data.longitude || '',
+        disabled: true
       }),
       latitude: new FormText({
         label: '小区纬度',
         key: 'latitude',
-        value: data && data.latitude || ''
+        value: data && data.latitude || '',
+        disabled: true
       }),
     }
   }

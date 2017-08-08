@@ -195,8 +195,7 @@ export class ReservationBedComponent implements OnInit {
               name: '未入院'
             }],
             order: 1
-          })
-        ]
+          })]
       });
       EditDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result) {
@@ -220,8 +219,7 @@ export class ReservationBedComponent implements OnInit {
             },
             required: true,
             validated: true,
-          })
-        ]
+          })]
       });
       EditDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result) {

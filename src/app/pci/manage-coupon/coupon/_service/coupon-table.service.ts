@@ -25,7 +25,7 @@ export class CouponTableService {
       }),
       new TableTitle({
         name: '已领取数量',
-        key: 'grantNum'
+        key: 'receiveQuantity'
       }),
       new TableTitle({
         name: '状态',

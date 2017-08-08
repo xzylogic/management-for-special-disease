@@ -80,7 +80,7 @@ export class CommunityComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-community-123',
+  selector: 'app-community-map',
   templateUrl: './community-dialog.html',
 })
 export class DialogComponent implements OnInit {
