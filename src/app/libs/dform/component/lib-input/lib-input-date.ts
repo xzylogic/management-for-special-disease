@@ -39,10 +39,19 @@ export class LibInputDateComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const date = new Flatpickr(this.date.nativeElement, {
-      'locale': ZH,
-      'defaultDate': this.value || ''
-    });
+    if (this.data && this.data.options) {
+      const date = new Flatpickr(this.date.nativeElement, {
+        'locale': ZH,
+        'defaultDate': this.value || '',
+        'minDate': this.data.options.minDate || '',
+        'maxDate': this.data.options.maxDate || '',
+      });
+    } else {
+      const date = new Flatpickr(this.date.nativeElement, {
+        'locale': ZH,
+        'defaultDate': this.value || '',
+      });
+    }
   }
 
   change() {

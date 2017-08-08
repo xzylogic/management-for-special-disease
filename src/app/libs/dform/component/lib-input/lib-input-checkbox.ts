@@ -26,7 +26,7 @@ import { FormCheckbox } from '../../_entity';
 export class LibInputCheckboxComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() data: FormCheckbox;
-  @Input() value: any;
+  @Input() value: Array<any>;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('date') date: any;

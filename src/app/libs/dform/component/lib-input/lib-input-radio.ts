@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { FormRadio } from '../../_entity';
-import { log } from 'util';
 
 @Component({
   selector: 'app-input-radio',
@@ -37,8 +36,6 @@ export class LibInputRadioComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data.options);
-    console.log(this.value);
     if (this.data) {
       this.data.options.forEach(obj => {
         if (obj.id === this.value) {
