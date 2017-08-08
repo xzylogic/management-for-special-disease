@@ -56,10 +56,8 @@ export class LibInputFileComponent implements OnInit {
   uploadChange(files) {
     const myForm = new FormData();
     myForm.append('file', files.target.files[0]);
-    console.log(myForm);
     this.uploadService.upload(this.data.url, myForm)
       .subscribe(res => {
-        console.log(res);
         if (res.code === 0) {
           HintDialog('上传图片成功！', this.dialog);
           if (this.data.multiple === false) {
@@ -71,7 +69,6 @@ export class LibInputFileComponent implements OnInit {
             this.value.push(res.data);
           }
           this.cdr.detectChanges();
-          console.log(this.value);
         } else {
           HintDialog(res.msg || '上传图片失败！', this.dialog);
         }
@@ -82,7 +79,6 @@ export class LibInputFileComponent implements OnInit {
   }
 
   fileDel(file ?: any) {
-    console.log(this.value);
     if (!file) {
       this.value = '';
       this.file.nativeElement.value = '';
