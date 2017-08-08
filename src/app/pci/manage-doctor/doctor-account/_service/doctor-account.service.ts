@@ -86,9 +86,7 @@ export class DoctorAccountService {
    */
   getPurchase(id: number, expressNo: string, expressName: string, status: number) {
     return this.httpService.post(
-      `${this.app.pci.BASE_URL}${PATH.incomePurchase}?
-        id=${id}&adminId=${this.admin.getAdminId()}
-        &expressNo=${expressNo}&expressName=${expressName}&status=${status}`,
+      `${this.app.pci.BASE_URL}${PATH.incomePurchase}?id=${id}&adminId=${this.admin.getAdminId()}&expressNo=${expressNo}&expressName=${expressName}&status=${status}`,
       {}
     );
   }

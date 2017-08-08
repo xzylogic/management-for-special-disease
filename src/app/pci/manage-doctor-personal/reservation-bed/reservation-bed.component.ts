@@ -1,21 +1,22 @@
-/**
- * Created by zhanglin on 2017/7/31.
- */
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
-import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
-import { ERRMSG } from '../../_store/static';
-import { FormDate } from '../../../libs/dform/_entity/form-date';
-import { FormDropdown } from '../../../libs/dform/_entity/form-dropdown';
-import { ReservationBedTableService } from './_service/reservation-bed-table.service';
-import { ReservationBedService } from './_service/reservation-bed.service';
+import {
+  TableOption, ContainerConfig,
+  DialogOptions, ActionDialog, HintDialog,
+  FormDate, FormDropdown
+} from '../../../libs';
 import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
 import { DialogEdit } from '../../../libs/dmodal/dialog/dialog.entity';
+import { ERRMSG } from '../../_store/static';
+import { ReservationBedTableService } from './_service/reservation-bed-table.service';
+import { ReservationBedService } from './_service/reservation-bed.service';
 
-@Component ({
+import * as moment from 'moment';
+
+@Component({
   selector: 'app-reservation-bed',
   templateUrl: './reservation-bed.component.html'
 })
@@ -26,6 +27,7 @@ export class ReservationBedComponent implements OnInit {
   rejectedTable: TableOption;
   @select(['reservationBed', 'tab']) tab: Observable<number>;
   @select(['reservationBed', 'page']) page: Observable<Array<number>>;
+
   constructor(
     @Inject('action') private action,
     private reservationBedService: ReservationBedService,
@@ -104,11 +106,11 @@ export class ReservationBedComponent implements OnInit {
     list.forEach(data => {
       if (data.status == 0) {
         data.status = '已就诊';
-      }else if (data.status == 1) {
+      } else if (data.status == 1) {
         data.status = '未就诊';
-      }else if (data.status == 2) {
+      } else if (data.status == 2) {
         data.status = '已入院';
-      }else if (data.status == 3) {
+      } else if (data.status == 3) {
         data.status = '未入院';
       }
     });
@@ -158,6 +160,8 @@ export class ReservationBedComponent implements OnInit {
 
   gotoHandle(res) {
     if (res.key === 'edit') {
+      let mindate = new Date(res.value.applicationTime).valueOf();
+      let maxdate = mindate + 24 * 60 * 60 * 30 * 1000;
       const config: DialogEdit = new DialogEdit({
         title: `编辑`,
         form: [
@@ -165,6 +169,10 @@ export class ReservationBedComponent implements OnInit {
             key: 'date',
             label: '可就诊时间',
             value: res && res.value && res.value.TreatmentTime || '',
+            options: {
+              minDate: moment(mindate).format('YYYY-MM-DD'),
+              maxDate: moment(maxdate).format('YYYY-MM-DD')
+            },
             required: true,
             order: 0
           }),
@@ -195,7 +203,10 @@ export class ReservationBedComponent implements OnInit {
           this.editInfo(result.status, res.value.orderId, result.date);
         }
       });
-    }else if (res.key === 'agree') {
+    }
+    if (res.key === 'agree') {
+      let mindate = new Date(res.value.applicationTime).valueOf();
+      let maxdate = mindate + 24 * 60 * 60 * 30 * 1000;
       const config: DialogEdit = new DialogEdit({
         title: `选择就诊时间`,
         form: [
@@ -203,6 +214,10 @@ export class ReservationBedComponent implements OnInit {
             key: 'date',
             label: '',
             value: '',
+            options: {
+              minDate: moment(mindate).format('YYYY-MM-DD'),
+              maxDate: moment(maxdate).format('YYYY-MM-DD')
+            },
             required: true,
             validated: true,
           })
@@ -213,7 +228,8 @@ export class ReservationBedComponent implements OnInit {
           this.toAgree(res.value.orderId, result.date);
         }
       });
-    } else if (res.key === 'disagree') {
+    }
+    if (res.key === 'disagree') {
       const config = new DialogOptions({
         title: `确认拒绝么？`,
         message: '',

@@ -161,7 +161,7 @@ export class GreenChannelComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    console.log(res.value);
+    // console.log(res.value);
     if (res.key === 'edit') {
       let mindate = new Date(res.value.applicationTime).valueOf();
       let maxdate = mindate + 24 * 60 * 60 * 30 * 1000;
@@ -206,7 +206,8 @@ export class GreenChannelComponent implements OnInit {
           this.editInfo(result.status, res.value.orderId, result.date);
         }
       });
-    } else if (res.key === 'agree') {
+    }
+    if (res.key === 'agree') {
       let mindate = new Date(res.value.applicationTime).valueOf();
       let maxdate = mindate + 24 * 60 * 60 * 30 * 1000;
       const config: DialogEdit = new DialogEdit({
@@ -230,7 +231,8 @@ export class GreenChannelComponent implements OnInit {
           this.toAgree(res.value.orderId, result.date);
         }
       });
-    } else if (res.key === 'disagree') {
+    }
+    if (res.key === 'disagree') {
       const config = new DialogOptions({
         title: `确认拒绝么？`,
         message: '',

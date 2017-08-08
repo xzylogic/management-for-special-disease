@@ -166,7 +166,7 @@ export class DoctorService {
    * @param {any} body [description]
    */
   sendMessage(body: any) {
-    return this.httpService.post(`${PATH.sendMessage}`, body);
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.sendMessage}`, body);
   }
 
   getServiceDetail(id, page, size) {
