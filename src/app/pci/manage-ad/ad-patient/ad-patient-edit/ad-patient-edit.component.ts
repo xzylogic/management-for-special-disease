@@ -65,6 +65,7 @@ export class AdPatientEditComponent implements OnInit {
       title: new FormText({
         key: 'title',
         label: '广告标题',
+        maxlength: 24,
         value: data && data.title || ''
       }),
       subTitle: new FormText({
