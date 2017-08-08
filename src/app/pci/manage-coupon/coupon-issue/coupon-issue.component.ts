@@ -124,7 +124,7 @@ export class CouponIssueComponent implements OnInit {
           XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
           /* save to file */
           const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-          const fileName = `全程心管家医生信息列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+          const fileName = `优惠券发放记录列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
           saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
         } else {
           HintDialog('导出数据错误，请重新尝试', this.dialog);
