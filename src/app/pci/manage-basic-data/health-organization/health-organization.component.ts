@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { TableOption, ContainerConfig  } from '../../../libs';
+import { TableOption, ContainerConfig } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
@@ -37,9 +37,7 @@ export class HealthOrganizationComponent implements OnInit {
       titles: this.healthOrganizationTableService.setTitles(),
       ifPage: true
     });
-    this.page.subscribe((page: Array<number>) => {
-      this.getHealthOrganization();
-    });
+    this.getHealthOrganization();
   }
 
   getHealthOrganization() {
@@ -73,11 +71,4 @@ export class HealthOrganizationComponent implements OnInit {
       this.router.navigate(['/health-organization/edit']);
     }
   }
-  // //返回服务器信息
-  // handleSuccess(data){
-  //   this.titleShow = '提示信息';
-  //   this.message = data;
-  //   this.enableShow = true;
-  //   this.refresh();
-  // }
 }

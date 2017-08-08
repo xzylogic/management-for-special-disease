@@ -53,7 +53,6 @@ export class HealthServiceComponent implements OnInit {
           for (let i = 0; i < res.data.content.length; i++) {
             res.data.content[i].enable = this.formatStatus(res.data.content[i].enable);
           }
-          console.log(this.healthServiceTable.lists);
         } else {
           this.healthServiceTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }

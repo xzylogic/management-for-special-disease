@@ -123,6 +123,7 @@ export class IntegralOrderComponent implements OnInit {
         } else if (res.code === 0 && res.data && res.data.content) {
           this.integralOrderedTable.totalPage = res.data.totalPages;
           this.integralOrderedTable.lists = res.data.content;
+          console.log(this.integralOrderedTable.lists);
         } else {
           this.integralOrderedTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }

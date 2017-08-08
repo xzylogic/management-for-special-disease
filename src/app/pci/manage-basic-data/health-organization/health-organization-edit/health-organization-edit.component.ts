@@ -48,7 +48,6 @@ export class HealthOrganizationEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
     if (this.healthOrganizationId !== 0) {
       this.healthOrganizationService.healthOrganizationEdit(value)
         .subscribe(res => {

@@ -55,7 +55,7 @@ export class PackageServiceFormService {
       new FormCheckbox({
         key: 'specificationIds',
         label: '第三方服务',
-        value: data && (data.thirdServiceIds === 0 ? data.thirdServiceIds : data.thirdServiceIds || ''),
+        value: data &&  data.thirdServiceIds || [],
         required: false,
         options: thirdPackages,
         order: 4

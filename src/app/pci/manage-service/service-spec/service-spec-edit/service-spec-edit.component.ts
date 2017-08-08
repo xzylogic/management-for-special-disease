@@ -31,7 +31,6 @@ export class ServiceSpecEditComponent implements OnInit {
   searchStream: Subject<string> = new Subject<string>();
   thirdList: Array<string>;
 
-  modalTitle: string;
   errorMessage: string;
 
   constructor(
@@ -48,9 +47,9 @@ export class ServiceSpecEditComponent implements OnInit {
   ngOnInit() {
     this.containerConfig = this.serviceSpecService.serviceSpecEditConfig(true);
     this.serviceSpec.subscribe(data => {
-      console.log(data);
       if (data && data.id > 0) {
         this.serviceSpecId = data.id;
+        this.serviceName = data.serviceName;
         this.createForm( data);
         this.containerConfig = this.serviceSpecService.serviceSpecEditConfig(false);
       }else {

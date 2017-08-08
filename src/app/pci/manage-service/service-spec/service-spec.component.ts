@@ -54,7 +54,6 @@ export class ServiceSpecComponent implements OnInit {
         } else if (res.code === 0 && res.data && res.data.content) {
           this.serviceSpecTable.totalPage = res.data.totalPages;
           this.serviceSpecTable.lists = res.data.content;
-          console.log(this.serviceSpecTable.lists);
         } else {
           this.serviceSpecTable.errorMessage = res.msg || ERRMSG.otherMsg;
         }

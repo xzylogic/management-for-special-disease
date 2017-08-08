@@ -58,7 +58,6 @@ export class HealthServiceEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
     value.healthBanners = [];
     if (value.pictures) {
       for (let i = 0; i < value.pictures.length; i++) {

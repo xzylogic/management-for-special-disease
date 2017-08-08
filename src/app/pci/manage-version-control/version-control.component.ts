@@ -42,7 +42,6 @@ export class VersionControlComponent implements OnInit {
   }
 
   getversionControl(page: number) {
-    // this.versionControlTable.reset(page);
     this.versionControlService.getVersionControls(page, 20)
       .subscribe(res => {
         this.versionControlTable.loading = false;

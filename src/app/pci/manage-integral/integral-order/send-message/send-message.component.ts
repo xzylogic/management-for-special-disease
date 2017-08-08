@@ -38,11 +38,9 @@ export class SendMessageComponent implements OnInit {
 
   constructor(
     private integralOrderService: IntegralOrderService,
-    private integralOrderFormService: IntegralOrderFormService,
     private dialog: MdDialog,
     private router: Router,
     private fb: FormBuilder,
-    private activeRouter: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     @Inject('auth') private auth
   ) {
@@ -53,7 +51,6 @@ export class SendMessageComponent implements OnInit {
       this.expressList = express.data;
       this.expressName = express.data[0];
       this.integralOrder.subscribe(data => {
-        console.log(data);
         this.goodsName = data.title;
         this.processStatus = data.processStatus;
         this.integralOrderId = data.id;
@@ -67,7 +64,6 @@ export class SendMessageComponent implements OnInit {
           this.containerConfig = this.integralOrderService.sendMessageConfig(false);
           this.createEditMessageForm(this.expressList, data);
           this.cdr.detectChanges();
-          console.log(data);
         }
       });
     });
@@ -152,7 +148,6 @@ export class SendMessageComponent implements OnInit {
         operator: this.auth.getName()
       };
     }
-     console.log(body);
     this.integralOrderService.editExpressNo(body).subscribe(res => {
         if (res.code === 0) {
           HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {

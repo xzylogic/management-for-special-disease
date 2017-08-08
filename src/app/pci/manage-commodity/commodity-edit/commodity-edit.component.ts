@@ -49,7 +49,6 @@ export class CommodityEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
     if (this.commodityId !== 0) {
       this.commodityService.commodityUpdate(value)
         .subscribe(res => {
