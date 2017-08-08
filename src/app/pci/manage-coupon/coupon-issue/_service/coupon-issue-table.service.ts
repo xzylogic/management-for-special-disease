@@ -13,15 +13,15 @@ export class CouponIssueTableService {
       }),
       new TableTitle({
         name: '用户名',
-        key: 'user',
+        key: 'userName',
       }),
       new TableTitle({
         name: '手机号',
-        key: 'tel',
+        key: 'userTel',
       }),
       new TableTitle({
         name: '优惠券名称',
-        key: 'coupon',
+        key: 'couponName',
       }),
       new TableTitle({
         name: '时间',

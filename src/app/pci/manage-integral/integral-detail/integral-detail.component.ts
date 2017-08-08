@@ -143,11 +143,11 @@ export class IntegralDetailComponent implements OnInit {
         {
           key: 'id',
           label: 'id',
-          value: data.id || ''
+          value: data.id || '',
         }, {
           key: 'rule',
           label: '积分规则说明',
-          value: data.rule || ''
+          value: data.rule || '',
         }]
     });
     ActionDialog(config, this.dialog).afterClosed().subscribe(result => {

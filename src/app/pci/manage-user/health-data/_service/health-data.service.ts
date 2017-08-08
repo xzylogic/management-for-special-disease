@@ -31,7 +31,7 @@ export class HealthDataService {
    * @param {string} param   [搜索参数，姓名/手机号]
    * @param {string} standard   [患者体征项目状态，0正常，1异常]
    */
-  getData(page: number, param: string, standard: string) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.healthData}?page=${page}&&standard=${standard}&&param=${param}`);
+  getData(page: number, size: number, param: string, standard: string) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.healthData}?page=${page}&size=${size}&&standard=${standard}&&param=${param}`);
   }
 }

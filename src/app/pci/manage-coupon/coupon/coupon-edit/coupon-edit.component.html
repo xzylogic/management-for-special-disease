@@ -5,21 +5,38 @@
       <div>
         <span>优惠券面值</span>
         <md-input-container class="example-full-width">
-          <input mdInput placeholder="订单满" disabled  [formControlName]="config.fullPrice.key" [(ngModel)]="config.fullPrice.value">
+          <input mdInput placeholder="订单满" type="number"  [formControlName]="config.fullPrice.key" [(ngModel)]="config.fullPrice.value">
         </md-input-container>
         <span>元</span>
         <md-input-container class="example-full-width">
-          <input mdInput placeholder="减" disabled  [formControlName]="config.price.key" [(ngModel)]="config.price.value">
+          <input mdInput placeholder="减" type="number"   [formControlName]="config.price.key" [(ngModel)]="config.price.value">
         </md-input-container>
         <span>元</span>
+        <span class="price" *ngIf="price">优惠价格不能多于订单价格</span>
       </div>
       <app-input-text [form]="form" [data]="config.code" [value]="config.code.value"></app-input-text>
-      <app-input-text [form]="form" [data]="config.grantNum" [value]="config.grantNum.value"></app-input-text>
-      <app-input-radio [form]="form" [data]="config.assignUser" [value]="config.assignUser.value" (valueChange)="getExecl($event)"></app-input-radio>
+      <app-input-text [form]="form" *ngIf="grantNums" [data]="config.grantNum" [value]="config.grantNum.value"></app-input-text>
+      <app-input-text [form]="form" *ngIf="newSurplusNum" [data]="config.newSurplusNum" [value]="config.newSurplusNum.value"></app-input-text>
+      <span class="repertory" *ngIf="repertory">库存数量应该多于之前的数量</span>
+      <div class="input_container">
+        <md-select style="width: 100%"
+                   [placeholder]="config.assignUser.label"
+                   [formControlName]="config.assignUser.key"
+                   [(ngModel)]="config.assignUser.value"
+                   (change) = "getDonate($event)"
+        >
+          <md-option *ngFor="let opt of config.assignUser.options" [value]="opt.id">
+            {{opt.name}}
+          </md-option>
+        </md-select>
+      </div>
+      <app-input-radio [form]="form" *ngIf="config.assignUser.value" [data]="config.isDonate" [value]="config.isDonate.value" (valueChange)="getExecl($event)"></app-input-radio>
       <!--<input class="input_content" #file type="file" (change)="uploadChange($event)">-->
-      <app-input-file *ngIf="exEcl" [form]="form" [data]="config.exEcl" [(value)]="config.exEcl.value"></app-input-file>
+      <div class="input_container" *ngIf="exEcl">
+        <input class="input_content" #file type="file" (change)="uploadChange($event)">
+        <span class="input_span">上传表格</span>
+      </div>
       <app-input-radio [form]="form" [data]="config.useRange" [value]="config.useRange.value" (valueChange)="usableRange($event)"></app-input-radio>
-      <!--<app-input-dropdown *ngIf="service" [form]="form" [data]="config.service" [(value)]="config.service.value"></app-input-dropdown>-->
       <div class="input_container" *ngIf="service">
         <md-select style="width: 100%"
                    [placeholder]="config.thirdPartyServiceId.label"

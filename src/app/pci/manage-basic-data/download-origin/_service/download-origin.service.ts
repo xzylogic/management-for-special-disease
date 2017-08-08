@@ -18,7 +18,7 @@ export class DownloadOriginService {
   downloadOriginConfig(): ContainerConfig {
     return new ContainerConfig({
       title: '基础数据维护',
-      subTitle: '渠道来源维护',
+      subTitle: '下载渠道维护',
       ifHome: true,
       homeRouter: '/download-origin',
       currentRouter: '/download-origin'

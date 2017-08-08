@@ -83,7 +83,7 @@ export class HospitalComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-community-123',
+  selector: 'app-hospital-map',
   templateUrl: './hospital-dialog.html',
 })
 export class DialogComponent implements OnInit {
@@ -94,7 +94,8 @@ export class DialogComponent implements OnInit {
     @Inject(MD_DIALOG_DATA) public data: any,
     public dialogRef: MdDialogRef<DialogComponent>
   ) {
-    this.option = this.data
+    this.option = this.data;
+    console.log(this.option);
   }
 
   ngOnInit() {

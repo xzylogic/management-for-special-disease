@@ -14,10 +14,10 @@
       </button>
       <div>
         <md-input-container class="example-full-width">
-          <input mdInput placeholder="小区经度" disabled  [formControlName]="config.longitude.key" [(ngModel)]="config.longitude.value">
+          <input mdInput placeholder="小区经度" readonly  [formControlName]="config.longitude.key" [(ngModel)]="config.longitude.value">
         </md-input-container>
         <md-input-container class="example-full-width">
-          <input mdInput placeholder="小区纬度" disabled  [formControlName]="config.latitude.key" [(ngModel)]="config.latitude.value">
+          <input mdInput placeholder="小区纬度" readonly  [formControlName]="config.latitude.key" [(ngModel)]="config.latitude.value">
         </md-input-container>
       </div>
       <baidu-map

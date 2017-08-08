@@ -1,13 +1,13 @@
-<h1 md-dialog-title>A小区位置</h1>
+<h1 md-dialog-title>{{option.communityName}}位置</h1>
 <div md-dialog-content style="width: 500px;">
   <div *ngIf="option">
-    <md-list style="display: block">
+    <md-list style="display: block; margin: 10px 0">
       <md-list-item> 小区地点 </md-list-item>
-      <md-list-item> {{option.communityAddress}} </md-list-item>
+      <md-list-item style="padding-left: 20px;"> {{option.communityAddress}} </md-list-item>
     </md-list>
-    <md-list>
+    <md-list style="display: block; margin: 10px 0">
       <md-list-item> 小区坐标 </md-list-item>
-      <md-list-item>{{option.longitude}} , {{option.latitude}} </md-list-item>
+      <md-list-item style="padding-left: 20px;">{{option.longitude}} , {{option.latitude}} </md-list-item>
     </md-list>
     <baidu-map style="width: 100%;
                       height: 500px;

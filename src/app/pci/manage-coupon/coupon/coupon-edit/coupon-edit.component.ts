@@ -1,9 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+
+import { HttpService } from '../../../../libs/_service';
 
 import { ContainerConfig, HintDialog, FormText, FormDatetime, FormRadio, FormDropdown, FormFile} from '../../../../libs';
 import { CouponService } from '../_service/coupon.service';
@@ -20,23 +22,34 @@ export class CouponEditComponent implements OnInit {
   @select(['coupon', 'data']) coupon: Observable<Coupon>;
   errMsg = '';
   exEcl: boolean;
+  price: boolean;
+  data: any;
+  isDonate: boolean;
+  assignUser: boolean;
   form: FormGroup;
   config: any;
   couponId: any;
   state: boolean;
+  repertory: boolean;
   service: boolean;
   serviceNmae: any;
+  grantNum: any;
+  grantNums: boolean;
+  newSurplusNum: boolean;
 
   constructor(
+    private uploadService: HttpService,
     private couponService: CouponService,
     private fb: FormBuilder,
     private dialog: MdDialog,
     private router: Router,
     @Inject('app') private app,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit() {
+    // 获取第三方服务机构
     this.couponService.getthirdService().subscribe(res => {
       if (res.code === 0 && res.data) {
         this.serviceNmae = res.data;
@@ -46,6 +59,7 @@ export class CouponEditComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+    // 获取第三方服务名称
     this.couponService.getthirdServiceName().subscribe(res => {
       this.getStatus(res.data);
       if (res.code === 0 && res.data) {
@@ -53,8 +67,12 @@ export class CouponEditComponent implements OnInit {
           if (data.couponId === 0) {
             this.containerConfig = this.couponService.couponEditConfig(true);
             this.createForm(res.data, this.serviceNmae, data);
+            this.grantNums = true;
           } else {
             this.couponId = data.couponId;
+            this.newSurplusNum = true;
+            this.grantNum = data.surplusNum;
+            data.newSurplusNum = data.surplusNum;
             this.containerConfig = this.couponService.couponEditConfig(false);
             this.getState(data);
             this.createForm(res.data, this.serviceNmae, data);
@@ -67,6 +85,7 @@ export class CouponEditComponent implements OnInit {
       console.log(err);
       this.errMsg = ERRMSG.netErrMsg;
     });
+    this.cdr.detectChanges();
   }
 
   getStatus(list) {
@@ -92,9 +111,10 @@ export class CouponEditComponent implements OnInit {
       price: new FormControl({value: ''}, Validators.required),
       code: new FormControl({value: ''}, Validators.required),
       grantNum: new FormControl({value: ''}, Validators.required),
-      assignUser: new FormControl({value: ''}, Validators.required),
-      exEcl: new FormControl(Validators.required),
+      newSurplusNum: new FormControl({value: ''}, Validators.required),
+      assignUser: new FormControl(Validators.required),
       useRange: new FormControl({value: ''}, Validators.required),
+      isDonate: new FormControl({value: ''}, Validators.required),
       thirdPartyServiceId: new FormControl(),
       organizationId: new FormControl({value: ''}, Validators.required),
       startDate: new FormControl({value: ''}, Validators.required),
@@ -126,14 +146,32 @@ export class CouponEditComponent implements OnInit {
         value: data && data.code || ''
       }),
       grantNum: new FormText({
-        type: 'text',
-        label: '库存数量',
+        type: 'number',
+        label: '优惠券数量',
         key: 'grantNum',
         value: data && data.grantNum || ''
       }),
+      newSurplusNum: new FormText({
+        type: 'number',
+        label: '库存数量',
+        key: 'newSurplusNum',
+        value: data && data.newSurplusNum || ''
+      }),
       assignUser: new FormRadio({
-        label: '赠送用户',
+        label: '是否赠送用户',
         key: 'assignUser',
+        options: [{
+          id: true,
+          name: '是',
+        }, {
+          id: false,
+          name: '否',
+        }],
+        value: data && data.assignUser
+      }),
+      isDonate: new FormRadio({
+        label: '赠送用户',
+        key: 'isDonate',
         options: [{
           id: false,
           name: '所有用户',
@@ -141,14 +179,7 @@ export class CouponEditComponent implements OnInit {
           id: true,
           name: '指定用户',
         }],
-        value: data && data.assignUser || false
-      }),
-      exEcl: new FormFile({
-        key: 'exEcl',
-        label: '上传表格',
-        value: '',
-        required: true,
-        url: `${this.app.pci.BASE_URL}api/analyticalXlsxBackIds`
+        value: data && data.isDonate || false
       }),
       useRange: new FormRadio({
         label: '使用范围',
@@ -202,12 +233,37 @@ export class CouponEditComponent implements OnInit {
   }
 
   getExecl(value) {
-    console.log(value);
     if (value === true) {
       this.exEcl = true;
     } else {
       this.exEcl = false;
     }
+  }
+
+  getDonate(value) {
+    if (value.value === true) {
+      this.assignUser = true;
+    } else {
+      this.assignUser = false;
+    }
+  }
+
+  // 上传表格
+  uploadChange(files) {
+    const myForm = new FormData();
+    myForm.append('file', files.target.files[0]);
+    this.uploadService.upload(`${this.app.pci.BASE_URL}api/analyticalXlsxBackIds`, myForm)
+      .subscribe(res => {
+        if (res.code === 0) {
+          this.data = res.data;
+          HintDialog('上传表格成功！', this.dialog);
+        } else {
+          HintDialog(res.msg || '上传表格失败！', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('上传表格失败！', this.dialog);
+      });
   }
 
 // 更新保存状态转换
@@ -218,43 +274,57 @@ export class CouponEditComponent implements OnInit {
     if (value.useRange === 3) {
       value.useRange = '';
     }
-    if (value.assignUser === false) {
-      delete value.exEcl;
+    if (value.assignUser === true) {
+      value.exEcl = this.data;
+      delete value.isDonate;
+    } else {
+      delete value.isDonate;
     }
   }
 
   getValues(value) {
-    console.log(value);
     this.useRange(value);
-    if (this.couponId) {
-      value.couponId = this.couponId;
-      this.couponService.couponEdit(value)
-        .subscribe(res => {
-          if (res.code === 0) {
-            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
-              this.router.navigate(['/dc-list']);
+    if (value.fullPrice > value.price) {
+      this.price = false;
+      if (this.couponId) {
+        delete value.grantNum;
+        value.surplusNum = this.grantNum;
+        value.couponId = this.couponId;
+        if ( value.newSurplusNum >= this.grantNum) {
+          this.couponService.couponEdit(value)
+            .subscribe(res => {
+              if (res.code === 0) {
+                HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+                  this.router.navigate(['/dc-list']);
+                });
+              } else {
+                HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+              }
+            }, err => {
+              console.log(err);
+              HintDialog(ERRMSG.saveError, this.dialog);
             });
-          } else {
-            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
-          }
-        }, err => {
-          console.log(err);
-          HintDialog(ERRMSG.saveError, this.dialog);
-        });
+        } else {
+          this.repertory = true;
+        }
+      } else {
+        delete value.newSurplusNum;
+        this.couponService.couponEdit(value)
+          .subscribe(res => {
+            if (res.code === 0) {
+              HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+                this.router.navigate(['/dc-list']);
+              });
+            } else {
+              HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+            }
+          }, err => {
+            console.log(err);
+            HintDialog(ERRMSG.saveError, this.dialog);
+          });
+      }
     } else {
-      this.couponService.couponEdit(value)
-        .subscribe(res => {
-          if (res.code === 0) {
-            HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
-              this.router.navigate(['/dc-list']);
-            });
-          } else {
-            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
-          }
-        }, err => {
-          console.log(err);
-          HintDialog(ERRMSG.saveError, this.dialog);
-        });
+      this.price = true;
     }
   }
 }
