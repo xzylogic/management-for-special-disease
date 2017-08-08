@@ -168,6 +168,10 @@ export class GreenChannelComponent implements OnInit {
             key: 'date',
             label: '可就诊时间',
             value: res && res.value && res.value.TreatmentTime || '',
+            options: {
+              minDate: 'today',
+              maxDate: '2017-09-01'
+            },
             required: true,
             order: 0
           }),
