@@ -179,7 +179,7 @@ export class ReservationBedComponent implements OnInit {
           new FormDropdown({
             key: 'status',
             label: '状态',
-            value: res && res.value && res.value.status || '',
+            value:  '',
             required: true,
             options: [{
               id: 2,
