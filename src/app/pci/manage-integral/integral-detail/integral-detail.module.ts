@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MdDialogModule, MdChipsModule, MdTabsModule } from '@angular/material';
 
 import { IntegralDetailComponent } from './integral-detail.component';
-import { IntegralDetailEditComponent } from './integral-detail-edit.component';
+import { IntegralDetailEditComponent } from './integral-detail-edit/integral-detail-edit.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { IntegralDetailService } from './_service/integral-detail.service';

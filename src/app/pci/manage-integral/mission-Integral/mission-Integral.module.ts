@@ -4,7 +4,10 @@ import { MdDialogModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
-import { MissionIntegralComponent, DialogSigninComponent, DialogRecordComponent, DialogElseComponent} from './mission-Integral.component';
+import { MissionIntegralComponent } from './mission-Integral.component';
+import { IntegralSigninComponent } from './mission-Integral-edit/integral-signin-edit.component'
+import { IntegralRecordComponent } from './mission-Integral-edit/integral-record-edit.component';
+import { IntegralElseComponent } from './mission-Integral-edit/integral-else-edit.component'
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { MissionIntegralService } from './_service/mission-Integral.service';
@@ -26,15 +29,15 @@ const routes: Routes = [{
   ],
   declarations: [
     MissionIntegralComponent,
-    DialogSigninComponent,
-    DialogRecordComponent,
-    DialogElseComponent,
+    IntegralSigninComponent,
+    IntegralRecordComponent,
+    IntegralElseComponent,
   ],
   providers: [
     MissionIntegralService,
     MissionIntegralTableService
   ],
-  entryComponents: [DialogSigninComponent, DialogRecordComponent, DialogElseComponent]
+  entryComponents: [IntegralSigninComponent, IntegralRecordComponent, IntegralElseComponent]
 })
 export class MissionIntegralModule {
 }

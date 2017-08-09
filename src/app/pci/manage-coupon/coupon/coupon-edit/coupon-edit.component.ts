@@ -5,9 +5,7 @@ import { MdDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
-import { HttpService } from '../../../../libs/_service';
-
-import { ContainerConfig, HintDialog, FormText, FormDatetime, FormRadio, FormDropdown, FormFile} from '../../../../libs';
+import { ContainerConfig, HintDialog, FormText, FormDatetime, FormRadio, FormDropdown} from '../../../../libs';
 import { CouponService } from '../_service/coupon.service';
 import { Coupon } from '../_entity/coupon.entity';
 import { ERRMSG } from '../../../_store/static';
@@ -30,7 +28,6 @@ export class CouponEditComponent implements OnInit {
   config: any;
   couponId: any;
   state: boolean;
-  repertory: boolean;
   service: boolean;
   serviceNmae: any;
   grantNum: any;
@@ -38,7 +35,7 @@ export class CouponEditComponent implements OnInit {
   newSurplusNum: boolean;
 
   constructor(
-    private uploadService: HttpService,
+    @Inject('http') private uploadService,
     private couponService: CouponService,
     private fb: FormBuilder,
     private dialog: MdDialog,
@@ -155,7 +152,7 @@ export class CouponEditComponent implements OnInit {
         type: 'number',
         label: '库存数量',
         key: 'newSurplusNum',
-        value: data && data.newSurplusNum || ''
+        value: data && data.newSurplusNum || 0
       }),
       assignUser: new FormRadio({
         label: '是否赠送用户',
@@ -290,7 +287,6 @@ export class CouponEditComponent implements OnInit {
         delete value.grantNum;
         value.surplusNum = this.grantNum;
         value.couponId = this.couponId;
-        if ( value.newSurplusNum >= this.grantNum) {
           this.couponService.couponEdit(value)
             .subscribe(res => {
               if (res.code === 0) {
@@ -304,9 +300,6 @@ export class CouponEditComponent implements OnInit {
               console.log(err);
               HintDialog(ERRMSG.saveError, this.dialog);
             });
-        } else {
-          this.repertory = true;
-        }
       } else {
         delete value.newSurplusNum;
         this.couponService.couponEdit(value)

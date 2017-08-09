@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { FormRadio, FormText, FormFile, HintDialog } from '../../../libs';
+import { FormRadio, FormText, FormFile, HintDialog } from '../../../../libs';
 
 @Component({
   selector: 'app-integral-detail-edit',
