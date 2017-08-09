@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MdDialogModule } from '@angular/material';
 
-import { IntegralDetailComponent } from './integral-detail.component';
+import { IntegralDetailComponent, DialogComponent } from './integral-detail.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { IntegralDetailService } from './_service/integral-detail.service';
@@ -22,6 +23,7 @@ const routes: Routes = [{
   imports: [
     DTableModule,
     DFormModule,
+    MdDialogModule,
     LibModule,
     MdTabsModule,
     MdChipsModule,
@@ -29,12 +31,14 @@ const routes: Routes = [{
     RouterModule.forChild(routes)
   ],
   declarations: [
-    IntegralDetailComponent
+    IntegralDetailComponent,
+    DialogComponent
   ],
   providers: [
     IntegralDetailService,
     IntegralDetailTableService
-  ]
+  ],
+  entryComponents: [DialogComponent]
 })
 export class IntegralDetailModule {
 }

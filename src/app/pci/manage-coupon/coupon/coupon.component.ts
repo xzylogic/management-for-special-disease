@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
 
 import { CouponService } from './_service/coupon.service';
 import { CouponTableService } from './_service/coupon-table.service';
@@ -21,6 +23,7 @@ export class CouponComponent implements OnInit {
   containerConfig: ContainerConfig;
   couponTable: TableOption;
   controlType = ControlType;
+  @select(['coupon', 'page']) page: Observable<Array<number>>;
 
   constructor(
     @Inject('action') private action,
@@ -41,10 +44,14 @@ export class CouponComponent implements OnInit {
   }
 
   reset() {
-    this.getCouponList(0);
+    this.page.subscribe((page: Array<number>) => {
+      this.getCouponList(page[0]);
+    });
   }
 
   getCouponList(page: number) {
+    this.action.pageChange('coupon', [page]);
+    this.couponTable.reset(page);
     this.couponService.getCouponList(
       page, this.couponTable.size)
       .subscribe(res => {
@@ -87,6 +94,7 @@ export class CouponComponent implements OnInit {
     this.router.navigate(['/dc-list/edit']);
   }
 
+  // 请求优惠券说明维护参数
   couponMaintain() {
     this.couponService.couponExplain()
       .subscribe(res => {
@@ -98,6 +106,7 @@ export class CouponComponent implements OnInit {
       })
   }
 
+  // 优惠券说明维护模态框
   getcouponExplain(data) {
     const config = new DialogOptions({
       title: '优惠券说明维护',
@@ -124,6 +133,7 @@ export class CouponComponent implements OnInit {
     });
   }
 
+  // 编辑优惠券
   gotoHandle(res) {
     const coupon = <Coupon>res.value;
     if (res.key === 'edit') {
@@ -131,7 +141,7 @@ export class CouponComponent implements OnInit {
       this.router.navigate(['/dc-list/edit']);
     }
   }
-
+  // 提交优惠券说明维护更改
   toRefuseCoupon(value) {
     this.couponService.couponExplainUpdate(value)
       .subscribe(res => {

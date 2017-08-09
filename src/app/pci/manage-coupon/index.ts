@@ -11,6 +11,5 @@ export const routes: Routes = [{
 
 export const stores = {
   coupon: createReducer('coupon', [0], {}),
-  couponIssue: createReducer('couponIssue', [0, 0], {})
 };
 

@@ -3,7 +3,7 @@
     <button md-raised-button (click)="export()">导出</button>
   </div>
   <div class="content">
-    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+    <md-tab-group dynamicHeight="true">
       <md-tab label="已领取">
         <div *ngIf="!couponGetTable.lists&&couponGetTable.loading">Loading...</div>
         <div *ngIf="!couponGetTable.lists&&!couponGetTable.loading&&!!couponGetTable.errorMessage" class="center">

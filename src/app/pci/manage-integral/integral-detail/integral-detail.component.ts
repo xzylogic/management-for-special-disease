@@ -1,13 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { TableOption } from '../../../libs';
+import { HttpService } from '../../../libs/_service';
 import { IntegralDetailService } from './_service/integral-detail.service';
 import { IntegralDetailTableService } from './_service/integral-detail-table.service';
-import { ContainerConfig, FormRadio, DialogEdit, DialogOptions, ActionDialog, HintDialog, FormText, FormFile } from '../../../libs';
-import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
+import { ContainerConfig, FormRadio, DialogOptions, ActionDialog, HintDialog, FormText, FormFile } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
 import { IntegralDetail } from './_entity/integralDetail.entity';
 import { ERRMSG } from '../../_store/static';
 
@@ -158,38 +159,9 @@ export class IntegralDetailComponent implements OnInit {
   }
 
   sendIntegral() {
-    const config: DialogEdit = new DialogEdit({
-      title: '赠送积分',
-      form: [
-        new FormRadio({
-          key: 'type',
-          label: '选择APP',
-          value: '',
-          required: true,
-          options: [{
-            id: 1,
-            name: '患者端'
-          }, {
-            id: 0,
-            name: '医生端'
-          }],
-        }),
-        new FormText({
-          key: 'integral',
-          label: '赠送数量',
-          value: '',
-          required: true,
-        }),
-        new FormFile({
-          key: 'exEcl',
-          label: '上传表格',
-          value: '',
-          required: true,
-          url: `${this.app.pci.BASE_URL}api/analyticalXlsxBackIds`
-        }),
-      ]
-    });
-    EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+    const config = new MdDialogConfig();
+    const other = this.dialog.open(DialogComponent, config);
+    other.afterClosed().subscribe(result => {
       if (result) {
         this.toPresentExp(result);
       }
@@ -228,5 +200,85 @@ export class IntegralDetailComponent implements OnInit {
 
   change(index) {
     this.action.tabChange('integralDetail', index);
+  }
+}
+
+@Component({
+  selector: 'app-integral-detail-edit',
+  templateUrl: 'integral-detail-edit.component.html',
+  styleUrls: ['integral-detail-edit.component.scss']
+})
+export class DialogComponent implements OnInit {
+  form: FormGroup;
+  config: any;
+  errMsg = '';
+
+  constructor(
+    private uploadService: HttpService,
+    private fb: FormBuilder,
+    private dialog: MdDialog,
+    private cdr: ChangeDetectorRef,
+    @Inject('app') private app,
+    public dialogRef: MdDialogRef<DialogComponent>,
+  ) {
+  }
+
+  ngOnInit() {
+    this.createForm();
+    this.cdr.detectChanges();
+  }
+
+  createForm() {
+    this.form = this.fb.group({
+      type : new FormControl({value: ''}, Validators.required),
+      integral: new FormControl({value: ''}, Validators.required),
+      exEcl: new FormControl({value: ''}, Validators.required),
+    });
+    this.config = {
+       type: new FormRadio({
+         key: 'type',
+         label: '选择APP',
+         value: '',
+         required: true,
+         options: [{
+           id: 1,
+           name: '患者端'
+         }, {
+           id: 0,
+           name: '医生端'
+         }],
+       }),
+      integral: new FormText({
+        key: 'integral',
+        label: '赠送数量',
+        value: '',
+        required: true,
+      }),
+      exEcl: new FormFile({
+        key: 'exEcl',
+        label: '上传表格',
+        value: '',
+        required: true,
+        url: ''
+      })
+    }
+  }
+
+  // 上传表格
+  uploadChange(files) {
+    const myForm = new FormData();
+    myForm.append('file', files.target.files[0]);
+    this.uploadService.upload(`${this.app.pci.BASE_URL}api/analyticalXlsxBackIds`, myForm)
+      .subscribe(res => {
+        if (res.code === 0) {
+          this.config.exEcl.value = res.data;
+          HintDialog('上传表格成功！', this.dialog);
+        } else {
+          HintDialog(res.msg || '上传表格失败！', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('上传表格失败！', this.dialog);
+      });
   }
 }
