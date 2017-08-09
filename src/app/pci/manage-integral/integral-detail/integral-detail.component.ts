@@ -14,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 import { MdDialog, MdDialogConfig } from '@angular/material';
 import { IntegralDetail } from './_entity/integralDetail.entity';
 import { ERRMSG } from '../../_store/static';
-import { IntegralDetailEditComponent } from './integral-detail-edit.component';
+import { IntegralDetailEditComponent } from './integral-detail-edit/integral-detail-edit.component';
 
 @Component({
   selector: 'app-integral-detail',
@@ -124,7 +124,6 @@ export class IntegralDetailComponent implements OnInit {
       .subscribe(res => {
         if (res.code === 0) {
           this.IntegralRule(res.data);
-          console.log(res.data);
         }
       }, err => {
         alert(err);

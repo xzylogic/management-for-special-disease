@@ -17,7 +17,6 @@
       <app-input-text [form]="form" [data]="config.code" [value]="config.code.value"></app-input-text>
       <app-input-text [form]="form" *ngIf="grantNums" [data]="config.grantNum" [value]="config.grantNum.value"></app-input-text>
       <app-input-text [form]="form" *ngIf="newSurplusNum" [data]="config.newSurplusNum" [value]="config.newSurplusNum.value"></app-input-text>
-      <span class="repertory" *ngIf="repertory">库存数量应该多于之前的数量</span>
       <div class="input_container">
         <md-select style="width: 100%"
                    [placeholder]="config.assignUser.label"
