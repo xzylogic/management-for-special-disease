@@ -42,7 +42,7 @@ export class ReservationBedTableService {
         key: 'applicationTime'
       }),
       new TableTitle({
-        name: '可就诊日期',
+        name: '可入院日期',
         key: 'TreatmentTime'
       }),
       new TableTitle({

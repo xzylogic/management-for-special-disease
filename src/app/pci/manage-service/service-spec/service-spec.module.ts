@@ -12,7 +12,6 @@ import { DFormModule } from '../../../libs/dform/dform.module';
 import { LibModule } from '../../../libs/common/lib.module';
 import { MdChipsModule, MdTabsModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { ServiceSpecFormService } from './_service/service-spec-form.service';
 
 const routes: Routes = [{
   path: '',
@@ -41,7 +40,6 @@ const routes: Routes = [{
   ],
   providers: [
     ServiceSpecService,
-    ServiceSpecFormService,
     ServiceSpecTableService
   ]
 })

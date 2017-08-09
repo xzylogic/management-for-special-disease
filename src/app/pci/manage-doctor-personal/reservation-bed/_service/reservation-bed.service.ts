@@ -17,7 +17,8 @@ const PATH = {
 export class ReservationBedService {
   constructor(
     @Inject('app') private app,
-    @Inject('http') private httpService) {
+    @Inject('http') private httpService
+  ) {
   }
 
   ReservationBedConfig(): ContainerConfig {
@@ -38,16 +39,16 @@ export class ReservationBedService {
     }
   }
 
-  agreeOrDisagreeApply(agreeType: number, orderId: number, date?: string) {
-    if ( date == '') {
-      return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}`, {});
+  agreeOrDisagreeApply(agreeType: number, orderId: number, serviceType: number, date?: string) {
+    if (date == '') {
+      return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}&serviceType=${serviceType}`, {});
     } else {
-      return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}&date=${date}`, {});
+      return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}&serviceType=${serviceType}&date=${date}`, {});
     }
   }
 
   editInfo(status: number, orderId: number, date?: string) {
-    if ( date == '') {
+    if (date == '') {
       return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.editInfo}?status=${status}&orderId=${orderId}`, {});
     } else {
       return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.editInfo}?status=${status}&orderId=${orderId}&date=${date}`, {});
@@ -57,7 +58,7 @@ export class ReservationBedService {
   pending(page: number, size: number, serviceType: number, queryInfo?: string) {
     if (queryInfo == '') {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.pending}?page=${page}&size${size}&serviceType=${serviceType}`);
-    }else {
+    } else {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.pending}?page=${page}&size${size}&serviceType=${serviceType}&queryInfo=${queryInfo}`);
     }
   }
@@ -65,7 +66,7 @@ export class ReservationBedService {
   rejected(page: number, size: number, type: number, queryInfo?: string) {
     if (queryInfo == '') {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.rejected}?page=${page}&size${size}&type=${type}`);
-    }else {
+    } else {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.rejected}?page=${page}&size${size}&type=${type}&queryInfo=${queryInfo}`);
     }
   }

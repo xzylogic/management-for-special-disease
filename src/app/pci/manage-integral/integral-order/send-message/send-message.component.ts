@@ -2,7 +2,7 @@
  * Created by zhanglin on 2017/7/26.
  */
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { ContainerConfig, FormDropdown, FormText, HintDialog, FormTextarea } from '../../../../libs/';
 import { IntegralOrderService } from '../_service/integral-order.service';
 import { IntegralOrderFormService } from '../_service/integral-order-form.service';
 import { MdDialog } from '@angular/material';
@@ -11,10 +11,6 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { IntegralOrder } from '../_entity/integralOrder.entity';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { FormDropdown, FormText, FormEditor } from '../../../../libs';
-import { Subject } from 'rxjs/Subject';
-import { FormTextarea } from '../../../../libs/dform/_entity/form-textarea';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 import { ERRMSG } from '../../../_store/static';
 
 @Component({

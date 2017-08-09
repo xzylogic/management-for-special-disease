@@ -6,7 +6,6 @@ import { PackageServiceTableService } from './_service/package-service-table.ser
 import { ContainerConfig } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { PackageService } from './_entity/package-service.entity';
 import { ERRMSG } from '../../_store/static';
@@ -25,7 +24,6 @@ export class PackageServiceComponent implements OnInit {
     @Inject('action') private action,
     private packageServiceService: PackageServiceService,
     private packageServiceTableService: PackageServiceTableService,
-    private dialog: MdDialog,
     private router: Router
   ) {
     action.dataChange('packageService', new PackageService());

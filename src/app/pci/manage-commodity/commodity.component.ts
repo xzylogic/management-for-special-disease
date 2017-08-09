@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { TableOption } from '../../libs/dtable/dtable.entity';
+import { TableOption, ActionDialog, HintDialog, DialogOptions } from '../../libs/';
 import { CommodityService } from './_service/commodity.service';
 import { CommodityTableService } from './_service/commodity-table.service';
 import { ContainerConfig } from '../../libs';
@@ -10,8 +10,6 @@ import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Commodity } from './_entity/commodity.entity';
 import { ERRMSG } from '../_store/static';
-import { ActionDialog, HintDialog } from '../../libs/dmodal/dialog/dialog.component';
-import { DialogOptions } from '../../libs/dmodal/dialog/dialog.entity';
 
 @Component({
   selector: 'app-commodity',

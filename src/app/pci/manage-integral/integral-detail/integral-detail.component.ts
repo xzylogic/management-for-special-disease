@@ -1,10 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { TableOption } from '../../../libs';
 import { IntegralDetailService } from './_service/integral-detail.service';
 import { IntegralDetailTableService } from './_service/integral-detail-table.service';
-import { ContainerConfig, FormRadio, DialogEdit, DialogOptions, ActionDialog, HintDialog, FormText, FormFile } from '../../../libs';
-import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
+import {
+  EditDialog,
+  TableOption,
+  ContainerConfig,
+  FormRadio,
+  DialogEdit,
+  DialogOptions,
+  ActionDialog,
+  HintDialog,
+  FormText,
+  FormFile
+} from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';

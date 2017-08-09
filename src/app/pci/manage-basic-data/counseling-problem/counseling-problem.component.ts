@@ -4,15 +4,10 @@
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
-import {
-  TableOption, ContainerConfig, DialogOptions,
-  ActionDialog, HintDialog,
-} from '../../../libs';
+import { ContainerConfig, HintDialog, FormTextarea} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 import { CounselingProblemService } from './_service/counseling-problem.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormHidden } from '../../../libs/dform/_entity/form-hidden';
-import { FormTextarea } from '../../../libs/dform/_entity/form-textarea';
+import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-counseling-problem',

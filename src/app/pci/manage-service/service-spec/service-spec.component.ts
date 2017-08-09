@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { TableOption } from '../../../libs';
+import { TableOption, ContainerConfig  } from '../../../libs';
 import { ServiceSpecService } from './_service/service-spec.service';
 import { ServiceSpecTableService } from './_service/service-spec-table.service';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
@@ -20,13 +19,11 @@ export class ServiceSpecComponent implements OnInit {
   serviceSpecTable: TableOption;
   @select(['serviceSpec', 'tab']) tab: Observable<number>;
   @select(['serviceSpec', 'page']) page: Observable<Array<number>>;
-  // serviceSpec: any;
 
   constructor(
     @Inject('action') private action,
     private serviceSpecService: ServiceSpecService,
     private serviceSpecTableService: ServiceSpecTableService,
-    private dialog: MdDialog,
     private router: Router
   ) {
     action.dataChange('serviceSpecService', new ServiceSpec());

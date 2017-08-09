@@ -9,8 +9,7 @@ import { ERRMSG } from '../../../_store/static';
 import { IntegralCommodity } from '../_entity/integralCommodity.entity';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
-import { FormDropdown, FormTextarea, FormText, FormFile, HintDialog, ContainerConfig } from '../../../../libs';
-import { FormEditor } from '../../../../libs/dform/_entity/form-editor';
+import { FormDropdown, FormEditor, FormText, FormFile, HintDialog, ContainerConfig } from '../../../../libs';
 
 @Component({
   selector: 'app-integral-commodity-edit',

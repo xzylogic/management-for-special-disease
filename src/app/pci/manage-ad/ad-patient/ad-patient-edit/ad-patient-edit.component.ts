@@ -4,13 +4,11 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
-import { ContainerConfig, HintDialog } from '../../../../libs';
+import { ContainerConfig, HintDialog, FormText, FormRadio } from '../../../../libs';
 import { AdPatientService } from '../_service/ad-patient.service';
 import { AdPatient } from '../_entity/ad-patient.entity';
 import { ERRMSG } from '../../../_store/static';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { FormText } from '../../../../libs/dform/_entity/form-text';
-import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
 
 @Component({
   selector: 'app-ad-patient-edit',

@@ -1,15 +1,13 @@
 /**
  * Created by zhanglin on 2017/8/1.
  */
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
-import { ContainerConfig } from '../../../libs';
+import { ContainerConfig, HintDialog, FormText } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 import { RecommendRadiusService } from './_service/recommend-radius.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { FormText } from '../../../libs/dform/_entity/form-text';
-import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-recommend-radius',

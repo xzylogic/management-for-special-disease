@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { TableOption } from '../../../libs';
+import { TableOption, ContainerConfig  } from '../../../libs';
 import { BasicServiceService } from './_service/basic-service.service';
 import { BasicServiceTableService } from './_service/basic-service-table.service';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { ERRMSG } from '../../_store/static';
 import { Router } from '@angular/router';
 import { BasicService } from './_entity/basic-service.entity';

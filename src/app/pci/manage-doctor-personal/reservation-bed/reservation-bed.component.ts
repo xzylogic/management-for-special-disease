@@ -83,7 +83,7 @@ export class ReservationBedComponent implements OnInit {
   getAgreeReservationBed(page: number) {
     this.action.pageChange('reservationBed', [page, this.pendingTable.currentPage, this.rejectedTable.currentPage]);
     this.agreeTable.reset(page);
-    this.reservationBedService.agree(page, 20, 2, this.agreeTable.queryKey)
+    this.reservationBedService.agree(page, 20, 1, this.agreeTable.queryKey)
       .subscribe(res => {
         this.agreeTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -119,7 +119,7 @@ export class ReservationBedComponent implements OnInit {
   getPendingReservationBed(page: number) {
     this.action.pageChange('reservationBed', [this.agreeTable.currentPage, page, this.rejectedTable.currentPage]);
     this.pendingTable.reset(page);
-    this.reservationBedService.pending(page, 20, 2, this.pendingTable.queryKey)
+    this.reservationBedService.pending(page, 20, 1, this.pendingTable.queryKey)
       .subscribe(res => {
         this.pendingTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -140,7 +140,7 @@ export class ReservationBedComponent implements OnInit {
   getRejectedReservationBed(page: number) {
     this.action.pageChange('reservationBed', [this.agreeTable.currentPage, this.pendingTable.currentPage, page]);
     this.rejectedTable.reset(page);
-    this.reservationBedService.rejected(page, 20, 2, this.rejectedTable.queryKey)
+    this.reservationBedService.rejected(page, 20, 1, this.rejectedTable.queryKey)
       .subscribe(res => {
         this.rejectedTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -167,7 +167,7 @@ export class ReservationBedComponent implements OnInit {
         form: [
           new FormDate({
             key: 'date',
-            label: '可就诊时间',
+            label: '可入院时间',
             value: res && res.value && res.value.TreatmentTime || '',
             options: {
               minDate: moment(mindate).format('YYYY-MM-DD'),
@@ -179,15 +179,9 @@ export class ReservationBedComponent implements OnInit {
           new FormDropdown({
             key: 'status',
             label: '状态',
-            value: '',
+            value: res && res.value && res.value.status || '',
             required: true,
             options: [{
-              id: 0,
-              name: '已就诊'
-            }, {
-              id: 1,
-              name: '未就诊'
-            }, {
               id: 2,
               name: '已入院'
             }, {
@@ -207,7 +201,7 @@ export class ReservationBedComponent implements OnInit {
       let mindate = new Date(res.value.applicationTime).valueOf();
       let maxdate = mindate + 24 * 60 * 60 * 30 * 1000;
       const config: DialogEdit = new DialogEdit({
-        title: `选择就诊时间`,
+        title: `选择入院时间`,
         form: [
           new FormDate({
             key: 'date',
@@ -265,7 +259,7 @@ export class ReservationBedComponent implements OnInit {
   }
 
   toAgree(id, date) {
-    this.reservationBedService.agreeOrDisagreeApply(1, id, date)
+    this.reservationBedService.agreeOrDisagreeApply(1, id, 1, date)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);
@@ -280,7 +274,7 @@ export class ReservationBedComponent implements OnInit {
   }
 
   toDisagree(id) {
-    this.reservationBedService.agreeOrDisagreeApply(2, id)
+    this.reservationBedService.agreeOrDisagreeApply(2, id, 1)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);
