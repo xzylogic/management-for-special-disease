@@ -8,7 +8,7 @@ import { select } from '@angular-redux/store';
 import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
+import { HintDialog } from '../../../../libs/';
 import { HealthOrganization } from '../_entity/health-organization.entity';
 
 @Component({

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 
 import { FormBase, FormText, FormFile, FormDropdown, FormCheckbox, FormTextarea } from '../../../../libs';
+import { FormEditor } from '../../../../libs/dform/_entity/form-editor';
 
 @Injectable()
 export class PackageServiceFormService {
@@ -78,7 +79,7 @@ export class PackageServiceFormService {
         ],
         order: 4
       }),
-      new FormTextarea({
+      new FormEditor({
         key: 'description',
         label: '套餐说明',
         value: data && data.description || '',

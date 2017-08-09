@@ -1,18 +1,14 @@
-import { ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { ServiceSpecService } from '../_service/service-spec.service';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { ContainerConfig, HintDialog, FormText, FormDropdown } from '../../../../libs/';
 import { MdDialog } from '@angular/material';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 import { Subject } from 'rxjs/Subject';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { ServiceSpec } from '../_entity/service-spec.entity';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormText } from '../../../../libs/dform/_entity/form-text';
-import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
-import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
 
 @Component({
   selector: 'app-service-spec-edit',
@@ -49,70 +45,76 @@ export class ServiceSpecEditComponent implements OnInit {
     this.serviceSpec.subscribe(data => {
       if (data && data.id > 0) {
         this.serviceSpecId = data.id;
+        this.serviceId = data.serviceId;
         this.serviceName = data.serviceName;
-        this.createForm( data);
+        this.createForm(data);
         this.containerConfig = this.serviceSpecService.serviceSpecEditConfig(false);
-      }else {
-        this.createForm( data);
+      } else {
+        this.createForm(data);
       }
     });
     this.cdr.detectChanges();
   }
-    createForm(data) {
-      this.form = this.fb.group({
-        name: new FormControl({value: ''}, Validators.required),
-        specificationIdx: new FormControl({value: ''}, Validators.required),
-        price: new FormControl({value: ''}, Validators.required),
-        count: new FormControl({value: ''}, Validators.required),
-        serviceId: new FormControl({value: ''}, Validators.required),
-        serviceName: new FormControl({value: ''}, Validators.required),
-        enable: new FormControl({value: ''}),
-      });
-      this.config = {
-        name: new FormText({
-          type: 'text',
-          label: '规格名称',
-          key: 'name',
-          value: data.name || ''
-        }),
-        specificationIdx: new FormDropdown( {
-          label: '所属类型',
-          key: 'specificationIdx',
-          options: [{
-            id: 0,
-            name: '供第三方服务'}, {
-            id: 1,
-            name: '供组合服务'}],
-          value: data.specificationIdx === 0 ? data.specificationIdx : data.specificationIdx || ''
-        }),
-        price: new FormText({
-          label: '价格',
-          key: 'price',
-          value: data.price || ''
-        }),
-        count: new FormText({
-          type: 'text',
-          label: '库存数量',
-          key: 'count',
-          value: data.count || ''
-        }),
-        serviceId: new FormText({
-          label: '所属第三方服务',
-          key: 'serviceId',
-          value: data.serviceId || 1,
-          // options: [],
-        }),
-        enable: new FormDropdown({
-          label: '状态',
-          key: 'enable',
-          options: [{
-            id: true,
-            name: '启用'}, {
-            id: false,
-            name: '禁用'}],
-          value: data.enable === false ? data.enable : data.enable || ''
-        })
-      }
+
+  createForm(data) {
+    this.form = this.fb.group({
+      name: new FormControl({value: ''}, Validators.required),
+      specificationIdx: new FormControl({value: ''}, Validators.required),
+      price: new FormControl({value: ''}, Validators.required),
+      count: new FormControl({value: ''}, Validators.required),
+      serviceId: new FormControl({value: ''}, Validators.required),
+      serviceName: new FormControl({value: ''}, Validators.required),
+      enable: new FormControl({value: ''}),
+    });
+    this.config = {
+      name: new FormText({
+        type: 'text',
+        label: '规格名称',
+        key: 'name',
+        value: data.name || ''
+      }),
+      specificationIdx: new FormDropdown({
+        label: '所属类型',
+        key: 'specificationIdx',
+        options: [{
+          id: 0,
+          name: '供第三方服务'
+        }, {
+          id: 1,
+          name: '供组合服务'
+        }],
+        value: data.specificationIdx === 0 ? data.specificationIdx : data.specificationIdx || ''
+      }),
+      price: new FormText({
+        label: '价格',
+        key: 'price',
+        value: data.price || ''
+      }),
+      count: new FormText({
+        type: 'text',
+        label: '库存数量',
+        key: 'count',
+        value: data.count || ''
+      }),
+      serviceId: new FormText({
+        label: '所属第三方服务',
+        key: 'serviceId',
+        value: data.serviceId || 1,
+        // options: [],
+      }),
+      enable: new FormDropdown({
+        label: '状态',
+        key: 'enable',
+        options: [{
+          id: true,
+          name: '启用'
+        }, {
+          id: false,
+          name: '禁用'
+        }],
+        value: data.enable === false ? data.enable : data.enable || ''
+      })
+    }
     this.searchStream.debounceTime(500).distinctUntilChanged().subscribe(searchText => {
       this.loadData(this.serviceName);
     });
@@ -135,7 +137,7 @@ export class ServiceSpecEditComponent implements OnInit {
     value.operator = this.auth.getAdminName();
     if (this.serviceSpec) {
       value.id = this.serviceSpecId;
-    }else {
+    } else {
       delete value.id;
     }
     this.serviceSpecService.serviceSpecUpdate(value)

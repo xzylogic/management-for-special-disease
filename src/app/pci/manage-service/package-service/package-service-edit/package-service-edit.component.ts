@@ -1,14 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { PackageServiceService } from '../_service/package-service.service';
 import { PackageServiceFormService } from '../_service/package-service-form.service';
-import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { ContainerConfig, HintDialog } from '../../../../libs/';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { PackageService } from '../_entity/package-service.entity';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-package-service-edit',

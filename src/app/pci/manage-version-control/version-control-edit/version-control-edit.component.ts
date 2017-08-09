@@ -1,14 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { VersionControlFormService } from '../_service/version-control-form.service';
 import { VersionControlService } from '../_service/version-control.service';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ContainerConfig, HintDialog } from '../../../libs/';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../_store/static';
 import { VersionControl } from '../_entity/version-control.entity';
-import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
 
 @Component({
   selector: 'app-version-control-edit',

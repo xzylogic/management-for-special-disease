@@ -1,21 +1,27 @@
 /**
  * Created by zhanglin on 2017/7/31.
  */
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
-import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
+import {
+  TableOption,
+  ContainerConfig,
+  DialogOptions,
+  ActionDialog,
+  HintDialog,
+  FormDate,
+  DialogEdit,
+  EditDialog,
+  FormDropdown
+} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
-import { FormDate } from '../../../libs/dform/_entity/form-date';
-import { FormDropdown } from '../../../libs/dform/_entity/form-dropdown';
 import { ReservationBedTableService } from './_service/reservation-bed-table.service';
 import { ReservationBedService } from './_service/reservation-bed.service';
-import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
-import { DialogEdit } from '../../../libs/dmodal/dialog/dialog.entity';
 
-@Component ({
+@Component({
   selector: 'app-reservation-bed',
   templateUrl: './reservation-bed.component.html'
 })
@@ -26,6 +32,7 @@ export class ReservationBedComponent implements OnInit {
   rejectedTable: TableOption;
   @select(['reservationBed', 'tab']) tab: Observable<number>;
   @select(['reservationBed', 'page']) page: Observable<Array<number>>;
+
   constructor(
     @Inject('action') private action,
     private reservationBedService: ReservationBedService,
@@ -81,7 +88,7 @@ export class ReservationBedComponent implements OnInit {
   getAgreeReservationBed(page: number) {
     this.action.pageChange('reservationBed', [page, this.pendingTable.currentPage, this.rejectedTable.currentPage]);
     this.agreeTable.reset(page);
-    this.reservationBedService.agree(page, 20, 2, this.agreeTable.queryKey)
+    this.reservationBedService.agree(page, 20, 1, this.agreeTable.queryKey)
       .subscribe(res => {
         this.agreeTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -104,11 +111,11 @@ export class ReservationBedComponent implements OnInit {
     list.forEach(data => {
       if (data.status == 0) {
         data.status = '已就诊';
-      }else if (data.status == 1) {
+      } else if (data.status == 1) {
         data.status = '未就诊';
-      }else if (data.status == 2) {
+      } else if (data.status == 2) {
         data.status = '已入院';
-      }else if (data.status == 3) {
+      } else if (data.status == 3) {
         data.status = '未入院';
       }
     });
@@ -117,7 +124,7 @@ export class ReservationBedComponent implements OnInit {
   getPendingReservationBed(page: number) {
     this.action.pageChange('reservationBed', [this.agreeTable.currentPage, page, this.rejectedTable.currentPage]);
     this.pendingTable.reset(page);
-    this.reservationBedService.pending(page, 20, 2, this.pendingTable.queryKey)
+    this.reservationBedService.pending(page, 20, 1, this.pendingTable.queryKey)
       .subscribe(res => {
         this.pendingTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -138,7 +145,7 @@ export class ReservationBedComponent implements OnInit {
   getRejectedReservationBed(page: number) {
     this.action.pageChange('reservationBed', [this.agreeTable.currentPage, this.pendingTable.currentPage, page]);
     this.rejectedTable.reset(page);
-    this.reservationBedService.rejected(page, 20, 2, this.rejectedTable.queryKey)
+    this.reservationBedService.rejected(page, 20, 1, this.rejectedTable.queryKey)
       .subscribe(res => {
         this.rejectedTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -163,7 +170,7 @@ export class ReservationBedComponent implements OnInit {
         form: [
           new FormDate({
             key: 'date',
-            label: '可就诊时间',
+            label: '可入院时间',
             value: res && res.value && res.value.TreatmentTime || '',
             required: true,
             order: 0
@@ -171,15 +178,9 @@ export class ReservationBedComponent implements OnInit {
           new FormDropdown({
             key: 'status',
             label: '状态',
-            value: '',
+            value: res && res.value && res.value.status || '',
             required: true,
             options: [{
-              id: 0,
-              name: '已就诊'
-            }, {
-              id: 1,
-              name: '未就诊'
-            }, {
               id: 2,
               name: '已入院'
             }, {
@@ -195,9 +196,9 @@ export class ReservationBedComponent implements OnInit {
           this.editInfo(result.status, res.value.orderId, result.date);
         }
       });
-    }else if (res.key === 'agree') {
+    } else if (res.key === 'agree') {
       const config: DialogEdit = new DialogEdit({
-        title: `选择就诊时间`,
+        title: `选择入院时间`,
         form: [
           new FormDate({
             key: 'date',
@@ -251,7 +252,7 @@ export class ReservationBedComponent implements OnInit {
   }
 
   toAgree(id, date) {
-    this.reservationBedService.agreeOrDisagreeApply(1, id, date)
+    this.reservationBedService.agreeOrDisagreeApply(1, id, 1, date)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);
@@ -266,7 +267,7 @@ export class ReservationBedComponent implements OnInit {
   }
 
   toDisagree(id) {
-    this.reservationBedService.agreeOrDisagreeApply(2, id)
+    this.reservationBedService.agreeOrDisagreeApply(2, id, 1)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);

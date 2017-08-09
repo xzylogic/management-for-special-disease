@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TableOption } from '../../../libs';
+import { TableOption, ActionDialog, HintDialog, DialogOptions, ContainerConfig } from '../../../libs';
 import { NewsClassifyService } from './_service/news-classify.service';
 import { NewsClassifyTableService } from './_service/news-classify-table.service';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { ERRMSG } from '../../_store/static';
-import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
-import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
 import { MdDialog } from '@angular/material';
 
 @Component({

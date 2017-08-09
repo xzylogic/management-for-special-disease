@@ -1,13 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { TableOption } from '../../../libs/dtable/dtable.entity';
+import { TableOption, ContainerConfig } from '../../../libs/';
 import { HealthServiceService } from './_service/health-service.service';
 import { HealthServiceTableService } from './_service/health-service-table.service';
 import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({

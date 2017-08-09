@@ -4,16 +4,10 @@
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
-import {
-  TableOption, ContainerConfig, DialogOptions,
-  ActionDialog, HintDialog,
-} from '../../../libs';
+import { ContainerConfig, HintDialog, FormRadio, FormText } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 import { PurchaseEntranceService } from './_service/purchase-entrance.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormText } from '../../../libs/dform/_entity/form-text';
-import { FormHidden } from '../../../libs/dform/_entity/form-hidden';
-import { FormRadio } from '../../../libs/dform/_entity/form-radio';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-purchase-entrance',
@@ -61,7 +55,7 @@ export class PurchaseEntranceComponent implements OnInit {
       url: new FormControl({value: ''}),
     });
     this.config = {
-      flag: new FormRadio( {
+      flag: new FormRadio({
         label: '打开购药入口',
         key: 'flag',
         value: data && (data.flag === false ? data.flag : data.flag || ''),

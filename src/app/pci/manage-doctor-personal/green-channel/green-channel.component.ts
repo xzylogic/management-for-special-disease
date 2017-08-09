@@ -6,15 +6,21 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
-import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
+import {
+  TableOption,
+  ContainerConfig,
+  DialogOptions,
+  ActionDialog,
+  HintDialog,
+  FormDate,
+  EditDialog,
+  DialogEdit,
+  FormDropdown
+} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 import { GreenChannelService } from './_service/green-channel.service';
 import { GreenChannelTableService } from './_service/green-channel-table.service';
-import { FormDate } from '../../../libs/dform/_entity/form-date';
-import { FormDropdown } from '../../../libs/dform/_entity/form-dropdown';
 import { GreenChannel } from './_entity/green-channel.entity';
-import { DialogEdit } from '../../../libs/dmodal/dialog/dialog.entity';
-import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
 
 @Component({
   selector: 'app-green-channel',
@@ -172,7 +178,7 @@ export class GreenChannelComponent implements OnInit {
             order: 0
           }),
           new FormDropdown({
-            key: 'status',
+            key: 'statusId',
             label: '状态',
             value: '',
             required: true,
@@ -182,12 +188,6 @@ export class GreenChannelComponent implements OnInit {
             }, {
               id: 1,
               name: '未就诊'
-            }, {
-              id: 2,
-              name: '已入院'
-            }, {
-              id: 3,
-              name: '未入院'
             }],
             order: 1
           })
@@ -195,7 +195,7 @@ export class GreenChannelComponent implements OnInit {
       });
       EditDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result) {
-          this.editInfo(result.status, res.value.orderId, result.date);
+          this.editInfo(result.statusId, res.value.orderId, result.date);
         }
       });
     } else if (res.key === 'agree') {
@@ -254,7 +254,7 @@ export class GreenChannelComponent implements OnInit {
   }
 
   toAgree(id, date) {
-    this.greenChannelService.agreeOrDisagreeApply(1, id, date)
+    this.greenChannelService.agreeOrDisagreeApply(1, id, 2, date)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);
@@ -269,7 +269,7 @@ export class GreenChannelComponent implements OnInit {
   }
 
   toDisagree(id) {
-    this.greenChannelService.agreeOrDisagreeApply(2, id)
+    this.greenChannelService.agreeOrDisagreeApply(2, id, 2)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);

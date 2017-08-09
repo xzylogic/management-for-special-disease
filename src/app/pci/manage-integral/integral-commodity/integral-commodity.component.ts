@@ -1,17 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { IntegralCommodityService } from './_service/integral-commodity.service';
 import { IntegralCommodityTableService } from './_service/integral-commodity-table.service';
-import { ContainerConfig } from '../../../libs';
+import { ContainerConfig, TableOption, ActionDialog, HintDialog, DialogOptions } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { IntegralCommodity } from './_entity/integralCommodity.entity';
 import { ERRMSG } from '../../_store/static';
-import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
-import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
 
 @Component({
   selector: 'app-integral-commodity',

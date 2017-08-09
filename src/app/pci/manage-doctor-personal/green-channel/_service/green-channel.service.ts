@@ -39,11 +39,11 @@ export class GreenChannelService {
     }
   }
 
-  agreeOrDisagreeApply(agreeType: number, orderId: number, date?: string) {
+  agreeOrDisagreeApply(agreeType: number, orderId: number, serviceType: number, date?: string) {
     if ( date == '') {
-      return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}`, {});
+      return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}&serviceType=${serviceType}`, {});
     } else {
-      return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}&date=${date}`, {});
+      return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}&serviceType=${serviceType}&date=${date}`, {});
     }
   }
 

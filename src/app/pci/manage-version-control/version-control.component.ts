@@ -4,7 +4,6 @@ import { VersionControlTableService } from './_service/version-control-table.ser
 import { ContainerConfig } from '../../libs/common/container/container.component';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
-import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { TableOption } from '../../libs/dtable/dtable.entity';
 import { ERRMSG } from '../_store/static';
@@ -24,7 +23,6 @@ export class VersionControlComponent implements OnInit {
     @Inject('action') private action,
     private versionControlService: VersionControlService,
     private versionControlTableService: VersionControlTableService,
-    private dialog: MdDialog,
     private router: Router
   ) {
     action.dataChange('versionControlService', new VersionControl());

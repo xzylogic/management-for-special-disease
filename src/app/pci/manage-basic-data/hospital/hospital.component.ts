@@ -5,10 +5,9 @@ import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA} from '@angular/m
 import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
 import { Router } from '@angular/router';
 
-import { TableOption } from '../../../libs';
+import { TableOption, ContainerConfig } from '../../../libs';
 import { HospitalService } from './_service/hospital.service';
 import { HospitalTableService } from './_service/hospital-table.service';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { Hospital } from './_entity/hospital.entity';
 import { ERRMSG } from '../../_store/static';
 

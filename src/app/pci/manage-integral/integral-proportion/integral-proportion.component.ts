@@ -7,8 +7,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { IntegralProportionService } from './_service/integral-proportion.service';
 import { MdDialog } from '@angular/material';
 import { ERRMSG } from '../../_store/static';
-import { FormText } from '../../../libs/dform/_entity/form-text';
-import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
+import { FormText, HintDialog } from '../../../libs/';
 
 @Component({
   selector: 'app-integral-proportion',
