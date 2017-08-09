@@ -189,12 +189,6 @@ export class GreenChannelComponent implements OnInit {
             }, {
               id: 1,
               name: '未就诊'
-            }, {
-              id: 2,
-              name: '已入院'
-            }, {
-              id: 3,
-              name: '未入院'
             }],
             order: 1
           })]
