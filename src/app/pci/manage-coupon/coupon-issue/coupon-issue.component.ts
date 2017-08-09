@@ -1,6 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
 import { MdDialog } from '@angular/material';
 
 import { CouponIssueService } from './_service/coupon-issue.service';
@@ -25,12 +23,9 @@ export class CouponIssueComponent implements OnInit {
   containerConfig: ContainerConfig;
   couponGetTable: TableOption;
   couponUseTable: TableOption;
-  @select(['couponIssue', 'tab']) tab: Observable<number>;
-  @select(['couponIssue', 'page']) page: Observable<Array<number>>;
 
   constructor(
     @Inject('common') private common,
-    @Inject('action') private action,
     private dialog: MdDialog,
     private couponIssueService: CouponIssueService,
     private couponIssueTableService: CouponIssueTableService,
@@ -51,23 +46,12 @@ export class CouponIssueComponent implements OnInit {
   }
 
   reset() {
-    this.reset0();
-    this.reset1();
-  }
-
-  reset0() {
-    this.page.subscribe((page: Array<number>) => {
-      this.getCouponList(page[0]);
-    });
-  }
-
-  reset1() {
-    this.page.subscribe((page: Array<number>) => {
-      this.useCouponList(page[1]);
-    });
+    this.getCouponList(0);
+    this.useCouponList(1);
   }
 
   getCouponList(page: number) {
+    this.couponGetTable.reset(page);
     this.couponIssueService.getCoupon(
       page, this.couponGetTable.size, 0)
       .subscribe(res => {
@@ -88,6 +72,7 @@ export class CouponIssueComponent implements OnInit {
   }
 
   useCouponList(page: number) {
+    this.couponUseTable.reset(page);
     this.couponIssueService.getCoupon(
       page, this.couponUseTable.size, 1)
       .subscribe(res => {
@@ -105,10 +90,6 @@ export class CouponIssueComponent implements OnInit {
         console.log(err);
         this.couponUseTable.errorMessage = ERRMSG.netErrMsg;
       })
-  }
-
-  change(index) {
-    this.action.tabChange('couponIssue', index);
   }
 
   export() {
@@ -134,5 +115,4 @@ export class CouponIssueComponent implements OnInit {
         HintDialog('导出数据错误，请重新尝试', this.dialog);
       });
   }
-
 }

@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MdDialogModule, MdChipsModule, MdTabsModule } from '@angular/material';
 
 import { IntegralDetailComponent } from './integral-detail.component';
+import { IntegralDetailEditComponent } from './integral-detail-edit.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { IntegralDetailService } from './_service/integral-detail.service';
 import { IntegralDetailTableService } from './_service/integral-detail-table.service';
-import { DTableModule } from '../../../libs/dtable/dtable.module';
-import { DFormModule } from '../../../libs/dform/dform.module';
-import { LibModule } from '../../../libs/common/lib.module';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +21,7 @@ const routes: Routes = [{
   imports: [
     DTableModule,
     DFormModule,
+    MdDialogModule,
     LibModule,
     MdTabsModule,
     MdChipsModule,
@@ -29,12 +29,14 @@ const routes: Routes = [{
     RouterModule.forChild(routes)
   ],
   declarations: [
-    IntegralDetailComponent
+    IntegralDetailComponent,
+    IntegralDetailEditComponent
   ],
   providers: [
     IntegralDetailService,
     IntegralDetailTableService
-  ]
+  ],
+  entryComponents: [IntegralDetailEditComponent]
 })
 export class IntegralDetailModule {
 }

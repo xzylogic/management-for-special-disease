@@ -4,8 +4,8 @@ import { MdDialog } from '@angular/material';
 import { PushTimeService } from './_service/push-time-service.service';
 import { PushTimeTableService } from './_service/push-time-service-table.service';
 import {
-  TableOption, ContainerConfig, DialogOptions,
-  ActionDialog, HintDialog,
+  TableOption, ContainerConfig,
+  HintDialog, DialogEdit, EditDialog, FormTime
 } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
@@ -64,33 +64,25 @@ export class PushTimeComponent implements OnInit {
   }
 
   pushTime(data) {
-    const config = new DialogOptions({
-      title: `编辑推送时间`,
-      message: '',
-      buttons: [{
-        key: 'confirm',
-        value: '确定',
-        color: 'primary'
-      }, {
-        key: 'cancel',
-        value: '取消',
-        color: ''
-      }],
-      forms: [{
-        key: 'pushTime',
-        label: '患者总览数据推送',
-        value: data && data.value || ''
-      }]
+    const config: DialogEdit = new DialogEdit({
+      title: '编辑推送时间',
+      form: [
+        new FormTime({
+          key: 'pushTime',
+          label: '赠送数量',
+          value: data && data.value || '',
+          required: true,
+        }),
+      ]
     });
-    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-      if (result && result.key === 'confirm') {
-        this.getValue({pushTime: result.value[0].value});
+    EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result) {
+        this.getValue(result);
       }
     });
   }
 
   getValue(data) {
-    console.log(data);
     this.pushtimeservice.PushTimeEdit(data.pushTime)
       .subscribe(res => {
         if (res.code === 0) {

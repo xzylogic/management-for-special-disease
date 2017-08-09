@@ -3,26 +3,22 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { IntegralDetailService } from './_service/integral-detail.service';
 import { IntegralDetailTableService } from './_service/integral-detail-table.service';
 import {
-  EditDialog,
   TableOption,
   ContainerConfig,
-  FormRadio,
-  DialogEdit,
   DialogOptions,
   ActionDialog,
   HintDialog,
-  FormText,
-  FormFile
 } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdDialogConfig } from '@angular/material';
 import { IntegralDetail } from './_entity/integralDetail.entity';
 import { ERRMSG } from '../../_store/static';
+import { IntegralDetailEditComponent } from './integral-detail-edit.component';
 
 @Component({
   selector: 'app-integral-detail',
-  templateUrl: 'integral-detail.component.html'
+  templateUrl: './integral-detail.component.html'
 })
 export class IntegralDetailComponent implements OnInit {
   containerConfig: ContainerConfig;
@@ -167,38 +163,9 @@ export class IntegralDetailComponent implements OnInit {
   }
 
   sendIntegral() {
-    const config: DialogEdit = new DialogEdit({
-      title: '赠送积分',
-      form: [
-        new FormRadio({
-          key: 'type',
-          label: '选择APP',
-          value: '',
-          required: true,
-          options: [{
-            id: 1,
-            name: '患者端'
-          }, {
-            id: 0,
-            name: '医生端'
-          }],
-        }),
-        new FormText({
-          key: 'integral',
-          label: '赠送数量',
-          value: '',
-          required: true,
-        }),
-        new FormFile({
-          key: 'exEcl',
-          label: '上传表格',
-          value: '',
-          required: true,
-          url: `${this.app.pci.BASE_URL}api/analyticalXlsxBackIds`
-        }),
-      ]
-    });
-    EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+    const config = new MdDialogConfig();
+    const other = this.dialog.open(IntegralDetailEditComponent, config);
+    other.afterClosed().subscribe(result => {
       if (result) {
         this.toPresentExp(result);
       }

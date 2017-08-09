@@ -65,10 +65,10 @@ export class CommunityEditComponent implements OnInit {
 
   createForm(data?) {
     this.form = this.fb.group({
-      communityName: new FormControl(Validators.required),
-      communityAddress: new FormControl( Validators.required),
-      longitude: new FormControl( Validators.required),
-      latitude: new FormControl( Validators.required),
+      communityName: new FormControl({value: ''}, Validators.required),
+      communityAddress: new FormControl({value: ''}, Validators.required),
+      longitude: new FormControl({value: ''}, Validators.required),
+      latitude: new FormControl({value: ''}, Validators.required),
     });
     this.config = {
       communityName: new FormText({
