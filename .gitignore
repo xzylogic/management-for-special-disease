@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+/management-pci
 /tmp
 /out-tsc
 
