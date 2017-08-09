@@ -195,7 +195,7 @@ export class GreenChannelComponent implements OnInit {
       });
       EditDialog(config, this.dialog).afterClosed().subscribe(result => {
         if (result) {
-          this.editInfo(result.statusId, res.value.orderId, result.date);
+          this.editInfo(result.status, res.value.orderId, result.date);
         }
       });
     }
