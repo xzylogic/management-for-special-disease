@@ -8,10 +8,11 @@ import { CouponService } from './_service/coupon.service';
 import { CouponTableService } from './_service/coupon-table.service';
 import { Coupon } from './_entity/coupon.entity';
 import {
-  TableOption, ContainerConfig, ControlType, DialogOptions,
-  ActionDialog, HintDialog
+  TableOption, ContainerConfig, ControlType, DialogEdit,
+  HintDialog, FormEditor
 } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
+import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
 
 
 @Component({
@@ -108,27 +109,20 @@ export class CouponComponent implements OnInit {
 
   // 优惠券说明维护模态框
   getcouponExplain(data) {
-    const config = new DialogOptions({
+    const config: DialogEdit = new DialogEdit({
       title: '优惠券说明维护',
-      message: '',
-      buttons: [{
-        key: 'torefuse',
-        value: '保存',
-        color: 'primary'
-      }, {
-        key: 'tocancel',
-        value: '取消',
-        color: ''
-      }],
-      forms: [{
-        key: 'message',
-        label: '优惠券说明维护',
-        value: data || '',
-      }]
+      form: [
+        new FormEditor({
+          key: 'message',
+          label: '优惠券说明维护',
+          value: data || '',
+          required: true
+        })
+      ]
     });
-    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-      if (result && result.key === 'torefuse' && result.value[0]) {
-        this.toRefuseCoupon(result.value[0].value);
+    EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result && result.message) {
+        this.toRefuseCoupon(result.message);
       }
     });
   }

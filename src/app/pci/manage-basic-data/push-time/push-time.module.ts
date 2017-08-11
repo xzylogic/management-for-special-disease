@@ -3,9 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MdChipsModule, MdTabsModule } from '@angular/material';
 
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
+import { DTableModule, LibModule } from '../../../libs';
 import { PushTimeComponent } from './push-time.component';
-import { PushTimeEditComponent } from './push-time-edit/push-time-edit.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { PushTimeService } from './_service/push-time-service.service';
@@ -27,8 +26,7 @@ const routes: Routes = [{
     RouterModule.forChild(routes)
   ],
   declarations: [
-    PushTimeComponent,
-    PushTimeEditComponent
+    PushTimeComponent
   ],
   providers: [
     PushTimeService,

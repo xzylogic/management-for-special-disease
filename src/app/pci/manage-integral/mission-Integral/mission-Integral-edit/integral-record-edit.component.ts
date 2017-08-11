@@ -22,7 +22,7 @@ export class IntegralRecordComponent implements OnInit {
     @Inject(MD_DIALOG_DATA) public data: any,
     public dialogRef: MdDialogRef<IntegralRecordComponent>,
   ) {
-    this.option = this.data
+    this.option = this.data;
   }
 
   ngOnInit() {

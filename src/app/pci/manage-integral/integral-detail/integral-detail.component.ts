@@ -5,8 +5,10 @@ import { IntegralDetailTableService } from './_service/integral-detail-table.ser
 import {
   TableOption,
   ContainerConfig,
-  DialogOptions,
-  ActionDialog,
+  DialogEdit,
+  EditDialog,
+  FormEditor,
+  FormText,
   HintDialog,
 } from '../../../libs';
 import { select } from '@angular-redux/store';
@@ -131,32 +133,26 @@ export class IntegralDetailComponent implements OnInit {
   }
 
   IntegralRule(data) {
-    const config = new DialogOptions({
+    const config: DialogEdit = new DialogEdit({
       title: `积分规则维护`,
-      message: '',
-      buttons: [{
-        key: 'confirm',
-        value: '确定',
-        color: 'primary'
-      }, {
-        key: 'cancel',
-        value: '取消',
-        color: ''
-      }],
-      forms: [
-        {
+      form: [
+        new FormText ({
           key: 'id',
           label: 'id',
           value: data.id || '',
-        }, {
+          required: true
+        }),
+        new FormEditor({
           key: 'rule',
           label: '积分规则说明',
-          value: data.rule || ''
-        }]
+          value: data.rule || '',
+          required: true
+        })
+      ]
     });
-    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
-      if (result && result.key === 'confirm') {
-        this.toIntegralRule(result.value);
+    EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result) {
+        this.toIntegralRule(result);
       }
     });
   }
@@ -187,7 +183,7 @@ export class IntegralDetailComponent implements OnInit {
   }
 
   toIntegralRule(data) {
-    this.integralDetailService.integralRuleUpdate(data[0].value, data[1].value)
+    this.integralDetailService.integralRuleUpdate(data.id, data.rule)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('操作成功', this.dialog);

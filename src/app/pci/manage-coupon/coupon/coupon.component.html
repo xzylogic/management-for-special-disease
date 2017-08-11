@@ -5,7 +5,7 @@
   </div>
   <div class="content">
     <md-tab-group dynamicHeight="true">
-      <md-tab label="优惠券了列表">
+      <md-tab label="优惠券列表">
         <div *ngIf="!couponTable.lists&&couponTable.loading">Loading...</div>
         <div *ngIf="!couponTable.lists&&!couponTable.loading&&!!couponTable.errorMessage" class="center">
           {{couponTable.errorMessage}}
