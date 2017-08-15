@@ -52,7 +52,7 @@ export class DoctorServiceEditComponent implements OnInit {
       // times: new FormControl({value: ''}, Validators.required),
       enable: new FormControl({value: ''}, Validators.required),
       unitId: new FormControl({value: ''}, Validators.required),
-      numbers: new FormControl({value: ''}, Validators.required),
+      numbers: new FormControl({value: ''}),
       content : new FormControl({value: ''}, Validators.required),
       operationalRemark : new FormControl({value: ''}, Validators.required),
     });
@@ -103,7 +103,7 @@ export class DoctorServiceEditComponent implements OnInit {
           id: 4,
           name: '年'
         }],
-        value: data.unitId || 1
+        value: data.unitId || ''
       }),
       numbers: new FormText({
         type: 'text',

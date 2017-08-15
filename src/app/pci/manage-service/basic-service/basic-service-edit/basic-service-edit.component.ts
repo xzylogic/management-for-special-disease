@@ -111,7 +111,7 @@ export class BasicServiceEditComponent implements OnInit {
           id: 3,
           name: '朵花／次'
         }],
-        value: data && data.unitId || 1
+        value: data && data.unitId || ''
       }),
       numbers: new FormText({
         type: 'text',
