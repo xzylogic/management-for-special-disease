@@ -135,33 +135,33 @@ export class HealthServiceFormService {
         ],
         order: 11
       }),
-      new FormDate({
+      new FormText({
         key: 'validPeriod',
         label: '有效期',
         value: data && (data.validPeriod || ''),
         required: false,
         order: 12
       }),
-      new FormText({
+      new FormEditor({
         key: 'details',
-        label: '服务内容',
+        label: '商品参数',
         value: data && (data.details || ''),
         required: false,
-        order: 13
+        order: 15
       }),
       new FormText({
         key: 'forPeople',
         label: '适用人群',
         value: data && (data.forPeople || ''),
         required: false,
-        order: 14
+        order: 13
       }),
       new FormText({
         key: 'description',
         label: '服务简介',
         value: data && (data.description || ''),
         required: false,
-        order: 15
+        order: 14
       }),
       new FormEditor({
         key: 'content',

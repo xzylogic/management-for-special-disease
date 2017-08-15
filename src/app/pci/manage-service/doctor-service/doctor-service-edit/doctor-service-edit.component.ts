@@ -115,7 +115,7 @@ export class DoctorServiceEditComponent implements OnInit {
         label: '服务简介',
         key: 'content',
         value: data.content  || '',
-        maxlength: 42
+        // maxlength: 42
       }),
       operationalRemark : new FormTextarea({
         label: '服务说明',
