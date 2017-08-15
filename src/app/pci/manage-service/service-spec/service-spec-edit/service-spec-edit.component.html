@@ -6,6 +6,7 @@
       <app-input-dropdown [form]="form" [data]="config.specificationIdx"
                           [value]="config.specificationIdx.value"></app-input-dropdown>
       <app-input-text [form]="form" [data]="config.price" [value]="config.price.value"></app-input-text>
+      <app-input-text [form]="form" [data]="config.originalPrice" [value]="config.originalPrice.value"></app-input-text>
       <app-input-text [form]="form" [data]="config.count" [value]="config.count.value"></app-input-text>
       <md-input-container [style.width]="'100%'">
       <input mdInput type="text" [formControlName]="'serviceId'" name="serviceId" placeholder="输入第三方服务以检索" (change)="serviceId=null" (change)="search($event)" (keyup)="search($event)" [(ngModel)]="serviceName">
