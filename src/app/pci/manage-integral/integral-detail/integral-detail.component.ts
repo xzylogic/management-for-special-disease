@@ -132,6 +132,18 @@ export class IntegralDetailComponent implements OnInit {
       })
   }
 
+  integralDiscription() {
+    this.integralDetailService.getIntegralDiscription()
+      .subscribe(res => {
+        if (res.code === 0) {
+          this.IntegralExplain(res.data)
+          console.log(res);
+        }
+      }, err => {
+        alert(err);
+      })
+  }
+
   IntegralRule(data) {
     const config: DialogEdit = new DialogEdit({
       title: `积分规则维护`,
@@ -157,6 +169,32 @@ export class IntegralDetailComponent implements OnInit {
     });
   }
 
+  IntegralExplain(data) {
+    const config: DialogEdit = new DialogEdit({
+      title: `积分说明`,
+      form: [
+        new FormText ({
+          key: 'id',
+          label: 'id',
+          value: data.id || '',
+          required: true
+        }),
+        new FormEditor({
+          key: 'description',
+          label: '积分说明',
+          value: data.description || '',
+          required: true
+        })
+      ]
+    });
+    EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result) {
+        this.toIntegralExplain(result);
+        console.log(result);
+      }
+    });
+  }
+
   sendIntegral() {
     const config = new MdDialogConfig();
     const other = this.dialog.open(IntegralDetailEditComponent, config);
@@ -165,6 +203,21 @@ export class IntegralDetailComponent implements OnInit {
         this.toPresentExp(result);
       }
     });
+  }
+
+  toIntegralExplain(data) {
+    this.integralDetailService.integralExplainUpdate(data.id, data.description)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
   }
 
   toPresentExp(data) {

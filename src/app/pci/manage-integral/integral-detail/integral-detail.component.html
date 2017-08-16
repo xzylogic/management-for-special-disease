@@ -1,5 +1,6 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="addition">
+    <button md-raised-button (click)="integralDiscription()">积分说明</button>
     <button md-raised-button (click)="integralManage()">积分规则维护</button>
     <button md-raised-button (click)="sendIntegral()">赠送积分给用户</button>
   </div>
