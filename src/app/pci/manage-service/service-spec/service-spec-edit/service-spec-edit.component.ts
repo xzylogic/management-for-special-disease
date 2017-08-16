@@ -61,6 +61,7 @@ export class ServiceSpecEditComponent implements OnInit {
       name: new FormControl({value: ''}, Validators.required),
       specificationIdx: new FormControl({value: ''}, Validators.required),
       price: new FormControl({value: ''}, Validators.required),
+      originalPrice: new FormControl({value: ''}, Validators.required),
       count: new FormControl({value: ''}, Validators.required),
       serviceId: new FormControl({value: ''}, Validators.required),
       serviceName: new FormControl({value: ''}, Validators.required),
@@ -89,6 +90,11 @@ export class ServiceSpecEditComponent implements OnInit {
         label: '价格',
         key: 'price',
         value: data.price || ''
+      }),
+      originalPrice: new FormText({
+        label: '原价',
+        key: 'originalPrice',
+        value: data.originalPrice || ''
       }),
       count: new FormText({
         type: 'text',
