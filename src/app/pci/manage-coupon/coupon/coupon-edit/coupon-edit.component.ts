@@ -47,20 +47,11 @@ export class CouponEditComponent implements OnInit {
 
   ngOnInit() {
     // 获取第三方服务机构
-    this.couponService.getthirdService().subscribe(res => {
-      if (res.code === 0 && res.data) {
-        this.serviceNmae = res.data;
-      } else {
-        this.errMsg = res.msg || ERRMSG.nullMsg;
-      }
-    }, err => {
-      console.log(err);
-    });
-    // 获取第三方服务名称
-    this.couponService.getthirdServiceName().subscribe(res => {
-      this.getStatus(res.data);
-      if (res.code === 0 && res.data) {
-        this.coupon.subscribe(data => {
+    this.couponService.getthirdService().subscribe(data => {
+      this.couponService.getthirdServiceName().subscribe(res => {
+        this.getStatus(res.data);
+        if (res.code === 0 && res.data && data.code === 0 && data.data) {
+          this.serviceNmae = data.data;
           if (data.couponId === 0) {
             this.containerConfig = this.couponService.couponEditConfig(true);
             this.createForm(res.data, this.serviceNmae, data);
@@ -74,15 +65,16 @@ export class CouponEditComponent implements OnInit {
             this.getState(data);
             this.createForm(res.data, this.serviceNmae, data);
           }
-        });
-      } else {
-        this.errMsg = res.msg || ERRMSG.nullMsg;
-      }
+        } else {
+          this.errMsg = data.msg || ERRMSG.nullMsg;
+          this.errMsg = res.msg || ERRMSG.nullMsg;
+        }
+      }, err => {
+        this.errMsg = ERRMSG.netErrMsg;
+      })
     }, err => {
-      console.log(err);
       this.errMsg = ERRMSG.netErrMsg;
-    });
-    this.cdr.detectChanges();
+    })
   }
 
   getStatus(list) {
