@@ -51,20 +51,23 @@ export class CouponEditComponent implements OnInit {
       this.couponService.getthirdServiceName().subscribe(res => {
         this.getStatus(res.data);
         if (res.code === 0 && res.data && data.code === 0 && data.data) {
-          this.serviceNmae = data.data;
-          if (data.couponId === 0) {
-            this.containerConfig = this.couponService.couponEditConfig(true);
-            this.createForm(res.data, this.serviceNmae, data);
-            this.grantNums = true;
-          } else {
-            this.couponId = data.couponId;
-            this.newSurplusNum = true;
-            this.grantNum = data.surplusNum;
-            data.newSurplusNum = data.surplusNum;
-            this.containerConfig = this.couponService.couponEditConfig(false);
-            this.getState(data);
-            this.createForm(res.data, this.serviceNmae, data);
-          }
+          this.coupon.subscribe(value => {
+            console.log(value);
+            this.serviceNmae = data.data;
+            if (value.couponId === 0) {
+              this.containerConfig = this.couponService.couponEditConfig(true);
+              this.createForm(res.data, this.serviceNmae, value);
+              this.grantNums = true;
+            } else {
+              this.couponId = value.couponId;
+              this.newSurplusNum = true;
+              this.grantNum = value.surplusNum;
+              value.newSurplusNum = value.surplusNum;
+              this.containerConfig = this.couponService.couponEditConfig(false);
+              this.getState(value);
+              this.createForm(res.data, this.serviceNmae, value);
+            }
+          })
         } else {
           this.errMsg = data.msg || ERRMSG.nullMsg;
           this.errMsg = res.msg || ERRMSG.nullMsg;
