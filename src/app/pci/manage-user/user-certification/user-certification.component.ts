@@ -204,7 +204,7 @@ export class UserCertificationComponent implements OnInit {
 
   gotoHandle(res) {
     if (res.key === 'idCardImageUrl') {
-      ImageDialog(res.value.name, res.value.avatarUrl, this.dialog);
+      ImageDialog(res.value.name, res.value.idCardImageUrl, this.dialog);
     }
   }
 
