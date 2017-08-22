@@ -71,7 +71,7 @@ export class UserOrderTableService {
       }),
       new TableTitle({
         name: '状态',
-        key: 'paymentStatus'
+        key: 'status'
       }),
       new TableTitle({
         name: 'Ping++订单号',
@@ -368,15 +368,15 @@ export class UserOrderTableService {
       }),
       new TableTitle({
         name: '订单价格',
-        key: 'serviceName'
+        key: 'originalPrice'
       }),
       new TableTitle({
         name: '付款金额',
-        key: 'serviceName'
+        key: 'amount'
       }),
       new TableTitle({
         name: '优惠金额',
-        key: 'serviceName'
+        key: 'discountAmount'
       }),
       new TableTitle({
         name: '购买时间',
