@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialogConfig, MdDialog} from '@angular/material';
 
 import { ContainerConfig, TableOption } from '../../../libs';
+import { RiskDetailComponent } from './risk-detail/risk-detail.component';
 import { AssessmentRiskService } from './_service/assessment-risk.service';
 import { AssessmentRiskTableService } from './_service/assessment-risk-table.service';
 import { ERRMSG } from '../../_store/static';
@@ -16,7 +18,8 @@ export class AssessmentRiskComponent implements OnInit {
 
   constructor(
     private assessmentRiskService: AssessmentRiskService,
-    private assessmentRiskTableService: AssessmentRiskTableService
+    private assessmentRiskTableService: AssessmentRiskTableService,
+    private dialog: MdDialog
   ) {
   }
 
@@ -70,10 +73,10 @@ export class AssessmentRiskComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    console.log(res)
     if (res.key === 'show') {
-      // this.assessmentRisk = data.value;
-      // this.enableDetail = true;
+      const config = new MdDialogConfig();
+      config.data = res.value;
+      this.dialog.open(RiskDetailComponent, config);
     }
   }
 }
