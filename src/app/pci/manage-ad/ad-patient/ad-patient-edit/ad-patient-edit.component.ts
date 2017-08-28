@@ -83,6 +83,9 @@ export class AdPatientEditComponent implements OnInit {
         }, {
           id: 2,
           name: '跳转到第三方服务页'
+        }, {
+          id: 3,
+          name: '跳转到风险评估页'
         }],
         value: data && (data.skipType == 0 ? data.skipType : data.skipType || '')
       }),
