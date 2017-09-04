@@ -42,7 +42,7 @@ export class ReceiveFlowersComponent implements OnInit {
 
   getReceiveFlowers(id, page: number) {
     this.receiveFlowersTable.reset(page);
-    this.doctorAccountService.getDetailList(id, page, this.receiveFlowersTable.size)
+    this.doctorAccountService.getDetailList(id, this.receiveFlowersTable.size, page)
       .subscribe(
         res => {
           this.receiveFlowersTable.loading = false;
