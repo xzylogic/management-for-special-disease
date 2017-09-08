@@ -20,8 +20,12 @@ export class IntegralDetailTableService {
         minwidth: 85
       }),
       new TableTitle({
-        name: '剩余积分',
+        name: '当前积分',
         key: 'remainingIntegral'
+      }),
+      new TableTitle({
+        name: '送分时间',
+        key: 'recordTime'
       }),
       new TableTitle({
         name: '项目',
