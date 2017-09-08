@@ -42,7 +42,7 @@ export class ExchangeCommoditiesComponent implements OnInit {
 
   getExchangeCommodities(id, page: number) {
     this.exchangeCommoditiesTable.reset(page);
-    this.doctorAccountService.getExchangeList(id, page, this.exchangeCommoditiesTable.size)
+    this.doctorAccountService.getExchangeList(id, this.exchangeCommoditiesTable.size, page)
       .subscribe(
         res => {
           this.exchangeCommoditiesTable.loading = false;

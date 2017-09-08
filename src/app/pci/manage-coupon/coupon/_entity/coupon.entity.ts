@@ -19,7 +19,7 @@ export class Coupon {
     this.price = obj && obj.price || '';
     this.code = obj && obj.code || '';
     this.surplusNum = obj && obj.surplusNum || 0;
-    this.assignUser = obj && obj.assignUser || null;
+    this.assignUser = obj && obj.assignUser || false;
     this.useRange = obj && obj.useRange || '';
     this.organizationId = obj && obj.organizationId || 0;
     this.startDate = obj && obj.startDate || '';

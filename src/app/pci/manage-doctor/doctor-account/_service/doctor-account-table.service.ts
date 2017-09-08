@@ -175,11 +175,11 @@ export class DoctorAccountTableService {
       }),
       new TableTitle({
         name: '快递公司',
-        key: 'expressCompany'
+        key: 'expressNo'
       }),
       new TableTitle({
         name: '快递单号',
-        key: 'expressNo'
+        key: 'expressCompany'
       }),
       new TableTitle({
         name: '输入快递单',

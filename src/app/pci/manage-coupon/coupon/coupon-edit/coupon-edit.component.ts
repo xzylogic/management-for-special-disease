@@ -52,7 +52,6 @@ export class CouponEditComponent implements OnInit {
         this.getStatus(res.data);
         if (res.code === 0 && res.data && data.code === 0 && data.data) {
           this.coupon.subscribe(value => {
-            console.log(value);
             this.serviceNmae = data.data;
             if (value.couponId === 0) {
               this.containerConfig = this.couponService.couponEditConfig(true);
@@ -159,7 +158,7 @@ export class CouponEditComponent implements OnInit {
           id: false,
           name: '否',
         }],
-        value: data && data.assignUser
+        value: false
       }),
       isDonate: new FormRadio({
         label: '赠送用户',
@@ -276,7 +275,7 @@ export class CouponEditComponent implements OnInit {
 
   getValues(value) {
     this.useRange(value);
-    if (value.fullPrice > value.price) {
+    if (value.fullPrice >= value.price) {
       this.price = false;
       if (this.couponId) {
         delete value.grantNum;
