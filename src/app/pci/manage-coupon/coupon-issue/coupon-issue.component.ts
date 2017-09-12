@@ -47,7 +47,7 @@ export class CouponIssueComponent implements OnInit {
 
   reset() {
     this.getCouponList(0);
-    this.useCouponList(1);
+    this.useCouponList(0);
   }
 
   getCouponList(page: number) {
