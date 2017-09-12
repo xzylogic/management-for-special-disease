@@ -16,7 +16,7 @@ export class UserIntegralDetailTableService {
         key: 'integralTransaction'
       }),
       new TableTitle({
-        name: '剩余积分',
+        name: '当前积分',
         key: 'remainingIntegral'
       }),
       new TableTitle({

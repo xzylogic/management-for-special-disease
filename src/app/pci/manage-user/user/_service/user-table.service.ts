@@ -79,7 +79,7 @@ export class UserTableService {
         minwidth: 70
       }),
       new TableTitle({
-        name: '剩余积分',
+        name: '当前积分',
         key: 'integral',
         option: '查看',
         controlType: ControlType.button,

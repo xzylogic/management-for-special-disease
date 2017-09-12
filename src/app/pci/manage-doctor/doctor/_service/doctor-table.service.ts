@@ -58,7 +58,7 @@ export class DoctorTableService {
         maxwidth: 70
       }),
       new TableTitle({
-        name: '剩余积分',
+        name: '当前积分',
         key: 'integral',
         option: '查看',
         controlType: ControlType.button,
@@ -232,7 +232,7 @@ export class DoctorTableService {
         minwidth: 85
       }),
       new TableTitle({
-        name: '剩余积分',
+        name: '当前积分',
         key: 'remainingIntegral'
       }),
       new TableTitle({
