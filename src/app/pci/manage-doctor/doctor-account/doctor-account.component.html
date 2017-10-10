@@ -1,4 +1,7 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="addition">
+    <button md-raised-button (click)="sendFlowerDoctor()">赠送鲜花给医生</button>
+  </div>
   <div class="content">
     <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <md-tab label="全部账户">

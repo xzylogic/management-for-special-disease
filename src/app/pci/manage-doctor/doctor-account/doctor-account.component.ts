@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdDialogConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
+
+import { SendFlowersComponent } from './send-flowers/send-flowers.component';
 
 import { ContainerConfig, TableOption, HintDialog } from '../../../libs';
 import { DoctorAccountService } from './_service/doctor-account.service';
@@ -254,6 +256,31 @@ export class DoctorAccountComponent implements OnInit {
         HintDialog('已到货', this.dialog);
       }
     }
+  }
+
+  sendFlowerDoctor() {
+    const config = new MdDialogConfig();
+    const other = this.dialog.open(SendFlowersComponent, config);
+    other.afterClosed().subscribe(result => {
+      if (result) {
+        this.toSendFlowers(result);
+      }
+    });
+  }
+
+  toSendFlowers(data) {
+    this.doctorAccountService.SendFlowers(data)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
   }
 
   processPay(id) {

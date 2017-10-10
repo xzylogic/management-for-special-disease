@@ -11,6 +11,7 @@ const PATH = {
   incomePurchaseList: 'api/income/purchase/list', // 兑换列表
   incomeWithdraw: 'api/income/withdraw', // 提现处理
   incomeWithdrawList: 'api/income/withdraw/list', // 提现列表
+  sendFlowers: 'api/income/grantFlower' // 赠送鲜花
 };
 
 @Injectable()
@@ -110,5 +111,14 @@ export class DoctorAccountService {
    */
   getWithdrawDeposits(page: number, size: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeWithdrawList}?size=${size}&page=${page}`);
+  }
+
+
+  /**
+   * 赠送鲜花
+   * @param {any} body [description]
+   */
+  SendFlowers(body: any) {
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.sendFlowers}`, body);
   }
 }

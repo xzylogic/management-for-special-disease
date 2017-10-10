@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MdChipsModule, MdTabsModule, MdDialogModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
 import { DoctorAccountComponent } from './doctor-account.component';
 import { ExchangeCommoditiesComponent } from './exchange-commodities/exchange-commodities.component';
+import { SendFlowersComponent } from './send-flowers/send-flowers.component';
 import { ReceiveFlowersComponent } from './receive-flowers/receive-flowers.component';
 
 import { AuthGuardService } from '../../_service/auth-guard.service';
@@ -32,18 +33,21 @@ const routes: Routes = [{
     DFormModule,
     LibModule,
     MdTabsModule,
+    MdDialogModule,
     MdChipsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
     DoctorAccountComponent,
     ExchangeCommoditiesComponent,
-    ReceiveFlowersComponent
+    ReceiveFlowersComponent,
+    SendFlowersComponent
   ],
   providers: [
     DoctorAccountService,
     DoctorAccountTableService
-  ]
+  ],
+  entryComponents: [SendFlowersComponent]
 })
 export class DoctorAccountModule {
 }
