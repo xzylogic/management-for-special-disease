@@ -84,7 +84,7 @@ export class AdDoctorEditComponent implements OnInit {
         },
           {
             id: 4,
-            name: '图片'
+            name: '跳转到图片'
           }],
         value: data && data.skipType || 0,
         required: true,
