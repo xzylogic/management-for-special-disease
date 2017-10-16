@@ -13,6 +13,8 @@ export class SendFlowersComponent implements OnInit {
   form: FormGroup;
   config: any;
   errMsg = '';
+  errMsgFlower = false;
+  message = '';
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +57,17 @@ export class SendFlowersComponent implements OnInit {
         value: '',
         required: true,
       }),
+    }
+  }
+
+  SendChange(value) {
+    let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
+    if (reg.test(this.config.flower.value) === false) {
+      this.errMsgFlower = true;
+      this.message = '只能填写正数和小数点后两位的数字';
+    } else {
+      this.errMsgFlower = false;
+      this.errMsg = '';
     }
   }
 

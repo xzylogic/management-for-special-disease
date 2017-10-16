@@ -238,7 +238,7 @@ export class DoctorAccountTableService {
       }),
       new TableTitle({
         name: '处理时间',
-        key: 'exchangeDate',
+        key: 'handleDate',
         minwidth: 70
       })
     ];
