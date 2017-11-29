@@ -39,12 +39,13 @@ export class HospitalComponent implements OnInit {
       ifPage: true
     });
     this.page.subscribe((page: Array<number>) => {
-      this.getHospital();
+      this.getHospital(0);
     });
   }
 
-  getHospital() {
-    this.hospitalService.getHospital()
+  getHospital(page) {
+    this.hospitalTable.reset(page);
+    this.hospitalService.getHospital(page)
       .subscribe(res => {
         this.hospitalTable.loading = false;
         if (res.code === 0 && res.data && res.data.length === 0) {
