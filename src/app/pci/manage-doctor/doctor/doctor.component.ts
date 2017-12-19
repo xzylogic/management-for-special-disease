@@ -193,7 +193,7 @@ export class DoctorComponent implements OnInit {
       this.router.navigate(['/doctor/service-list'], {queryParams: {id: doctor.id}});
     }
     if (res.key === 'certificationUrl') {
-      ImageDialog(doctor.name, doctor.avatarUrl, this.dialog);
+      ImageDialog(doctor.name, doctor.certificationUrl, this.dialog);
     }
     if (res.key === 'failureReason') {
       MessageDialog('拒绝理由', doctor.failureReason, this.dialog);
