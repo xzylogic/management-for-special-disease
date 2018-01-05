@@ -9,7 +9,8 @@ export class HealthServiceTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'serviceId'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '服务图片',
@@ -19,6 +20,10 @@ export class HealthServiceTableService {
       new TableTitle({
         name: '服务名称',
         key: 'title',
+      }),
+      new TableTitle({
+        name: '服务ID',
+        key: 'serviceId'
       }),
       new TableTitle({
         name: '服务机构',

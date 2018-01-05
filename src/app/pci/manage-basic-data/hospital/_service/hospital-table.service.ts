@@ -9,7 +9,8 @@ export class HospitalTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '医院图片',

@@ -9,8 +9,8 @@ export class UserTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id',
-        minwidth: 40
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '头像',
@@ -21,6 +21,11 @@ export class UserTableService {
         name: '患者姓名',
         key: 'name',
         minwidth: 80
+      }),
+      new TableTitle({
+        name: '用户ID',
+        key: 'id',
+        minwidth: 40
       }),
       new TableTitle({
         name: '手机号',

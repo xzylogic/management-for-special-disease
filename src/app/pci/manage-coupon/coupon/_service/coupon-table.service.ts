@@ -9,7 +9,8 @@ export class CouponTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'couponId'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '优惠券名称',

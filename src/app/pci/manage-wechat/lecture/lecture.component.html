@@ -22,8 +22,13 @@
               </tr>
               </thead>
               <tbody *ngIf="lectureTable.lists">
-              <tr *ngFor="let list of lectureTable.lists">
+              <tr *ngFor="let list of lectureTable.lists; let i = index">
                 <td *ngFor="let title of lectureTable.titles" [ngSwitch]="title.controlType" data-title="{{title.name}}">
+                  <div *ngSwitchCase="controlType.index" [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"
+                       [ngStyle]="{'text-align': title.align}"
+                       class="table__content">
+                    <span>{{i + 1 + lectureTable.currentPage * lectureTable.size}}</span>
+                  </div>
                   <div *ngSwitchCase="controlType.text" [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"
                        class="table__content">
                     <span>{{list[title.key] == 0 ? list[title.key] : list[title.key] || ''}}</span>

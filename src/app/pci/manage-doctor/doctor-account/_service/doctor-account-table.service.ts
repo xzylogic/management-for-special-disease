@@ -9,7 +9,8 @@ export class DoctorAccountTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '头像',
@@ -64,7 +65,8 @@ export class DoctorAccountTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '提现人',
@@ -136,7 +138,8 @@ export class DoctorAccountTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '兑换人',
@@ -213,7 +216,8 @@ export class DoctorAccountTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '兑换商品',

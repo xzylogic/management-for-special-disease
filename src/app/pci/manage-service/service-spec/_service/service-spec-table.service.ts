@@ -9,7 +9,8 @@ export class ServiceSpecTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '规格名称',

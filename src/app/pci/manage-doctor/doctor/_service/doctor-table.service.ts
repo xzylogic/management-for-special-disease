@@ -9,7 +9,8 @@ export class DoctorTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '头像',
@@ -19,6 +20,10 @@ export class DoctorTableService {
       new TableTitle({
         name: '医生姓名',
         key: 'name'
+      }),
+      new TableTitle({
+        name: '医生ID',
+        key: 'id'
       }),
       new TableTitle({
         name: '手机号',
@@ -89,7 +94,8 @@ export class DoctorTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '头像',
@@ -99,6 +105,10 @@ export class DoctorTableService {
       new TableTitle({
         name: '医生姓名',
         key: 'name'
+      }),
+      new TableTitle({
+        name: '医生ID',
+        key: 'id'
       }),
       new TableTitle({
         name: '手机号',
@@ -157,7 +167,8 @@ export class DoctorTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '头像',
@@ -167,6 +178,10 @@ export class DoctorTableService {
       new TableTitle({
         name: '医生姓名',
         key: 'name'
+      }),
+      new TableTitle({
+        name: '医生ID',
+        key: 'id'
       }),
       new TableTitle({
         name: '手机号',
@@ -220,11 +235,16 @@ export class DoctorTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'id'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '姓名',
         key: 'name'
+      }),
+      new TableTitle({
+        name: '医生ID',
+        key: 'id'
       }),
       new TableTitle({
         name: '手机号',

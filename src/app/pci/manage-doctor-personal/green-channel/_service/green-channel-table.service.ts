@@ -11,7 +11,8 @@ export class GreenChannelTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'orderId'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '医生姓名',
@@ -62,7 +63,8 @@ export class GreenChannelTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'orderId'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '医生姓名',
@@ -110,7 +112,8 @@ export class GreenChannelTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '序号',
-        key: 'orderId'
+        key: '',
+        controlType: ControlType.index
       }),
       new TableTitle({
         name: '医生姓名',
