@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -26,7 +26,7 @@ export class DoctorServiceEditComponent implements OnInit {
   constructor(
     @Inject('app') private app,
     private doctorServiceService: DoctorServiceService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef

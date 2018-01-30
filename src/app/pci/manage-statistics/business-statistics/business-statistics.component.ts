@@ -4,7 +4,7 @@ import { BusinessStatisticsService } from './_service/business-statistics.servic
 import { BusinessStatisticsTableService } from './_service/business-statistics-table.service';
 import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
-import { MdAnchor } from '@angular/material';
+import { MatAnchor } from '@angular/material';
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -23,7 +23,7 @@ export class BusinessStatisticsComponent implements OnInit {
   businessDoctorExport: AOA;
   queryUserDate: any;
   queryDoctorDate: any;
-  @ViewChild('userExport') userExport: MdAnchor;
+  @ViewChild('userExport') userExport: MatAnchor;
 
   constructor(
     @Inject('search') private search,

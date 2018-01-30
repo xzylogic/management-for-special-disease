@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { CouponIssueService } from './_service/coupon-issue.service';
 import { CouponIssueTableService } from './_service/coupon-issue-table.service';
@@ -26,7 +26,7 @@ export class CouponIssueComponent implements OnInit {
 
   constructor(
     @Inject('common') private common,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private couponIssueService: CouponIssueService,
     private couponIssueTableService: CouponIssueTableService,
   ) {

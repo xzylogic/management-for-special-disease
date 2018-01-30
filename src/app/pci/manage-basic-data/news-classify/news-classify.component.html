@@ -1,6 +1,6 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="newData()">新增健康资讯分类</button>
+    <button mat-raised-button (click)="newData()">新增健康资讯分类</button>
   </div>
   <div class="content">
     <div *ngIf="!newsClassifyTable.lists&&newsClassifyTable.loading">Loading...</div>

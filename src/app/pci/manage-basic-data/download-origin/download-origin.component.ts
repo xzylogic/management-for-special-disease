@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { DownloadOriginService } from './_service/download-origin.service';
 import { DownloadOriginTableService } from './_service/download-origin-table.service';
@@ -21,7 +21,7 @@ export class DownloadOriginComponent implements OnInit {
     @Inject('action') private action,
     private downloadOriginService: DownloadOriginService,
     private downloadOriginTableService: DownloadOriginTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
   ) {
   }
 

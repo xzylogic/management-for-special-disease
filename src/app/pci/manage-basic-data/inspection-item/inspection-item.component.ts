@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, TableOption, HintDialog } from '../../../libs';
 import { InspectionItemService } from './_service/inspection-item.service';
@@ -21,7 +21,7 @@ export class InspectionItemComponent implements OnInit {
     @Inject('action') private action,
     private inspectionItemService: InspectionItemService,
     private inspectionItemTableService: InspectionItemTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

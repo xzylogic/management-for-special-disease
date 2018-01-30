@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-
-export enum SearchType {date, range}
+import { AfterViewInit, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
 declare let require;
-const Flatpickr = require('flatpickr');
-const ZH = require('flatpickr/dist/l10n/zh.js').zh;
+const flatpickr = require('flatpickr');
+import { Mandarin } from 'flatpickr/dist/l10n/zh.js';
+
+export enum SearchType {date, range}
 
 @Component({
   selector: 'app-search',
@@ -17,24 +17,38 @@ const ZH = require('flatpickr/dist/l10n/zh.js').zh;
       >
       <span class="input_span">{{label}}</span>
     </div>
-    <div class="input_container" style="display: inline-block;width: 200px;" *ngIf="type==SearchType.range">
-      <input class="input_content"
-             [placeholder]="label"
-             (change)="change()"
-             [(ngModel)]="value" #range
-      >
-      <span class="input_span">{{label}}</span>
+    <div class="mat-input-wrapper mat-form-field-wrapper" *ngIf="type==SearchType.range">
+      <div class="mat-input-flex mat-form-field-flex">
+        <div class="mat-input-infix mat-form-field-infix">
+          <input class="mat-input-element"
+                 [placeholder]="label"
+                 (change)="change()"
+                 [(ngModel)]="value" #range
+          >
+          <span
+            class="mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper mat-form-field-can-float mat-form-field-should-float">
+            <label class="mat-input-placeholder mat-form-field-placeholder"
+                   style="display: block;"
+            >{{label}}</label>
+          </span>
+        </div>
+        <div class="mat-input-underline mat-form-field-underline" style="left: 0">
+          <span class="mat-input-ripple mat-form-field-ripple"></span>
+        </div>
+      </div>
     </div>
   `,
   styleUrls: ['../../dform/component/lib-input/lib-input.scss']
 })
-export class SearchComponent implements OnInit, AfterViewInit {
+export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
+  @HostBinding('class') hostClass = 'mat-input-container mat-form-field';
   @Input() type: SearchType;
   @Input() label: string;
   @Input() value: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
   @ViewChild('date') date: any;
   @ViewChild('range') range: any;
+  datepicker: any;
   SearchType = SearchType;
 
   constructor() {
@@ -44,19 +58,24 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    flatpickr.l10ns.default.firstDayOfWeek = 1;
     if (this.type == this.SearchType.date) {
-      const date = new Flatpickr(this.date.nativeElement, {
-        'locale': ZH,
+      this.datepicker = flatpickr(this.date.nativeElement, {
+        'locale': Mandarin,
         'defaultDate': this.value || ''
       });
     }
     if (this.type == this.SearchType.range) {
-      const range = new Flatpickr(this.range.nativeElement, {
-        'locale': ZH,
+      this.datepicker = flatpickr(this.range.nativeElement, {
+        'locale': Mandarin,
         'mode': 'range',
         'defaultDate': this.value || ''
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.datepicker = null;
   }
 
   change() {

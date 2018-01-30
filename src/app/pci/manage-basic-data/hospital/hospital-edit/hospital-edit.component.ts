@@ -7,7 +7,7 @@ import { ContainerConfig, HintDialog, FormText, FormFile } from '../../../../lib
 
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
 import { Hospital } from '../_entity/hospital.entity';
@@ -37,7 +37,7 @@ export class HospitalEditComponent implements OnInit {
     @Inject('app') private app,
     private hospitalService: HospitalService,
     private fb: FormBuilder,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
@@ -31,7 +31,7 @@ export class HealthNewsEditComponent implements OnInit {
     @Inject('app') private app,
     @Inject('auth') private auth,
     private healthNewsService: HealthNewsService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef

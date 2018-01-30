@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdDialogModule, MdChipsModule, MdTabsModule } from '@angular/material';
+import { MatDialogModule, MatChipsModule, MatTabsModule } from '@angular/material';
 
 import { IntegralDetailComponent } from './integral-detail.component';
 import { IntegralDetailEditComponent } from './integral-detail-edit/integral-detail-edit.component';
@@ -21,10 +21,10 @@ const routes: Routes = [{
   imports: [
     DTableModule,
     DFormModule,
-    MdDialogModule,
+    MatDialogModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
+    MatTabsModule,
+    MatChipsModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

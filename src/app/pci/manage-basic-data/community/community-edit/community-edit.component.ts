@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -37,7 +37,7 @@ export class CommunityEditComponent implements OnInit {
 
   constructor(
     private communityService: CommunityService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private fb: FormBuilder,
     private router: Router
   ) {

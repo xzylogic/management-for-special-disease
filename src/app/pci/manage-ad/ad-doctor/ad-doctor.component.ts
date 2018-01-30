@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, TableOption, ActionDialog, HintDialog, DialogOptions } from '../../../libs';
 import { AdDoctorService } from './_service/ad-doctor.service';
@@ -24,7 +24,7 @@ export class AdDoctorComponent implements OnInit {
     @Inject('auth') private auth,
     private adDoctorService: AdDoctorService,
     private adDoctorTableService: AdDoctorTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('adDoctor', new AdDoctor());

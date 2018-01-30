@@ -10,7 +10,7 @@ import { AuthGuardService } from '../../_service/auth-guard.service';
 import { FlowerGradeService } from './_service/flower-grade.service';
 import { FlowerGradeFormService } from './_service/flower-grade-form.service';
 import { FlowerGradeTableService } from './_service/flower-grade-table.service';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{
@@ -28,8 +28,8 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
+    MatTabsModule,
+    MatChipsModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

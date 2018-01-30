@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject} from '@angular/core';
-import { MdDialog, MdDialogConfig} from '@angular/material';
+import { MatDialog, MatDialogConfig} from '@angular/material';
 
 import { IntegralSigninComponent } from './mission-Integral-edit/integral-signin-edit.component';
 import { IntegralRecordComponent } from './mission-Integral-edit/integral-record-edit.component';
@@ -27,7 +27,7 @@ export class MissionIntegralComponent implements OnInit {
     @Inject('action') private action,
     private missionIntegralService: MissionIntegralService,
     private missionIntegralTableService: MissionIntegralTableService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 
@@ -101,7 +101,7 @@ export class MissionIntegralComponent implements OnInit {
 
     // 签到编辑
     if (res === 'signin') {
-      const config = new MdDialogConfig();
+      const config = new MatDialogConfig();
       config.data = list;
       const signin = this.dialog.open(IntegralSigninComponent, config);
       signin.afterClosed().subscribe(result => {
@@ -113,7 +113,7 @@ export class MissionIntegralComponent implements OnInit {
 
     // 记录数据编辑
     if (res === 'record') {
-      const config = new MdDialogConfig();
+      const config = new MatDialogConfig();
       config.data = list;
       const record = this.dialog.open(IntegralRecordComponent, config);
       record.afterClosed().subscribe(result => {
@@ -125,7 +125,7 @@ export class MissionIntegralComponent implements OnInit {
 
     // 其他任务编辑
     if (value === 'tag' && res !== 'signin' && res !== 'record') {
-      const config = new MdDialogConfig();
+      const config = new MatDialogConfig();
       config.data = list;
       const other = this.dialog.open(IntegralElseComponent, config);
       other.afterClosed().subscribe(result => {

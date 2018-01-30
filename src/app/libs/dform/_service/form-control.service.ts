@@ -1,7 +1,18 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { FormBase } from '../_entity';
+import { FormBase } from '../_entity/form-base';
+
+// const TEL_REGEXP = new RegExp('1[0-9]{10}');
+//
+// export function validateTel(c: FormControl) {
+//   return (TEL_REGEXP.test(c.value)) ? null : {
+//     tel: {
+//       valid: false,
+//       errorMsg: '请输入正确的手机号'
+//     }
+//   };
+// }
 
 @Injectable()
 export class DFormControlService {
@@ -12,18 +23,37 @@ export class DFormControlService {
     const group: any = {};
 
     forms.forEach(form => {
-      group[form.key] = form.required ?
-        new FormControl({
+      if (form.pattern) {
+        group[form.key] = form.required ?
+          new FormControl({
+              value: form.value == 0 ? form.value : form.value || '',
+              disabled: form.disabled
+            },
+            Validators.compose([
+              Validators.required,
+              Validators.pattern(form.pattern)
+            ])) :
+          new FormControl({
+              value: form.value == 0 ? form.value : form.value || '',
+              disabled: form.disabled
+            },
+            Validators.compose([
+              Validators.pattern(form.pattern)
+            ]));
+      } else {
+        group[form.key] = form.required ?
+          new FormControl({
+              value: form.value == 0 ? form.value : form.value || '',
+              disabled: form.disabled
+            },
+            Validators.compose([
+              Validators.required
+            ])) :
+          new FormControl({
             value: form.value == 0 ? form.value : form.value || '',
             disabled: form.disabled
-          },
-          Validators.compose([
-            Validators.required
-          ])) :
-        new FormControl({
-          value: form.value == 0 ? form.value : form.value || '',
-          disabled: form.disabled
-        });
+          });
+      }
     });
     return new FormGroup(group);
   }

@@ -1,6 +1,6 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="newData()">新增鲜花等级</button>
+    <button mat-raised-button (click)="newData()">新增鲜花等级</button>
   </div>
   <div class="content">
     <div *ngIf="!flowerGradeTable.lists&&flowerGradeTable.loading">Loading...</div>

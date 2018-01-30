@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit, Inject, } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -30,7 +30,7 @@ export class OperationPushEditComponent implements OnInit {
 
   constructor(
     @Inject('auth') private authService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private operationpushservice: OperationPushService,
     private fb: FormBuilder,
     private routers: Router,

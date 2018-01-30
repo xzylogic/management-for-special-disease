@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { TableOption, ContainerConfig } from '../../../libs';
 import { DiscomfortSymptomService } from './_service/discomfort-symptom.service';
@@ -21,7 +21,7 @@ export class DiscomfortSymptomComponent implements OnInit {
     @Inject('action') private action,
     private discomfortSymptomService: DiscomfortSymptomService,
     private discomfortSymptomTableService: DiscomfortSymptomTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

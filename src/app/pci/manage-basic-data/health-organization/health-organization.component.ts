@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { TableOption, ContainerConfig } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Drug } from '../drug/_entity/drug.entity';
 import { HealthOrganizationService } from './_service/health-organization.service';
@@ -25,7 +25,7 @@ export class HealthOrganizationComponent implements OnInit {
     @Inject('action') private action,
     private healthOrganizationService: HealthOrganizationService,
     private healthOrganizationTableService: HealthOrganizationTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('healthOrganizationService', new Drug());

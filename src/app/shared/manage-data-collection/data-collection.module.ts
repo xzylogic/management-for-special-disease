@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DataCollectionComponent } from './data-collection.component';
 import { LibModule } from '../../libs/common/lib.module';
-import { MdTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
 import { DTableModule } from '../../libs/dtable/dtable.module';
 import { DFormModule } from '../../libs/dform/dform.module';
 import { DataCollectionService } from './_service/data-collection.service';
@@ -31,7 +31,7 @@ const routes: Routes = [{
     LibModule,
     DTableModule,
     DFormModule,
-    MdTabsModule,
+    MatTabsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

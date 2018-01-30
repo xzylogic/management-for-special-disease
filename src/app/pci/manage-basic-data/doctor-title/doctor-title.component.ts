@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
 import { DoctorTitleService } from './_service/doctor-title.service';
@@ -19,7 +19,7 @@ export class DoctorTitleComponent implements OnInit {
   constructor(
     private doctorTitleService: DoctorTitleService,
     private doctorTitleTableService: DoctorTitleTableService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

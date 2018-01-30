@@ -1,23 +1,25 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FormDropdown } from '../../_entity';
+import { FormDropdown } from '../../_entity/form-dropdown';
 
 @Component({
   selector: 'app-input-dropdown',
   template: `
     <div [formGroup]="form">
       <div class="input_container">
-        <md-select style="width: 100%"
-                   [placeholder]="data.label"
-                   [formControlName]="data.key"
-                   [(ngModel)]="value"
-                   (change)="change()"
-        >
-          <md-option *ngFor="let opt of data.options" [value]="opt.id">
-            {{opt.name}}
-          </md-option>
-        </md-select>
+        <mat-form-field style="width: 100%">
+          <mat-select [placeholder]="data.label"
+                      [formControlName]="data.key"
+                      [(ngModel)]="value"
+                      (change)="change()"
+                      floatPlaceholder="always"
+          >
+            <mat-option *ngFor="let opt of data.options" [value]="opt.id">
+              {{opt.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
   `,

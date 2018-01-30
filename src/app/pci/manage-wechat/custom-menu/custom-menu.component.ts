@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, TableOption, DialogEdit, HintDialog } from '../../../libs';
 import { CustomMenuService } from './_service/custom-menu.service';
@@ -23,7 +23,7 @@ export class CustomMenuComponent implements OnInit {
     private customMenuService: CustomMenuService,
     private customMenuTableService: CustomMenuTableService,
     private customMenuFormService: CustomMenuFormService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

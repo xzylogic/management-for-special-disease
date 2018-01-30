@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, HintDialog, FormText, FormRadio, FormFile } from '../../../../libs';
 import { AdDoctorService } from '../_service/ad-doctor.service';
@@ -24,7 +24,7 @@ export class AdDoctorEditComponent implements OnInit {
 
   constructor(
     private adDoctorService: AdDoctorService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,

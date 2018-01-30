@@ -1,18 +1,18 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group dynamicHeight="true">
-      <md-tab label="患者活跃度统计">
+    <mat-tab-group dynamicHeight="true">
+      <mat-tab label="患者活跃度统计">
         <form style="padding: 0 16px">
-          <md-input-container floatPlaceholder="never">
-            <input mdInput type="text" placeholder="手机号／姓名搜索" name="queryKey"
+          <mat-form-field floatPlaceholder="never">
+            <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey"
                    [(ngModel)]="userActivenessTable.queryKey">
-          </md-input-container>
+          </mat-form-field>
           <app-search [type]="'0'" [label]="'请选择日期'" [(value)]="queryUserDate"></app-search>
-          <button md-icon-button color="primary" type="button" (click)="getUserActivenessStatistics(0)">
-            <md-icon>search</md-icon>
+          <button mat-icon-button color="primary" type="button" (click)="getUserActivenessStatistics(0)">
+            <mat-icon>search</mat-icon>
           </button>
-          <button md-icon-button color="primary" type="button" (click)="reset0()">Today</button>
-          <button md-icon-button color="primary" type="button" (click)="all0()">All</button>
+          <button mat-icon-button color="primary" type="button" (click)="reset0()">Today</button>
+          <button mat-icon-button color="primary" type="button" (click)="all0()">All</button>
         </form>
         <div *ngIf="!userActivenessTable.lists&&userActivenessTable.loading">Loading...</div>
         <div *ngIf="!userActivenessTable.lists&&!userActivenessTable.loading&&!!userActivenessTable.errorMessage"
@@ -27,19 +27,19 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="医生活跃度统计">
+      </mat-tab>
+      <mat-tab label="医生活跃度统计">
         <form style="padding: 0 16px">
-          <md-input-container floatPlaceholder="never">
-            <input mdInput type="text" placeholder="手机号／姓名搜索" name="queryKey"
+          <mat-input-container floatPlaceholder="never">
+            <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey"
                    [(ngModel)]="doctorActivenessTable.queryKey">
-          </md-input-container>
+          </mat-input-container>
           <app-search [type]="'0'" [label]="'请选择日期'" [(value)]="queryDoctorDate"></app-search>
-          <button md-icon-button color="primary" type="button" (click)="getDoctorActivenessStatistics(0)">
-            <md-icon>search</md-icon>
+          <button mat-icon-button color="primary" type="button" (click)="getDoctorActivenessStatistics(0)">
+            <mat-icon>search</mat-icon>
           </button>
-          <button md-icon-button color="primary" type="button" (click)="reset1()">Today</button>
-          <button md-icon-button color="primary" type="button" (click)="all1()">All</button>
+          <button mat-icon-button color="primary" type="button" (click)="reset1()">Today</button>
+          <button mat-icon-button color="primary" type="button" (click)="all1()">All</button>
         </form>
         <div *ngIf="!doctorActivenessTable.lists&&doctorActivenessTable.loading">Loading...</div>
         <div *ngIf="!doctorActivenessTable.lists&&!doctorActivenessTable.loading&&!!doctorActivenessTable.errorMessage"
@@ -54,8 +54,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>
 

@@ -1,6 +1,6 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="newData()">新增商品</button>
+    <button mat-raised-button (click)="newData()">新增商品</button>
   </div>
   <div class="content">
         <div *ngIf="!commodityTable.lists&&commodityTable.loading">Loading...</div>

@@ -6,7 +6,7 @@ import { IntegralOrderService } from './_service/integral-order.service';
 import { ContainerConfig } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { IntegralOrder } from './_entity/integralOrder.entity';
 import { ERRMSG } from '../../_store/static';
@@ -25,7 +25,7 @@ import { ERRMSG } from '../../_store/static';
       left: 108px;
     }
 
-    .count > md-chip {
+    .count > mat-chip {
       padding: 4px 5px;
       font-size: 12px;
     }
@@ -51,7 +51,7 @@ export class IntegralOrderComponent implements OnInit {
     @Inject('nav') private navService,
     private integralOrderService: IntegralOrderService,
     private integralOrderTableService: IntegralOrderTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('integralOrderService', new IntegralOrder());

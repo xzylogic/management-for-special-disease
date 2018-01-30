@@ -6,7 +6,7 @@ import { FlowerGradeTableService } from './_service/flower-grade-table.service';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { FlowerGrade } from './_entity/flower-grade.entity';
 import { ERRMSG } from '../../_store/static';
@@ -27,7 +27,7 @@ export class FlowerGradeComponent implements OnInit {
     @Inject('action') private action,
     private flowerGradeService: FlowerGradeService,
     private flowerGradeTableService: FlowerGradeTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('flowerGradeService', new FlowerGrade());

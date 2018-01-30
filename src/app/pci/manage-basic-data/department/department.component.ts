@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, TableOption, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
 import { DepartmentService } from './_service/department.service';
@@ -19,7 +19,7 @@ export class DepartmentComponent implements OnInit {
   constructor(
     private departmentService: DepartmentService,
     private departmentTableService: DepartmentTableService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

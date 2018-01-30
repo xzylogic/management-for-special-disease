@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { FormText,  FormDropdown } from '../../../../libs';
 
@@ -19,8 +19,8 @@ export class IntegralRecordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    @Inject(MD_DIALOG_DATA) public data: any,
-    public dialogRef: MdDialogRef<IntegralRecordComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<IntegralRecordComponent>,
   ) {
     this.option = this.data;
   }

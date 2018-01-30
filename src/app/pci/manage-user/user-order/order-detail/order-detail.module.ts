@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdDialogModule, MdListModule } from '@angular/material';
+import { MatDialogModule, MatListModule } from '@angular/material';
 
 import { OrderDetailComponent } from './order-detail.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    MdDialogModule,
-    MdListModule
+    MatDialogModule,
+    MatListModule
   ],
   declarations: [
     OrderDetailComponent

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MdDialogModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
@@ -23,8 +23,9 @@ const routes: Routes = [{
   imports: [
     DTableModule,
     DFormModule,
-    MdDialogModule,
+    MatDialogModule,
     LibModule,
+    MatTabsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

@@ -2,7 +2,7 @@
  * Created by zhanglin on 2017/8/1.
  */
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, HintDialog, FormRadio, FormText } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
@@ -22,7 +22,7 @@ export class PurchaseEntranceComponent implements OnInit {
   constructor(
     @Inject('action') private action,
     private purchaseEntranceService: PurchaseEntranceService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {

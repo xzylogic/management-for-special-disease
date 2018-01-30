@@ -1,7 +1,7 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group dynamicHeight="true">
-      <md-tab label="推送时间维护">
+    <mat-tab-group dynamicHeight="true">
+      <mat-tab label="推送时间维护">
         <div *ngIf="!pushTimeTable.lists&&pushTimeTable.loading">Loading...</div>
         <div *ngIf="!pushTimeTable.lists&&!pushTimeTable.loading&&!!pushTimeTable.errorMessage" class="center">
           {{pushTimeTable.errorMessage}}
@@ -14,7 +14,7 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>

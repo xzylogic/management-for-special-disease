@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject} from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { HealthDataService } from './_service/health-data.service';
 import { HealthDataTableService } from './_service/health-data-table.service';
@@ -37,7 +37,7 @@ export class HealthDataComponent implements OnInit {
     @Inject('common') private common,
     private healthDataService: HealthDataService,
     private healthDataTableService: HealthDataTableService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

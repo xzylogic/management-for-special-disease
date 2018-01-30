@@ -13,7 +13,7 @@ import {
 } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog, MdDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { IntegralDetail } from './_entity/integralDetail.entity';
 import { ERRMSG } from '../../_store/static';
 import { IntegralDetailEditComponent } from './integral-detail-edit/integral-detail-edit.component';
@@ -33,7 +33,7 @@ export class IntegralDetailComponent implements OnInit {
     @Inject('action') private action,
     private integralDetailService: IntegralDetailService,
     private integralDetailTableService: IntegralDetailTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     @Inject('app') private app,
   ) {
     action.dataChange('integralDetail', new IntegralDetail());
@@ -196,7 +196,7 @@ export class IntegralDetailComponent implements OnInit {
   }
 
   sendIntegral() {
-    const config = new MdDialogConfig();
+    const config = new MatDialogConfig();
     const other = this.dialog.open(IntegralDetailEditComponent, config);
     other.afterClosed().subscribe(result => {
       if (result) {

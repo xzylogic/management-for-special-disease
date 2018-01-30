@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaiduMapModule  } from 'angular2-baidu-map';
-import { MdDialogModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule, MatListModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
@@ -28,7 +28,9 @@ const routes: Routes = [{
     DFormModule,
     LibModule,
     BaiduMapModule,
-    MdDialogModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatListModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

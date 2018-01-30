@@ -1,14 +1,14 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="newData()">新增检查类目</button>
+    <button mat-raised-button (click)="newData()">新增检查类目</button>
   </div>
   <div class="content">
     <form style="padding: 2em 1em" *ngIf="inspectionItemTable&&inspectionType">
-      <md-select placeholder="请选择检查类目" [(ngModel)]="inspectionItemTable.queryKey" name="type" style="width: 100%">
-        <md-option [value]="opt.id" *ngFor="let opt of inspectionType" (click)="getInspectionItems(0)">
+      <mat-select placeholder="请选择检查类目" [(ngModel)]="inspectionItemTable.queryKey" name="type" style="width: 100%">
+        <mat-option [value]="opt.id" *ngFor="let opt of inspectionType" (click)="getInspectionItems(0)">
           {{opt.name}}
-        </md-option>
-      </md-select>
+        </mat-option>
+      </mat-select>
     </form>
     <div *ngIf="!inspectionItemTable.lists&&inspectionItemTable.loading">Loading...</div>
     <div *ngIf="!inspectionItemTable.lists&&!inspectionItemTable.loading&&!!inspectionItemTable.errorMessage" class="center">

@@ -5,7 +5,7 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { ContainerConfig, FormDropdown, FormText, HintDialog, FormTextarea } from '../../../../libs/';
 import { IntegralOrderService } from '../_service/integral-order.service';
 import { IntegralOrderFormService } from '../_service/integral-order-form.service';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +35,7 @@ export class SendMessageComponent implements OnInit {
   constructor(
     private integralOrderService: IntegralOrderService,
     private integralOrderFormService: IntegralOrderFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
     private activeRouter: ActivatedRoute,

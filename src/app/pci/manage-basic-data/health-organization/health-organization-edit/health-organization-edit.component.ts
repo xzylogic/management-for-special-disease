@@ -5,7 +5,7 @@ import { HealthOrganizationFormService } from '../_service/health-organization-f
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
 import { HintDialog } from '../../../../libs/';
@@ -25,7 +25,7 @@ export class HealthOrganizationEditComponent implements OnInit {
   constructor(
     private healthOrganizationService: HealthOrganizationService,
     private healthOrganizationFormService: HealthOrganizationFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

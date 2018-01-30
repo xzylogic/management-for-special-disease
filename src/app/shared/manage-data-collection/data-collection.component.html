@@ -1,7 +1,7 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
-      <md-tab label="待录入">
+    <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <mat-tab label="待录入">
         <div *ngIf="!waitingTable.lists&&waitingTable.loading">Loading...</div>
         <div *ngIf="!waitingTable.lists&&!waitingTable.loading&&!!waitingTable.errorMessage" class="center">
           {{waitingTable.errorMessage}}
@@ -15,8 +15,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="待审核">
+      </mat-tab>
+      <mat-tab label="待审核">
         <div *ngIf="!auditingTable.lists&&auditingTable.loading">Loading...</div>
         <div *ngIf="!auditingTable.lists&&!auditingTable.loading&&!!auditingTable.errorMessage" class="center">
           {{auditingTable.errorMessage}}
@@ -30,8 +30,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="审核通过">
+      </mat-tab>
+      <mat-tab label="审核通过">
         <div *ngIf="!auditedTable.lists&&auditedTable.loading">Loading...</div>
         <div *ngIf="!auditedTable.lists&&!auditedTable.loading&&!!auditedTable.errorMessage" class="center">
           {{auditedTable.errorMessage}}
@@ -45,8 +45,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="未处理">
+      </mat-tab>
+      <mat-tab label="未处理">
         <div *ngIf="!unhandledTable.lists&&unhandledTable.loading">Loading...</div>
         <div *ngIf="!unhandledTable.lists&&!unhandledTable.loading&&!!unhandledTable.errorMessage" class="center">
           {{unhandledTable.errorMessage}}
@@ -60,7 +60,7 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>

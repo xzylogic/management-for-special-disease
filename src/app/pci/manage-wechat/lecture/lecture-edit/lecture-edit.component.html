@@ -17,8 +17,8 @@
       <app-input-text *ngIf="limit" [form]="form" [data]="config.joinLimitCount" [value]="config.joinLimitCount.value"></app-input-text>
       <app-input-radio [form]="form" [data]="config.isOnlineDate" [value]="config.isOnlineDate.value" (valueChange)="isOnlineDate($event)"></app-input-radio>
       <app-input-datetime *ngIf="onlineDate" [form]="form" [data]="config.onlineDate" [value]="config.onlineDate.value"></app-input-datetime>
-      <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
-      <button md-raised-button type="reset">重置</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid">保存</button>
+      <button mat-raised-button type="reset">重置</button>
     </form>
   </div>
 </app-container>

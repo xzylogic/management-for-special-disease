@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FormDate } from '../../_entity';
+import { FormDate } from '../../_entity/form-date';
 
 declare var require;
-const Flatpickr = require('flatpickr');
-const ZH = require('flatpickr/dist/l10n/zh.js').zh;
+const flatpickr = require('flatpickr');
+import { Mandarin } from 'flatpickr/dist/l10n/zh.js';
 
 @Component({
   selector: 'app-input-date',
@@ -24,13 +24,15 @@ const ZH = require('flatpickr/dist/l10n/zh.js').zh;
   `,
   styleUrls: ['./lib-input.scss']
 })
-export class LibInputDateComponent implements OnInit, AfterViewInit {
+export class LibInputDateComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() data: FormDate;
   @Input() value: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('date') date: any;
+
+  datePicker: any;
 
   constructor() {
   }
@@ -40,18 +42,22 @@ export class LibInputDateComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.data && this.data.options) {
-      const date = new Flatpickr(this.date.nativeElement, {
-        'locale': ZH,
+      this.datePicker = flatpickr(this.date.nativeElement, {
+        'locale': Mandarin,
         'defaultDate': this.value || '',
         'minDate': this.data.options.minDate || '',
         'maxDate': this.data.options.maxDate || '',
       });
     } else {
-      const date = new Flatpickr(this.date.nativeElement, {
-        'locale': ZH,
+      this.datePicker = flatpickr(this.date.nativeElement, {
+        'locale': Mandarin,
         'defaultDate': this.value || '',
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.datePicker = null;
   }
 
   change() {

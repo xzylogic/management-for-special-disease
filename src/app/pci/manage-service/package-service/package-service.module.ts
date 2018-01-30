@@ -12,7 +12,7 @@ import { ServiceSpecService } from '../service-spec/_service/service-spec.servic
 import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { DFormModule } from '../../../libs/dform/dform.module';
 import { LibModule } from '../../../libs/common/lib.module';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 export const routes: Routes = [{
@@ -30,8 +30,8 @@ export const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
+    MatTabsModule,
+    MatChipsModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

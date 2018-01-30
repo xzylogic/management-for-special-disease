@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
@@ -45,7 +45,7 @@ export class InspectionItemEditComponent implements OnInit {
 
   constructor(
     private inspectionItemService: InspectionItemService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef

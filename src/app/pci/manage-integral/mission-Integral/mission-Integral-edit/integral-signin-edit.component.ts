@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { FormText,  FormDropdown } from '../../../../libs';
 
@@ -15,10 +15,10 @@ export class IntegralSigninComponent implements OnInit {
   option: any;
   errMsg = '';
   constructor(
-    @Inject(MD_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    public dialogRef: MdDialogRef<IntegralSigninComponent>,
+    public dialogRef: MatDialogRef<IntegralSigninComponent>,
   ) {
     this.option = this.data
   }

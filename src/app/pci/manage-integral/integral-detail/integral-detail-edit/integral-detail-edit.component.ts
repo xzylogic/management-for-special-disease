@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { FormRadio, FormText, FormFile, HintDialog } from '../../../../libs';
 
@@ -16,11 +16,11 @@ export class IntegralDetailEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     @Inject('http') private uploadService,
     @Inject('app') private app,
-    public dialogRef: MdDialogRef<IntegralDetailEditComponent>,
+    public dialogRef: MatDialogRef<IntegralDetailEditComponent>,
   ) {
   }
 

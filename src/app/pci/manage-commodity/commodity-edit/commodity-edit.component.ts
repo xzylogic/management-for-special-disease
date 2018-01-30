@@ -5,7 +5,7 @@ import { CommodityFormService } from '../_service/commodity-form.service';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Commodity } from '../_entity/commodity.entity';
 import { ERRMSG } from '../../_store/static';
@@ -26,7 +26,7 @@ export class CommodityEditComponent implements OnInit {
   constructor(
     private commodityService: CommodityService,
     private commodityFormService: CommodityFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

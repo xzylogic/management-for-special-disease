@@ -6,7 +6,7 @@ import { ContainerConfig } from '../../../../libs/common/container/container.com
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 import { Drug } from '../_entity/drug.entity';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
 import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
@@ -26,7 +26,7 @@ export class DrugEditComponent implements OnInit {
   constructor(
     private drugService: DrugService,
     private drugFormService: DrugFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

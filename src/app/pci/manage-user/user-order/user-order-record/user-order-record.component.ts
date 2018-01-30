@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -27,7 +27,7 @@ export class UserOrderRecordComponent implements OnInit {
   constructor(
     private userOrderService: UserOrderService,
     private serviceRecordFormService: ServiceRecordFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

@@ -1,10 +1,10 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="newData()">新增Push</button>
+    <button mat-raised-button (click)="newData()">新增Push</button>
   </div>
   <div class="content">
-    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
-      <md-tab label="患者端">
+    <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <mat-tab label="患者端">
         <div *ngIf="!operationPushTable.lists&&operationPushTable.loading">Loading...</div>
         <div *ngIf="!operationPushTable.lists&&!operationPushTable.loading&&!!operationPushTable.errorMessage" class="center">
           {{operationPushTable.errorMessage}}
@@ -42,8 +42,8 @@
             </table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="医生端">
+      </mat-tab>
+      <mat-tab label="医生端">
         <div *ngIf="!operationPushDoctorTable.lists&&operationPushDoctorTable.loading">Loading...</div>
         <div *ngIf="!operationPushDoctorTable.lists&&!operationPushDoctorTable.loading&&!!operationPushDoctorTable.errorMessage" class="center">
           {{operationPushDoctorTable.errorMessage}}
@@ -76,8 +76,8 @@
             </table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>
 

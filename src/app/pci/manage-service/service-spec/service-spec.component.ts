@@ -5,7 +5,7 @@ import { ServiceSpecService } from './_service/service-spec.service';
 import { ServiceSpecTableService } from './_service/service-spec-table.service';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../_store/static';
 import { ServiceSpec } from './_entity/service-spec.entity';

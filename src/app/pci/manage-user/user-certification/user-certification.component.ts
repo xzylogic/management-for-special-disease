@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { UserCertificationService } from './_service/user-certification.service';
 import { UserCertificationTableService } from './_service/user-certification-table.service';
@@ -22,7 +22,7 @@ import { ERRMSG } from '../../_store/static';
       left: 595px;
     }
 
-    .count > md-chip {
+    .count > mat-chip {
       padding: 4px 5px;
       font-size: 12px;
     }
@@ -50,7 +50,7 @@ export class UserCertificationComponent implements OnInit {
   constructor(
     @Inject('action') private action,
     @Inject('nav') private navService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private userCertificationService: UserCertificationService,
     private userCertificationTableService: UserCertificationTableService
   ) {

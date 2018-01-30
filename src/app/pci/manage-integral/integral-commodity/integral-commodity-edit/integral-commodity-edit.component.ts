@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { IntegralCommodityService } from '../_service/integral-commodity.service';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
 import { IntegralCommodity } from '../_entity/integralCommodity.entity';
@@ -53,7 +53,7 @@ export class IntegralCommodityEditComponent implements OnInit {
 
   constructor(
     private integralCommodityService: IntegralCommodityService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     @Inject('app') private app,
     @Inject('auth') private auth,

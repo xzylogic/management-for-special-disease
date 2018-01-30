@@ -6,7 +6,7 @@ import { ContainerConfig } from '../../../libs/common/container/container.compon
 import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../_store/static';
 import { DoctorGroup } from './_entity/doctor-group.entity';
@@ -26,7 +26,7 @@ import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
       left: 292px;
     }
 
-    .count > md-chip {
+    .count > mat-chip {
       padding: 4px 5px;
       font-size: 12px;
     }
@@ -52,7 +52,7 @@ export class DoctorGroupComponent implements OnInit {
     private doctorGroupService: DoctorGroupService,
     private doctorGroupTableService: DoctorGroupTableService,
     private auditingServiceTableService: AuditingServiceTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

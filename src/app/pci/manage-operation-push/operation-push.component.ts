@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { OperationPushService } from './_service/operation-push-service.service';
 import { OperationPushTableService } from './_service/operation-push-service-table.service';
@@ -31,7 +31,7 @@ export class OperationPushComponent implements OnInit {
     @Inject('action') private action,
     private operationpushservice: OperationPushService,
     private operationpushtableservice: OperationPushTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('operationPush', new OperationPush());

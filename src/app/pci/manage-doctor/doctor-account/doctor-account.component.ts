@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog, MdDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
@@ -33,8 +33,8 @@ import { ActionDialog } from '../../../libs/dmodal/dialog/dialog.component';
       left: 432px;
     }
 
-    .count1 > md-chip,
-    .count2 > md-chip {
+    .count1 > mat-chip,
+    .count2 > mat-chip {
       padding: 4px 5px;
       font-size: 12px;
     }
@@ -65,7 +65,7 @@ export class DoctorAccountComponent implements OnInit {
     @Inject('nav') private navService,
     private doctorAccountService: DoctorAccountService,
     private doctorAccountTableService: DoctorAccountTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }
@@ -259,7 +259,7 @@ export class DoctorAccountComponent implements OnInit {
   }
 
   sendFlowerDoctor() {
-    const config = new MdDialogConfig();
+    const config = new MatDialogConfig();
     const other = this.dialog.open(SendFlowersComponent, config);
     other.afterClosed().subscribe(result => {
       if (result) {

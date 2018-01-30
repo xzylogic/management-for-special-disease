@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA} from '@angular/material';
 import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
 
 import { TableOption, ContainerConfig } from '../../../libs';
@@ -23,7 +23,7 @@ export class CommunityComponent implements OnInit {
     private doctorService: CommunityService,
     private doctorTableService: CommunityTableService,
     private router: Router,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
   ) {
     action.dataChange('community', new Community());
   }
@@ -68,7 +68,7 @@ export class CommunityComponent implements OnInit {
   gotoHandle(res) {
     const community = <Community>res.value;
     if (res.key === 'geography') {
-      const config = new MdDialogConfig();
+      const config = new MatDialogConfig();
       config.data = community;
       this.dialog.open(DialogComponent, config);
     }
@@ -89,8 +89,8 @@ export class DialogComponent implements OnInit {
   offlineOpts: OfflineOptions;
 
   constructor(
-    @Inject(MD_DIALOG_DATA) public data: any,
-    public dialogRef: MdDialogRef<DialogComponent>
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<DialogComponent>
   ) {
     console.log(data);
     this.option = this.data

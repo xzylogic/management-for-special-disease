@@ -1,6 +1,6 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="newData()">新增广告位</button>
+    <button mat-raised-button (click)="newData()">新增广告位</button>
   </div>
   <div class="content">
     <div *ngIf="!adDoctorTable.lists&&adDoctorTable.loading">Loading...</div>

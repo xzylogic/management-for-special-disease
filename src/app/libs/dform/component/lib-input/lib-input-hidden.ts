@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FormText } from '../../_entity';
+import { FormText } from '../../_entity/form-text';
 
 @Component({
   selector: 'app-input-hidden',

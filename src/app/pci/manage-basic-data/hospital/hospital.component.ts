@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA} from '@angular/material';
 import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
 import { Router } from '@angular/router';
 
@@ -26,7 +26,7 @@ export class HospitalComponent implements OnInit {
     @Inject('action') private action,
     private hospitalService: HospitalService,
     private hospitalTableService: HospitalTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('hospitalService', new Hospital());
@@ -75,7 +75,7 @@ export class HospitalComponent implements OnInit {
       this.router.navigate(['/hospital/edit']);
     }
     if (res.key === 'geography') {
-      const config = new MdDialogConfig();
+      const config = new MatDialogConfig();
       config.data = hospital;
       this.dialog.open(DialogComponent, config);
     }
@@ -91,8 +91,8 @@ export class DialogComponent implements OnInit {
   opts: any;
   offlineOpts: OfflineOptions;
   constructor(
-    @Inject(MD_DIALOG_DATA) public data: any,
-    public dialogRef: MdDialogRef<DialogComponent>
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<DialogComponent>
   ) {
     this.option = this.data;
     console.log(this.option);

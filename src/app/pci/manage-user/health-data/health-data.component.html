@@ -1,22 +1,22 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
-      <md-tab label="血压">
+    <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <mat-tab label="血压">
         <form style="padding: 0 16px">
-          <md-input-container floatPlaceholder="never">
-            <input mdInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="pressureTable.queryKey">
-          </md-input-container>
-          <md-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
-            <md-option [value]= 0 >正常</md-option>
-            <md-option [value]= 1 >异常</md-option>
-          </md-select>
-          <button md-icon-button color="primary" type="button" (click)="PressureData(0)">
-            <md-icon>search</md-icon>
+          <mat-input-container floatPlaceholder="never">
+            <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="pressureTable.queryKey">
+          </mat-input-container>
+          <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
+            <mat-option [value]= 0 >正常</mat-option>
+            <mat-option [value]= 1 >异常</mat-option>
+          </mat-select>
+          <button mat-icon-button color="primary" type="button" (click)="PressureData(0)">
+            <mat-icon>search</mat-icon>
           </button>
-          <button md-icon-button color="primary" type="button" (click)="reset()">
-            <md-icon>autorenew</md-icon>
+          <button mat-icon-button color="primary" type="button" (click)="reset()">
+            <mat-icon>autorenew</mat-icon>
           </button>
-          <button md-raised-button (click)="exportBlutdruck()">导出</button>
+          <button mat-raised-button (click)="exportBlutdruck()">导出</button>
         </form>
         <div *ngIf="!pressureTable.lists&&pressureTable.loading">Loading...</div>
         <div *ngIf="!pressureTable.lists&&!pressureTable.loading&&!!pressureTable.errorMessage" class="center">
@@ -30,23 +30,23 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="血糖">
+      </mat-tab>
+      <mat-tab label="血糖">
         <form style="padding: 0 16px">
-          <md-input-container floatPlaceholder="never">
-            <input mdInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="sugarTable.queryKey">
-          </md-input-container>
-          <md-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
-            <md-option [value]= 0 >正常</md-option>
-            <md-option [value]= 1 >异常</md-option>
-          </md-select>
-          <button md-icon-button color="primary" type="button" (click)="getSugarData(0)">
-            <md-icon>search</md-icon>
+          <mat-input-container floatPlaceholder="never">
+            <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="sugarTable.queryKey">
+          </mat-input-container>
+          <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
+            <mat-option [value]= 0 >正常</mat-option>
+            <mat-option [value]= 1 >异常</mat-option>
+          </mat-select>
+          <button mat-icon-button color="primary" type="button" (click)="getSugarData(0)">
+            <mat-icon>search</mat-icon>
           </button>
-          <button md-icon-button color="primary" type="button" (click)="reset()">
-            <md-icon>autorenew</md-icon>
+          <button mat-icon-button color="primary" type="button" (click)="reset()">
+            <mat-icon>autorenew</mat-icon>
           </button>
-          <button md-raised-button (click)="exportMmol()">导出</button>
+          <button mat-raised-button (click)="exportMmol()">导出</button>
         </form>
         <div *ngIf="!sugarTable.lists&&sugarTable.loading">Loading...</div>
         <div *ngIf="!sugarTable.lists&&!sugarTable.loading&&!!sugarTable.errorMessage" class="center">
@@ -60,23 +60,23 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="心率">
+      </mat-tab>
+      <mat-tab label="心率">
         <form style="padding: 0 16px">
-          <md-input-container floatPlaceholder="never">
-            <input mdInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="rateTable.queryKey">
-          </md-input-container>
-          <md-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
-            <md-option [value]= 0 >正常</md-option>
-            <md-option [value]= 1 >异常</md-option>
-          </md-select>
-          <button md-icon-button color="primary" type="button" (click)="getRateData(0)">
-            <md-icon>search</md-icon>
+          <mat-input-container floatPlaceholder="never">
+            <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="rateTable.queryKey">
+          </mat-input-container>
+          <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
+            <mat-option [value]= 0 >正常</mat-option>
+            <mat-option [value]= 1 >异常</mat-option>
+          </mat-select>
+          <button mat-icon-button color="primary" type="button" (click)="getRateData(0)">
+            <mat-icon>search</mat-icon>
           </button>
-          <button md-icon-button color="primary" type="button" (click)="reset()">
-            <md-icon>autorenew</md-icon>
+          <button mat-icon-button color="primary" type="button" (click)="reset()">
+            <mat-icon>autorenew</mat-icon>
           </button>
-          <button md-raised-button (click)="exportHrrest()">导出</button>
+          <button mat-raised-button (click)="exportHrrest()">导出</button>
         </form>
         <div *ngIf="!rateTable.lists&&rateTable.loading">Loading...</div>
         <div *ngIf="!rateTable.lists&&!rateTable.loading&&!!rateTable.errorMessage" class="center">
@@ -90,23 +90,23 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="体重">
+      </mat-tab>
+      <mat-tab label="体重">
         <form style="padding: 0 16px">
-          <md-input-container floatPlaceholder="never">
-            <input mdInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="weightTable.queryKey">
-          </md-input-container>
-          <md-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
-            <md-option [value]= 0 >正常</md-option>
-            <md-option [value]= 1 >异常</md-option>
-          </md-select>
-          <button md-icon-button color="primary" type="button" (click)="getWeightData(0)">
-            <md-icon>search</md-icon>
+          <mat-input-container floatPlaceholder="never">
+            <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="weightTable.queryKey">
+          </mat-input-container>
+          <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
+            <mat-option [value]= 0 >正常</mat-option>
+            <mat-option [value]= 1 >异常</mat-option>
+          </mat-select>
+          <button mat-icon-button color="primary" type="button" (click)="getWeightData(0)">
+            <mat-icon>search</mat-icon>
           </button>
-          <button md-icon-button color="primary" type="button" (click)="reset()">
-            <md-icon>autorenew</md-icon>
+          <button mat-icon-button color="primary" type="button" (click)="reset()">
+            <mat-icon>autorenew</mat-icon>
           </button>
-          <button md-raised-button (click)="exportWeight()">导出</button>
+          <button mat-raised-button (click)="exportWeight()">导出</button>
         </form>
         <div *ngIf="!weightTable.lists&&weightTable.loading">Loading...</div>
         <div *ngIf="!weightTable.lists&&!weightTable.loading&&!!weightTable.errorMessage" class="center">
@@ -120,8 +120,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>
 

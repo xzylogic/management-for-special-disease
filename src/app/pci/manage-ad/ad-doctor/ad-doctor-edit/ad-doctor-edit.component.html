@@ -7,7 +7,7 @@
       <app-input-text [form]="form" [data]="config.linkUrl" [(value)]="config.linkUrl.value" *ngIf="config.skipType.value==0"></app-input-text>
       <app-input-file [form]="form" [data]="config.img" [(value)]="config.img.value" *ngIf="config.skipType.value==4"></app-input-file>
       <app-input-text [form]="form" [data]="config.ranking" [(value)]="config.ranking.value"></app-input-text>
-      <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid">保存</button>
     </form>
     <div *ngIf="errMsg">{{errMsg}}</div>
   </div>

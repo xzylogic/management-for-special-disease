@@ -3,7 +3,7 @@
  */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MdChipsModule, MdGridListModule, MdListModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatGridListModule, MatListModule, MatTabsModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 import { AuthGuardService } from '../../_service/auth-guard.service';
@@ -24,10 +24,10 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
-    MdGridListModule,
-    MdListModule,
+    MatTabsModule,
+    MatChipsModule,
+    MatGridListModule,
+    MatListModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

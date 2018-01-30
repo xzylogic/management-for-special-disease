@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FormText } from '../../_entity';
+import { FormText } from '../../_entity/form-text';
 
 declare var require;
-const Flatpickr = require('flatpickr');
+const flatpickr = require('flatpickr');
+import { Mandarin } from 'flatpickr/dist/l10n/zh.js';
 
 @Component({
   selector: 'app-input-time',
@@ -38,7 +39,8 @@ export class LibInputTimeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const date = new Flatpickr(this.time.nativeElement, {
+    const date = flatpickr(this.time.nativeElement, {
+      'locale': Mandarin,
       'enableTime': true,
       'time_24hr': true,
       'noCalendar': true,

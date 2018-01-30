@@ -11,8 +11,8 @@
       <app-input-dropdown [form]="form" [data]="config.freeShipping" [(value)]="freeShipping" (valueChange)="setFreeShipping($event)"></app-input-dropdown>
       <app-input-text [form]="form" [data]="config.freight" [(value)]="config.freight.value" *ngIf="freeShipping==false"></app-input-text>
       <app-input-editor [form]="form" [data]="config.introduction" [(value)]="config.introduction.value"></app-input-editor>
-      <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
-      <button md-raised-button type="reset">重置</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid">保存</button>
+      <button mat-raised-button type="reset">重置</button>
     </form>
   </div>
 </app-container>

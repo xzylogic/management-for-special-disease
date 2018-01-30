@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -40,7 +40,7 @@ export class FollowUpPlanComponent implements OnInit {
     @Inject('action') private action,
     private followUpPlanService: FollowUpPlanService,
     private followUpPlanTableService: FollowUpPlanTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import {
   TableOption, ContainerConfig,
@@ -33,7 +33,7 @@ export class GreenChannelComponent implements OnInit {
     @Inject('action') private action,
     private greenChannelService: GreenChannelService,
     private greenChannelTableService: GreenChannelTableService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
     action.dataChange('greenChannel', new GreenChannel());
   }

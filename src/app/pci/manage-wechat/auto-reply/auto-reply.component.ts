@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, HintDialog } from '../../../libs';
 import { AutoReplyService } from './_service/auto-reply.service';
@@ -17,7 +17,7 @@ export class AutoReplyComponent implements OnInit {
 
   constructor(
     private autoReplyService: AutoReplyService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

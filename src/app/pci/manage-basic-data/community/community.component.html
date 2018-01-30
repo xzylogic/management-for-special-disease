@@ -1,10 +1,10 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="newData()">新增小区</button>
+    <button mat-raised-button (click)="newData()">新增小区</button>
   </div>
   <div class="content">
-    <md-tab-group dynamicHeight="true">
-      <md-tab label="小区维护列表">
+    <mat-tab-group dynamicHeight="true">
+      <mat-tab label="小区维护列表">
         <div *ngIf="!communityTable.lists&&communityTable.loading">Loading...</div>
         <div *ngIf="!communityTable.lists&&!communityTable.loading&&!!communityTable.errorMessage" class="center">
           {{communityTable.errorMessage}}
@@ -18,8 +18,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>
 

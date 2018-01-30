@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-risk-edit',
@@ -9,8 +9,8 @@ export class RiskDetailComponent implements OnInit {
   option: any;
 
   constructor(
-    @Inject(MD_DIALOG_DATA) public data: any,
-    public dialogRef: MdDialogRef<RiskDetailComponent>
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<RiskDetailComponent>
   ) {
     this.option = this.data
   }

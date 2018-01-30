@@ -5,7 +5,7 @@ import { IntegralCommodityTableService } from './_service/integral-commodity-tab
 import { ContainerConfig, TableOption, ActionDialog, HintDialog, DialogOptions } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { IntegralCommodity } from './_entity/integralCommodity.entity';
 import { ERRMSG } from '../../_store/static';
@@ -24,7 +24,7 @@ export class IntegralCommodityComponent implements OnInit {
     @Inject('action') private action,
     private integralCommodityService: IntegralCommodityService,
     private integralCommodityTableService: IntegralCommodityTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
   ) {
     action.dataChange('integralCommodity', new IntegralCommodity());

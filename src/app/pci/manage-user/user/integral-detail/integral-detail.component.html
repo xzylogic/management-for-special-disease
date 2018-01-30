@@ -1,7 +1,7 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group>
-      <md-tab label="患者积分列表">
+    <mat-tab-group>
+      <mat-tab label="患者积分列表">
         <div *ngIf="!userIntegralTable.lists&&userIntegralTable.loading">Loading...</div>
         <div *ngIf="!userIntegralTable.lists&&!userIntegralTable.loading&&!!userIntegralTable.errorMessage" class="center">
           {{userIntegralTable.errorMessage}}
@@ -14,8 +14,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 
 </app-container>

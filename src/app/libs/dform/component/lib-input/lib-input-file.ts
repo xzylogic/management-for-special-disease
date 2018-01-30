@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { HttpService } from '../../../_service';
 import { FormFile } from '../../_entity';
@@ -17,12 +17,12 @@ import { HintDialog } from '../../../dmodal';
         <div class="upload_container">
           <div class="upload_content" *ngIf="!data.multiple&&value">
             <img class="image" [src]="value">
-            <md-icon (click)="fileDel()">close</md-icon>
+            <mat-icon (click)="fileDel()">close</mat-icon>
           </div>
           <div *ngIf="data.multiple">
             <div class="upload_content" *ngFor="let item of value">
               <img class="image" [src]="item">
-              <md-icon (click)="fileDel(item)">close</md-icon>
+              <mat-icon (click)="fileDel(item)">close</mat-icon>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@ export class LibInputFileComponent implements OnInit {
 
   constructor(
     private uploadService: HttpService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private cdr: ChangeDetectorRef
   ) {
   }

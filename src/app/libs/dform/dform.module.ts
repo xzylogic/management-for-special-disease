@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { DynamicFormComponent, DynamicFormSetComponent } from './component';
-import { DFormControlService } from './_service';
 import { LibInputModule } from './lib-input.module';
+import { DynamicFormComponent } from './component/form.component';
+import { DynamicFormSetComponent } from './component/form-set.component';
+import { DFormControlService } from './_service/form-control.service';
 
 @NgModule({
   imports: [

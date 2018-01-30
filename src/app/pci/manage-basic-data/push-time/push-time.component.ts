@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { EditDialog } from '../../../libs/dmodal/dialog';
 
 import { PushTimeService } from './_service/push-time-service.service';
 import { PushTimeTableService } from './_service/push-time-service-table.service';
 import {
   TableOption, ContainerConfig,
-  HintDialog, DialogEdit, EditDialog, FormTime
+  HintDialog, DialogEdit, FormTime
 } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
@@ -22,7 +23,7 @@ export class PushTimeComponent implements OnInit {
     @Inject('action') private action,
     private pushtimeservice: PushTimeService,
     private pushtimetableservice: PushTimeTableService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

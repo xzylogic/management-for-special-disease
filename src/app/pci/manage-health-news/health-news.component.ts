@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../libs';
 import { HealthNewsService } from './_service/health-news.service';
@@ -22,7 +22,7 @@ export class HealthNewsComponent implements OnInit {
     @Inject('action') private action,
     private healthNewsService: HealthNewsService,
     private healthNewsTableService: HealthNewsTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

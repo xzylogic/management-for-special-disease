@@ -8,8 +8,8 @@
       <app-input-text [form]="form" [data]="config.price" [value]="config.price.value"></app-input-text>
       <app-input-text [form]="form" [data]="config.originalPrice" [value]="config.originalPrice.value"></app-input-text>
       <app-input-text [form]="form" [data]="config.count" [value]="config.count.value"></app-input-text>
-      <md-input-container [style.width]="'100%'">
-      <input mdInput type="text" [formControlName]="'serviceId'" name="serviceId" placeholder="输入第三方服务以检索" (change)="serviceId=null" (change)="search($event)" (keyup)="search($event)" [(ngModel)]="serviceName">
+      <mat-input-container [style.width]="'100%'">
+      <input matInput type="text" [formControlName]="'serviceId'" name="serviceId" placeholder="输入第三方服务以检索" (change)="serviceId=null" (change)="search($event)" (keyup)="search($event)" [(ngModel)]="serviceName">
       <div class="ui middle aligned divided selection list" style="background-color: #fff">
       <div class="item" *ngFor="let result of thirdList">
       <div class="content">
@@ -17,10 +17,10 @@
       </div>
       </div>
       </div>
-      </md-input-container><br><br>
+      </mat-input-container><br><br>
       <app-input-dropdown [form]="form" [data]="config.enable" [value]="config.enable.value"></app-input-dropdown>
-      <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
-      <button md-raised-button type="reset">重置</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid">保存</button>
+      <button mat-raised-button type="reset">重置</button>
     </form>
   </div>
 </app-container>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MdTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
 
 import { DTableModule, LibModule } from '../../../libs';
 
@@ -17,7 +17,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    MdTabsModule,
+    MatTabsModule,
     DTableModule,
     LibModule,
     RouterModule.forChild(routes)

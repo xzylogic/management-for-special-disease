@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdChipsModule, MdTabsModule, MdGridListModule, MdListModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule, MatGridListModule, MatListModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
@@ -48,10 +48,10 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
-    MdGridListModule,
-    MdListModule,
+    MatTabsModule,
+    MatChipsModule,
+    MatGridListModule,
+    MatListModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

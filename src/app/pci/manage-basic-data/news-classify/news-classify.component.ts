@@ -4,7 +4,7 @@ import { TableOption, ActionDialog, HintDialog, DialogOptions, ContainerConfig }
 import { NewsClassifyService } from './_service/news-classify.service';
 import { NewsClassifyTableService } from './_service/news-classify-table.service';
 import { ERRMSG } from '../../_store/static';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-news-classify',
@@ -17,7 +17,7 @@ export class NewsClassifyComponent implements OnInit {
   constructor(
     private newsClassifyService: NewsClassifyService,
     private newsClassifyTableService: NewsClassifyTableService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

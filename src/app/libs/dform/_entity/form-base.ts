@@ -12,7 +12,7 @@
  * file - 文件上传
  */
 
-export enum FormType { text, date, time, datetime, textarea, editor, radio, checkbox, dropdown, file, hidden }
+export enum FormType { text, date, time, datetime, textarea, editor, radio, checkbox, dropdown, file, hidden, tree }
 
 export class FormBase<T> {
   value: T; // 默认值
@@ -27,6 +27,7 @@ export class FormBase<T> {
   controlType?: FormType; // Form类型
   errMsg?: string; // 错误提示
   order?: number; // 排序
+  pattern?: string;
 
   constructor(options: FormBase<T>) {
     this.value = options.value;
@@ -41,5 +42,6 @@ export class FormBase<T> {
     this.controlType = options.controlType || FormType.text;
     this.errMsg = options.errMsg || '';
     this.order = options.order || 1;
+    this.pattern = options.pattern || null;
   }
 }

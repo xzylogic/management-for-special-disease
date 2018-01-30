@@ -10,7 +10,7 @@ import { IntegralCommodityTableService } from './_service/integral-commodity-tab
 import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { DFormModule } from '../../../libs/dform/dform.module';
 import { LibModule } from '../../../libs/common/lib.module';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{
@@ -28,8 +28,8 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
+    MatTabsModule,
+    MatChipsModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

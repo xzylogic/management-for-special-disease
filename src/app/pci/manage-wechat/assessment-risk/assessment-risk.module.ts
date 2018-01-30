@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdInputModule, MdSelectModule, MdDialogModule } from '@angular/material';
+import { MatInputModule, MatSelectModule, MatDialogModule } from '@angular/material';
 
 import { LibModule, DTableModule } from '../../../libs';
 import { AssessmentRiskComponent } from './assessment-risk.component';
@@ -21,9 +21,9 @@ const routes: Routes = [{
     LibModule,
     DTableModule,
     FormsModule,
-    MdInputModule,
-    MdSelectModule,
-    MdDialogModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDialogModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

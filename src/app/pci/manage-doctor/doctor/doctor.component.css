@@ -8,7 +8,7 @@
   left: 270px;
 }
 
-.count > md-chip {
+.count > mat-chip {
   padding: 4px 5px;
   font-size: 12px;
 }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaiduMapModule  } from 'angular2-baidu-map';
 import { FormsModule } from '@angular/forms';
-import { MdChipsModule, MdTabsModule, MdDialogModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule, MatDialogModule, MatListModule } from '@angular/material';
 
 import { HospitalComponent, DialogComponent } from './hospital.component';
 import { HospitalEditComponent } from './hospital-edit/hospital-edit.component';
@@ -31,9 +31,10 @@ const routes: Routes = [{
     DFormModule,
     LibModule,
     BaiduMapModule,
-    MdTabsModule,
-    MdChipsModule,
-    MdDialogModule,
+    MatTabsModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatListModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

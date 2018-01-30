@@ -6,7 +6,7 @@ import { CommodityTableService } from './_service/commodity-table.service';
 import { ContainerConfig } from '../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Commodity } from './_entity/commodity.entity';
 import { ERRMSG } from '../_store/static';
@@ -25,7 +25,7 @@ export class CommodityComponent implements OnInit {
     @Inject('action') private action,
     private commodityService: CommodityService,
     private commodityTableService: CommodityTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('commodity', new Commodity());

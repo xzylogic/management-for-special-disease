@@ -4,7 +4,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 import { AuthGuardService } from '../../_service/auth-guard.service';
@@ -22,8 +22,8 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
+    MatTabsModule,
+    MatChipsModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

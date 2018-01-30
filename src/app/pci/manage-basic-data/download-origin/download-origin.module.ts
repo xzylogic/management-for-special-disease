@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
 
 import { DTableModule, LibModule } from '../../../libs';
 import { DownloadOriginComponent } from './download-origin.component';
@@ -20,7 +20,7 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     FormsModule,
-    MdTabsModule,
+    MatTabsModule,
     DTableModule,
     LibModule,
     RouterModule.forChild(routes)

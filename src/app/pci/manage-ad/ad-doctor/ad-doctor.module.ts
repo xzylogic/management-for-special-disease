@@ -9,7 +9,7 @@ import { AdDoctorEditComponent } from './ad-doctor-edit/ad-doctor-edit.component
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { AdDoctorService } from './_service/ad-doctor.service';
 import { AdDoctorTableService } from './_service/ad-doctor-table.service';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [{
@@ -28,8 +28,8 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
+    MatTabsModule,
+    MatChipsModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

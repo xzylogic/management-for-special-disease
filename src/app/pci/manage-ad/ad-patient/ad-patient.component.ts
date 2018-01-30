@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -23,7 +23,7 @@ export class AdPatientComponent implements OnInit {
     @Inject('action') private action,
     private adPatientService: AdPatientService,
     private adPatientTableService: AdPatientTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     @Inject('auth') private auth
   ) {

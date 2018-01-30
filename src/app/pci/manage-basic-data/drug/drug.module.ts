@@ -10,7 +10,7 @@ import { AuthGuardService } from '../../_service/auth-guard.service';
 import { DrugService } from './_service/drug.service';
 import { DrugFormService } from './_service/drug-form.service';
 import { DrugTableService } from './_service/drug-table.service';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 export const routes: Routes = [{
@@ -28,8 +28,8 @@ export const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibModule,
-    MdTabsModule,
-    MdChipsModule,
+    MatTabsModule,
+    MatChipsModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],

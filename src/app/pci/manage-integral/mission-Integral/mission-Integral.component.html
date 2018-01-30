@@ -1,7 +1,7 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group dynamicHeight="true">
-      <md-tab label="任务积分列表">
+    <mat-tab-group dynamicHeight="true">
+      <mat-tab label="任务积分列表">
         <div *ngIf="!missionIntegralTable.lists&&missionIntegralTable.loading">Loading...</div>
         <div *ngIf="!missionIntegralTable.lists&&!missionIntegralTable.loading&&!!missionIntegralTable.errorMessage" class="center">
           {{missionIntegralTable.errorMessage}}
@@ -30,8 +30,8 @@
             </table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>
 

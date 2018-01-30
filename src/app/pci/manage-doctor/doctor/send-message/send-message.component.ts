@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, TableOption, HintDialog } from '../../../../libs';
 import { DoctorService } from '../_service/doctor.service';
@@ -18,7 +18,7 @@ export class SendMessageComponent implements OnInit {
 
   constructor(
     private doctorService: DoctorService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

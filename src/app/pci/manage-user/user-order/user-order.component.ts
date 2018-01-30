@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { UserOrderService } from './_service/user-order.service';
 import { UserOrderTableService } from './_service/user-order-table.service';
@@ -36,7 +36,7 @@ export class UserOrderComponent implements OnInit {
     @Inject('action') private action,
     private userOrderService: UserOrderService,
     private userOrderTableService: UserOrderTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('userOrder', new UserOrder());

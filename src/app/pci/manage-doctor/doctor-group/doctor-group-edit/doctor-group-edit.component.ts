@@ -9,7 +9,7 @@ import { DoctorGroup } from '../_entity/doctor-group.entity';
 import { ERRMSG } from '../../../_store/static';
 import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-doctor-group-edit',
@@ -24,7 +24,7 @@ export class DoctorGroupEditComponent implements OnInit {
   constructor(
     private doctorGroupFormService: DoctorGroupFormService,
     private doctorGroupService: DoctorGroupService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

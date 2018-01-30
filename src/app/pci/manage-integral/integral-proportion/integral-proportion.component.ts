@@ -5,7 +5,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { IntegralProportionService } from './_service/integral-proportion.service';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ERRMSG } from '../../_store/static';
 import { FormText, HintDialog } from '../../../libs/';
 
@@ -23,7 +23,7 @@ export class IntegralProportionComponent implements OnInit {
   constructor(
     @Inject('action') private action,
     private integralProportionService: IntegralProportionService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private fb: FormBuilder
   ) {
   }

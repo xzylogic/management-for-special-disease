@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MdToolbarModule } from '@angular/material';
+import { MatToolbarModule } from '@angular/material';
 
 import { LibInputModule } from '../../libs';
 import { LoginComponent } from './login.component';
@@ -13,7 +13,7 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     LibInputModule,
-    MdToolbarModule,
+    MatToolbarModule,
     RouterModule.forChild(routes),
   ],
   declarations: [

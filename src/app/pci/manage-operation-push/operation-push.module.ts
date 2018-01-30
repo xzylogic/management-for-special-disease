@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../libs';
 
@@ -24,7 +24,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    MdTabsModule,
+    MatTabsModule,
     DTableModule,
     DFormModule,
     FormsModule,

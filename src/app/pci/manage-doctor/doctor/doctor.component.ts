@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { DoctorService } from './_service/doctor.service';
 import { DoctorTableService } from './_service/doctor-table.service';
@@ -37,7 +37,7 @@ export class DoctorComponent implements OnInit {
     @Inject('nav') private navService,
     private doctorService: DoctorService,
     private doctorTableService: DoctorTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, HintDialog } from '../../../../libs';
 import { HealthServiceService } from '../_service/health-service.service';
@@ -21,7 +21,7 @@ export class HealthServiceEditComponent implements OnInit {
   constructor(
     private healthServiceService: HealthServiceService,
     private healthServiceFormService: HealthServiceFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private activeRouter: ActivatedRoute
   ) {

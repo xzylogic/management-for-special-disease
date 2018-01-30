@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -30,7 +30,7 @@ export class CouponComponent implements OnInit {
     @Inject('action') private action,
     private couponService: CouponService,
     private couponTableService: CouponTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
   ) {
   }

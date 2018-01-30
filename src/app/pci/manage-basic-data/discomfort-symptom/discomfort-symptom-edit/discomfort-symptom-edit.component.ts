@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -25,7 +25,7 @@ export class DiscomfortSymptomEditComponent implements OnInit {
   constructor(
     private discomfortSymptomService: DiscomfortSymptomService,
     private discomfortSymptomFormService: DiscomfortSymptomFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

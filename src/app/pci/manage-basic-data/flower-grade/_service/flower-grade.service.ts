@@ -22,8 +22,8 @@ export class FlowerGradeService {
       title: '基础数据维护',
       subTitle: '鲜花等级维护',
       ifHome: true,
-      homeRouter: '/BasicData',
-      currentRouter: '/doctorTitle'
+      homeRouter: '/flower-grade',
+      currentRouter: '/flower-grade'
     });
   }
 
@@ -32,8 +32,8 @@ export class FlowerGradeService {
       title: '鲜花等级维护',
       subTitle: tag ? '新增鲜花等级' : '编辑鲜花等级',
       ifHome: false,
-      homeRouter: '/flowerGrade',
-      currentRouter: '/flowerGrade/edit'
+      homeRouter: '/flower-grade',
+      currentRouter: '/flower-grade/edit'
     });
   }
 

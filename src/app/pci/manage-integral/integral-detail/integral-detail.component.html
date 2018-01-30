@@ -1,22 +1,22 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="integralDiscription()">积分说明</button>
-    <button md-raised-button (click)="integralManage()">积分规则维护</button>
-    <button md-raised-button (click)="sendIntegral()">赠送积分给用户</button>
+    <button mat-raised-button (click)="integralDiscription()">积分说明</button>
+    <button mat-raised-button (click)="integralManage()">积分规则维护</button>
+    <button mat-raised-button (click)="sendIntegral()">赠送积分给用户</button>
   </div>
   <div class="content">
-    <md-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
-      <md-tab label="患者端">
+    <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <mat-tab label="患者端">
         <form style="padding: 0 16px">
-          <md-input-container floatPlaceholder="never">
-            <input mdInput type="text" placeholder="姓名/手机号/项目搜索" name="queryKey"
+          <mat-input-container floatPlaceholder="never">
+            <input matInput type="text" placeholder="姓名/手机号/项目搜索" name="queryKey"
                    [(ngModel)]="integralDetailUserTable.queryKey">
-          </md-input-container>
-          <button md-icon-button color="primary" type="button" (click)="getIntegralDetailUsers(0)">
-            <md-icon>search</md-icon>
+          </mat-input-container>
+          <button mat-icon-button color="primary" type="button" (click)="getIntegralDetailUsers(0)">
+            <mat-icon>search</mat-icon>
           </button>
-          <button md-icon-button color="primary" type="button" (click)="reset0()">
-            <md-icon>autorenew</md-icon>
+          <button mat-icon-button color="primary" type="button" (click)="reset0()">
+            <mat-icon>autorenew</mat-icon>
           </button>
         </form>
         <div *ngIf="!integralDetailUserTable.lists&&integralDetailUserTable.loading">Loading...</div>
@@ -33,18 +33,18 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="医生端">
+      </mat-tab>
+      <mat-tab label="医生端">
         <form style="padding: 0 16px">
-          <md-input-container floatPlaceholder="never">
-            <input mdInput type="text" placeholder="姓名/手机号/项目搜索" name="queryKey"
+          <mat-input-container floatPlaceholder="never">
+            <input matInput type="text" placeholder="姓名/手机号/项目搜索" name="queryKey"
                    [(ngModel)]="integralDetailDoctorTable.queryKey">
-          </md-input-container>
-          <button md-icon-button color="primary" type="button" (click)="getIntegralDetailDoctors(0)">
-            <md-icon>search</md-icon>
+          </mat-input-container>
+          <button mat-icon-button color="primary" type="button" (click)="getIntegralDetailDoctors(0)">
+            <mat-icon>search</mat-icon>
           </button>
-          <button md-icon-button color="primary" type="button" (click)="reset1()">
-            <md-icon>autorenew</md-icon>
+          <button mat-icon-button color="primary" type="button" (click)="reset1()">
+            <mat-icon>autorenew</mat-icon>
           </button>
         </form>
         <div *ngIf="!integralDetailDoctorTable.lists&&integralDetailDoctorTable.loading">Loading...</div>
@@ -61,8 +61,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>
 

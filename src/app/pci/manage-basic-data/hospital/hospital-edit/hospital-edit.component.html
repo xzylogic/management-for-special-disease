@@ -3,22 +3,22 @@
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="getValues(form.value)">
       <app-input-file [form]="form" [data]="config.imageUrl" [(value)]="config.imageUrl.value"></app-input-file>
       <app-input-text [form]="form" [data]="config.name" [value]="config.name.value"></app-input-text>
-      <md-input-container floatPlaceholder="never" style="width: 95%;">
-        <input mdInput type="text" [placeholder]="config.hospitalAddress.label"
+      <mat-input-container floatPlaceholder="never" style="width: 95%;">
+        <input matInput type="text" [placeholder]="config.hospitalAddress.label"
                [formControlName]="config.hospitalAddress.key"
                [(ngModel)]="config.hospitalAddress.value"
         >
-      </md-input-container>
-      <button md-icon-button color="primary" type="button" (click)="getSerah()">
-        <md-icon>search</md-icon>
+      </mat-input-container>
+      <button mat-icon-button color="primary" type="button" (click)="getSerah()">
+        <mat-icon>search</mat-icon>
       </button>
       <div>
-        <md-input-container class="example-full-width">
-          <input mdInput placeholder="小区经度" readonly  [formControlName]="config.longitude.key" [(ngModel)]="config.longitude.value">
-        </md-input-container>
-        <md-input-container class="example-full-width">
-          <input mdInput placeholder="小区纬度" readonly  [formControlName]="config.latitude.key" [(ngModel)]="config.latitude.value">
-        </md-input-container>
+        <mat-input-container class="example-full-width">
+          <input matInput placeholder="小区经度" readonly  [formControlName]="config.longitude.key" [(ngModel)]="config.longitude.value">
+        </mat-input-container>
+        <mat-input-container class="example-full-width">
+          <input matInput placeholder="小区纬度" readonly  [formControlName]="config.latitude.key" [(ngModel)]="config.latitude.value">
+        </mat-input-container>
       </div>
       <baidu-map
         *ngIf="baidu"
@@ -28,8 +28,8 @@
         (onMapLoaded)="loadMap($event)"
         (onMarkerClicked)="clickMarker($event)"
       ></baidu-map>
-      <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
-      <button md-raised-button type="reset">重置</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid">保存</button>
+      <button mat-raised-button type="reset">重置</button>
     </form>
     <div *ngIf="errMsg">{{errMsg}}</div>
   </div>

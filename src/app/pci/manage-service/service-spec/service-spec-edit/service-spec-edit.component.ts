@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { ServiceSpecService } from '../_service/service-spec.service';
 import { ContainerConfig, HintDialog, FormText, FormDropdown } from '../../../../libs/';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
 import { Subject } from 'rxjs/Subject';
@@ -33,7 +33,7 @@ export class ServiceSpecEditComponent implements OnInit {
     @Inject('app') private app,
     @Inject('auth') private auth,
     private serviceSpecService: ServiceSpecService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef

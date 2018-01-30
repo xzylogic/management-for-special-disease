@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import {
-  MdButtonModule, MdChipsModule,
-  MdIconModule, MdSidenavModule, MdToolbarModule
+  MatButtonModule, MatChipsModule,
+  MatIconModule, MatSidenavModule, MatToolbarModule
 } from '@angular/material';
 
 import { PciRoutingModule } from './main-routing.module';
@@ -27,11 +27,11 @@ import { CommonService } from './_service/common.service';
   imports: [
     CommonModule,
     HttpModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdButtonModule,
-    MdIconModule,
-    MdChipsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatChipsModule,
     StoreModule,
     LibDialogModule,
     LibDialogEditModule,

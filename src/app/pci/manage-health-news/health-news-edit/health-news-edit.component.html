@@ -19,8 +19,8 @@
       <app-input-text [form]="form" [data]="config.ranking" [(value)]="config.ranking.value"></app-input-text>
       <app-input-radio [form]="form" [data]="config.online" [(value)]="config.online.value"></app-input-radio>
       <app-input-hidden [form]="form" [data]="config.adminId" [(value)]="config.adminId.value"></app-input-hidden>
-      <button md-raised-button color="primary" [disabled]="!form.valid">保存</button>
-      <button md-raised-button type="reset">重置</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid">保存</button>
+      <button mat-raised-button type="reset">重置</button>
     </form>
   </div>
 </app-container>

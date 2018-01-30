@@ -6,27 +6,40 @@
   padding-top: 1em;
   padding-bottom: 1.296875em;
   .input_content {
+    margin-top: -0.0625em;
     font-size: 1em;
     width: 100%;
     padding: .4375em 0;
     background: transparent;
     border: none;
-    border-bottom: 1px solid $border-color-dark;
+    border-bottom: 1px solid $color-border-dark;
   }
   .input_content:focus {
     border: none;
-    border-bottom: 1px solid $primary-color;
+    border-bottom: 1px solid $color-primary;
   }
   .input_span {
     position: absolute;
     top: 0;
     left: 0;
     font-size: 12px;
-    color: $text-label;
+    color: $color-text-label;
   }
   .input_content:focus + .input_span {
-    color: $primary-color;
+    color: $color-primary;
   }
+}
+
+.input__content {
+  font-size: 16px;
+  font-weight: 200;
+  width: 100%;
+  border: none;
+}
+
+.input__format {
+  border-bottom: 1px solid $color-text-label !important;
+  bottom: 2px !important;
 }
 
 .check_content {
@@ -53,7 +66,7 @@
     width: 100px;
     height: 100px;
   }
-  md-icon {
+  mat-icon {
     position: absolute;
     right: 16px;
     top: 0;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdChipsModule, MdListModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatListModule, MatTabsModule } from '@angular/material';
 
 import { DTableModule, DFormModule, LibModule } from '../../../libs';
 
@@ -29,9 +29,9 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     FormsModule,
-    MdChipsModule,
-    MdTabsModule,
-    // MdListModule,
+    MatChipsModule,
+    MatTabsModule,
+    // MatListModule,
     DTableModule,
     DFormModule,
     LibModule,

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdChipsModule, MdTabsModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule } from '@angular/material';
 
 import { DTableModule, LibModule } from '../../../libs';
 import { PushTimeComponent } from './push-time.component';
@@ -19,8 +19,8 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     FormsModule,
-    MdChipsModule,
-    MdTabsModule,
+    MatChipsModule,
+    MatTabsModule,
     DTableModule,
     LibModule,
     RouterModule.forChild(routes)

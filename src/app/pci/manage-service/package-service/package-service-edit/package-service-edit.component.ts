@@ -4,7 +4,7 @@ import { PackageServiceFormService } from '../_service/package-service-form.serv
 import { ContainerConfig, HintDialog } from '../../../../libs/';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { PackageService } from '../_entity/package-service.entity';
 import { ERRMSG } from '../../../_store/static';
@@ -24,7 +24,7 @@ export class PackageServiceEditComponent implements OnInit {
   constructor(
     private packageServiceService: PackageServiceService,
     private packageServiceFormService: PackageServiceFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     @Inject('auth') private auth
   ) {

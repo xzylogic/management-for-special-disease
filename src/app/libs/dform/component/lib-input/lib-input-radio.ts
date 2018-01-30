@@ -1,26 +1,25 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FormRadio } from '../../_entity';
-import { log } from 'util';
+import { FormRadio } from '../../_entity/form-radio';
 
 @Component({
   selector: 'app-input-radio',
   template: `
     <div [formGroup]="form">
       <div class="input_container">
-        <md-radio-group class="input_content"
+        <mat-radio-group class="input_content"
                         style="border: none"
                         [formControlName]="data.key"
                         [(ngModel)]="value"
                         (change)="change()">
-          <md-radio-button class="check_content"
+          <mat-radio-button class="check_content"
                            *ngFor="let opt of data.options"
                            [value]="opt.id"
                            [checked]="opt.checked"
           >{{opt.name}}
-          </md-radio-button>
-        </md-radio-group>
+          </mat-radio-button>
+        </mat-radio-group>
         <span class="input_span">{{data.label}}</span>
       </div>
     </div>
@@ -42,7 +41,7 @@ export class LibInputRadioComponent implements OnInit {
         if (obj.id === this.value) {
           obj.checked = true;
         }
-      })
+      });
     }
   }
 

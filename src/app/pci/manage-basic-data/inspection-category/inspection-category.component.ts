@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
 import { InspectionCategoryService } from './_service/inspection-category.service';
@@ -17,7 +17,7 @@ export class InspectionCategoryComponent implements OnInit {
   constructor(
     private inspectionCategoryService: InspectionCategoryService,
     private inspectionCategoryTableService: InspectionCategoryTableService,
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 

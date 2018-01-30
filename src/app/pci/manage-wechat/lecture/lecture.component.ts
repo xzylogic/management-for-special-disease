@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { LectureService } from './_service/lecture.service';
 import { LectureTableService } from './_service/lecture-table.service';
@@ -27,7 +27,7 @@ export class LectureComponent implements OnInit {
     @Inject('auth') private authService,
     private lectureService: LectureService,
     private lectureTableService: LectureTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
     action.dataChange('lecture', new Lecture());

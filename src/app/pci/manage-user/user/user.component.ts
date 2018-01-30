@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { UserService } from './_service/user.service';
 import { UserTableService } from './_service/user-table.service';
@@ -31,7 +31,7 @@ export class UserComponent implements OnInit {
     @Inject('common') private common,
     private userService: UserService,
     private userTableService: UserTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
      action.dataChange('user', new User());

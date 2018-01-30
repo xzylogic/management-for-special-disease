@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { ContainerConfig, HintDialog, FormText, FormRadio } from '../../../../libs';
 import { AdPatientService } from '../_service/ad-patient.service';
@@ -24,7 +24,7 @@ export class AdPatientEditComponent implements OnInit {
 
   constructor(
     private adPatientService: AdPatientService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,

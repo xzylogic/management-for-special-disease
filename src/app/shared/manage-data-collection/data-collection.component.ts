@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { TableOption, ContainerConfig } from '../../libs';
 import { DataCollectionService } from './_service/data-collection.service';
@@ -28,7 +28,7 @@ export class DataCollectionComponent implements OnInit {
     @Inject('action') private action,
     private dataCollectionService: DataCollectionService,
     private dataCollectionTableService: DataCollectionTableService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

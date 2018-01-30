@@ -4,7 +4,7 @@ import { VersionControlService } from '../_service/version-control.service';
 import { ContainerConfig, HintDialog } from '../../../libs/';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../_store/static';
 import { VersionControl } from '../_entity/version-control.entity';
@@ -23,7 +23,7 @@ export class VersionControlEditComponent implements OnInit {
   constructor(
     private versionControlService: VersionControlService,
     private versionControlFormService: VersionControlFormService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router
   ) {
   }

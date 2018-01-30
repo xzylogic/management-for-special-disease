@@ -1,7 +1,7 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
-    <md-tab-group dynamicHeight="true">
-      <md-tab label="患者统计">
+    <mat-tab-group dynamicHeight="true">
+      <mat-tab label="患者统计">
         <div *ngIf="!userTable.lists&&userTable.loading">Loading...</div>
         <div *ngIf="!userTable.lists&&!userTable.loading&&!!userTable.errorMessage" class="center">
           {{userTable.errorMessage}}
@@ -15,8 +15,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="医生统计">
+      </mat-tab>
+      <mat-tab label="医生统计">
         <div *ngIf="!doctorTable.lists&&doctorTable.loading">Loading...</div>
         <div *ngIf="!doctorTable.lists&&!doctorTable.loading&&!!doctorTable.errorMessage" class="center">
           {{doctorTable.errorMessage}}
@@ -31,8 +31,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>
 

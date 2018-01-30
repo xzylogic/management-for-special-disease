@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
@@ -25,7 +25,7 @@ export class BasicServiceEditComponent implements OnInit {
   constructor(
     @Inject('app') private app,
     private basicServiceService: BasicServiceService,
-    private dialog: MdDialog,
+    private dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef

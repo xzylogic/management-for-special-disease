@@ -1,10 +1,10 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
   <div class="addition">
-    <button md-raised-button (click)="export()">导出</button>
+    <button mat-raised-button (click)="export()">导出</button>
   </div>
   <div class="content">
-    <md-tab-group dynamicHeight="true">
-      <md-tab label="已领取">
+    <mat-tab-group dynamicHeight="true">
+      <mat-tab label="已领取">
         <div *ngIf="!couponGetTable.lists&&couponGetTable.loading">Loading...</div>
         <div *ngIf="!couponGetTable.lists&&!couponGetTable.loading&&!!couponGetTable.errorMessage" class="center">
           {{couponGetTable.errorMessage}}
@@ -17,8 +17,8 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-      <md-tab label="已使用">
+      </mat-tab>
+      <mat-tab label="已使用">
         <div *ngIf="!couponUseTable.lists&&couponUseTable.loading">Loading...</div>
         <div *ngIf="!couponUseTable.lists&&!couponUseTable.loading&&!!couponUseTable.errorMessage" class="center">
           {{couponUseTable.errorMessage}}
@@ -31,7 +31,7 @@
             ></app-lib-table>
           </div>
         </div>
-      </md-tab>
-    </md-tab-group>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-container>
