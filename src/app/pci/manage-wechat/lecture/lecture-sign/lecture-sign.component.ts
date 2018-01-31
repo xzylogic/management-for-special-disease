@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 import { TableOption } from '../../../../libs/dtable/dtable.entity';
 import { LectureService } from '../_service/lecture.service';
 import { LectureAuditingTableService } from '../_service/lecture-auditing-table.service';
@@ -46,14 +45,14 @@ export class LectureSignComponent implements OnInit {
   getLectureAuditings(id, page: number) {
     this.lectureDetailTable.reset(page);
     this.lectureService.getApply(
-        id,
-        this.signStatus || '',
-        this.joinStatus || '',
-        page,
-        0
-        )
+      id,
+      this.signStatus || '',
+      this.joinStatus || '',
+      page,
+      0
+    )
       .subscribe(
-         res => {
+        res => {
           this.lectureDetailTable.loading = false;
           if (res.data && res.data.length === 0 && res.code === 0) {
             this.lectureDetailTable.errorMessage = ERRMSG.nullMsg;

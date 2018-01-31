@@ -1,10 +1,9 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-
-import { HttpService } from '../../../_service';
-import { FormFile } from '../../_entity';
-import { HintDialog } from '../../../dmodal';
+import { HttpService } from '../../../_service/http.service';
+import { HintDialog } from '../../../dmodal/dialog.component';
+import { FormFile } from '../../_entity/form-file';
 
 @Component({
   selector: 'app-input-file',

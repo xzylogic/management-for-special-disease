@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
-
+import { ContainerConfig } from '../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../libs/dmodal/dialog.entity';
+import { ControlType, TableOption } from '../../libs/dtable/dtable.entity';
 import { OperationPushService } from './_service/operation-push-service.service';
 import { OperationPushTableService } from './_service/operation-push-service-table.service';
 import { OperationPush } from './_entity/operationPush.entity';
-import {
-  TableOption, ContainerConfig, DialogOptions,
-  ActionDialog, HintDialog, ControlType
-} from '../../libs';
 import { ERRMSG } from '../_store/static';
 
 @Component({
@@ -73,47 +72,47 @@ export class OperationPushComponent implements OnInit {
     this.operationPushTable.lists = null;
     this.operationPushTable.currentPage = page;
     this.operationpushservice.getOperationPush(0, page).subscribe(
-        res => {
-          this.operationPushTable.loading = false;
-            if (res.data && res.data.length === 0 && res.code === 0) {
-              this.operationPushTable.errorMessage = ERRMSG.nullMsg;
-            } else if (res.data && res.code === 0) {
-              this.operationPushTable.totalPage = res.data.totalPages;
-              this.operationPushTable.lists = res.data.content;
-              for ( let i = 0; i < this.operationPushTable.lists.length; ++i) {
-                this.operationPushTable.lists[i].state = this.getStatus(this.operationPushTable.lists[i].status);
-                this.operationPushTable.lists[i].send = this.getSend(this.operationPushTable.lists[i].status);
-                this.operationPushTable.lists[i].edit = this.getEdit(this.operationPushTable.lists[i].status);
-              }
-            } else {
-              this.operationPushTable.errorMessage = res.msg || ERRMSG.otherMsg;
-            }
-        }, err => {
-          this.operationPushTable.loading = false;
-          this.operationPushTable.errorMessage = ERRMSG.netErrMsg;
-        })
+      res => {
+        this.operationPushTable.loading = false;
+        if (res.data && res.data.length === 0 && res.code === 0) {
+          this.operationPushTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.data && res.code === 0) {
+          this.operationPushTable.totalPage = res.data.totalPages;
+          this.operationPushTable.lists = res.data.content;
+          for (let i = 0; i < this.operationPushTable.lists.length; ++i) {
+            this.operationPushTable.lists[i].state = this.getStatus(this.operationPushTable.lists[i].status);
+            this.operationPushTable.lists[i].send = this.getSend(this.operationPushTable.lists[i].status);
+            this.operationPushTable.lists[i].edit = this.getEdit(this.operationPushTable.lists[i].status);
+          }
+        } else {
+          this.operationPushTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.operationPushTable.loading = false;
+        this.operationPushTable.errorMessage = ERRMSG.netErrMsg;
+      })
   }
 
   getOperationPushDoctor(page: number) {
-      this.operationpushservice.getOperationPush(1, page).subscribe(
-        res => {
-          this.operationPushDoctorTable.loading = false;
-            if (res.data && res.data.length === 0 && res.code === 0) {
-              this.operationPushDoctorTable.errorMessage = ERRMSG.nullMsg;
-            } else if (res.data && res.code === 0) {
-              this.operationPushDoctorTable.lists = res.data.content;
-              for ( let i = 0; i < this.operationPushDoctorTable.lists.length; ++i) {
-                this.operationPushDoctorTable.lists[i].state = this.getStatus(this.operationPushDoctorTable.lists[i].status);
-                this.operationPushDoctorTable.lists[i].send = this.getSend(this.operationPushDoctorTable.lists[i].status);
-                this.operationPushDoctorTable.lists[i].edit = this.getEdit(this.operationPushDoctorTable.lists[i].status);
-              }
-            } else {
-              this.operationPushDoctorTable.errorMessage = res.msg || ERRMSG.otherMsg;
-            }
-        }, err => {
-          this.operationPushDoctorTable.loading = false;
-          this.operationPushDoctorTable.errorMessage = ERRMSG.netErrMsg;
-        })
+    this.operationpushservice.getOperationPush(1, page).subscribe(
+      res => {
+        this.operationPushDoctorTable.loading = false;
+        if (res.data && res.data.length === 0 && res.code === 0) {
+          this.operationPushDoctorTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.data && res.code === 0) {
+          this.operationPushDoctorTable.lists = res.data.content;
+          for (let i = 0; i < this.operationPushDoctorTable.lists.length; ++i) {
+            this.operationPushDoctorTable.lists[i].state = this.getStatus(this.operationPushDoctorTable.lists[i].status);
+            this.operationPushDoctorTable.lists[i].send = this.getSend(this.operationPushDoctorTable.lists[i].status);
+            this.operationPushDoctorTable.lists[i].edit = this.getEdit(this.operationPushDoctorTable.lists[i].status);
+          }
+        } else {
+          this.operationPushDoctorTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.operationPushDoctorTable.loading = false;
+        this.operationPushDoctorTable.errorMessage = ERRMSG.netErrMsg;
+      })
   }
 
   newData() {
@@ -170,26 +169,26 @@ export class OperationPushComponent implements OnInit {
   }
 
   getStatus(status) {
-      if (status === 1 ) {
-        return  '已发送';
-      } else {
-        return  '待发送';
-      }
-  }
-
-  getSend(status) {
-    if (status === 1 ) {
-      return  ' ';
+    if (status === 1) {
+      return '已发送';
     } else {
-      return  '发送';
+      return '待发送';
     }
   }
 
-  getEdit (status) {
-    if (status === 1 ) {
-      return  ' ';
+  getSend(status) {
+    if (status === 1) {
+      return ' ';
     } else {
-      return  '编辑';
+      return '发送';
+    }
+  }
+
+  getEdit(status) {
+    if (status === 1) {
+      return ' ';
+    } else {
+      return '编辑';
     }
   }
 
@@ -200,7 +199,7 @@ export class OperationPushComponent implements OnInit {
   // 确定发送,删除
   process(id, key) {
     if (key === 'send') {
-       this.operationpushservice.OperationPushSend(id)
+      this.operationpushservice.OperationPushSend(id)
         .subscribe(res => {
           if (res.code === 0) {
             HintDialog('操作成功', this.dialog);

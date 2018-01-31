@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule, MatTabsModule } from '@angular/material';
-
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
-
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { HealthDataComponent } from './health-data.component';
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { HealthDataService } from './_service/health-data.service';

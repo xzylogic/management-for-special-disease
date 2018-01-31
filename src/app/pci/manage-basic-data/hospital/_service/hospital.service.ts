@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   hospitalList: 'api/hospital/all', // 医院列表
@@ -35,6 +35,7 @@ export class HospitalService {
       currentRouter: '/hospital/edit'
     });
   }
+
   /**
    * 获取医院列表
    */

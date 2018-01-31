@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MatChipsModule, MatTabsModule } from '@angular/material';
-
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
-
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { DoctorGroupComponent } from './doctor-group.component';
 import { DoctorGroupEditComponent } from './doctor-group-edit/doctor-group-edit.component';
 import { ServiceDetailComponent } from './service-detail/service-detail.component';
-
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { DoctorGroupService } from './_service/doctor-group.service';
 import { DoctorGroupFormService } from './_service/doctor-group-form.service';

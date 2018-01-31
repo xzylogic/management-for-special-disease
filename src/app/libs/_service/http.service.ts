@@ -1,4 +1,5 @@
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+// import { Http, Headers, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -6,19 +7,19 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class HttpService {
-  protected headers: Headers = new Headers({
+  protected headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json'
   });
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   /**
    * Translate Response Data to JSON
    * @param {Response} response
    */
-  private static getJson(response: Response) {
-    return response.json();
+  private static getJson(response: HttpResponse<any>) {
+    return response;
   }
 
   /**
@@ -58,9 +59,9 @@ export class HttpService {
    */
   get(path: string): Observable<any> {
     return this.http.get(path, {headers: this.headers})
-      .map(HttpService.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(HttpService.getJson);
+    // .map(HttpService.checkForError)
+    // .catch(err => Observable.throw(err))
+    // .map(HttpService.getJson);
   }
 
   /**
@@ -71,9 +72,9 @@ export class HttpService {
    */
   post(path: string, body: any): Observable<any> {
     return this.http.post(path, HttpService.getBody(body), {headers: this.headers})
-      .map(HttpService.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(HttpService.getJson);
+    // .map(HttpService.checkForError)
+    // .catch(err => Observable.throw(err))
+    // .map(HttpService.getJson);
   }
 
   /**
@@ -85,9 +86,9 @@ export class HttpService {
     return this.http.post(path, {
       headers: this.headers
     })
-      .map(HttpService.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(HttpService.getJson)
+    // .map(HttpService.checkForError)
+    // .catch(err => Observable.throw(err))
+    // .map(HttpService.getJson)
   }
 
   /**
@@ -98,9 +99,9 @@ export class HttpService {
    */
   put(path: string, body: any): Observable<any> {
     return this.http.put(path, HttpService.getBody(body), {headers: this.headers})
-      .map(HttpService.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(HttpService.getJson);
+    // .map(HttpService.checkForError)
+    // .catch(err => Observable.throw(err))
+    // .map(HttpService.getJson);
   }
 
   /**
@@ -110,9 +111,9 @@ export class HttpService {
    */
   del(path: string): Observable<any> {
     return this.http.delete(path, {headers: this.headers})
-      .map(HttpService.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(HttpService.getJson);
+    // .map(HttpService.checkForError)
+    // .catch(err => Observable.throw(err))
+    // .map(HttpService.getJson);
   }
 
   /**
@@ -120,23 +121,22 @@ export class HttpService {
    * @param  {string}     path
    * @return {Observable}
    */
-  delParam(path: string, body): Observable<any> {
+  delParam(path: string): Observable<any> {
     return this.http.delete(path, {
-      body: body,
       headers: this.headers
     })
-      .map(HttpService.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(HttpService.getJson);
+    // .map(HttpService.checkForError)
+    // .catch(err => Observable.throw(err))
+    // .map(HttpService.getJson);
   }
 
   /**
    * 上传图片
    */
   upload(path: string, data: any): Observable<any> {
-    return this.http.post(path, data, {headers: new Headers({processData: false})})
-      .map(HttpService.checkForError)
-      .catch(err => Observable.throw(err))
-      .map(HttpService.getJson);
+    return this.http.post(path, data, {headers: new HttpHeaders({processData: 'false'})})
+    // .map(HttpService.checkForError)
+    // .catch(err => Observable.throw(err))
+    // .map(HttpService.getJson);
   }
 }

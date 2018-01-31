@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, FormDropdown, FormText, HintDialog } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { FollowUpPlanService } from '../_service/follow-up-plan.service';
 import { FollowUpPlan } from '../_entity/follow-up-plan.entity';
 import { ERRMSG } from '../../../_store/static';

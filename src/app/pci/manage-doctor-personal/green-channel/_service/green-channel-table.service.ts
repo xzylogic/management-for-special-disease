@@ -2,8 +2,7 @@
  * Created by zhanglin on 2017/7/31.
  */
 import { Injectable } from '@angular/core';
-
-import { ControlType, TableTitle } from '../../../../libs';
+import { ControlType, TableTitle } from '../../../../libs/dtable/dtable.entity';
 
 @Injectable()
 export class GreenChannelTableService {

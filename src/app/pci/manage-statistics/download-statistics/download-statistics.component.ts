@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 
 import { DownloadStatisticsService } from './_service/download-statistics.service';
 import { DownloadStatisticsTableService } from './_service/download-statistics-table.service';
-import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({

@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-
-import { TableOption, ContainerConfig, DialogOptions, ActionDialog, HintDialog } from '../../libs';
+import { ContainerConfig } from '../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../libs/dtable/dtable.entity';
 import { HealthNewsService } from './_service/health-news.service';
 import { HealthNewsTableService } from './_service/health-news-table.service';
 import { HealthNews } from './_entity/health-news.entity';

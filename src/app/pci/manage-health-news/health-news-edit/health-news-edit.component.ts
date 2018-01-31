@@ -4,13 +4,14 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import {
-  ContainerConfig, HintDialog,
-  FormDropdown, FormText, FormRadio,
-  FormFile, FormTextarea, FormHidden,
-} from '../../../libs';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { FormDropdown } from '../../../libs/dform/_entity/form-dropdown';
+import { FormFile } from '../../../libs/dform/_entity/form-file';
+import { FormHidden } from '../../../libs/dform/_entity/form-hidden';
+import { FormRadio } from '../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../libs/dform/_entity/form-text';
+import { FormTextarea } from '../../../libs/dform/_entity/form-textarea';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { HealthNewsService } from '../_service/health-news.service';
 import { HealthNews } from '../_entity/health-news.entity';
 import { ERRMSG } from '../../_store/static';

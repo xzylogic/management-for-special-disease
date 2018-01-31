@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ImageDialog } from '../../../libs/dmodal/dialog-img.component';
+import { ActionDialog, HintDialog, MessageDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { DoctorService } from './_service/doctor.service';
 import { DoctorTableService } from './_service/doctor-table.service';
 import { Doctor } from './_entity/doctor.entity';
-import {
-  TableOption, ContainerConfig, DialogOptions,
-  ImageDialog, ActionDialog, HintDialog, MessageDialog
-} from '../../../libs';
 import { ERRMSG, AOA } from '../../_store/static';
 
 import * as moment from 'moment';

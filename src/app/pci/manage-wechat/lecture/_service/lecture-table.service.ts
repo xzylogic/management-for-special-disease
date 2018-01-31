@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { ControlType, TableTitle } from '../../../../libs';
+import { ControlType, TableTitle } from '../../../../libs/dtable/dtable.entity';
 
 @Injectable()
 export class LectureTableService {
@@ -41,7 +40,7 @@ export class LectureTableService {
         name: '签到二维码',
         key: 'signCodeUrl',
         option: '查看',
-        controlType:  ControlType.button,
+        controlType: ControlType.button,
         minwidth: 65
       }),
       new TableTitle({

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { PackageServiceComponent } from './package-service.component';
 import { PackageServiceEditComponent } from './package-service-edit/package-service-edit.component';
-
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { PackageServiceService } from './_service/package-service.service';
 import { PackageServiceFormService } from './_service/package-service-form.service';

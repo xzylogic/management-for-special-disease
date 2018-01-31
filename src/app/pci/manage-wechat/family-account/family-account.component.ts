@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { FamilyAccountService } from './_service/family-account.service';
 import { FamilyAccountTableService } from './_service/family-account-table.service';
-import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
-import { TableOption, ContainerConfig  } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { BasicServiceService } from './_service/basic-service.service';
 import { BasicServiceTableService } from './_service/basic-service-table.service';
 import { ERRMSG } from '../../_store/static';
@@ -59,7 +59,8 @@ export class BasicServiceComponent implements OnInit {
     }
   }
 
-  newData() {this.action.dataChange('basicService', {});
+  newData() {
+    this.action.dataChange('basicService', {});
     this.router.navigate(['/basic-service/edit']);
   }
 }

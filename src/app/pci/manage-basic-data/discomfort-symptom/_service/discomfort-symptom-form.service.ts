@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { FormBase, FormText, FormFile, FormDropdown } from '../../../../libs';
+import { FormBase } from '../../../../libs/dform/_entity/form-base';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
 
 @Injectable()
 export class DiscomfortSymptomFormService {

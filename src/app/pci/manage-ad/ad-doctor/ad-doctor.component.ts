@@ -4,7 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 import { MatDialog } from '@angular/material';
 
-import { ContainerConfig, TableOption, ActionDialog, HintDialog, DialogOptions } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
+
 import { AdDoctorService } from './_service/ad-doctor.service';
 import { AdDoctorTableService } from './_service/ad-doctor-table.service';
 import { AdDoctor } from './_entity/ad-doctor.entity';

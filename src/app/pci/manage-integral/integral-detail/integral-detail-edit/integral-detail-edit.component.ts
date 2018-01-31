@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
-
-import { FormRadio, FormText, FormFile, HintDialog } from '../../../../libs';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 
 @Component({
   selector: 'app-integral-detail-edit',

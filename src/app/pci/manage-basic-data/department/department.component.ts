@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
-import { ContainerConfig, TableOption, DialogOptions, ActionDialog, HintDialog } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { DepartmentService } from './_service/department.service';
 import { DepartmentTableService } from './_service/department-table.service';
 import { Department } from './_entity/department.entity';

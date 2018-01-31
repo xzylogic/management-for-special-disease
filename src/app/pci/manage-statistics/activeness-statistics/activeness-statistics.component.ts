@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { ActivenessStatisticsService } from './_service/activeness-statistics.service';
 import { ActivenessStatisticsTableService } from './_service/activeness-statistics-table.service';
-import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({

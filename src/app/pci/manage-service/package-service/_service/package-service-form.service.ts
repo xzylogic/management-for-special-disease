@@ -1,7 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { FormBase, FormText, FormFile, FormDropdown, FormCheckbox, FormTextarea } from '../../../../libs';
+import { FormBase } from '../../../../libs/dform/_entity/form-base';
+import { FormCheckbox } from '../../../../libs/dform/_entity/form-checkbox';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
 import { FormEditor } from '../../../../libs/dform/_entity/form-editor';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
 
 @Injectable()
 export class PackageServiceFormService {
@@ -56,7 +59,7 @@ export class PackageServiceFormService {
       new FormCheckbox({
         key: 'specificationIds',
         label: '第三方服务',
-        value: data &&  data.thirdServiceIds || [],
+        value: data && data.thirdServiceIds || [],
         required: false,
         options: thirdPackages,
         order: 4

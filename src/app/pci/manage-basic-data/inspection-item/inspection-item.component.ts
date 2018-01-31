@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-
-import { ContainerConfig, TableOption, HintDialog } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { InspectionItemService } from './_service/inspection-item.service';
 import { InspectionItemTableService } from './_service/inspection-item-table.service';
 import { ERRMSG } from '../../_store/static';

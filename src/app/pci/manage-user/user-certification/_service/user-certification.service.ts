@@ -1,6 +1,5 @@
-import { Injectable, Inject} from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { Injectable, Inject } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   userCertificationList: 'opt/validates/listAudited', // 已实名认证用户列表
@@ -19,7 +18,6 @@ export class UserCertificationService {
     @Inject('http') private httpService
   ) {
   }
-
 
   UserCertificationConfig(): ContainerConfig {
     return new ContainerConfig({

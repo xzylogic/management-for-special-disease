@@ -5,7 +5,12 @@ import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 import { MatDialog } from '@angular/material';
 
-import { ContainerConfig, HintDialog, FormText, FormRadio, FormFile } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
+
 import { AdDoctorService } from '../_service/ad-doctor.service';
 import { AdDoctor } from '../_entity/ad-doctor.entity';
 import { ERRMSG } from '../../../_store/static';

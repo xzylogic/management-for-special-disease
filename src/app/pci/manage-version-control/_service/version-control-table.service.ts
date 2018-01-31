@@ -1,5 +1,5 @@
 import { Injectable  } from '@angular/core';
-import { TableTitle, ControlType } from '../../../libs';
+import { ControlType, TableTitle } from '../../../libs/dtable/dtable.entity';
 
 @Injectable()
 export class VersionControlTableService {

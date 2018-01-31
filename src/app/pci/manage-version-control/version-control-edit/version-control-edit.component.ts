@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { VersionControlFormService } from '../_service/version-control-form.service';
 import { VersionControlService } from '../_service/version-control.service';
-import { ContainerConfig, HintDialog } from '../../../libs/';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 import { MatDialog } from '@angular/material';

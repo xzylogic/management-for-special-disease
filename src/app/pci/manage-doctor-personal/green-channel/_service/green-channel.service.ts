@@ -2,8 +2,7 @@
  * Created by zhanglin on 2017/7/31.
  */
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   agree: 'opt/doctorPersonalService/agree', // 预约床位/挂号管理-已同意
@@ -40,7 +39,7 @@ export class GreenChannelService {
   }
 
   agreeOrDisagreeApply(agreeType: number, orderId: number, serviceType: number, date?: string) {
-    if ( date == '') {
+    if (date == '') {
       return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}&serviceType=${serviceType}`, {});
     } else {
       return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.agreeOrDisagreeApply}?agreeType=${agreeType}&orderId=${orderId}&serviceType=${serviceType}&date=${date}`, {});
@@ -48,7 +47,7 @@ export class GreenChannelService {
   }
 
   editInfo(status: number, orderId: number, date?: string) {
-    if ( date == '') {
+    if (date == '') {
       return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.editInfo}?status=${status}&orderId=${orderId}`, {});
     } else {
       return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.editInfo}?status=${status}&orderId=${orderId}&date=${date}`, {});
@@ -58,7 +57,7 @@ export class GreenChannelService {
   pending(page: number, size: number, serviceType: number, queryInfo?: string) {
     if (queryInfo == '') {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.pending}?page=${page}&size${size}&serviceType=${serviceType}`);
-    }else {
+    } else {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.pending}?page=${page}&size${size}&serviceType=${serviceType}&queryInfo=${queryInfo}`);
     }
   }
@@ -66,7 +65,7 @@ export class GreenChannelService {
   rejected(page: number, size: number, type: number, queryInfo?: string) {
     if (queryInfo == '') {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.rejected}?page=${page}&size${size}&type=${type}`);
-    }else {
+    } else {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.rejected}?page=${page}&size${size}&type=${type}&queryInfo=${queryInfo}`);
     }
   }

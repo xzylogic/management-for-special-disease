@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { DoctorServiceService } from './_service/doctor-service.service';
 import { DoctorServiceTableService } from './_service/doctor-service-table.service';
 import { DoctorService } from './_entity/doctor-service.entity';
-import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({

@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { PeriodStatisticsService } from './_service/period-statistics.service';
 import { PeriodStatisticsTableService } from './_service/period-statistics-table.service';
-import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({

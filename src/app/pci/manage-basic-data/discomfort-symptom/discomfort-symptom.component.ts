@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-
-import { TableOption, ContainerConfig } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { DiscomfortSymptomService } from './_service/discomfort-symptom.service';
 import { DiscomfortSymptomTableService } from './_service/discomfort-symptom-table.service';
 import { ERRMSG } from '../../_store/static';

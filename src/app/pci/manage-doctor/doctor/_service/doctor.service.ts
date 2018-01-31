@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   doctorQuery: 'api/doctor/query', // 查询选项列表

@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   doctorRankList: 'api/doctor/rank/list', // 医生排序

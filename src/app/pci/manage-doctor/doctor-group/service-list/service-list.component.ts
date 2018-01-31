@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 import { TableOption } from '../../../../libs/dtable/dtable.entity';
 import { DoctorGroupService } from '../_service/doctor-group.service';
 import { DoctorGroupTableService } from '../_service/doctor-group-table.service';

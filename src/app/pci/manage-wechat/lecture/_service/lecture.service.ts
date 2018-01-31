@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   lectureList: 'api/lecture', // 讲座列表

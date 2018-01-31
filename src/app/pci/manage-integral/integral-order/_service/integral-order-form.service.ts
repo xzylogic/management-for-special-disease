@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
-
-import { FormBase, FormText, FormDropdown } from '../../../../libs';
+import { FormBase } from '../../../../libs/dform/_entity/form-base';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
 import { FormEditor } from '../../../../libs/dform/_entity/form-editor';
-import { FormTextarea } from '../../../../libs/dform/_entity/form-textarea';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
 
 @Injectable()
 export class IntegralOrderFormService {

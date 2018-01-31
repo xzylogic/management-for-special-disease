@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { CommodityService } from '../_service/commodity.service';
 import { CommodityFormService } from '../_service/commodity-form.service';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
@@ -9,7 +8,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Commodity } from '../_entity/commodity.entity';
 import { ERRMSG } from '../../_store/static';
-import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 
 @Component({
   selector: 'app-commodity-edit',

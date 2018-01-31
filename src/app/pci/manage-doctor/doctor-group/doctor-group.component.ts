@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../_store/static';
 import { DoctorGroup } from './_entity/doctor-group.entity';
-import { HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 
 @Component({
   selector: 'app-doctor-group',

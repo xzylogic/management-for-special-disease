@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA} from '@angular/material';
-import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
-
-import { TableOption, ContainerConfig } from '../../../libs';
-
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
+import { OfflineOptions, ControlAnchor, NavigationControlType } from 'angular2-baidu-map';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { CommunityService } from './_service/community.service';
 import { CommunityTableService } from './_service/community-table.service';
 import { Community } from './_entity/community.entity';
@@ -23,7 +22,7 @@ export class CommunityComponent implements OnInit {
     private doctorService: CommunityService,
     private doctorTableService: CommunityTableService,
     private router: Router,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {
     action.dataChange('community', new Community());
   }
@@ -43,7 +42,7 @@ export class CommunityComponent implements OnInit {
 
   getCommunityList(page: number) {
     this.doctorService.getCommunity(
-       page, this.communityTable.size)
+      page, this.communityTable.size)
       .subscribe(res => {
         this.communityTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {

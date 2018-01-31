@@ -1,11 +1,14 @@
-import {ChangeDetectorRef, Component, OnInit, Inject, } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Inject, } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, FormText, FormDatetime, FormRadio, HintDialog } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { FormDatetime } from '../../../libs/dform/_entity/form-datetime';
+import { FormRadio } from '../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { OperationPushService } from '../_service/operation-push-service.service';
 import { OperationPush } from '../_entity/operationPush.entity';
 import { ERRMSG } from '../../_store/static';
@@ -23,9 +26,9 @@ export class OperationPushEditComponent implements OnInit {
   id: any;
   operator: any;
   send: any;
-  http: boolean = false;
-  skip: boolean = false;
-  date: boolean = false;
+  http = false;
+  skip = false;
+  date = false;
   errMsg = '';
 
   constructor(
@@ -40,7 +43,7 @@ export class OperationPushEditComponent implements OnInit {
 
   ngOnInit() {
     this.operationPush.subscribe(data => {
-      if (data.id !== 0 ) {
+      if (data.id !== 0) {
         this.containerConfig = this.operationpushservice.operationPushEditConfig(false);
         this.getpushUrl(data);
         this.createForm(data);
@@ -234,6 +237,7 @@ export class OperationPushEditComponent implements OnInit {
     }
     return value;
   }
+
   getValues(value) {
     this.getStatus(value);
     if (this.id) {
@@ -270,13 +274,12 @@ export class OperationPushEditComponent implements OnInit {
     }
   }
 
-    // 提交时间转换
-    getpushTime(date) {
-      var time = new Date(date.replace(/-/g, '/'));
-      return time.getTime();
-    }
-
-
+  // 提交时间转换
+  getpushTime(date) {
+    var time = new Date(date.replace(/-/g, '/'));
+    return time.getTime();
   }
+
+}
 
 

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { FormBase, FormText, FormFile } from '../../../../libs';
+import { FormBase } from '../../../../libs/dform/_entity/form-base';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
 
 @Injectable()
 export class FlowerGradeFormService {

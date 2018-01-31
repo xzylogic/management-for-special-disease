@@ -3,11 +3,12 @@
  */
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
-import { ContainerConfig, HintDialog, FormTextarea} from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { FormTextarea } from '../../../libs/dform/_entity/form-textarea';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../_store/static';
 import { CounselingProblemService } from './_service/counseling-problem.service';
-import { FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-counseling-problem',
@@ -33,9 +34,9 @@ export class CounselingProblemComponent implements OnInit {
     this.containerConfig = this.counselingProblemService.counselingProblemConfig();
     this.counselingProblemService.getCounselingProblem().subscribe(
       res => {
-        if ( res.data.question !== '' ) {
+        if (res.data.question !== '') {
           this.createForm(res.data);
-        }else {
+        } else {
           this.createForm();
         }
         this.counselingProblemId = res.data.id;
@@ -76,6 +77,5 @@ export class CounselingProblemComponent implements OnInit {
         HintDialog(ERRMSG.saveError, this.dialog);
       });
   }
-
 
 }

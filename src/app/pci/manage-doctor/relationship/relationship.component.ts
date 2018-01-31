@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { TableOption, ContainerConfig } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { RelationshipService } from './_service/relationship.service';
 import { RelationshipTableService } from './_service/relationship-table.service';
 import { ERRMSG } from '../../_store/static';

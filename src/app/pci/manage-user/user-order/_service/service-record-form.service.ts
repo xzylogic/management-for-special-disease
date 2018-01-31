@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-
-import { FormBase, FormDropdown } from '../../../../libs';
+import { FormBase } from '../../../../libs/dform/_entity/form-base';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
 
 @Injectable()
 export class ServiceRecordFormService {

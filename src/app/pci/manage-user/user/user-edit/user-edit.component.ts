@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, HintDialog } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { UserService } from '../_service/user.service';
 import { UserFormService } from '../_service/user-form.service';
 import { User } from '../_entity/user.entity';

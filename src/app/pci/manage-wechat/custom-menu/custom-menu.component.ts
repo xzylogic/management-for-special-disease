@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
-import { ContainerConfig, TableOption, DialogEdit, HintDialog } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogEdit } from '../../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { CustomMenuService } from './_service/custom-menu.service';
 import { CustomMenuTableService } from './_service/custom-menu-table.service';
 import { CustomMenuFormService } from './_service/custom-menu-form.service';
 import { ERRMSG } from '../../_store/static';
-import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
+import { EditDialog } from '../../../libs/dmodal/dialog-edit.component';
 
 @Component({
   selector: 'app-custom-menu',

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 
 import { AdPatientComponent } from './ad-patient.component';
 import { AdPatientEditComponent } from './ad-patient-edit/ad-patient-edit.component';

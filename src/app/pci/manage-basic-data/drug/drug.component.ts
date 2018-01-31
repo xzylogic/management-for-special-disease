@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 import { Router } from '@angular/router';
-
-import { TableOption, ContainerConfig } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { DrugService } from './_service/drug.service';
 import { DrugTableService } from './_service/drug-table.service';
 import { Drug } from './_entity/drug.entity';

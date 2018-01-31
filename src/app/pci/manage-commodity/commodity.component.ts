@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
-import { TableOption, ActionDialog, HintDialog, DialogOptions } from '../../libs/';
+import { ContainerConfig } from '../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../libs/dtable/dtable.entity';
 import { CommodityService } from './_service/commodity.service';
 import { CommodityTableService } from './_service/commodity-table.service';
-import { ContainerConfig } from '../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
@@ -64,7 +65,7 @@ export class CommodityComponent implements OnInit {
       })
   }
 
-  formatCommodity(list: Array < any > ) {
+  formatCommodity(list: Array<any>) {
     list.forEach(data => {
       data.typeName = data.type ? '现金兑换' : '商品兑换';
       data.statusName = data.status ? '下架' : '上架';
@@ -90,7 +91,7 @@ export class CommodityComponent implements OnInit {
     if (data.key === 'edit') {
       this.action.dataChange('commodity', commodity);
       this.router.navigate(['/commodity/edit']);
-    }else if (data.key === 'updown') {
+    } else if (data.key === 'updown') {
       if (data.value.status === 1) {
         const config = new DialogOptions({
           title: `您确定要上架${commodity.title}？`,
@@ -112,7 +113,7 @@ export class CommodityComponent implements OnInit {
             this.status(data.value.id, 0);
           }
         });
-      }else if (data.value.status === 0) {
+      } else if (data.value.status === 0) {
         const config = new DialogOptions({
           title: `您确定要下架${commodity.title}？`,
           message: '',
@@ -134,7 +135,7 @@ export class CommodityComponent implements OnInit {
           }
         });
       }
-    }else if (data.key === 'del') {
+    } else if (data.key === 'del') {
       const config = new DialogOptions({
         title: `您确定要删除${commodity.title}？`,
         message: '',

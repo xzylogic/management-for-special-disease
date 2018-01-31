@@ -1,13 +1,13 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
+import { OfflineOptions, ControlAnchor, NavigationControlType } from 'angular2-baidu-map';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, HintDialog, FormText } from '../../../../libs';
-
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { CommunityService } from '../_service/community.service';
 import { Community } from '../_entity/community.entity';
 import { ERRMSG } from '../../../_store/static';
@@ -45,22 +45,22 @@ export class CommunityEditComponent implements OnInit {
 
   ngOnInit() {
     const self = this;
-      this.community.subscribe(data => {
-        if (data.id === 0) {
-          this.containerConfig = this.communityService.communityEditConfig(true);
-          this.createForm();
-          setTimeout(function(){
-            self.getMapShow();
-          }, 200);
-        } else {
-          this.containerConfig = this.communityService.communityEditConfig(false);
-          this.id = data.id;
-          this.createForm(data);
-          setTimeout(function(){
-            self.getMapShow(data);
-          }, 200);
-        }
-      });
+    this.community.subscribe(data => {
+      if (data.id === 0) {
+        this.containerConfig = this.communityService.communityEditConfig(true);
+        this.createForm();
+        setTimeout(function () {
+          self.getMapShow();
+        }, 200);
+      } else {
+        this.containerConfig = this.communityService.communityEditConfig(false);
+        this.id = data.id;
+        this.createForm(data);
+        setTimeout(function () {
+          self.getMapShow(data);
+        }, 200);
+      }
+    });
   }
 
   createForm(data?) {
@@ -99,10 +99,10 @@ export class CommunityEditComponent implements OnInit {
     const self = this;
     this.search = this.config.communityAddress.value;
     const local = new BMap.LocalSearch(this.map, {
-      renderOptions: { map: this.map }
+      renderOptions: {map: this.map}
     });
     local.search(this.search);
-    this.map.addEventListener('click', function(e){
+    this.map.addEventListener('click', function (e) {
       const pt = e.point;
       self.config.longitude.value = pt.lng;
       self.config.latitude.value = pt.lat;

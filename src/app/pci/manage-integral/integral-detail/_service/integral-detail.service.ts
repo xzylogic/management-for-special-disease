@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   integralDetailList: 'opt/integral/records/listByParam', // 查询选项列表
@@ -31,7 +31,7 @@ export class IntegralDetailService {
   /**
    * 获取积分明细列表
    */
-  getIntegralDetail(obj: {type: number, param ?: string, flag ?: number}) {
+  getIntegralDetail(obj: { type: number, param ?: string, flag ?: number }) {
     if (obj.param && !obj.flag) {
       return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.integralDetailList}/${obj.type}?param=${obj.param}`);
     } else if (!obj.param && obj.flag) {
@@ -77,7 +77,7 @@ export class IntegralDetailService {
    * 积分赠送
    * @param {any} body [description]
    */
-  PresentExp(body: any ) {
+  PresentExp(body: any) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.PresentExp}`, body);
   }
 }

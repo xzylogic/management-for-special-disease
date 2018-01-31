@@ -1,15 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { EditDialog } from '../../../libs/dmodal/dialog';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { FormTime } from '../../../libs/dform/_entity/form-time';
+import { EditDialog } from '../../../libs/dmodal/dialog-edit.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogEdit } from '../../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { PushTimeService } from './_service/push-time-service.service';
 import { PushTimeTableService } from './_service/push-time-service-table.service';
-import {
-  TableOption, ContainerConfig,
-  HintDialog, DialogEdit, FormTime
-} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
-
 
 @Component({
   selector: 'app-push-time',
@@ -39,18 +38,19 @@ export class PushTimeComponent implements OnInit {
   reset() {
     this.getPushTime();
   }
+
   getPushTime() {
     this.pushtimeservice.getPushTime().subscribe(
       res => {
         this.pushTimeTable.loading = false;
-         if (res.data && res.data.length === 0 && res.code === 0) {
-            this.pushTimeTable.errorMessage = ERRMSG.nullMsg;
-          } else if (res.data && res.code === 0) {
-            this.pushTimeTable.lists = [];
-            this.pushTimeTable.lists.push(res.data);
-          } else {
-            this.pushTimeTable.errorMessage = res.msg || ERRMSG.otherMsg;
-          }
+        if (res.data && res.data.length === 0 && res.code === 0) {
+          this.pushTimeTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.data && res.code === 0) {
+          this.pushTimeTable.lists = [];
+          this.pushTimeTable.lists.push(res.data);
+        } else {
+          this.pushTimeTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
       }, err => {
         this.pushTimeTable.loading = false;
         this.pushTimeTable.errorMessage = ERRMSG.netErrMsg;

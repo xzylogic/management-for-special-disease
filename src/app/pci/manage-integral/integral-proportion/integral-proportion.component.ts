@@ -4,10 +4,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormText } from '../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { IntegralProportionService } from './_service/integral-proportion.service';
 import { MatDialog } from '@angular/material';
 import { ERRMSG } from '../../_store/static';
-import { FormText, HintDialog } from '../../../libs/';
 
 @Component({
   selector: 'app-integral-proportion',

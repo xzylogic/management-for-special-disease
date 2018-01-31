@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule, MatSelectModule, MatDialogModule } from '@angular/material';
-
-import { LibModule, DTableModule } from '../../../libs';
+import { LibModule } from '../../../libs/common/lib.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { AssessmentRiskComponent } from './assessment-risk.component';
 import { RiskDetailComponent } from './risk-detail/risk-detail.component';
 import { AuthGuardService } from '../../_service/auth-guard.service';
@@ -34,7 +34,7 @@ const routes: Routes = [{
     AssessmentRiskService,
     AssessmentRiskTableService
   ],
-  entryComponents: [ RiskDetailComponent ]
+  entryComponents: [RiskDetailComponent]
 })
 export class AssessmentRiskModule {
 }

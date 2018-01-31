@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { ControlType, TableTitle } from '../../../../libs';
-
+import { ControlType, TableTitle } from '../../../../libs/dtable/dtable.entity';
 
 @Injectable()
 export class LectureAuditingTableService {

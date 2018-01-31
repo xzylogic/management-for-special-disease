@@ -1,26 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { RegisterStatisticsService } from './_service/register-statistics.service';
 import { RegisterStatisticsTableService } from './_service/register-statistics-table.service';
-import { TableOption, ContainerConfig } from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-register-statistics',
   templateUrl: 'register-statistics.component.html'
 })
-export class RegisterStatisticsComponent implements OnInit {
+export class RegisterStatisticsComponent implements OnInit, OnDestroy {
   containerConfig: ContainerConfig;
   userTable: TableOption;
   doctorTable: TableOption;
-  userRegisterCount: number;
-  doctorRegisterCount: number;
-  doctorValidateCount: number;
+
+  subscribeUserTable: any;
+  subscribeDoctorTable: any;
+
+  userRegisterCount: number | string;
+  doctorRegisterCount: number | string;
+  doctorValidateCount: number | string;
 
   constructor(
     private registerStatisticsService: RegisterStatisticsService,
     private registerStatisticsTableService: RegisterStatisticsTableService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.containerConfig = this.registerStatisticsService.registerStatisticsConfig();
@@ -35,47 +40,74 @@ export class RegisterStatisticsComponent implements OnInit {
     this.reset();
   }
 
+  ngOnDestroy() {
+    if (this.subscribeUserTable) {
+      this.subscribeUserTable.unsubscribe();
+    }
+    if (this.subscribeDoctorTable) {
+      this.subscribeDoctorTable.unsubscribe();
+    }
+  }
+
   reset() {
     this.reset0();
     this.reset1()
   }
 
   reset0() {
-      this.getUsers(0);
-      this.getUserCount();
+    this.getUsers(0);
+    this.getUserCount();
   }
 
   reset1() {
-      this.getDoctors(0);
-      this.getDoctorCount();
+    this.getDoctors(0);
+    this.getDoctorCount();
   }
 
   getUserCount() {
-    this.registerStatisticsService.getUserTotals()
-    .subscribe(
-      data => {
-        if ( data.code === 0 ) {
-          this.userRegisterCount = data.data.registerCount;
+    let count = this.registerStatisticsService.getUserTotals()
+      .subscribe(
+        data => {
+          if (data.code === 0) {
+            this.userRegisterCount = data.data.registerCount;
+            count.unsubscribe();
+          } else {
+            this.userRegisterCount = '未找到数据';
+            count.unsubscribe();
+          }
+        }, err => {
+          this.userRegisterCount = '网络出错';
+          count.unsubscribe();
+          return new Error(err);
         }
-      }
-    )
+      )
   }
 
   getDoctorCount() {
-    this.registerStatisticsService.getDoctorTotals()
-    .subscribe(
-      data => {
-        if ( data.code === 0 ) {
-          this.doctorRegisterCount = data.data.registerCount;
-          this.doctorValidateCount = data.data.validateCount;
+    let count = this.registerStatisticsService.getDoctorTotals()
+      .subscribe(
+        data => {
+          if (data.code === 0) {
+            this.doctorRegisterCount = data.data.registerCount;
+            this.doctorValidateCount = data.data.validateCount;
+            count.unsubscribe();
+          } else {
+            this.doctorRegisterCount = '未找到数据';
+            this.doctorValidateCount = '未找到数据';
+            count.unsubscribe();
+          }
+        }, err => {
+          this.doctorRegisterCount = '网络出错';
+          this.doctorValidateCount = '网络出错';
+          count.unsubscribe();
+          return new Error(err);
         }
-      }
-    )
+      )
   }
 
   getUsers(page: number) {
     this.userTable.reset(page);
-    this.registerStatisticsService.getUsers(page, this.userTable.size)
+    this.subscribeUserTable = this.registerStatisticsService.getUsers(page, this.userTable.size)
       .subscribe(
         res => {
           this.userTable.loading = false;
@@ -84,7 +116,7 @@ export class RegisterStatisticsComponent implements OnInit {
           } else if (res.data && res.data.content && res.code === 0) {
             this.userTable.totalPage = res.data.totalPages;
             this.userTable.lists = res.data.content;
-          }else {
+          } else {
             this.userTable.errorMessage = res.msg || ERRMSG.otherMsg;
           }
         }, err => {
@@ -96,7 +128,7 @@ export class RegisterStatisticsComponent implements OnInit {
 
   getDoctors(page: number) {
     this.userTable.reset(page);
-    this.registerStatisticsService.getDoctors(page, this.doctorTable.size)
+    this.subscribeDoctorTable = this.registerStatisticsService.getDoctors(page, this.doctorTable.size)
       .subscribe(
         res => {
           this.doctorTable.loading = false;
@@ -105,7 +137,7 @@ export class RegisterStatisticsComponent implements OnInit {
           } else if (res.data && res.data.content && res.code === 0) {
             this.doctorTable.totalPage = res.data.totalPages;
             this.doctorTable.lists = res.data.content;
-          }else {
+          } else {
             this.doctorTable.errorMessage = res.msg || ERRMSG.otherMsg;
           }
         }, err => {

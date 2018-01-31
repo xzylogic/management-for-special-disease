@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MatChipsModule, MatTabsModule } from '@angular/material';
-
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
-
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { LectureComponent } from './lecture.component';
 import { LectureEditComponent } from './lecture-edit/lecture-edit.component';
 import { LectureSignComponent } from './lecture-sign/lecture-sign.component';
-
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { LectureService } from './_service/lecture.service';
 import { LectureTableService } from './_service/lecture-table.service';

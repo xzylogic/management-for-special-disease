@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   incomeDetailList: 'api/income/detail/list', // 收入列表
@@ -112,7 +111,6 @@ export class DoctorAccountService {
   getWithdrawDeposits(page: number, size: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeWithdrawList}?size=${size}&page=${page}`);
   }
-
 
   /**
    * 赠送鲜花

@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
-import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
+import { OfflineOptions, ControlAnchor, NavigationControlType } from 'angular2-baidu-map';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { HospitalService } from '../_service/hospital.service';
-
-import { ContainerConfig, HintDialog, FormText, FormFile } from '../../../../libs';
-
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
@@ -49,14 +50,14 @@ export class HospitalEditComponent implements OnInit {
         if (data.id === 0) {
           this.containerConfig = this.hospitalService.hospitalEditConfig(true);
           this.createForm();
-          setTimeout(function(){
+          setTimeout(function () {
             self.getMapShow();
           }, 200);
         } else {
           this.containerConfig = this.hospitalService.hospitalEditConfig(false);
           this.id = data.id;
           this.createForm(data);
-          setTimeout(function(){
+          setTimeout(function () {
             self.getMapShow(data);
           }, 200);
         }
@@ -113,10 +114,10 @@ export class HospitalEditComponent implements OnInit {
     const self = this;
     this.search = this.config.hospitalAddress.value;
     const local = new BMap.LocalSearch(this.map, {
-      renderOptions: { map: this.map }
+      renderOptions: {map: this.map}
     });
     local.search(this.search);
-    this.map.addEventListener('click', function(e){
+    this.map.addEventListener('click', function (e) {
       const pt = e.point;
       self.config.longitude.value = pt.lng;
       self.config.latitude.value = pt.lat;

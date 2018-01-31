@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA} from '@angular/material';
-import {OfflineOptions, ControlAnchor, NavigationControlType} from 'angular2-baidu-map';
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
+import { OfflineOptions, ControlAnchor, NavigationControlType } from 'angular2-baidu-map';
 import { Router } from '@angular/router';
-
-import { TableOption, ContainerConfig } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { HospitalService } from './_service/hospital.service';
 import { HospitalTableService } from './_service/hospital-table.service';
 import { Hospital } from './_entity/hospital.entity';
@@ -90,6 +90,7 @@ export class DialogComponent implements OnInit {
   option: any;
   opts: any;
   offlineOpts: OfflineOptions;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogComponent>

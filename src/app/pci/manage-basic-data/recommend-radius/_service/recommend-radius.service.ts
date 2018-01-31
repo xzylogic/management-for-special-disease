@@ -2,8 +2,7 @@
  * Created by zhanglin on 2017/8/1.
  */
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   recommendRadius: 'opt/config/getRadii', // 获取定位推荐半径

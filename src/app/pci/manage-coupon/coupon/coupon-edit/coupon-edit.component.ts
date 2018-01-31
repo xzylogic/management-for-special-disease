@@ -4,8 +4,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, HintDialog, FormText, FormDatetime, FormRadio, FormDropdown} from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormDatetime } from '../../../../libs/dform/_entity/form-datetime';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
+import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { CouponService } from '../_service/coupon.service';
 import { Coupon } from '../_entity/coupon.entity';
 import { ERRMSG } from '../../../_store/static';
@@ -281,19 +285,19 @@ export class CouponEditComponent implements OnInit {
         delete value.grantNum;
         value.surplusNum = this.grantNum;
         value.couponId = this.couponId;
-          this.couponService.couponEdit(value)
-            .subscribe(res => {
-              if (res.code === 0) {
-                HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
-                  this.router.navigate(['/dc-list']);
-                });
-              } else {
-                HintDialog(res.msg || ERRMSG.saveError, this.dialog);
-              }
-            }, err => {
-              console.log(err);
-              HintDialog(ERRMSG.saveError, this.dialog);
-            });
+        this.couponService.couponEdit(value)
+          .subscribe(res => {
+            if (res.code === 0) {
+              HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+                this.router.navigate(['/dc-list']);
+              });
+            } else {
+              HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+            }
+          }, err => {
+            console.log(err);
+            HintDialog(ERRMSG.saveError, this.dialog);
+          });
       } else {
         delete value.newSurplusNum;
         this.couponService.couponEdit(value)

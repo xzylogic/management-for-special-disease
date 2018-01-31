@@ -3,17 +3,16 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { FormEditor } from '../../../libs/dform/_entity/form-editor';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogEdit } from '../../../libs/dmodal/dialog.entity';
+import { ControlType, TableOption } from '../../../libs/dtable/dtable.entity';
 import { CouponService } from './_service/coupon.service';
 import { CouponTableService } from './_service/coupon-table.service';
 import { Coupon } from './_entity/coupon.entity';
-import {
-  TableOption, ContainerConfig, ControlType, DialogEdit,
-  HintDialog, FormEditor
-} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
-import { EditDialog } from '../../../libs/dmodal/dialog/dialog-edit.component';
-
+import { EditDialog } from '../../../libs/dmodal/dialog-edit.component';
 
 @Component({
   selector: 'app-coupon',
@@ -135,6 +134,7 @@ export class CouponComponent implements OnInit {
       this.router.navigate(['/dc-list/edit']);
     }
   }
+
   // 提交优惠券说明维护更改
   toRefuseCoupon(value) {
     this.couponService.couponExplainUpdate(value)

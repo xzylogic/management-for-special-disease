@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ImageDialog } from '../../../libs/dmodal/dialog-img.component';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { ControlType, TableOption } from '../../../libs/dtable/dtable.entity';
 import { LectureService } from './_service/lecture.service';
 import { LectureTableService } from './_service/lecture-table.service';
 import { Lecture } from './_entity/lecture.entity';
-import {
-  TableOption, ContainerConfig, DialogOptions,
-  ImageDialog, ActionDialog, HintDialog, ControlType
-} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
@@ -45,26 +45,27 @@ export class LectureComponent implements OnInit {
   reset() {
     this.getLectures();
   }
+
   getLectures() {
-      this.lectureService.getLecture()
-        .subscribe(
-          res => {
-            this.lectureTable.loading = false;
-            if (res.data && res.data.length === 0 && res.code === 0) {
-              this.lectureTable.errorMessage = ERRMSG.nullMsg;
-            } else if (res.data && res.code === 0) {
-              this.lectureTable.lists = res.data.content;
-              for (let i = 0; i < this.lectureTable.lists.length; ++i) {
-                this.lectureTable.lists[i].state = this.getStatus(this.lectureTable.lists[i].status);
-                this.lectureTable.lists[i].edit = this.getEdit(this.lectureTable.lists[i].status);
-              }
-            } else {
-              this.lectureTable.errorMessage = res.msg || ERRMSG.otherMsg;
+    this.lectureService.getLecture()
+      .subscribe(
+        res => {
+          this.lectureTable.loading = false;
+          if (res.data && res.data.length === 0 && res.code === 0) {
+            this.lectureTable.errorMessage = ERRMSG.nullMsg;
+          } else if (res.data && res.code === 0) {
+            this.lectureTable.lists = res.data.content;
+            for (let i = 0; i < this.lectureTable.lists.length; ++i) {
+              this.lectureTable.lists[i].state = this.getStatus(this.lectureTable.lists[i].status);
+              this.lectureTable.lists[i].edit = this.getEdit(this.lectureTable.lists[i].status);
             }
-          }, err => {
-            this.lectureTable.loading = false;
-            this.lectureTable.errorMessage = ERRMSG.netErrMsg;
-          })
+          } else {
+            this.lectureTable.errorMessage = res.msg || ERRMSG.otherMsg;
+          }
+        }, err => {
+          this.lectureTable.loading = false;
+          this.lectureTable.errorMessage = ERRMSG.netErrMsg;
+        })
   }
 
   getStatus(status) {

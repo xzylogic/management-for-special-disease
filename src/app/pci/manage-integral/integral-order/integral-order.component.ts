@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { IntegralOrderTableService } from './_service/integral-order-table.service';
 import { IntegralOrderService } from './_service/integral-order.service';
-import { ContainerConfig } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';

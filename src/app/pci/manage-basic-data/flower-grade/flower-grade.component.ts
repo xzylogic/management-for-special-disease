@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
 import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { FlowerGradeService } from './_service/flower-grade.service';
 import { FlowerGradeTableService } from './_service/flower-grade-table.service';
@@ -10,8 +9,8 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { FlowerGrade } from './_entity/flower-grade.entity';
 import { ERRMSG } from '../../_store/static';
-import { DialogOptions } from '../../../libs/dmodal/dialog/dialog.entity';
-import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component';
 
 @Component({
   selector: 'app-flower-grade',

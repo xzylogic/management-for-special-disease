@@ -1,11 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
-import { TableOption, ContainerConfig  } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { ServiceSpecService } from './_service/service-spec.service';
 import { ServiceSpecTableService } from './_service/service-spec-table.service';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../_store/static';
 import { ServiceSpec } from './_entity/service-spec.entity';

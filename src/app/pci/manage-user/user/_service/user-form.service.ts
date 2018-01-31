@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-
+import { FormBase } from '../../../../libs/dform/_entity/form-base';
+import { FormDate } from '../../../../libs/dform/_entity/form-date';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { FormTextarea } from '../../../../libs/dform/_entity/form-textarea';
 import { User } from '../_entity/user.entity';
-import { FormBase, FormText, FormTextarea, FormFile, FormDropdown, FormDate} from '../../../../libs';
 
 @Injectable()
 export class UserFormService {
@@ -13,7 +17,7 @@ export class UserFormService {
 
   setForm(hospitalList, data?: User) {
 
-    const forms: FormBase < any > [] = [];
+    const forms: FormBase<any> [] = [];
 
     if (data) {
       forms.push(
@@ -66,8 +70,8 @@ export class UserFormService {
         value: data && data.sex || 0,
         required: true,
         options: [
-          { id: 0, name: '男' },
-          { id: 1, name: '女' }
+          {id: 0, name: '男'},
+          {id: 1, name: '女'}
         ],
         order: 4
       }),

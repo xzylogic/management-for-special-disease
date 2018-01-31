@@ -4,8 +4,12 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
-
-import { ContainerConfig, FormText, FormFile, FormTextarea, FormRadio, HintDialog } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { FormTextarea } from '../../../../libs/dform/_entity/form-textarea';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { BasicServiceService } from '../_service/basic-service.service';
 import { BasicService } from '../_entity/basic-service.entity';
 import { ERRMSG } from '../../../_store/static';

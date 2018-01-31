@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { HealthOrganizationService } from '../_service/health-organization.service';
 import { HealthOrganizationFormService } from '../_service/health-organization-form.service';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
@@ -8,7 +8,6 @@ import { select } from '@angular-redux/store';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/';
 import { HealthOrganization } from '../_entity/health-organization.entity';
 
 @Component({

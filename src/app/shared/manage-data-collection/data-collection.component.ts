@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-
-import { TableOption, ContainerConfig } from '../../libs';
+import { ContainerConfig } from '../../libs/common/container/container.component';
+import { TableOption } from '../../libs/dtable/dtable.entity';
 import { DataCollectionService } from './_service/data-collection.service';
 import { DataCollectionTableService } from './_service/data-collection-table.service';
 import { ERRMSG } from '../../pci/_store/static';

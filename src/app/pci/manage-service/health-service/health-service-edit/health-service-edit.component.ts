@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-
-import { ContainerConfig, HintDialog } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { HealthServiceService } from '../_service/health-service.service';
 import { HealthServiceFormService } from '../_service/health-service-form.service';
 import { ERRMSG } from '../../../_store/static';

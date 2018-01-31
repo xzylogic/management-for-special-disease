@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
-import { TableOption, ContainerConfig } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { Drug } from '../drug/_entity/drug.entity';
 import { HealthOrganizationService } from './_service/health-organization.service';
 import { HealthOrganizationTableService } from './_service/health-organization-table.service';

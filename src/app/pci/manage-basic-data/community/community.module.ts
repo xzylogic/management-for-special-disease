@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { BaiduMapModule  } from 'angular2-baidu-map';
 import { MatDialogModule, MatTabsModule, MatListModule } from '@angular/material';
 
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 
 import { CommunityComponent, DialogComponent } from './community.component';
 import { CommunityEditComponent} from './community-edit/community-edit.component';

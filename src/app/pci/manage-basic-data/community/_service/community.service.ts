@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   communityQuery: 'opt/doctorsServeTheCommunity/list', // 查询小区列表

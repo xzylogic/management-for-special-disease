@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { MatTabsModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
-
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
-
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { CouponComponent } from './coupon.component';
 import { CouponEditComponent } from './coupon-edit/coupon-edit.component';
-
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { CouponService } from './_service/coupon.service';
 import { CouponTableService } from './_service/coupon-table.service';

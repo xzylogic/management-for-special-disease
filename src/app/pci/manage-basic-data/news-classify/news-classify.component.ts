@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-import { TableOption, ActionDialog, HintDialog, DialogOptions, ContainerConfig } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { NewsClassifyService } from './_service/news-classify.service';
 import { NewsClassifyTableService } from './_service/news-classify-table.service';
 import { ERRMSG } from '../../_store/static';

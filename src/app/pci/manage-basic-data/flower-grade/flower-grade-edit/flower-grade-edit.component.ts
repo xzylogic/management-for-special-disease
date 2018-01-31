@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FlowerGradeService } from '../_service/flower-grade.service';
 import { FlowerGradeFormService } from '../_service/flower-grade-form.service';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
@@ -9,7 +8,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { FlowerGrade } from '../_entity/flower-grade.entity';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 
 @Component({
   selector: 'app-flower-grade-edit',

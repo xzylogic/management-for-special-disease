@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { UserService } from './_service/user.service';
 import { UserTableService } from './_service/user-table.service';
 import { User } from './_entity/user.entity';
-import { TableOption, ContainerConfig, HintDialog} from '../../../libs';
 import { ERRMSG, AOA } from '../../_store/static';
 
 import * as moment from 'moment';
@@ -34,7 +35,7 @@ export class UserComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router
   ) {
-     action.dataChange('user', new User());
+    action.dataChange('user', new User());
   }
 
   ngOnInit() {
@@ -82,7 +83,6 @@ export class UserComponent implements OnInit {
   change(index) {
     this.action.tabChange('user', index);
   }
-
 
   // 转换
   formatUser(list: Array<any>) {

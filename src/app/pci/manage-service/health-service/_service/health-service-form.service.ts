@@ -1,9 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
-
-import {
-  FormBase, FormText, FormFile, FormDropdown,
-  FormHidden, FormEditor, FormRadio, FormDate
-} from '../../../../libs';
+import { FormBase } from '../../../../libs/dform/_entity/form-base';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
+import { FormEditor } from '../../../../libs/dform/_entity/form-editor';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormHidden } from '../../../../libs/dform/_entity/form-hidden';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { FormRadio } from 'app/libs/dform/_entity/form-radio';
 
 @Injectable()
 export class HealthServiceFormService {

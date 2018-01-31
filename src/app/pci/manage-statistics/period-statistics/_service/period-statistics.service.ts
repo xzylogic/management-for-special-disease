@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   userPeriodStatistics: 'api/statistics/login/log/user', // 患者时间段内活跃度统计

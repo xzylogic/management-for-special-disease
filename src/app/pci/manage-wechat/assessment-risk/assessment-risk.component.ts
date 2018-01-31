@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogConfig, MatDialog} from '@angular/material';
-
-import { ContainerConfig, TableOption } from '../../../libs';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { RiskDetailComponent } from './risk-detail/risk-detail.component';
 import { AssessmentRiskService } from './_service/assessment-risk.service';
 import { AssessmentRiskTableService } from './_service/assessment-risk-table.service';

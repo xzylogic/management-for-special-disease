@@ -2,8 +2,7 @@
  * Created by zhanglin on 2017/7/31.
  */
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   agree: 'opt/doctorPersonalService/agree', // 预约床位/挂号管理-已同意

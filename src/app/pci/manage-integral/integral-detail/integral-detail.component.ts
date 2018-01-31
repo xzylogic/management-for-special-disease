@@ -1,16 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { FormEditor } from '../../../libs/dform/_entity/form-editor';
+import { FormText } from '../../../libs/dform/_entity/form-text';
+import { EditDialog } from '../../../libs/dmodal/dialog-edit.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogEdit } from '../../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { IntegralDetailService } from './_service/integral-detail.service';
 import { IntegralDetailTableService } from './_service/integral-detail-table.service';
-import {
-  TableOption,
-  ContainerConfig,
-  DialogEdit,
-  EditDialog,
-  FormEditor,
-  FormText,
-  HintDialog,
-} from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -148,7 +145,7 @@ export class IntegralDetailComponent implements OnInit {
     const config: DialogEdit = new DialogEdit({
       title: `积分规则维护`,
       form: [
-        new FormText ({
+        new FormText({
           key: 'id',
           label: 'id',
           value: data.id || '',
@@ -173,7 +170,7 @@ export class IntegralDetailComponent implements OnInit {
     const config: DialogEdit = new DialogEdit({
       title: `积分说明`,
       form: [
-        new FormText ({
+        new FormText({
           key: 'id',
           label: 'id',
           value: data.id || '',

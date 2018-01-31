@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, HintDialog } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { DoctorService } from '../_service/doctor.service';
 import { DoctorFormService } from '../_service/doctor-form.service';
 import { Doctor } from '../_entity/doctor.entity';

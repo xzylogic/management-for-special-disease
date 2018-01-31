@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
-import { TableOption } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { PackageServiceService } from './_service/package-service.service';
 import { PackageServiceTableService } from './_service/package-service-table.service';
-import { ContainerConfig } from '../../../libs';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';

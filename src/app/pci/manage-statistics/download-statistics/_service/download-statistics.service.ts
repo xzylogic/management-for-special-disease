@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   downloadStatistics: 'api/operational/pv' // 渠道来源统计

@@ -1,13 +1,13 @@
 import { Injectable, Inject } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   doctorRegister: 'api/statistics/register/doctor', // 医生注册量统计
   doctorTotal: 'api/statistics/register/doctor/total', // 注册总数 审核总数
   userRegister: 'api/statistics/register/user', // 患者注册量统计
   userTotal: 'api/statistics/register/user/total', // 患者注册总数
-}
+};
+
 @Injectable()
 export class RegisterStatisticsService {
   constructor(

@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { DoctorSortService } from '../_service/doctor-sort.service';
 import { DoctorSortFormService } from '../_service/doctor-sort-form.service';
-import { ContainerConfig, HintDialog } from '../../../../libs';
 import { DoctorSort } from '../_entity/doctor-sort.entity';
 import { ERRMSG } from '../../../_store/static';
 

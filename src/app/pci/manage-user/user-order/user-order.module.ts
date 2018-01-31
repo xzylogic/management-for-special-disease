@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatChipsModule, MatListModule, MatTabsModule } from '@angular/material';
-
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
-
+import { MatChipsModule, MatTabsModule } from '@angular/material';
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { UserOrderComponent } from './user-order.component';
 import { UserOrderRecordComponent } from './user-order-record/user-order-record.component';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
-
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { UserOrderService } from './_service/user-order.service';
 import { UserOrderTableService } from './_service/user-order-table.service';
@@ -31,7 +29,6 @@ const routes: Routes = [{
     FormsModule,
     MatChipsModule,
     MatTabsModule,
-    // MatListModule,
     DTableModule,
     DFormModule,
     LibModule,
@@ -41,10 +38,6 @@ const routes: Routes = [{
   declarations: [
     UserOrderComponent,
     UserOrderRecordComponent,
-    // OrderDetailComponent
-  ],
-  entryComponents: [
-    // OrderDetailComponent
   ],
   providers: [
     UserOrderService,

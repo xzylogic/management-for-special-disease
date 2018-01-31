@@ -3,8 +3,10 @@
  */
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
-import { ContainerConfig, HintDialog, FormRadio, FormText } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { FormRadio } from '../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../_store/static';
 import { PurchaseEntranceService } from './_service/purchase-entrance.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';

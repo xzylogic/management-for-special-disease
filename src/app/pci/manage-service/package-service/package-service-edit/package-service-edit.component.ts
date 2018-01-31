@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { PackageServiceService } from '../_service/package-service.service';
 import { PackageServiceFormService } from '../_service/package-service-form.service';
-import { ContainerConfig, HintDialog } from '../../../../libs/';
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 import { MatDialog } from '@angular/material';

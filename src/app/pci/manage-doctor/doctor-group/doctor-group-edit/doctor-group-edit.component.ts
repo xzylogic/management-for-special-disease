@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { DoctorGroupService } from '../_service/doctor-group.service';
 import { DoctorGroupFormService } from '../_service/doctor-group-form.service';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
@@ -7,7 +6,7 @@ import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { DoctorGroup } from '../_entity/doctor-group.entity';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 

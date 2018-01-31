@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   familyAccount: 'api/family', // 获取家庭账号
@@ -14,7 +13,6 @@ export class FamilyAccountService {
     @Inject('http') private httpService
   ) {
   }
-
 
   familyAccountConfig(): ContainerConfig {
     return new ContainerConfig({

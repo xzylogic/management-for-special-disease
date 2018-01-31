@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, TableOption, HintDialog } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { FollowUpPlanService } from './_service/follow-up-plan.service';
 import { FollowUpPlanTableService } from './_service/follow-up-plan-table.service';
 import { FollowUpPlan } from './_entity/follow-up-plan.entity';

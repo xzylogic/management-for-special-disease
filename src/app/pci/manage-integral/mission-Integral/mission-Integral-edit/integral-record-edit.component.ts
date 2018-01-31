@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
-import { FormText,  FormDropdown } from '../../../../libs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
 
 @Component({
   selector: 'app-integral-record',
@@ -50,54 +50,54 @@ export class IntegralRecordComponent implements OnInit {
 
   createForm(data) {
     this.form = this.fb.group({
-      doubleUpper : new FormControl({value: ''}, Validators.required),
-      toplimit : new FormControl({value: ''}, Validators.required),
-      integral : new FormControl({value: ''}, Validators.required),
+      doubleUpper: new FormControl({value: ''}, Validators.required),
+      toplimit: new FormControl({value: ''}, Validators.required),
+      integral: new FormControl({value: ''}, Validators.required),
       status: new FormControl({value: ''}, Validators.required),
       tag: new FormControl({value: ''}, Validators.required),
     });
     this.config = {
-      doubleUpper : new FormDropdown({
+      doubleUpper: new FormDropdown({
         label: '有无积分上限',
         key: 'doubleUpper ',
-        options:  [{
+        options: [{
           id: false,
           name: '无',
         }, {
           id: true,
           name: '有',
         }],
-        value: data && data.doubleUpper  || false
+        value: data && data.doubleUpper || false
       }),
-      toplimit : new FormText({
+      toplimit: new FormText({
         type: 'text',
         label: '积分上限',
         key: 'toplimit ',
         value: data && data.toplimit || ''
       }),
-      integral : new FormText({
+      integral: new FormText({
         type: 'text',
         label: '每次获得积分',
         key: 'integral',
-        value: data && data.integral  || ''
+        value: data && data.integral || ''
       }),
-      status : new FormDropdown({
+      status: new FormDropdown({
         label: '状态',
         key: 'status ',
-        options:  [{
+        options: [{
           id: 0,
           name: '已上架',
         }, {
           id: 1,
           name: '下架',
         }],
-        value: data && data.status  || 0
+        value: data && data.status || 0
       }),
       tag: new FormText({
         type: 'text',
         label: '#',
         key: 'tag',
-        value: data && data.tag  || ''
+        value: data && data.tag || ''
       }),
     }
   }

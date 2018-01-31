@@ -4,9 +4,12 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, FormText, FormFile, FormTextarea, FormRadio, HintDialog } from '../../../../libs';
-
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { FormTextarea } from '../../../../libs/dform/_entity/form-textarea';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { DoctorServiceService } from '../_service/doctor-service.service';
 import { DoctorService } from '../_entity/doctor-service.entity';
 import { ERRMSG } from '../../../_store/static';
@@ -53,8 +56,8 @@ export class DoctorServiceEditComponent implements OnInit {
       enable: new FormControl({value: ''}, Validators.required),
       unitId: new FormControl({value: ''}, Validators.required),
       numbers: new FormControl({value: ''}),
-      content : new FormControl({value: ''}, Validators.required),
-      operationalRemark : new FormControl({value: ''}, Validators.required),
+      content: new FormControl({value: ''}, Validators.required),
+      operationalRemark: new FormControl({value: ''}, Validators.required),
     });
     this.config = {
       iconUrl: new FormFile({
@@ -114,13 +117,13 @@ export class DoctorServiceEditComponent implements OnInit {
       content: new FormTextarea({
         label: '服务简介',
         key: 'content',
-        value: data.content  || '',
+        value: data.content || '',
         maxlength: 42
       }),
-      operationalRemark : new FormTextarea({
+      operationalRemark: new FormTextarea({
         label: '服务说明',
         key: 'operationalRemark',
-        value: data.operationalRemark  || ''
+        value: data.operationalRemark || ''
       }),
     }
   }

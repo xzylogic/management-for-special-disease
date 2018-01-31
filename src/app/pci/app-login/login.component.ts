@@ -2,8 +2,9 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { FormText } from '../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../libs/dmodal/dialog.component';
 
-import { FormText, HintDialog } from '../../libs';
 import { Admin } from '../_store/main.state';
 import { ERRMSG } from '../_store/static';
 
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
     if (value.name && value.password) {
       this.authService.login(value)
         .subscribe(res => {
+          console.log(res);
           if (res && res.code === 0 && res.data) {
             this.authService.setJwt(JSON.stringify(res.data));
             this.mainAction.setAdmin(new Admin({id: res.data.id, name: res.data.name}));

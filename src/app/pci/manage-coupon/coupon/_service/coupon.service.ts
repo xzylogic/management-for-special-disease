@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   couponMaintenance: 'opt/coupons/declare', // 优惠券说明维护
@@ -60,7 +59,6 @@ export class CouponService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.thirdService}`);
   }
 
-
   /**
    * 新建修改优惠券
    * @param {any} body [description]
@@ -68,7 +66,6 @@ export class CouponService {
   couponEdit(body: any) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.couponUpdate}`, body);
   }
-
 
   /**
    * 修改优惠券说明

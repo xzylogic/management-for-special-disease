@@ -1,6 +1,5 @@
 import { Injectable, Inject} from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   healthData: 'opt/measures/list', // 患者体征数据管理

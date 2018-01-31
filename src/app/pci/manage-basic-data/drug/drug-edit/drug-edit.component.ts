@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { DrugService } from '../_service/drug.service';
 import { DrugFormService } from '../_service/drug-form.service';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
@@ -9,7 +8,7 @@ import { Drug } from '../_entity/drug.entity';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
-import { HintDialog } from '../../../../libs/dmodal/dialog/dialog.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 
 @Component({
   selector: 'app-drug-edit',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
-import { ContainerConfig, HintDialog } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { AutoReplyService } from './_service/auto-reply.service';
 import { ERRMSG } from '../../_store/static';
 

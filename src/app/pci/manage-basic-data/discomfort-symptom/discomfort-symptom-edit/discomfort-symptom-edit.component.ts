@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, HintDialog } from '../../../../libs';
-
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { DiscomfortSymptomService } from '../_service/discomfort-symptom.service';
 import { DiscomfortSymptomFormService } from '../_service/discomfort-symptom-form.service';
 import { DiscomfortSymptom } from '../_entity/discomfort-symptom.entity';

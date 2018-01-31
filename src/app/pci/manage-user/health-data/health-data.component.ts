@@ -1,13 +1,12 @@
-import { Component, OnInit, Inject} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { HealthDataService } from './_service/health-data.service';
 import { HealthDataTableService } from './_service/health-data-table.service';
-import {
-  TableOption, ContainerConfig, HintDialog
-} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 import * as moment from 'moment';
@@ -62,7 +61,7 @@ export class HealthDataComponent implements OnInit {
     this.reset();
   }
 
-  reset () {
+  reset() {
     this.reset0();
     this.reset1();
     this.reset2();

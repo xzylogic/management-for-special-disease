@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
-
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { DrugComponent } from './drug.component';
 import { DrugEditComponent } from './drug-edit/drug-edit.component';
-
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { DrugService } from './_service/drug.service';
 import { DrugFormService } from './_service/drug-form.service';
@@ -16,7 +15,8 @@ import { FormsModule } from '@angular/forms';
 export const routes: Routes = [{
   path: '',
   component: DrugComponent,
-  canActivate: [AuthGuardService]},
+  canActivate: [AuthGuardService]
+},
   {
     path: 'edit',
     component: DrugEditComponent,

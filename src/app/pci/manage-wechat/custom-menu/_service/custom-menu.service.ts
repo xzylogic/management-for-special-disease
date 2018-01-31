@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   customMenu: 'api/micro/menu', // 自定义菜单

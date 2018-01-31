@@ -1,5 +1,10 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
+import { FormEditor } from '../../../../libs/dform/_entity/form-editor';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { IntegralCommodityService } from '../_service/integral-commodity.service';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
@@ -8,8 +13,6 @@ import { Router } from '@angular/router';
 import { ERRMSG } from '../../../_store/static';
 import { IntegralCommodity } from '../_entity/integralCommodity.entity';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-
-import { FormDropdown, FormEditor, FormText, FormFile, HintDialog, ContainerConfig } from '../../../../libs';
 
 @Component({
   selector: 'app-integral-commodity-edit',
@@ -72,7 +75,7 @@ export class IntegralCommodityEditComponent implements OnInit {
           this.containerConfig = this.integralCommodityService.integralCommodityEditConfig(false);
           if (data.freight === 0) {
             this.freeShipping = true;
-          }else {
+          } else {
             this.freeShipping = false;
           }
           this.createForm(data);

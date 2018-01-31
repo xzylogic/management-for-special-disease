@@ -1,12 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { DownloadOriginService } from './_service/download-origin.service';
 import { DownloadOriginTableService } from './_service/download-origin-table.service';
-import {
-  TableOption, ContainerConfig, DialogOptions,
-  ActionDialog, HintDialog
-} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({

@@ -2,7 +2,11 @@
  * Created by zhanglin on 2017/7/26.
  */
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { ContainerConfig, FormDropdown, FormText, HintDialog, FormTextarea } from '../../../../libs/';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { FormTextarea } from '../../../../libs/dform/_entity/form-textarea';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { IntegralOrderService } from '../_service/integral-order.service';
 import { IntegralOrderFormService } from '../_service/integral-order-form.service';
 import { MatDialog } from '@angular/material';
@@ -147,16 +151,16 @@ export class SendMessageComponent implements OnInit {
       };
     }
     this.integralOrderService.editExpressNo(body).subscribe(res => {
-        if (res.code === 0) {
-          HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
-            this.router.navigate(['/integral-order']);
-          });
-        } else {
-          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
-        }
-      }, err => {
-        console.log(err);
-        HintDialog(ERRMSG.saveError, this.dialog);
-      });
+      if (res.code === 0) {
+        HintDialog(ERRMSG.saveSuccess, this.dialog).afterClosed().subscribe(() => {
+          this.router.navigate(['/integral-order']);
+        });
+      } else {
+        HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+      }
+    }, err => {
+      console.log(err);
+      HintDialog(ERRMSG.saveError, this.dialog);
+    });
   }
 }

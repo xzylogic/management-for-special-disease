@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   userList: 'api/user/list', // 查询患者列表
@@ -48,6 +47,7 @@ export class UserService {
       currentRouter: '/user/integral'
     });
   }
+
   //  * 获取患者列表
   //  * @param {string} key     [description]
   //  * @param {boolean} bind   [description]
@@ -68,7 +68,6 @@ export class UserService {
       `${this.app.pci.BASE_URL}${PATH.userOptionList}`
     )
   }
-
 
   /**
    * 新建患者

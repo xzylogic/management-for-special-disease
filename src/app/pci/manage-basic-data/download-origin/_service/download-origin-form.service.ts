@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-
-import { FormBase, FormText } from '../../../../libs';
+import { FormBase } from '../../../../libs/dform/_entity/form-base';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
 
 @Injectable()
 export class DownloadOriginFormService {

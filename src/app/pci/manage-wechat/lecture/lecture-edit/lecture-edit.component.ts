@@ -1,11 +1,16 @@
-import { Component, OnInit, Inject, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, HintDialog, FormText, FormDatetime, FormRadio, FormFile, FormHidden} from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormDatetime } from '../../../../libs/dform/_entity/form-datetime';
+import { FormFile } from '../../../../libs/dform/_entity/form-file';
+import { FormHidden } from '../../../../libs/dform/_entity/form-hidden';
+import { FormRadio } from '../../../../libs/dform/_entity/form-radio';
+import { FormText } from '../../../../libs/dform/_entity/form-text';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { LectureService } from '../_service/lecture.service';
 import { Lecture } from '../_entity/lecture.entity';
 import { ERRMSG } from '../../../_store/static';
@@ -56,7 +61,8 @@ export class LectureEditComponent implements OnInit {
     } else {
       this.charge = true;
       data.isCharge = 1;
-    };
+    }
+    ;
     if (data.joinLimit === true) {
       this.limit = true;
     }
@@ -141,8 +147,8 @@ export class LectureEditComponent implements OnInit {
         label: '是否收费',
         value: data && data.isCharge || 0,
         options: [
-          { id: 0, name: '否'},
-          { id: 1, name: '是'}
+          {id: 0, name: '否'},
+          {id: 1, name: '是'}
         ],
       }),
       charge: new FormText({
@@ -158,8 +164,8 @@ export class LectureEditComponent implements OnInit {
         label: '人数上限',
         value: data && data.joinLimit || false,
         options: [
-          { id: false, name: '无'},
-          { id: true, name: '上限'}
+          {id: false, name: '无'},
+          {id: true, name: '上限'}
         ],
       }),
       joinLimitCount: new FormText({
@@ -175,8 +181,8 @@ export class LectureEditComponent implements OnInit {
         label: '讲座上线时间',
         value: data && data.isOnlineDate || 0,
         options: [
-          { id: 0, name: '保存即上线'},
-          { id: 1, name: '设定上线时间'}
+          {id: 0, name: '保存即上线'},
+          {id: 1, name: '设定上线时间'}
         ],
       }),
       onlineDate: new FormDatetime({
@@ -218,7 +224,7 @@ export class LectureEditComponent implements OnInit {
   getlectureTime(data) {
     if (data !== 0 && typeof(data) === 'string') {
       const newstr = data.replace(/-/g, '/');
-      const date =  new Date(newstr);
+      const date = new Date(newstr);
       const time_str = date.getTime();
       return time_str;
     } else if (data === 0) {
@@ -245,6 +251,7 @@ export class LectureEditComponent implements OnInit {
       delete data.isOnlineDate;
     }
   }
+
   // 提交保存信息
   getValues(data) {
     this.getStatus(data);

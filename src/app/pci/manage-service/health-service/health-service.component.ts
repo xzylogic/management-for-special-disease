@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
-import { TableOption, ContainerConfig } from '../../../libs/';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { HealthServiceService } from './_service/health-service.service';
 import { HealthServiceTableService } from './_service/health-service-table.service';
 import { MatDialog } from '@angular/material';
@@ -73,14 +73,14 @@ export class HealthServiceComponent implements OnInit {
   }
 
   // 状态信息转换
-   formatStatus(statu) {
-     if (statu === true) {
-       return '启用';
-     }
-     if (statu === false) {
-       return '禁用';
-     }
-     return null;
-   }
+  formatStatus(statu) {
+    if (statu === true) {
+      return '启用';
+    }
+    if (statu === false) {
+      return '禁用';
+    }
+    return null;
+  }
 
 }

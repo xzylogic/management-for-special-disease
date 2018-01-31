@@ -1,16 +1,15 @@
-import { Component, OnInit, Inject} from '@angular/core';
-import { MatDialog, MatDialogConfig} from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { ControlType, TableOption } from '../../../libs/dtable/dtable.entity';
 
 import { IntegralSigninComponent } from './mission-Integral-edit/integral-signin-edit.component';
 import { IntegralRecordComponent } from './mission-Integral-edit/integral-record-edit.component';
 import { IntegralElseComponent } from './mission-Integral-edit/integral-else-edit.component'
 import { MissionIntegralService } from './_service/mission-Integral.service';
 import { MissionIntegralTableService } from './_service/mission-Integral-table.service';
-
-import {
-  TableOption, ContainerConfig, ControlType, DialogOptions,
-  ActionDialog, HintDialog
-} from '../../../libs';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
@@ -107,7 +106,8 @@ export class MissionIntegralComponent implements OnInit {
       signin.afterClosed().subscribe(result => {
         if (result) {
           this.toSignin(result);
-        };
+        }
+        ;
       });
     }
 
@@ -155,22 +155,22 @@ export class MissionIntegralComponent implements OnInit {
   // 签到编辑请求
   toSignin(value) {
     this.missionIntegralService.IntegralTaskEdit(value)
-        .subscribe(res => {
-          if (res.code === 0) {
-            HintDialog('操作成功', this.dialog);
-            this.reset();
-          } else {
-            HintDialog(res.msg || '操作失败', this.dialog);
-          }
-        }, err => {
-          console.log(err);
-          HintDialog('操作失败', this.dialog);
-        });
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('操作成功', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('操作失败', this.dialog);
+      });
   }
 
   // 记录数据编辑请求
   toRecord(value) {
-    if (value.doubleUpper === false ) {
+    if (value.doubleUpper === false) {
       value.toplimit = 0;
       delete value.doubleUpper;
     } else {

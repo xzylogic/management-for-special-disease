@@ -1,6 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
-
-import { FormBase, FormText, FormTextarea, FormFile, FormDropdown, FormEditor } from '../../../libs';
+import { FormBase } from '../../../libs/dform/_entity/form-base';
+import { FormDropdown } from '../../../libs/dform/_entity/form-dropdown';
+import { FormEditor } from '../../../libs/dform/_entity/form-editor';
+import { FormFile } from '../../../libs/dform/_entity/form-file';
+import { FormText } from '../../../libs/dform/_entity/form-text';
+import { FormTextarea } from '../../../libs/dform/_entity/form-textarea';
 
 @Injectable()
 export class CommodityFormService {

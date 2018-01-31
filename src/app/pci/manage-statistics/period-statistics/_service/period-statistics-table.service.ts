@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { TableTitle } from '../../../../libs';
+import { TableTitle } from '../../../../libs/dtable/dtable.entity';
 
 @Injectable()
 export class PeriodStatisticsTableService {

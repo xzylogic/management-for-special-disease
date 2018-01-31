@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
@@ -16,8 +17,8 @@ import { NavigationService } from './_service/navigation.service';
 
 import { app } from '../../environments/environment';
 
-import { LibDialogModule } from '../libs/dmodal/dialog/dialog.module';
-import { LibDialogEditModule } from '../libs/dmodal/dialog/dialog-edit.module';
+import { LibDialogModule } from '../libs/dmodal/dialog.module';
+import { LibDialogEditModule } from '../libs/dmodal/dialog-edit.module';
 import { StoreModule } from './store.module';
 import { MainAction } from './_store/main.action';
 import { ApiAction } from './_store/api/api.action';
@@ -27,6 +28,7 @@ import { CommonService } from './_service/common.service';
   imports: [
     CommonModule,
     HttpModule,
+    HttpClientModule,
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,

@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { ContainerConfig, HintDialog } from '../../../../libs';
-
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { UserOrderService } from '../_service/user-order.service';
 import { ServiceRecordFormService } from '../_service/service-record-form.service';
 import { UserOrder } from '../_entity/user-order.entity';
@@ -22,7 +21,6 @@ export class UserOrderRecordComponent implements OnInit {
   form: any;
   serviceList: any;
   state: boolean;
-
 
   constructor(
     private userOrderService: UserOrderService,
@@ -53,7 +51,7 @@ export class UserOrderRecordComponent implements OnInit {
   getValues(data) {
     let name = '';
     this.serviceList.forEach(obj => {
-      if (obj.id === parseInt(data.serviceId)) {
+      if (obj.id === Number(data.serviceId)) {
         name = obj.name;
       }
     });
@@ -72,6 +70,7 @@ export class UserOrderRecordComponent implements OnInit {
         })
 
   }
+
   //
   // gotoHandle(data) {
   //   if (data.key === 'del') {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { ContainerConfig, TableOption } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { TableOption } from '../../../../libs/dtable/dtable.entity';
 import { DoctorAccountService } from '../_service/doctor-account.service';
 import { DoctorAccountTableService } from '../_service/doctor-account-table.service';
 import { ERRMSG } from '../../../_store/static';

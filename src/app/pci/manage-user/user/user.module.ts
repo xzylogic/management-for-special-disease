@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule, MatTabsModule } from '@angular/material';
-
-import { DTableModule, DFormModule, LibModule } from '../../../libs';
-
+import { LibModule } from '../../../libs/common/lib.module';
+import { DFormModule } from '../../../libs/dform/dform.module';
+import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { UserComponent } from './user.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { IntegralDetailComponent } from './integral-detail/integral-detail.component';
-
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { UserService } from './_service/user.service';
 import { UserFormService } from './_service/user-form.service';
@@ -24,10 +23,10 @@ const routes: Routes = [{
   component: UserEditComponent,
   canActivate: [AuthGuardService],
 }, {
-    path: 'integral',
-    component: IntegralDetailComponent,
-    canActivate: [AuthGuardService],
-  }];
+  path: 'integral',
+  component: IntegralDetailComponent,
+  canActivate: [AuthGuardService],
+}];
 
 @NgModule({
   imports: [

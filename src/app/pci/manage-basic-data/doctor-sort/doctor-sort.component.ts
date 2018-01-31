@@ -2,8 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-
-import { TableOption, ContainerConfig } from '../../../libs';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { DoctorSortService } from './_service/doctor-sort.service';
 import { DoctorSortTableService } from './_service/doctor-sort-table.service';
 import { DoctorSort } from './_entity/doctor-sort.entity';

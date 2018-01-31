@@ -2,8 +2,7 @@
  * Created by zhanglin on 2017/8/2.
  */
 import { Inject, Injectable } from '@angular/core';
-
-import { ContainerConfig } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   integralProportion: 'opt/integral/records/getRatio', // 获取积分兑换比例

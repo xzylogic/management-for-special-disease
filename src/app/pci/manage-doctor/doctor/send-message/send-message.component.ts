@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
-import { ContainerConfig, TableOption, HintDialog } from '../../../../libs';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
+import { TableOption } from '../../../../libs/dtable/dtable.entity';
 import { DoctorService } from '../_service/doctor.service';
 import { ERRMSG } from '../../../_store/static';
 
