@@ -15,7 +15,7 @@ export const routes: Routes = [{
 }, {
   path: 'download-statistics',
   loadChildren: 'app/pci/manage-statistics/download-statistics/download-statistics.module#DownloadStatisticsModule'
-}, {
-  path: 'father-statistics',
-  loadChildren: 'app/pci/manage-statistics/father-statistics/father-statistics.module#FatherStatisticsModule'
+// }, {
+//   path: 'father-statistics',
+//   loadChildren: 'app/pci/manage-statistics/father-statistics/father-statistics.module#FatherStatisticsModule'
 }];

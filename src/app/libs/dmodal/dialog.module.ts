@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatDialog, MatDialogModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatDialog, MatDialogModule, MatIconModule, MatInputModule } from '@angular/material';
 
 import { DialogComponent } from './dialog.component';
 import { DialogImgComponent } from './dialog-img.component';
@@ -16,6 +16,7 @@ export * from './dialog-img.component';
     FormsModule,
     MatDialogModule,
     MatInputModule,
+    MatIconModule,
     MatButtonModule
   ],
   declarations: [

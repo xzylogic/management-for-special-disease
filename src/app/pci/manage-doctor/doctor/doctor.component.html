@@ -7,10 +7,10 @@
   <div class="content">
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <mat-tab label="审核通过">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="userTable.queryKey">
-          </mat-input-container>
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getAuditedDoctors(0)">
             <mat-icon>search</mat-icon>
           </button>
@@ -33,10 +33,10 @@
         </div>
       </mat-tab>
       <mat-tab label="待审核">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="auditingTable.queryKey">
-          </mat-input-container>
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getAuditingDoctors(0)">
             <mat-icon>search</mat-icon>
           </button>
@@ -59,10 +59,10 @@
         </div>
       </mat-tab>
       <mat-tab label="审核失败">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="failureTable.queryKey">
-          </mat-input-container>
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getFailureDoctors(0)">
             <mat-icon>search</mat-icon>
           </button>

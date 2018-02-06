@@ -1,7 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-
-declare let require;
-const flatpickr = require('flatpickr');
+import flatpickr from 'flatpickr';
 import { Mandarin } from 'flatpickr/dist/l10n/zh.js';
 
 export enum SearchType {date, range}
@@ -11,32 +9,39 @@ export enum SearchType {date, range}
   template: `
     <div class="input_container" style="display: inline-block;width: auto;" *ngIf="type==SearchType.date">
       <input class="input_content"
-             [placeholder]="label"
+             [placeholder]=""
              (change)="change()"
              [(ngModel)]="value" #date
       >
       <span class="input_span">{{label}}</span>
     </div>
-    <div class="mat-input-wrapper mat-form-field-wrapper" *ngIf="type==SearchType.range">
-      <div class="mat-input-flex mat-form-field-flex">
-        <div class="mat-input-infix mat-form-field-infix">
-          <input class="mat-input-element"
-                 [placeholder]="label"
-                 (change)="change()"
-                 [(ngModel)]="value" #range
-          >
-          <span
-            class="mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper mat-form-field-can-float mat-form-field-should-float">
-            <label class="mat-input-placeholder mat-form-field-placeholder"
-                   style="display: block;"
-            >{{label}}</label>
-          </span>
-        </div>
-        <div class="mat-input-underline mat-form-field-underline" style="left: 0">
-          <span class="mat-input-ripple mat-form-field-ripple"></span>
-        </div>
-      </div>
+    <div class="input_container" style="display: inline-block;width: 225px;" *ngIf="type==SearchType.range">
+      <input class="input_content"
+             [placeholder]=""
+             (change)="change()"
+             [(ngModel)]="value" #range
+      >
+      <span class="input_span">{{label}}</span>
     </div>
+    <!--<div class="mat-input-wrapper mat-form-field-wrapper" *ngIf="type==SearchType.range">-->
+    <!--<div class="mat-input-flex mat-form-field-flex">-->
+    <!--<div class="mat-input-infix mat-form-field-infix">-->
+    <!--<input class="mat-input-element"-->
+    <!--[placeholder]="label"-->
+    <!--(change)="change()"-->
+    <!--[(ngModel)]="value" #range-->
+    <!--&gt;-->
+    <!--<span-->
+    <!--class="mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper mat-form-field-can-float mat-form-field-should-float">-->
+    <!--<label class="mat-input-placeholder mat-form-field-placeholder"-->
+    <!--style="display: block;"-->
+    <!--&gt;{{label}}</label>-->
+    <!--</span>-->
+    <!--</div>-->
+    <!--<div class="mat-input-underline mat-form-field-underline" style="left: 0">-->
+    <!--<span class="mat-input-ripple mat-form-field-ripple"></span>-->
+    <!--</div>-->
+    <!--</div>-->
   `,
   styleUrls: ['../../dform/component/lib-input/lib-input.scss']
 })

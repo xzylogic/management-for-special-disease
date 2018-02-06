@@ -7,7 +7,9 @@
           {{userTable.errorMessage}}
         </div>
         <div *ngIf="userTable.lists">
-          <div style="text-align:center;font-size:16px;"><strong>患者注册总数：{{userRegisterCount}}</strong></div>
+          <div style="text-align:center;font-size:16px;padding-top: 16px">
+            <strong>患者注册总数：{{userRegisterCount}}</strong>
+          </div>
           <div class="content__table">
             <app-lib-table
               [table]="userTable"
@@ -22,7 +24,8 @@
           {{doctorTable.errorMessage}}
         </div>
         <div *ngIf="doctorTable.lists">
-          <div style="text-align:center;font-size:16px;"><strong>医生注册总数：{{doctorRegisterCount}}&nbsp;&nbsp;&nbsp;&nbsp;审核通过总数：{{doctorValidateCount}}</strong>
+          <div style="text-align:center;font-size:16px;padding-top: 16px">
+            <strong>医生注册总数：{{doctorRegisterCount}}&nbsp;&nbsp;&nbsp;&nbsp;审核通过总数：{{doctorValidateCount}}</strong>
           </div>
           <div class="content__table">
             <app-lib-table

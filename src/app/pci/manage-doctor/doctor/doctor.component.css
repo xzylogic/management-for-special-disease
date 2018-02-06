@@ -5,16 +5,11 @@
 .count {
   position: absolute;
   top: 10px;
-  left: 270px;
-}
-
-.count > mat-chip {
-  padding: 4px 5px;
-  font-size: 12px;
+  left: 300px;
 }
 
 @media (max-width: 600px) {
   .count {
-    left: 138px;
+    left: 200px;
   }
 }

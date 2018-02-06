@@ -2,7 +2,7 @@
   <div class="content">
     <mat-tab-group dynamicHeight="true">
       <mat-tab label="全部来源统计">
-        <form style="padding: 0 16px">
+        <form style="padding: 16px">
           <app-search [type]="'1'" [label]="'请选择日期'" [(value)]="queryMainDate"></app-search>
           <button mat-icon-button color="primary" type="button" (click)="getMainQueryResult()">
             <mat-icon>search</mat-icon>
@@ -21,7 +21,7 @@
         </div>
       </mat-tab>
       <mat-tab label="用户渠道来源统计">
-        <form style="padding: 0 16px">
+        <form style="padding: 16px">
           <app-search [type]="'1'" [label]="'请选择日期'" [(value)]="queryUserDate"></app-search>
           <button mat-icon-button color="primary" type="button" (click)="getUserQueryResult()">
             <mat-icon>search</mat-icon>
@@ -40,7 +40,7 @@
         </div>
       </mat-tab>
       <mat-tab label="医生渠道来源统计">
-        <form style="padding: 0 16px">
+        <form style="padding: 16px">
           <app-search [type]="'1'" [label]="'请选择日期'" [(value)]="queryDoctorDate"></app-search>
           <button mat-icon-button color="primary" type="button" (click)="getDoctorQueryResult()">
             <mat-icon>search</mat-icon>

@@ -2,8 +2,8 @@
   <div class="content">
     <mat-tab-group dynamicHeight="true">
       <mat-tab label="患者活跃度统计">
-        <form style="padding: 0 16px">
-          <mat-form-field floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey"
                    [(ngModel)]="userActivenessTable.queryKey">
           </mat-form-field>
@@ -29,11 +29,11 @@
         </div>
       </mat-tab>
       <mat-tab label="医生活跃度统计">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey"
                    [(ngModel)]="doctorActivenessTable.queryKey">
-          </mat-input-container>
+          </mat-form-field>
           <app-search [type]="'0'" [label]="'请选择日期'" [(value)]="queryDoctorDate"></app-search>
           <button mat-icon-button color="primary" type="button" (click)="getDoctorActivenessStatistics(0)">
             <mat-icon>search</mat-icon>
