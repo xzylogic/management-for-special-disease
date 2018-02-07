@@ -1,14 +1,14 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
-    <form style="padding: 0 16px">
-      <mat-input-container floatPlaceholder="auto">
+    <form style="padding: 16px">
+      <mat-form-field floatPlaceholder="always">
         <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="doctorSortTable.queryKey">
-      </mat-input-container>
-      <div *ngIf="hospitalList" style="display: inline-block">
-        <mat-select placeholder="按医院搜索" [(ngModel)]="queryHospital" name="queryHospital" style="width: 200px;margin: 0 1em">
+      </mat-form-field>
+      <mat-form-field floatPlaceholder="always" *ngIf="hospitalList" style="width: 300px">
+        <mat-select placeholder="按医院搜索" [(ngModel)]="queryHospital" name="queryHospital">
           <mat-option [value]="opt.id" *ngFor="let opt of hospitalList">{{opt.name}}</mat-option>
         </mat-select>
-      </div>
+      </mat-form-field>
       <button mat-icon-button color="primary" type="button" (click)="getDoctorSort(0)">
         <mat-icon>search</mat-icon>
       </button>

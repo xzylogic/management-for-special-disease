@@ -1,18 +1,17 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
-    <form style="padding: 0 16px">
-      <mat-input-container floatPlaceholder="auto">
+    <form style="padding: 16px">
+      <mat-form-field floatPlaceholder="always">
         <input matInput type="text" placeholder="微信昵称／手机号／姓名搜索" name="queryKey"
                [(ngModel)]="assessmentRiskTable.queryKey">
-      </mat-input-container>
-      <div style="display: inline-block">
-        <mat-select placeholder="筛选风险评估结果" [(ngModel)]="queryResult" name="queryResult"
-                   style="width: 200px;margin: 0 1em">
+      </mat-form-field>
+      <mat-form-field floatPlaceholder="always">
+        <mat-select placeholder="筛选风险评估结果" [(ngModel)]="queryResult" name="queryResult">
           <mat-option [value]="'0'">低</mat-option>
           <mat-option [value]="'1'">中</mat-option>
           <mat-option [value]="'2'">高</mat-option>
         </mat-select>
-      </div>
+      </mat-form-field>
       <button mat-icon-button color="primary" type="button" (click)="getAssessmentRisks(0)">
         <mat-icon>search</mat-icon>
       </button>

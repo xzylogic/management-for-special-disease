@@ -1,11 +1,11 @@
-<app-container [config]="containerConfig"  *ngIf="containerConfig">
+<app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <mat-tab label="已同意">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
-            <input matInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="agreeTable.queryKey">
-          </mat-input-container>
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
+            <input matInput type="text" placeholder="姓名/手机号搜索" name="queryKey" [(ngModel)]="agreeTable.queryKey">
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getAgreeGreenChannel(0)">
             <mat-icon>search</mat-icon>
           </button>
@@ -28,10 +28,10 @@
         </div>
       </mat-tab>
       <mat-tab label="待处理">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
-            <input matInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="pendingTable.queryKey">
-          </mat-input-container>
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
+            <input matInput type="text" placeholder="姓名/手机号搜索" name="queryKey" [(ngModel)]="pendingTable.queryKey">
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getPendingGreenChannel(0)">
             <mat-icon>search</mat-icon>
           </button>
@@ -54,10 +54,10 @@
         </div>
       </mat-tab>
       <mat-tab label="已拒绝">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
-            <input matInput type="text" placeholder="输入姓名/手机号" name="queryKey" [(ngModel)]="rejectedTable.queryKey">
-          </mat-input-container>
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
+            <input matInput type="text" placeholder="姓名/手机号搜索" name="queryKey" [(ngModel)]="rejectedTable.queryKey">
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getRejectedGreenChannel(0)">
             <mat-icon>search</mat-icon>
           </button>

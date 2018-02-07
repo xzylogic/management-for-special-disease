@@ -50,7 +50,6 @@ export class MissionIntegralService {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.OperationIntegralTask}?id=${id}`);
   }
 
-
   /**
    * 编辑任务
    * @param {any} body [description]

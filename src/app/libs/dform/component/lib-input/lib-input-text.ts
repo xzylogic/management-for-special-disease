@@ -7,7 +7,7 @@ import { FormText } from '../../_entity/form-text';
   selector: 'app-input-text',
   template: `
     <div [formGroup]="form">
-      <mat-input-container *ngIf="!data.maxlength&&data.type!='password'" style="width: 100%" floatPlaceholder="always">
+      <mat-form-field *ngIf="!data.maxlength&&data.type!='password'" style="width: 100%" floatPlaceholder="always">
         <input matInput [type]="data.type"
                [placeholder]="data.label"
                [formControlName]="data.key"
@@ -21,8 +21,8 @@ import { FormText } from '../../_entity/form-text';
                autocomplete="off"
         >
         <mat-error>{{data.errMsg}}</mat-error>
-      </mat-input-container>
-      <mat-input-container *ngIf="!data.maxlength&&data.type=='password'" style="width: 100%" floatPlaceholder="always">
+      </mat-form-field>
+      <mat-form-field *ngIf="!data.maxlength&&data.type=='password'" style="width: 100%" floatPlaceholder="always">
         <input matInput [type]="'text'"
                [placeholder]="data.label"
                [formControlName]="data.key"
@@ -37,8 +37,8 @@ import { FormText } from '../../_entity/form-text';
                onfocus="this.type='password'"
         >
         <mat-error>{{data.errMsg}}</mat-error>
-      </mat-input-container>
-      <mat-input-container *ngIf="data.maxlength" style="width: 100%" floatPlaceholder="always">
+      </mat-form-field>
+      <mat-form-field *ngIf="data.maxlength" style="width: 100%" floatPlaceholder="always">
         <input matInput [type]="data.type"
                [maxlength]="data.maxlength"
                [placeholder]="data.label"
@@ -53,7 +53,7 @@ import { FormText } from '../../_entity/form-text';
                autocomplete="off"
         >
         <mat-hint align="end">{{value.length}} / {{data.maxlength}}</mat-hint>
-      </mat-input-container>
+      </mat-form-field>
     </div>
   `
 })

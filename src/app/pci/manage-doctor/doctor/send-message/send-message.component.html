@@ -37,9 +37,9 @@
       <mat-grid-tile [rowspan]="'1'">
         <div class="container" style="padding: 1em">
           <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
-            <mat-input-container floatPlaceholder="auto" style="width:100%;">
+            <mat-form-field floatPlaceholder="auto" style="width:100%;">
               <textarea matInput rows="4" name="message" placeholder="请编辑短信内容" ngModel required></textarea>
-            </mat-input-container>
+            </mat-form-field>
             <button mat-raised-button color="primary" type="submit">发送</button>
             <button mat-raised-button type="reset">重置</button>
           </form>

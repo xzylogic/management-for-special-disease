@@ -10,9 +10,9 @@ import { DialogOptions } from './dialog.entity';
     <div mat-dialog-content>
       {{option.message}}
       <div *ngIf="option.forms.length!=0">
-        <mat-input-container *ngFor="let item of option.forms" style="width: 100%">
+        <mat-form-field *ngFor="let item of option.forms" style="width: 100%">
           <textarea matInput [placeholder]="item.label" [(ngModel)]="item.value"></textarea>
-        </mat-input-container>
+        </mat-form-field>
       </div>
     </div>
     <div mat-dialog-actions style="float: right;">

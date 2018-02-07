@@ -3,22 +3,22 @@
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="getValues(form.value)">
       <app-input-file [form]="form" [data]="config.imageUrl" [(value)]="config.imageUrl.value"></app-input-file>
       <app-input-text [form]="form" [data]="config.name" [value]="config.name.value"></app-input-text>
-      <mat-input-container floatPlaceholder="never" style="width: 95%;">
+      <mat-form-field floatPlaceholder="never" style="width: 95%;">
         <input matInput type="text" [placeholder]="config.hospitalAddress.label"
                [formControlName]="config.hospitalAddress.key"
                [(ngModel)]="config.hospitalAddress.value"
         >
-      </mat-input-container>
+      </mat-form-field>
       <button mat-icon-button color="primary" type="button" (click)="getSerah()">
         <mat-icon>search</mat-icon>
       </button>
       <div>
-        <mat-input-container class="example-full-width">
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="小区经度" readonly  [formControlName]="config.longitude.key" [(ngModel)]="config.longitude.value">
-        </mat-input-container>
-        <mat-input-container class="example-full-width">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="小区纬度" readonly  [formControlName]="config.latitude.key" [(ngModel)]="config.latitude.value">
-        </mat-input-container>
+        </mat-form-field>
       </div>
       <baidu-map
         *ngIf="baidu"

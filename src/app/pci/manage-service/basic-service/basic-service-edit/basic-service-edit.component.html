@@ -8,9 +8,9 @@
       <app-input-radio [form]="form" [data]="config.unitId" [value]="config.unitId.value"></app-input-radio>
       <app-input-text [form]="form" [data]="config.numbers" [value]="numbers" class="hidden"></app-input-text>
       <div style="padding-bottom: 1em">
-        <mat-input-container>
+        <mat-form-field>
           <input matInput placeholder="添加服务时长/价格" name="number" #number>
-        </mat-input-container>
+        </mat-form-field>
         <button mat-icon-button type="button" (click)="addNumber(number.value)">
           <mat-icon>add</mat-icon>
         </button>

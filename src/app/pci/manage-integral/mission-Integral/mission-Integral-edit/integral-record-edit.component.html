@@ -17,14 +17,14 @@
         <span class="input_span">{{data.label}}</span>
       </div>
       <div class="integral" *ngIf="integral">
-        <mat-input-container class="example-full-width"  style="width: 100%;">
+        <mat-form-field class="example-full-width"  style="width: 100%;">
           <input matInput [placeholder]="config.toplimit.label"  formControlName="toplimit" [(ngModel)]="config.toplimit.value" type="number">
-        </mat-input-container>
+        </mat-form-field>
       </div>
       <div class="integral">
-        <mat-input-container class="example-full-width"  style="width: 100%;">
+        <mat-form-field class="example-full-width"  style="width: 100%;">
           <input matInput [placeholder]="config.integral.label"  formControlName="integral" [(ngModel)]="config.integral.value" type="number">
-        </mat-input-container>
+        </mat-form-field>
       </div>
       <div class="integral">
         <mat-select [placeholder]="config.status.label" formControlName="status" [(ngModel)]="config.status.value" style="width: 100%;">

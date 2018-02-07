@@ -23,28 +23,22 @@ import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component'
     .count1 {
       position: absolute;
       top: 10px;
-      left: 270px;
+      left: 300px;
     }
 
     .count2 {
       position: absolute;
       top: 10px;
-      left: 432px;
-    }
-
-    .count1 > mat-chip,
-    .count2 > mat-chip {
-      padding: 4px 5px;
-      font-size: 12px;
+      left: 460px;
     }
 
     @media (max-width: 600px) {
       .count1 {
-        left: 150px;
+        left: 215px;
       }
 
       .count2 {
-        left: 230px;
+        left: 320px;
       }
     }
   `]

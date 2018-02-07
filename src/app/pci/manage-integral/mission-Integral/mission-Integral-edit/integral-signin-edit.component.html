@@ -4,15 +4,15 @@
         <form *ngIf="form" [formGroup]="form" (ngSubmit)="dialogRef.close(form.value)">
           <div class="integral">
             <span>积分</span>
-            <mat-input-container class="example-full-width">
+            <mat-form-field class="example-full-width">
               <input matInput placeholder="其他每天"  formControlName="other" [(ngModel)]="config.other.value" type="number">
-            </mat-input-container>
-            <mat-input-container class="example-full-width">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
               <input matInput placeholder="第三天"  formControlName="third" [(ngModel)]="config.third.value" type="number">
-            </mat-input-container>
-            <mat-input-container class="example-full-width">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
               <input matInput placeholder="第七天"  formControlName="seventh" [(ngModel)]="config.seventh.value" type="number">
-            </mat-input-container>
+            </mat-form-field>
           </div>
           <div class="integral">
             <mat-select [placeholder]="config.status.label" formControlName="status" [(ngModel)]="config.status.value" style="width: 100%;">

@@ -1,15 +1,17 @@
-<app-container [config]="containerConfig"  *ngIf="containerConfig">
+<app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <mat-tab label="血压">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="pressureTable.queryKey">
-          </mat-input-container>
-          <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
-            <mat-option [value]= 0 >正常</mat-option>
-            <mat-option [value]= 1 >异常</mat-option>
-          </mat-select>
+          </mat-form-field>
+          <mat-form-field floatPlaceholder="always">
+            <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind">
+              <mat-option [value]=0>正常</mat-option>
+              <mat-option [value]=1>异常</mat-option>
+            </mat-select>
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="PressureData(0)">
             <mat-icon>search</mat-icon>
           </button>
@@ -32,14 +34,16 @@
         </div>
       </mat-tab>
       <mat-tab label="血糖">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="sugarTable.queryKey">
-          </mat-input-container>
-          <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
-            <mat-option [value]= 0 >正常</mat-option>
-            <mat-option [value]= 1 >异常</mat-option>
-          </mat-select>
+          </mat-form-field>
+          <mat-form-field floatPlaceholder="always">
+            <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind">
+              <mat-option [value]=0>正常</mat-option>
+              <mat-option [value]=1>异常</mat-option>
+            </mat-select>
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getSugarData(0)">
             <mat-icon>search</mat-icon>
           </button>
@@ -62,14 +66,16 @@
         </div>
       </mat-tab>
       <mat-tab label="心率">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="rateTable.queryKey">
-          </mat-input-container>
-          <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
-            <mat-option [value]= 0 >正常</mat-option>
-            <mat-option [value]= 1 >异常</mat-option>
-          </mat-select>
+          </mat-form-field>
+          <mat-form-field floatPlaceholder="always">
+            <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind">
+              <mat-option [value]=0>正常</mat-option>
+              <mat-option [value]=1>异常</mat-option>
+            </mat-select>
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getRateData(0)">
             <mat-icon>search</mat-icon>
           </button>
@@ -92,14 +98,16 @@
         </div>
       </mat-tab>
       <mat-tab label="体重">
-        <form style="padding: 0 16px">
-          <mat-input-container floatPlaceholder="never">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
             <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="weightTable.queryKey">
-          </mat-input-container>
-          <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind" style="margin: 0 1em">
-            <mat-option [value]= 0 >正常</mat-option>
-            <mat-option [value]= 1 >异常</mat-option>
-          </mat-select>
+          </mat-form-field>
+          <mat-form-field floatPlaceholder="always">
+            <mat-select placeholder="筛选状态" name="queryBind" [(ngModel)]="queryBind">
+              <mat-option [value]=0>正常</mat-option>
+              <mat-option [value]=1>异常</mat-option>
+            </mat-select>
+          </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getWeightData(0)">
             <mat-icon>search</mat-icon>
           </button>

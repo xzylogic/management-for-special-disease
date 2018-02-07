@@ -21,17 +21,12 @@ import { ERRMSG } from '../../_store/static';
     .count {
       position: absolute;
       top: 10px;
-      left: 108px;
-    }
-
-    .count > mat-chip {
-      padding: 4px 5px;
-      font-size: 12px;
+      left: 135px;
     }
 
     @media (max-width: 600px) {
       .count {
-        left: 60px;
+        left: 100px;
       }
     }
   `]

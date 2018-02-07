@@ -4,13 +4,13 @@
       <app-input-text [form]="form" [data]="config.name" [value]="config.name.value"></app-input-text>
       <div>
         <span>优惠券面值</span>
-        <mat-input-container class="example-full-width">
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="订单满" type="number"  [formControlName]="config.fullPrice.key" [(ngModel)]="config.fullPrice.value">
-        </mat-input-container>
+        </mat-form-field>
         <span>元</span>
-        <mat-input-container class="example-full-width">
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="减" type="number"   [formControlName]="config.price.key" [(ngModel)]="config.price.value">
-        </mat-input-container>
+        </mat-form-field>
         <span>元</span>
         <span class="price" *ngIf="price">优惠价格不能多于订单价格</span>
       </div>

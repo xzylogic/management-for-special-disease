@@ -23,17 +23,12 @@ import { HintDialog } from '../../../libs/dmodal/dialog.component';
     .count {
       position: absolute;
       top: 10px;
-      left: 292px;
-    }
-
-    .count > mat-chip {
-      padding: 4px 5px;
-      font-size: 12px;
+      left: 315px;
     }
 
     @media (max-width: 600px) {
       .count {
-        left: 220px;
+        left: 280px;
       }
     }
   `]

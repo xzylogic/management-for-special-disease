@@ -8,13 +8,13 @@
     </div>
     <div *ngIf="ifEdit" style="padding: 1em 0">
       <form #f="ngForm" (ngSubmit)="updateReply(f.value)">
-        <mat-input-container style="width: 100%">
-          <textarea matInput [attr.row]="'5'"
+        <mat-form-field style="width: 100%">
+          <textarea matInput [attr.row]="'20'"
                     [placeholder]="'编辑自动回复'"
                     name="name"
                     [(ngModel)]="autoReply"
           ></textarea>
-        </mat-input-container>
+        </mat-form-field>
         <button mat-raised-button color="primary">保存</button>
       </form>
     </div>

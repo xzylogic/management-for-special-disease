@@ -7,9 +7,9 @@
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="dialogRef.close(form.value)">
       <!--<app-input-text [form]="form" [data]="config.integral" [value]="config.integral.value"></app-input-text>-->
       <div class="integral">
-        <mat-input-container class="example-full-width"  style="width: 100%;">
+        <mat-form-field class="example-full-width"  style="width: 100%;">
           <input matInput [placeholder]="config.integral.label"  formControlName="integral" [(ngModel)]="config.integral.value" type="number">
-        </mat-input-container>
+        </mat-form-field>
       </div>
 
       <div class="integral">

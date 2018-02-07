@@ -3,15 +3,18 @@
     <button mat-raised-button (click)="newData()">新增不适症状</button>
   </div>
   <div class="content">
-    <form style="padding: 2em 1em" *ngIf="discomfortSymptomTable&&discomfortTypes">
-      <mat-select placeholder="请选择不适症状类别" [(ngModel)]="discomfortSymptomTable.queryKey" name="type" style="width: 100%">
-        <mat-option [value]="opt.id" *ngFor="let opt of discomfortTypes" (click)="getDiscomfortSymptoms()">
-          {{opt.name}}
-        </mat-option>
-      </mat-select>
+    <form style="padding: 16px" *ngIf="discomfortSymptomTable&&discomfortTypes">
+      <mat-form-field floatPlaceholder="always" style="width: 100%">
+        <mat-select placeholder="请选择不适症状类别" [(ngModel)]="discomfortSymptomTable.queryKey" name="type">
+          <mat-option [value]="opt.id" *ngFor="let opt of discomfortTypes" (click)="getDiscomfortSymptoms()">
+            {{opt.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </form>
     <div *ngIf="!discomfortSymptomTable.lists&&discomfortSymptomTable.loading">Loading...</div>
-    <div *ngIf="!discomfortSymptomTable.lists&&!discomfortSymptomTable.loading&&!!discomfortSymptomTable.errorMessage" class="center">
+    <div *ngIf="!discomfortSymptomTable.lists&&!discomfortSymptomTable.loading&&!!discomfortSymptomTable.errorMessage"
+         class="center">
       {{discomfortSymptomTable.errorMessage}}
     </div>
     <div *ngIf="discomfortSymptomTable.lists">

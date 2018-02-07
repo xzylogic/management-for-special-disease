@@ -2,22 +2,22 @@
   <div class="content">
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="getValues(form.value)">
       <app-input-text [form]="form" [data]="config.communityName" [value]="config.communityName.value"></app-input-text>
-      <mat-input-container floatPlaceholder="never" style="width: 95%;">
+      <mat-form-field floatPlaceholder="never" style="width: 95%;">
         <input matInput type="text" [placeholder]="config.communityAddress.label"
                [formControlName]="config.communityAddress.key"
                [(ngModel)]="config.communityAddress.value"
         >
-      </mat-input-container>
+      </mat-form-field>
       <button mat-icon-button color="primary" type="button" (click)="getSerah()">
         <mat-icon>search</mat-icon>
       </button>
       <div>
-        <mat-input-container class="example-full-width">
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="小区经度" readonly  [formControlName]="config.longitude.key" [(ngModel)]="config.longitude.value">
-        </mat-input-container>
-        <mat-input-container class="example-full-width">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="小区纬度" readonly  [formControlName]="config.latitude.key" [(ngModel)]="config.latitude.value">
-        </mat-input-container>
+        </mat-form-field>
       </div>
       <baidu-map
         *ngIf="baidu"

@@ -3,8 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { FormDate } from '../../_entity/form-date';
 
-declare var require;
-const flatpickr = require('flatpickr');
+import flatpickr from 'flatpickr';
 import { Mandarin } from 'flatpickr/dist/l10n/zh.js';
 
 @Component({

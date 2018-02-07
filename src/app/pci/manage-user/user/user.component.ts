@@ -24,7 +24,6 @@ export class UserComponent implements OnInit {
   containerConfig: ContainerConfig;
   userTable: TableOption;
   queryBind: any;
-  @select(['user', 'tab']) tab: Observable<number>;
   @select(['user', 'page']) page: Observable<Array<number>>;
 
   constructor(
@@ -78,10 +77,6 @@ export class UserComponent implements OnInit {
         this.userTable.loading = false;
         this.userTable.errorMessage = ERRMSG.netErrMsg;
       })
-  }
-
-  change(index) {
-    this.action.tabChange('user', index);
   }
 
   // 转换

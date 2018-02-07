@@ -45,7 +45,7 @@ export class PurchaseEntranceComponent implements OnInit {
         } else {
           this.createForm();
         }
-        this.purchaseEntranceId = res.data.id;
+        this.purchaseEntranceId = res.data && res.data.id || 0;
       }, err => {
         console.log(err);
       });

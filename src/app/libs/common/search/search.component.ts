@@ -46,7 +46,7 @@ export enum SearchType {date, range}
   styleUrls: ['../../dform/component/lib-input/lib-input.scss']
 })
 export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
-  @HostBinding('class') hostClass = 'mat-input-container mat-form-field';
+  @HostBinding('class') hostClass = 'mat-form-field mat-form-field';
   @Input() type: SearchType;
   @Input() label: string;
   @Input() value: any;
