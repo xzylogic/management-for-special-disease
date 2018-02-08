@@ -294,7 +294,7 @@ export let NAVBARS = [
   new Navbar({
     key: 'datacollection',
     title: '病史资料录入',
-    link: '/old'
+    link: '/data-collection'
   }),
   new Navbar({
     key: 'versioncontrol',

@@ -122,21 +122,21 @@ export class DataCollectionComponent implements OnInit {
   }
 
   gotoHandle(data) {
-    //   // console.log(data);
-    //   if(data.key === 'dataTypein') {
-    //     this.router.navigate(['/data-collection/edit', data.value.id]);
-    //   }
-    //   if(data.key === 'showData') {
-    //     this.router.navigate(['/data-collection/detail', data.value.id]);
-    //   }
-    //   if(data.key === 'keepData') {
-    //     this.id = data.value.id;
-    //     this.handleEnable = true;
-    //   }
-    //   if(data.key === 'tapeOut') {
-    //     this.id = data.value.id;
-    //     this.auditingEnable = true;
-    //   }
+    console.log(data);
+    if (data.key === 'dataTypein') {
+      this.router.navigate(['/data-collection/edit', data.value.id]);
+    }
+    if (data.key === 'showData') {
+      this.router.navigate(['/data-collection/detail', data.value.id]);
+    }
+    // if (data.key === 'keepData') {
+    //   this.id = data.value.id;
+    //   this.handleEnable = true;
+    // }
+    // if (data.key === 'tapeOut') {
+    //   this.id = data.value.id;
+    //   this.auditingEnable = true;
+    // }
   }
 
   format(data) {

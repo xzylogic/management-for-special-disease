@@ -1,5 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LibDialogModule } from '../../libs/dmodal/dialog.module';
+import { DataCollectionDetailComponent } from './data-collection-detail/data-collection-detail.component';
+import { EditFormComponent } from './data-collection-edit/editForm/edit-form.component';
+import { ImageFormComponent } from './data-collection-edit/imageForm/image-form.component';
+import { InspectionFormComponent } from './data-collection-edit/inspectionForm/inspection-form.component';
+import { InspectionItemFormComponent } from './data-collection-edit/inspectionItemForm/inspection-item-form.component';
+import { MedicineFormComponent } from './data-collection-edit/medicineForm/medicine-form.component';
+import { HandleAuditingComponent } from './handle/handle-auditing.component';
+import { HandlePassComponent } from './handle/handle-pass.component';
+import { HandleUnhandleComponent } from './handle/handle-unhandle.component';
+import { HandleUnpassComponent } from './handle/handle-unpass.component';
+import { ImageShowComponent } from './imageShow/imageShow.component';
+import { UserInfoComponent } from './userInfo/userInfo.component';
+import { DataCollectionEditComponent } from './data-collection-edit/data-collection-edit.component';
 import { DataCollectionComponent } from './data-collection.component';
 import { LibModule } from '../../libs/common/lib.module';
 import { MatTabsModule } from '@angular/material';
@@ -17,12 +31,12 @@ import { ReportDetailComponent } from './data-collection-detail/reportDetail/rep
 const routes: Routes = [{
   path: '',
   component: DataCollectionComponent
-// }, {
-//   path: 'detail/:id',
-//   component: DataCollectionDetailComponent
-// }, {
-//   path: 'edit/:id',
-//   component: DataCollectionEditComponent
+}, {
+  path: 'detail/:id',
+  component: DataCollectionDetailComponent
+}, {
+  path: 'edit/:id',
+  component: DataCollectionEditComponent
 }
 ];
 
@@ -31,6 +45,7 @@ const routes: Routes = [{
     LibModule,
     DTableModule,
     DFormModule,
+    LibDialogModule,
     MatTabsModule,
     RouterModule.forChild(routes)
   ],
@@ -40,7 +55,20 @@ const routes: Routes = [{
     MedicalDetailComponent,
     OtherDetailComponent,
     RecordDetailComponent,
-    ReportDetailComponent
+    ReportDetailComponent,
+    DataCollectionDetailComponent,
+    UserInfoComponent,
+    EditFormComponent,
+    ImageFormComponent,
+    InspectionFormComponent,
+    InspectionItemFormComponent,
+    MedicineFormComponent,
+    DataCollectionEditComponent,
+    HandleAuditingComponent,
+    HandlePassComponent,
+    HandleUnhandleComponent,
+    HandleUnpassComponent,
+    ImageShowComponent
   ],
   providers: [
     DataCollectionService,
