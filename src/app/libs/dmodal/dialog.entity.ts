@@ -26,10 +26,12 @@ export class DialogOptions {
 
 export class DialogEdit {
   title: string;
+  button?: string;
   form: Array<any>;
 
   constructor(obj?: DialogEdit) {
     this.title = obj && obj.title || '';
+    this.button = obj && obj.button || '';
     this.form = obj && obj.form || null;
   }
 }
