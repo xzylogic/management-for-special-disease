@@ -1,14 +1,15 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { Collection, Inspection, Medicine, InspectionFormList } from '../_entity/data-collection.entity';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import { Collection, InspectionFormList } from '../_entity/data-collection.entity';
 import { DataCollectionDetailService } from '../_service/data-collection-detail.service';
 import { DataCollectionService } from '../_service/data-collection.service';
 
 declare let localStorage: any;
-declare let history: any;
 declare let document: any;
-declare let $: any;
 
 @Component({
   selector: 'app-data-collection-edit',
@@ -16,37 +17,27 @@ declare let $: any;
   styleUrls: ['../data-collection.component.css']
 })
 export class DataCollectionEditComponent implements OnInit {
-  title = '病史资料录入';
-  subTitle = '患者信息录入';
+  containerConfig: ContainerConfig;
 
   userInfo: any;
-  errorMessage: string;
 
   commonList: any;
-
-  collectionInput: Collection;
-  medicineInput: Medicine[];
-  InspectionInput: Inspection[];
-
   editFormList: Collection[] = [];
-
-  enableShow = false;
-  message: string;
-
-  passEnable = false;
+  errorMessage = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private builder: FormBuilder,
-    private elementRef: ElementRef,
-    private _dataCollectionService: DataCollectionService,
-    private _dataCollectionDetailService: DataCollectionDetailService
+    private dialog: MatDialog,
+    private dataCollectionService: DataCollectionService,
+    private dataCollectionDetailService: DataCollectionDetailService
   ) {
 
   }
 
   ngOnInit() {
+    this.containerConfig = this.dataCollectionService.dataCollectionEditConfig();
     this.getTitle();
     this.getDataCollection();
   }
@@ -57,7 +48,7 @@ export class DataCollectionEditComponent implements OnInit {
   }
 
   getTitle() {
-    this.commonList = this._dataCollectionDetailService.setCommonList();
+    this.commonList = this.dataCollectionDetailService.setCommonList();
   }
 
   setUpdateData(data, type) {
@@ -103,9 +94,6 @@ export class DataCollectionEditComponent implements OnInit {
         });
       }
       updateData.recordPrescriptionMedicineList = data.object && data.object.recordPrescriptionMedicineList || [];
-      // updateData.recordPrescriptionMedicineList.forEach(obj => {
-      //   obj.startTime = new Date(obj.startTime);
-      // })
       updateData.recordImagingReportList = data.object && data.object.recordImagingReportList || [];
 
       updateData.hospitalNo = data.object && data.object.hospitalNo || '';
@@ -156,9 +144,6 @@ export class DataCollectionEditComponent implements OnInit {
       updateData.officeName = data.officeName || '';
       updateData.medicalRecordPhotoList = this.getImageList(data.medicalRecordPhotoList) || [];
       updateData.recordPrescriptionMedicineList = data.object && data.object.recordPrescriptionMedicineList || [];
-      // updateData.recordPrescriptionMedicineList.forEach(obj => {
-      //   obj.startTime = new Date(obj.startTime);
-      // })
     }
 
     if (type === 5 && data.id) {
@@ -181,7 +166,6 @@ export class DataCollectionEditComponent implements OnInit {
       updateData.title = data.object && data.object.title || '';
     }
     return updateData;
-
   }
 
   getImageList(list: any[]) {
@@ -192,7 +176,7 @@ export class DataCollectionEditComponent implements OnInit {
       } else {
         imgList.push(Number(obj))
       }
-    })
+    });
     return imgList;
   }
 
@@ -200,24 +184,20 @@ export class DataCollectionEditComponent implements OnInit {
     this.resetData();
     this.route.params.subscribe(params => {
       this.editFormList = this.getLocalStorage(`inputData${+params['id']}`);
-      this._dataCollectionService.getDataCollection(+params['id'])
+      this.dataCollectionService.getDataCollection(+params['id'])
         .subscribe(res => {
-          // console.log(res);
           if (res.code === 0 && res.data) {
             if (res.data.status == 1 || res.data.status == 3) {
-              this.errorMessage = '该用户资料已录入哦！';
+              HintDialog('该用户资料已录入哦！', this.dialog);
             } else {
               this.userInfo = res.data;
             }
           } else {
-            if (res.msg) {
-              this.errorMessage = res.msg;
-            } else {
-              this.errorMessage = '访问数据出错啦～';
-            }
+            HintDialog(res && res.msg || '访问数据出错啦～', this.dialog);
           }
         }, err => {
-          this.errorMessage = '啊哦～访问接口出错啦～';
+          HintDialog('啊哦～访问接口出错啦～', this.dialog);
+          throw new Error(err);
         })
     })
   }
@@ -260,70 +240,38 @@ export class DataCollectionEditComponent implements OnInit {
     let data = this.setUpdateData(obj, obj.recordHistoryType);
     if (data.InspectionFormList) {
       data.recordExaminationItemList = [];
-      data.InspectionFormList.forEach(obj => {
-        obj.list.forEach(list => {
-          list.itemId = obj.itemId;
-          if (obj.deleted) {
-            list.deleted = obj.deleted;
+      data.InspectionFormList.forEach(sobj => {
+        sobj.list.forEach(list => {
+          list.itemId = sobj.itemId;
+          if (sobj.deleted) {
+            list.deleted = sobj.deleted;
           }
-        })
-        data.recordExaminationItemList.push(...obj.list);
-      })
+        });
+        data.recordExaminationItemList.push(...sobj.list);
+      });
       delete data.InspectionFormList;
     }
     data.deleted = true;
-    this._dataCollectionService.dataCollectionCreate(this.userInfo.id, data)
+    this.dataCollectionService.dataCollectionCreate(this.userInfo.id, data)
       .subscribe(res => {
-        if (res.code === 0) {
-          this.message = res.msg || '删除数据成功！';
-          this.enableShow = true;
+        if (res && res.code === 0) {
+          HintDialog(res.msg || '删除数据成功！', this.dialog);
           this.getDataCollection();
         } else {
-          this.message = res.msg || '删除数据失败！';
-          this.enableShow = true;
+          HintDialog(res.msg || '删除数据失败！', this.dialog);
         }
       }, err => {
-        this.message = '链接服务器出错啦～请重新操作！';
-        this.enableShow = true;
+        HintDialog('链接服务器出错啦～请重新操作！', this.dialog);
+        throw new Error(err);
       });
   }
 
-  toggle(ele, button) {
-    let text = button.innerHTML;
-    ele.hidden = !ele.hidden;
-    button.innerHTML = (text == '展开详情') ? '收起详情' : '展开详情';
-  }
-
-  toPass() {
-    this.passEnable = true;
-  }
-
-  toclose(ele) {
-    ele.hidden = true;
-  }
-
-  done(res) {
-    this.passEnable = true;
-    if (res.code == -1) {
-      this.message = res.msg;
-      this.enableShow = true;
-    } else {
-      this.router.navigate(['/data-collection']);
-    }
-  }
-
   saveSuccess(flagInfo) {
-    this.message = '保存数据成功！';
-    this.enableShow = true;
+    HintDialog('保存数据成功！', this.dialog);
     let i = this.editFormList.indexOf(flagInfo);
     if (i > -1) {
       this.delForm(i);
     }
     this.getDataCollection();
   }
-
-  goback() {
-    history.go(-1);
-  }
-
 }

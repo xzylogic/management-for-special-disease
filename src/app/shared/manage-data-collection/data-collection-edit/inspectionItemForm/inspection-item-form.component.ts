@@ -12,6 +12,17 @@ export class InspectionItemFormComponent implements OnInit {
 
   info: Inspection = new Inspection();
 
+  standardOpt = [{
+    name: '偏低',
+    value: '0'
+  }, {
+    name: '正常',
+    value: '1'
+  }, {
+    name: '偏高',
+    value: '2'
+  }];
+
   constructor() {
   }
 

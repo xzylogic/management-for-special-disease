@@ -1,14 +1,12 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import * as moment from 'moment';
 import { Image } from '../../_entity/data-collection.entity';
-
-declare let $: any;
-declare var flatpickr: any;
 
 @Component({
   selector: 'app-image-form',
   templateUrl: 'image-form.component.html'
 })
-export class ImageFormComponent implements OnInit, AfterViewInit {
+export class ImageFormComponent implements OnInit {
   @Input() data: any;
   @Input() index: any;
   @Output() dataChange: EventEmitter<any> = new EventEmitter();
@@ -27,15 +25,10 @@ export class ImageFormComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    $('#time' + this.index).flatpickr({
-      'locale': 'zh',
-      'defaultDate': this.info.time || ''
-    });
-    this.cdr.detectChanges();
-  }
-
-  saveAsDraft() {
+  saveAsDraft(data?) {
+    if (data) {
+      this.info[data] = moment(this.info[data]).format('YYYY-MM-DD');
+    }
     this.dataChange.emit();
   }
 }

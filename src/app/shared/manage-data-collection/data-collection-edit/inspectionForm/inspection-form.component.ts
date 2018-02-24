@@ -32,9 +32,6 @@ export class InspectionFormComponent implements OnInit {
     this.info = this.data;
     // console.log('inspection-form:'+JSON.stringify(this.info));
 
-    // if(this.info.list) {
-    //   this.inspectionFormList = this.info.list;
-    // }
     this.selectedType = this.info && this.info.itemId || null;
     if (this.selectedType) {
       if (this.info && this.info.list !== 0) {
@@ -74,8 +71,7 @@ export class InspectionFormComponent implements OnInit {
                 unit: list.unit,
                 value: ''
               })
-            })
-            // this.info.list = this.inspectionList;
+            });
             // console.log(this.info);
           }
         })
@@ -91,6 +87,7 @@ export class InspectionFormComponent implements OnInit {
         }
       }, err => {
         this.inspectionType = [];
+        throw new Error(err);
       })
   }
 

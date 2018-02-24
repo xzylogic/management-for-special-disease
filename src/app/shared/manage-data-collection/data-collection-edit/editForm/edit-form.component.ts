@@ -1,14 +1,15 @@
 import {
-  Component, OnInit, AfterViewInit,
+  Component, OnInit,
   Input, Output, EventEmitter,
-  ChangeDetectorRef
+  ChangeDetectorRef, AfterViewChecked, AfterViewInit
 } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { Collection, Image, InspectionFormList, Medicine } from '../../_entity/data-collection.entity';
 import { DataCollectionService } from '../../_service/data-collection.service';
+import * as moment from 'moment';
 
 const typeList = ['检验报告', '出院小结', '影像资料', '用药清单', '就诊记录', '其他'];
-
-declare let $: any;
 
 @Component({
   selector: 'app-edit-form',
@@ -34,11 +35,12 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   medicineFormList: Medicine[] = [];
   imageFormList: Image[] = [];
 
-  enableShow = false;
-  message: string;
+  // enableShow = false;
+  // message: string;
 
   constructor(
     private cdr: ChangeDetectorRef,
+    private dialog: MatDialog,
     private _dataCollectionService: DataCollectionService
   ) {
 
@@ -46,13 +48,20 @@ export class EditFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.info = this.editFormData;
-    // console.log(this.info);
-    this.images.forEach(obj => {
-      this.imageList.push({id: obj.id, imgUrl: obj.imgUrl, checked: false});
-    })
+
     this.recordPhotos = (this.info.medicalRecordPhotoList &&
       this.info.medicalRecordPhotoList.length !== 0) ?
       this.info.medicalRecordPhotoList : [];
+
+    this.images.forEach(obj => {
+      let checkedValue = false;
+      this.recordPhotos.forEach(ids => {
+        if (obj.id == ids) {
+          checkedValue = true;
+        }
+      });
+      this.imageList.push({id: obj.id, imgUrl: obj.imgUrl, checked: checkedValue});
+    });
 
     if (this.info.InspectionFormList && this.info.InspectionFormList.length !== 0) {
       this.inspectionFormList = this.info.InspectionFormList;
@@ -72,33 +81,6 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // console.log(this.index);
-    setTimeout(() => {
-      this.resetImages(this.imageList, this.recordPhotos);
-      $('.ui.checkbox').checkbox();
-    }, 0);
-    // console.log("checkDate" + this.index);
-
-    $('#checkDate' + this.index).flatpickr({
-      'locale': 'zh',
-      'defaultDate': this.info.checkDate || ''
-    });
-    $('#inTime' + this.index).flatpickr({
-      'locale': 'zh',
-      'defaultDate': this.info.inTime || ''
-    });
-    $('#outTime' + this.index).flatpickr({
-      'locale': 'zh',
-      'defaultDate': this.info.outTime || ''
-    });
-    $('#writeTime' + this.index).flatpickr({
-      'locale': 'zh',
-      'defaultDate': this.info.writeTime || ''
-    });
-    this.cdr.detectChanges();
-    // $('#recordHistoryType').dropdown({
-    //   placeholder: typeList[this.data.content.recordHistoryType-1] || '',
-    // });
   }
 
   getImageList(list: any[]) {
@@ -109,7 +91,7 @@ export class EditFormComponent implements OnInit, AfterViewInit {
       } else {
         imgList.push(Number(obj))
       }
-    })
+    });
     return imgList;
   }
 
@@ -121,13 +103,14 @@ export class EditFormComponent implements OnInit, AfterViewInit {
     })
   }
 
-  getChecked(div, value) {
-    let i = this.recordPhotos.indexOf(Number(value));
-    if (i < 0) {
-      this.recordPhotos.push(value);
-    } else {
-      this.recordPhotos.splice(i, 1);
-    }
+  getChecked() {
+    this.recordPhotos = [];
+    this.imageList.forEach(image => {
+      if (image.checked) {
+        this.recordPhotos.push(image.id);
+      }
+    });
+    console.log(this.recordPhotos);
     this.info.medicalRecordPhotoList = this.recordPhotos;
     this.saveAsDraft();
   }
@@ -166,7 +149,6 @@ export class EditFormComponent implements OnInit, AfterViewInit {
     } else {
       this.imageFormList.splice(i, 1);
     }
-    // this.imageFormList.splice(i, 1);
     this.info.recordImagingReportList = this.imageFormList;
     this.saveAsDraft();
   }
@@ -189,7 +171,6 @@ export class EditFormComponent implements OnInit, AfterViewInit {
     } else {
       this.medicineFormList.splice(i, 1);
     }
-    // this.medicineFormList.splice(i, 1);
     this.info.recordPrescriptionMedicineList = this.medicineFormList;
     this.saveAsDraft();
   }
@@ -200,9 +181,13 @@ export class EditFormComponent implements OnInit, AfterViewInit {
     this.saveAsDraft();
   }
 
-  saveAsDraft() {
-    // console.log('save' + JSON.stringify(this.info));
+  saveAsDraft(data?) {
     if (!this.info.id) {
+      if (data) {
+        this.info[data] = moment(this.info[data]).format('YYYY-MM-DD');
+        // console.log(this.info[data]);
+      }
+      // console.log('save' + JSON.stringify(this.info));
       // console.log('saveAsDraft');
       this.dataChange.emit(this.info);
     }
@@ -228,9 +213,9 @@ export class EditFormComponent implements OnInit, AfterViewInit {
           if (obj.deleted) {
             list.deleted = obj.deleted;
           }
-        })
+        });
         this.info.recordExaminationItemList.push(...obj.list);
-      })
+      });
       delete this.info.InspectionFormList;
     }
     if (this.info.recordPrescriptionMedicineList) {
@@ -239,8 +224,7 @@ export class EditFormComponent implements OnInit, AfterViewInit {
       });
     }
     if (!this.info.medicalRecordPhotoList || this.info.medicalRecordPhotoList.length == 0) {
-      this.message = '请选择图片';
-      this.enableShow = true;
+      HintDialog('请选择图片！', this.dialog);
     } else {
       // console.log("SaveData:"+JSON.stringify(this.info));
       this._dataCollectionService.dataCollectionCreate(this.id, this.info)
@@ -249,12 +233,11 @@ export class EditFormComponent implements OnInit, AfterViewInit {
           if (res.code === 0) {
             this.saveSuccess.emit(this.info);
           } else {
-            this.message = res.msg || '保存数据失败！';
-            this.enableShow = true;
+            HintDialog(res.msg || '保存数据失败！', this.dialog);
           }
         }, err => {
-          this.message = '链接服务器出错啦～请重新保存！';
-          this.enableShow = true;
+          HintDialog('链接服务器出错啦～请重新保存！', this.dialog);
+          throw new Error(err);
         });
     }
   }
@@ -262,5 +245,4 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   cancel() {
     this.cancelEmmiter.emit();
   }
-
 }

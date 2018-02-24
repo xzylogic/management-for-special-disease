@@ -1,35 +1,51 @@
-<div class="field">
-  <label for="name">检查名称</label>
-  <input id="name" type="text" name="name" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.name"
-         required>
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="检查名称" name="name"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()"
+           [(ngModel)]="info.name" required>
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="time{{index}}">报告日期</label>
-  <input id="time{{index}}" type="text" name="time" (blur)="saveAsDraft()" (change)="saveAsDraft()"
-         [(ngModel)]="info.time" required>
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput [matDatepicker]="time" placeholder="报告日期" name="time"
+           (dateInput)="saveAsDraft('time')" (dateChange)="saveAsDraft('time')"
+           [(ngModel)]="info.time" required>
+    <mat-datepicker-toggle matSuffix [for]="time"></mat-datepicker-toggle>
+    <mat-datepicker #time></mat-datepicker>
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="orderNo">报告单号</label>
-  <input id="orderNo" type="text" name="orderNo" (blur)="saveAsDraft()" (change)="saveAsDraft()"
-         [(ngModel)]="info.orderNo" required>
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="报告单号" name="orderNo"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()"
+           [(ngModel)]="info.orderNo" required>
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="clinicalDiagnosis">临床诊断</label>
-  <input id="clinicalDiagnosis" type="text" name="clinicalDiagnosis" (blur)="saveAsDraft()" (change)="saveAsDraft()"
-         [(ngModel)]="info.clinicalDiagnosis">
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="临床诊断" name="clinicalDiagnosis"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()"
+           [(ngModel)]="info.clinicalDiagnosis" required>
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="technique">检查技术</label>
-  <input id="technique" type="text" name="technique" (blur)="saveAsDraft()" (change)="saveAsDraft()"
-         [(ngModel)]="info.technique">
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="检查技术" name="technique"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()"
+           [(ngModel)]="info.technique">
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="description">影像描述</label>
-  <textarea id="description" type="text" name="description" (blur)="saveAsDraft()" (change)="saveAsDraft()"
-            [(ngModel)]="info.description"></textarea>
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="影像描述" name="description"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()"
+           [(ngModel)]="info.description">
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="suggestion">诊断描述</label>
-  <input id="suggestion" type="text" name="suggestion" (blur)="saveAsDraft()" (change)="saveAsDraft()"
-         [(ngModel)]="info.suggestion">
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="诊断描述" name="suggestion"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()"
+           [(ngModel)]="info.suggestion">
+  </mat-form-field>
 </div>

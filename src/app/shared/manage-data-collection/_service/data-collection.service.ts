@@ -4,7 +4,7 @@ import { ContainerConfig } from '../../../libs/common/container/container.compon
 const PATH = {
   dataCollections: 'record/upload/list',
   dataCollection: 'record/upload',
-  drug: 'BackstageMedicine/like'
+  drug: 'api/medicine/list'
 };
 
 @Injectable()
@@ -63,6 +63,6 @@ export class DataCollectionService {
   }
 
   getDrugs(key) {
-    return this.httpService.get(`${PATH.drug}?name=${key}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.drug}?page=0&size=999999&keyword=${key}`);
   }
 }

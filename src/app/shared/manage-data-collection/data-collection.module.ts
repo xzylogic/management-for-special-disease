@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LibDialogEditModule } from '../../libs/dmodal/dialog-edit.module';
 import { LibDialogModule } from '../../libs/dmodal/dialog.module';
+import { InspectionCategoryService } from '../../pci/manage-basic-data/inspection-category/_service/inspection-category.service';
+import { InspectionItemService } from '../../pci/manage-basic-data/inspection-item/_service/inspection-item.service';
 import { DataCollectionDetailComponent } from './data-collection-detail/data-collection-detail.component';
 import { EditFormComponent } from './data-collection-edit/editForm/edit-form.component';
 import { ImageFormComponent } from './data-collection-edit/imageForm/image-form.component';
@@ -46,6 +49,7 @@ const routes: Routes = [{
     DTableModule,
     DFormModule,
     LibDialogModule,
+    LibDialogEditModule,
     MatTabsModule,
     RouterModule.forChild(routes)
   ],
@@ -73,7 +77,9 @@ const routes: Routes = [{
   providers: [
     DataCollectionService,
     DataCollectionTableService,
-    DataCollectionDetailService
+    DataCollectionDetailService,
+    InspectionCategoryService,
+    InspectionItemService
   ]
 })
 export class DataCollectionModule {

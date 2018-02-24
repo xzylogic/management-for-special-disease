@@ -1,51 +1,72 @@
 <div class="field">
-  <label for="name">药品名称</label>
-  <input id="name" type="text" name="name" placeholder="输入药品名称可进行搜索" (blur)="saveAsDraft()" (change)="search($event)" (keyup)="search($event)" [(ngModel)]="info.name" #name required>
-  <div class="ui middle aligned divided selection list" style="background-color: #fff">
-    <div class="item" *ngFor="let result of results$">
-      <div class="content">
-        <div class="header" (click)="selected(result)">{{result.name}}</div>
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="药品名称(输入药品名称可进行搜索)" name="name" [(ngModel)]="info.name"
+           (blur)="saveAsDraft()" (change)="search($event)" (keyup)="search($event)" #name required>
+  </mat-form-field>
+  <div class="ui middle aligned divided selection list" style="background-color: #fff;margin-bottom: 20px">
+    <div class="item" *ngFor="let result of results$;let i=index">
+      <div class="content" *ngIf="i < 20">
+        <div class="header" (click)="selected(result)">{{result&&result.name}}</div>
       </div>
     </div>
   </div>
 </div>
-<div class="field">
-  <label for="method">建议用法</label>
-  <input id="method" type="text" name="method" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.method">
+
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="建议用法" name="method" [(ngModel)]="info.method"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()">
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="take">服用剂量</label>
-  <input id="take" type="text" name="take" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.take" required>
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="服用剂量" name="take" [(ngModel)]="info.take"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()" required>
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="unit">剂量单位</label>
-  <input id="unit" type="text" name="unit" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.unit">
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="剂量单位" name="unit" [(ngModel)]="info.unit"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()">
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="dose">药量</label>
-  <input id="dose" type="text" name="dose" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.dose">
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="药量" name="dose" [(ngModel)]="info.dose"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()">
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="frequency">频率</label>
-  <input id="frequency" type="text" name="frequency" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.frequency" placeholder="例如：一日两次">
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="频率（例如：一日两次）" name="frequency" [(ngModel)]="info.frequency"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()">
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="spec">规格</label>
-  <input id="spec" type="text" name="spec" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.spec" placeholder="例如：两盒，若无则空着">
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="规格（例如：两盒，若无则空着）" name="spec" [(ngModel)]="info.spec"
+           (blur)="saveAsDraft()" (change)="saveAsDraft()">
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="time">服药时间</label>
-  <input id="time" type="text" name="time" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.time" required>
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput placeholder="服药时间" name="time" [(ngModel)]="info.time"
+           (dateInput)="saveAsDraft('time')" (dateChange)="saveAsDraft('time')" required>
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="startTime{{index}}">开始时间</label>
-  <input id="startTime{{index}}" type="text" name="startTime" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.startTime" required>
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <input matInput [matDatepicker]="startTime" placeholder="开始时间" name="startTime" [(ngModel)]="info.startTime"
+           (dateInput)="saveAsDraft('startTime')" (dateChange)="saveAsDraft('startTime')" required>
+    <mat-datepicker-toggle matSuffix [for]="startTime"></mat-datepicker-toggle>
+    <mat-datepicker #startTime></mat-datepicker>
+  </mat-form-field>
 </div>
-<div class="field">
-  <label for="remind">提醒开关</label>
-  <select class="ui dropdown" id="remind" name="remind" (blur)="saveAsDraft()" (change)="saveAsDraft()" [(ngModel)]="info.remind" required>
-    <option value=""></option>
-    <option value="true">开启</option>
-    <option value="false">关闭</option>
-  </select>
+<div class="form-content">
+  <mat-form-field floatPlaceholder="always" style="width: 100%">
+    <mat-select placeholder="提醒开关" name="remind" [(ngModel)]="info.remind"
+                (blur)="saveAsDraft()" (change)="saveAsDraft()" required>
+      <mat-option *ngFor="let opt of enableOpt" [value]="opt.value">{{opt.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
