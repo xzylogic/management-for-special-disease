@@ -37,15 +37,15 @@
 </div>
 <div class="form-content">
   <mat-form-field floatPlaceholder="always" style="width: 100%">
-    <input matInput placeholder="影像描述" name="description"
-           (blur)="saveAsDraft()" (change)="saveAsDraft()"
-           [(ngModel)]="info.description">
+    <textarea matInput placeholder="影像描述" name="description" rows="15"
+              (blur)="saveAsDraft()" (change)="saveAsDraft()"
+              [(ngModel)]="info.description"></textarea>
   </mat-form-field>
 </div>
 <div class="form-content">
   <mat-form-field floatPlaceholder="always" style="width: 100%">
-    <input matInput placeholder="诊断描述" name="suggestion"
-           (blur)="saveAsDraft()" (change)="saveAsDraft()"
-           [(ngModel)]="info.suggestion">
+    <textarea matInput placeholder="诊断描述" name="suggestion" rows="15"
+              (blur)="saveAsDraft()" (change)="saveAsDraft()"
+              [(ngModel)]="info.suggestion"></textarea>
   </mat-form-field>
 </div>

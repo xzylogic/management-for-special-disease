@@ -7,6 +7,7 @@ import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { Collection, InspectionFormList } from '../_entity/data-collection.entity';
 import { DataCollectionDetailService } from '../_service/data-collection-detail.service';
 import { DataCollectionService } from '../_service/data-collection.service';
+import { auditData } from '../data-collection.component';
 
 declare let localStorage: any;
 declare let document: any;
@@ -19,6 +20,7 @@ declare let document: any;
 export class DataCollectionEditComponent implements OnInit {
   containerConfig: ContainerConfig;
 
+  id: number;
   userInfo: any;
 
   commonList: any;
@@ -183,6 +185,7 @@ export class DataCollectionEditComponent implements OnInit {
   getDataCollection() {
     this.resetData();
     this.route.params.subscribe(params => {
+      this.id = +params['id'];
       this.editFormList = this.getLocalStorage(`inputData${+params['id']}`);
       this.dataCollectionService.getDataCollection(+params['id'])
         .subscribe(res => {
@@ -273,5 +276,12 @@ export class DataCollectionEditComponent implements OnInit {
       this.delForm(i);
     }
     this.getDataCollection();
+  }
+
+  toPass() {
+    auditData(this.id, '您确定要将资料提交到审核中？', 1,
+      this.dialog, this.dataCollectionService, () => {
+        this.router.navigate(['/data-collection']);
+      });
   }
 }

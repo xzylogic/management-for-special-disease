@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { DataCollectionDetailService } from '../_service/data-collection-detail.service';
 import { DataCollectionService } from '../_service/data-collection.service';
+import { auditData } from '../data-collection.component';
 
 @Component({
   selector: 'app-data-collection-detail',
@@ -15,6 +17,7 @@ export class DataCollectionDetailComponent implements OnInit {
   title = '病史资料录入';
   subTitle = '患者信息详情';
 
+  id: number;
   userInfo: any;
   errorMessage: string;
 
@@ -30,6 +33,7 @@ export class DataCollectionDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
     private dataCollectionService: DataCollectionService,
     private dataCollectionDetailService: DataCollectionDetailService
   ) {
@@ -53,6 +57,7 @@ export class DataCollectionDetailComponent implements OnInit {
   getDataCollection() {
     this.resetData();
     this.route.params.subscribe(params => {
+      this.id = +params['id'];
       this.dataCollectionService.getDataCollection(+params['id'])
         .subscribe(res => {
           // console.log(res);
@@ -70,31 +75,29 @@ export class DataCollectionDetailComponent implements OnInit {
           }
         }, err => {
           this.errorMessage = '啊哦～访问接口出错啦～';
+          throw new Error(err);
         })
     })
   }
 
   toAudit() {
-    this.auditingEnable = true;
+    auditData(this.id, '您确定要将资料提交到审核中？', 1,
+      this.dialog, this.dataCollectionService, () => {
+        this.router.navigate(['/data-collection']);
+      });
   }
 
   toPass() {
-    this.passEnable = true;
+    auditData(this.id, '您确定要通过审核？', 3,
+      this.dialog, this.dataCollectionService, () => {
+        this.router.navigate(['/data-collection']);
+      });
   }
 
   toUnpass() {
-    this.unpassEnable = true;
-  }
-
-  done(res) {
-    this.auditingEnable = false;
-    this.passEnable = false;
-    this.unpassEnable = false;
-    if (res.code == -1) {
-      this.message = res.msg;
-      this.enableShow = true;
-    } else {
-      this.router.navigate(['/data-collection']);
-    }
+    auditData(this.id, '您确定审核不通过？', 0,
+      this.dialog, this.dataCollectionService, () => {
+        this.router.navigate(['/data-collection']);
+      });
   }
 }

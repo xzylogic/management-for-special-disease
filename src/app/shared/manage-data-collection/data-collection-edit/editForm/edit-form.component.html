@@ -110,14 +110,14 @@
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="入院诊断" name="cause" [(ngModel)]="info.cause"
-                 (blur)="saveAsDraft()" (change)="saveAsDraft()">
+          <textarea matInput placeholder="入院诊断" name="cause" rows="5" [(ngModel)]="info.cause"
+                    (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
         </mat-form-field>
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="出院诊断" name="diagnosis" [(ngModel)]="info.diagnosis"
-                 (blur)="saveAsDraft()" (change)="saveAsDraft()">
+          <textarea matInput placeholder="出院诊断" name="diagnosis" rows="5" [(ngModel)]="info.diagnosis"
+                    (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
         </mat-form-field>
       </div>
       <div class="form-content">
@@ -128,20 +128,23 @@
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="主诉" name="briefHistoryChief" [(ngModel)]="info.briefHistoryChief"
-                 (blur)="saveAsDraft()" (change)="saveAsDraft()">
+          <textarea matInput placeholder="主诉" name="briefHistoryChief" rows="5"
+                    [(ngModel)]="info.briefHistoryChief"
+                    (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
         </mat-form-field>
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="现病史" name="briefHistoryPresent" [(ngModel)]="info.briefHistoryPresent"
-                 (blur)="saveAsDraft()" (change)="saveAsDraft()">
+          <textarea matInput placeholder="现病史" name="briefHistoryPresent" rows="5"
+                    [(ngModel)]="info.briefHistoryPresent"
+                    (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
         </mat-form-field>
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="既往史" name="briefHistoryPast" [(ngModel)]="info.briefHistoryPast"
-                 (blur)="saveAsDraft()" (change)="saveAsDraft()">
+          <textarea matInput placeholder="既往史" name="briefHistoryPast" rows="5"
+                    [(ngModel)]="info.briefHistoryPast"
+                    (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
         </mat-form-field>
       </div>
       <div class="form-content">
@@ -178,8 +181,9 @@
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="体检摘要" name="physicalExamination" [(ngModel)]="info.physicalExamination"
-                 (blur)="saveAsDraft()" (change)="saveAsDraft()">
+          <textarea matInput placeholder="体检摘要" name="physicalExamination" rows="10"
+                    [(ngModel)]="info.physicalExamination"
+                    (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
         </mat-form-field>
       </div>
       <div>
@@ -339,7 +343,7 @@
     <div *ngIf="info.recordHistoryType==5">
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <textarea matInput placeholder="诊断" name="content" [(ngModel)]="info.content"
+          <textarea matInput placeholder="诊断" name="content" rows="20" [(ngModel)]="info.content"
                     (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
         </mat-form-field>
       </div>
@@ -347,7 +351,7 @@
     <div *ngIf="info.recordHistoryType==6">
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <textarea matInput placeholder="标题名" name="title" [(ngModel)]="info.title"
+          <textarea matInput placeholder="标题名" name="title" rows="5" [(ngModel)]="info.title"
                     (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
         </mat-form-field>
       </div>
