@@ -37,7 +37,7 @@ export class SendMessageComponent implements OnInit {
 
   getAuditedDoctors(page: number) {
     this.auditedTable.reset(page);
-    this.doctorService.getAuditedDoctors(
+    this.doctorService.getAllDoctors(
       this.queryKey, '', page, 12)
       .subscribe(res => {
         this.auditedTable.loading = false;
@@ -69,8 +69,12 @@ export class SendMessageComponent implements OnInit {
 
   selectAll() {
     if (this.auditedTable.lists) {
+      const ids = [];
+      this.selectedItems.forEach(obj => {
+        ids.push(obj.id);
+      });
       this.auditedTable.lists.forEach(obj => {
-        if (this.selectedItems.indexOf(obj) < 0) {
+        if (ids.indexOf(obj.id) < 0) {
           this.selectedItems.push(obj);
         }
       })

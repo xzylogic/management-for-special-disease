@@ -15,19 +15,21 @@
             </button>
             <button mat-raised-button color="primary" type="button" (click)="selectAll()">全选</button>
           </div>
-          <mat-list *ngIf="auditedTable.lists" class="list">
-            <mat-list-item *ngFor="let item of auditedTable.lists"
-                           (click)="selectItem(item)"
-                           class="list_item">
-              <img [src]="item.avatarUrl" [alt]="item.name">
-              <span>{{item.name}}</span>
-            </mat-list-item>
-          </mat-list>
-          <app-lib-page *ngIf="auditedTable.totalPage"
-                        [page]="auditedTable.currentPage"
-                        [total]="auditedTable.totalPage"
-                        (pageEmitter)="getAuditedDoctors($event)"
-          ></app-lib-page>
+          <div *ngIf="auditedTable.lists">
+            <mat-list class="list">
+              <mat-list-item *ngFor="let item of auditedTable.lists"
+                             (click)="selectItem(item)"
+                             class="list_item">
+                <img [src]="item.avatarUrl" [alt]="item.name">
+                <span>{{item.name}}</span>
+              </mat-list-item>
+            </mat-list>
+            <app-lib-page *ngIf="auditedTable.totalPage"
+                          [page]="auditedTable.currentPage"
+                          [total]="auditedTable.totalPage"
+                          (pageEmitter)="getAuditedDoctors($event)"
+            ></app-lib-page>
+          </div>
         </div>
       </mat-grid-tile>
       <mat-grid-tile [rowspan]="'2'">
@@ -49,8 +51,8 @@
       <mat-grid-tile [rowspan]="'1'">
         <div class="container" style="padding: 1em">
           <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
-            <mat-form-field floatPlaceholder="auto" style="width:100%;">
-              <textarea matInput rows="4" name="message" placeholder="请编辑短信内容" ngModel required></textarea>
+            <mat-form-field floatPlaceholder="always" style="width:100%;">
+              <textarea matInput rows="5" name="message" placeholder="请编辑短信内容" ngModel required></textarea>
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit">发送</button>
             <button mat-raised-button type="reset">重置</button>
