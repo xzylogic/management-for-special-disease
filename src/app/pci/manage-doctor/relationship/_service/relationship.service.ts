@@ -24,8 +24,8 @@ export class RelationshipService {
     });
   }
 
-  getRelationships(page, size, keyword, accept) {
-    const param = `page=${page}&size=${size}&keyword=${keyword || ''}&accept=${accept || ''}`;
+  getRelationships(page, size, keyword, accept, channel) {
+    const param = `page=${page}&size=${size}&keyword=${keyword || ''}&accept=${accept || ''}&channel=${channel}`;
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.relationship}?${param}`);
   }
 }
