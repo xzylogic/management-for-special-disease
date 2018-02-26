@@ -21,11 +21,19 @@ export class HospitalTableService {
         key: 'name',
       }),
       new TableTitle({
+        name: '医生数量',
+        key: 'num',
+      }),
+      new TableTitle({
         name: '地理位置',
         key: 'geography',
         minwidth: 85,
         option: '查看',
         controlType: ControlType.button,
+      }),
+      new TableTitle({
+        name: '状态',
+        key: 'enableName',
       }),
       new TableTitle({
         name: '编辑',
