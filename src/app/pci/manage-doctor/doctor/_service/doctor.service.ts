@@ -83,22 +83,28 @@ export class DoctorService {
     });
   }
 
-  getDoctors(key: string, page: number, size: number, index: number) {
+  getDoctors(key: string, date: any, page: number, size: number, index: number) {
+    let start = date && new Date(date.split(' 至 ')[0] + ' 00:00').valueOf() || '';
+    let end = date && new Date(date.split(' 至 ')[1] + ' 24:00').valueOf() || '';
     return this.httpService.get(
-      `${this.app.pci.BASE_URL}${PATH.doctorQuery}?page=${page}&size=${size}&param=${key}&index=${index}`
+      `${this.app.pci.BASE_URL}${PATH.doctorQuery}?page=${page}&size=${size}&param=${key}&index=${index}&startDate=${start}&endDate=${end}`
     );
   }
 
-  getAuditedDoctors(key: string, page: number, size: number) {
-    return this.getDoctors(key, page, size, 1);
+  getAllDoctors(key: string, date: any, page: number, size: number) {
+    return this.getDoctors(key, date, page, size, 0);
   }
 
-  getAuditingDoctors(key: string, page: number, size: number) {
-    return this.getDoctors(key, page, size, 2);
+  getAuditedDoctors(key: string, date: any, page: number, size: number) {
+    return this.getDoctors(key, date, page, size, 1);
   }
 
-  getFailureDoctors(key: string, page: number, size: number) {
-    return this.getDoctors(key, page, size, 3);
+  getAuditingDoctors(key: string, date: any, page: number, size: number) {
+    return this.getDoctors(key, date, page, size, 2);
+  }
+
+  getFailureDoctors(key: string, date: any, page: number, size: number) {
+    return this.getDoctors(key, date, page, size, 3);
   }
 
   /**

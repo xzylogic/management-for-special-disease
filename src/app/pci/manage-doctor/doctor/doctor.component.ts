@@ -24,11 +24,13 @@ import { saveAs } from 'file-saver';
 })
 export class DoctorComponent implements OnInit {
   containerConfig: ContainerConfig;
+  allTable: TableOption;
   userTable: TableOption;
   auditingTable: TableOption;
   failureTable: TableOption;
   @select(['doctor', 'tab']) tab: Observable<number>;
   @select(['doctor', 'page']) page: Observable<Array<number>>;
+  @select(['doctor', 'data']) initData: Observable<Array<any>>;
   count: number;
 
   constructor(
@@ -43,18 +45,27 @@ export class DoctorComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.initData);
     this.containerConfig = this.doctorService.doctorConfig();
+    this.allTable = new TableOption({
+      titles: this.doctorTableService.setDoctorAllTitles(),
+      ifPage: true,
+      queryKey: {key: '', date: ''}
+    });
     this.userTable = new TableOption({
       titles: this.doctorTableService.setDoctorAuditedTitles(),
-      ifPage: true
+      ifPage: true,
+      queryKey: {key: '', date: ''}
     });
     this.auditingTable = new TableOption({
       titles: this.doctorTableService.setDoctorAuditingTitles(),
-      ifPage: true
+      ifPage: true,
+      queryKey: {key: '', date: ''}
     });
     this.failureTable = new TableOption({
       titles: this.doctorTableService.setDoctorFailureTitles(),
-      ifPage: true
+      ifPage: true,
+      queryKey: {key: '', date: ''}
     });
     this.reset();
   }
@@ -63,34 +74,74 @@ export class DoctorComponent implements OnInit {
     this.reset0();
     this.reset1();
     this.reset2();
+    this.reset3();
   }
 
   reset0() {
-    this.userTable.queryKey = '';
+    this.allTable.queryKey = {key: '', date: ''};
     this.page.subscribe((page: Array<number>) => {
-      this.getAuditedDoctors(page[0]);
+      this.getAllDoctors(page[0]);
     });
   }
 
   reset1() {
-    this.auditingTable.queryKey = '';
+    this.userTable.queryKey = {key: '', date: ''};
     this.page.subscribe((page: Array<number>) => {
-      this.getAuditingDoctors(page[1]);
+      this.getAuditedDoctors(page[1]);
     });
   }
 
   reset2() {
-    this.failureTable.queryKey = '';
+    this.auditingTable.queryKey = {key: '', date: ''};
     this.page.subscribe((page: Array<number>) => {
-      this.getFailureDoctors(page[2]);
+      this.getAuditingDoctors(page[2]);
     });
   }
 
+  reset3() {
+    this.failureTable.queryKey = {key: '', date: ''};
+    this.page.subscribe((page: Array<number>) => {
+      this.getFailureDoctors(page[3]);
+    });
+  }
+
+  getAllDoctors(page: number) {
+    this.action.pageChange(
+      'doctor',
+      [page, this.auditingTable.currentPage, this.auditingTable.currentPage, this.failureTable.currentPage]
+    );
+    this.allTable.reset(page);
+    this.doctorService.getAllDoctors(
+      this.allTable.queryKey.key,
+      this.allTable.queryKey.date,
+      page, this.allTable.size)
+      .subscribe(res => {
+        this.allTable.loading = false;
+        if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+          this.allTable.errorMessage = ERRMSG.nullMsg;
+        } else if (res.code === 0 && res.data && res.data.content) {
+          this.allTable.totalPage = res.data.totalPages;
+          this.formatDoctor(res.data.content, true);
+          this.allTable.lists = res.data.content;
+        } else {
+          this.allTable.errorMessage = res.msg || ERRMSG.otherMsg;
+        }
+      }, err => {
+        this.allTable.loading = false;
+        console.log(err);
+        this.allTable.errorMessage = ERRMSG.netErrMsg;
+      })
+  }
+
   getAuditedDoctors(page: number) {
-    this.action.pageChange('doctor', [page, this.auditingTable.currentPage, this.failureTable.currentPage]);
+    this.action.pageChange(
+      'doctor',
+      [this.allTable.currentPage, page, this.auditingTable.currentPage, this.failureTable.currentPage]);
     this.userTable.reset(page);
     this.doctorService.getAuditedDoctors(
-      this.userTable.queryKey, page, this.userTable.size)
+      this.userTable.queryKey.key,
+      this.userTable.queryKey.date,
+      page, this.userTable.size)
       .subscribe(res => {
         this.userTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -110,10 +161,14 @@ export class DoctorComponent implements OnInit {
   }
 
   getAuditingDoctors(page: number) {
-    this.action.pageChange('doctor', [this.userTable.currentPage, page, this.failureTable.currentPage]);
+    this.action.pageChange(
+      'doctor',
+      [this.allTable.currentPage, this.userTable.currentPage, page, this.failureTable.currentPage]);
     this.auditingTable.reset(page);
     this.doctorService.getAuditingDoctors(
-      this.auditingTable.queryKey, page, this.auditingTable.size)
+      this.auditingTable.queryKey.key,
+      this.auditingTable.queryKey.date,
+      page, this.auditingTable.size)
       .subscribe(res => {
         this.auditingTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -135,10 +190,14 @@ export class DoctorComponent implements OnInit {
   }
 
   getFailureDoctors(page: number) {
-    this.action.pageChange('doctor', [this.userTable.currentPage, this.auditingTable.currentPage, page]);
+    this.action.pageChange(
+      'doctor',
+      [this.allTable.currentPage, this.userTable.currentPage, this.auditingTable.currentPage, page]);
     this.failureTable.reset(page);
     this.doctorService.getFailureDoctors(
-      this.failureTable.queryKey, page, this.failureTable.size)
+      this.failureTable.queryKey.key,
+      this.failureTable.queryKey.date,
+      page, this.failureTable.size)
       .subscribe(res => {
         this.failureTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -285,7 +344,7 @@ export class DoctorComponent implements OnInit {
 
   export() {
     let exportList;
-    this.doctorService.getAuditedDoctors('', 0, 99999)
+    this.doctorService.getAuditedDoctors('', '', 0, 99999)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           this.formatDoctor(res.data.content, true);

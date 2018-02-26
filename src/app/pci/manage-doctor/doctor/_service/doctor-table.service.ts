@@ -4,6 +4,87 @@ import { ControlType, TableTitle } from '../../../../libs/dtable/dtable.entity';
 @Injectable()
 export class DoctorTableService {
 
+  setDoctorAllTitles() {
+    const Titles: TableTitle[] = [
+      new TableTitle({
+        name: '序号',
+        key: '',
+        controlType: ControlType.index
+      }),
+      new TableTitle({
+        name: '头像',
+        key: 'avatarUrl',
+        controlType: ControlType.image
+      }),
+      new TableTitle({
+        name: '医生姓名',
+        key: 'name'
+      }),
+      new TableTitle({
+        name: '医生ID',
+        key: 'id'
+      }),
+      new TableTitle({
+        name: '手机号',
+        key: 'tel',
+        minwidth: 85
+      }),
+      new TableTitle({
+        name: '所属医院',
+        key: 'hospitalName'
+      }),
+      new TableTitle({
+        name: '所属科室',
+        key: 'departmentName'
+      }),
+      new TableTitle({
+        name: '职称',
+        key: 'doctorTitleName'
+      }),
+      new TableTitle({
+        name: '职称证明和医院工牌',
+        key: 'certificationUrl',
+        option: '查看',
+        controlType: ControlType.button
+      }),
+      new TableTitle({
+        name: '注册时间',
+        key: 'createTime',
+        minwidth: 70,
+        maxwidth: 70
+      }),
+      new TableTitle({
+        name: '审核通过时间',
+        key: 'auditorDate',
+        minwidth: 70,
+        maxwidth: 70
+      }),
+      new TableTitle({
+        name: '状态',
+        key: 'statusName'
+      }),
+      new TableTitle({
+        name: '已开通个人服务',
+        key: 'serviceList',
+        option: '查看',
+        controlType: ControlType.button,
+      }),
+      new TableTitle({
+        name: '服务明细',
+        key: 'serviceDetail',
+        option: '查看',
+        controlType: ControlType.button,
+      }),
+      new TableTitle({
+        name: '编辑',
+        key: 'editAudited',
+        controlType: ControlType.button,
+      })
+    ];
+
+    return Titles;
+  }
+
   setDoctorAuditedTitles() {
     const Titles: TableTitle[] = [
       new TableTitle({
@@ -48,6 +129,18 @@ export class DoctorTableService {
         controlType: ControlType.button
       }),
       new TableTitle({
+        name: '注册时间',
+        key: 'createTime'
+      }),
+      new TableTitle({
+        name: '医生服务号二维码',
+        key: 'createTime'
+      }),
+      new TableTitle({
+        name: '剩余鲜花',
+        key: 'accountBalance'
+      }),
+      new TableTitle({
         name: '推荐下载',
         key: 'downloadCount'
       }),
@@ -57,7 +150,7 @@ export class DoctorTableService {
       }),
       new TableTitle({
         name: '审核时间',
-        key: 'auditDate',
+        key: 'auditorDate',
         minwidth: 70,
         maxwidth: 70
       }),
@@ -133,6 +226,10 @@ export class DoctorTableService {
         controlType: ControlType.button
       }),
       new TableTitle({
+        name: '注册时间',
+        key: 'createTime'
+      }),
+      new TableTitle({
         name: '状态',
         key: 'statusName'
       }),
@@ -204,6 +301,10 @@ export class DoctorTableService {
         key: 'certificationUrl',
         option: '查看',
         controlType: ControlType.button
+      }),
+      new TableTitle({
+        name: '注册时间',
+        key: 'createTime'
       }),
       new TableTitle({
         name: '审核人',

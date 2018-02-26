@@ -3,10 +3,22 @@
     <mat-grid-list class="grid" cols="2" rowHeight="fit">
       <mat-grid-tile [rowspan]="'3'">
         <div class="container">
+          <div>
+            <mat-form-field floatPlaceholder="always">
+              <input matInput type="text" placeholder="搜索医生姓名／手机号" name="queryKey" [(ngModel)]="queryKey">
+            </mat-form-field>
+            <button mat-icon-button color="primary" type="button" (click)="getAuditedDoctors(0)">
+              <mat-icon>search</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" type="button" (click)="reset()">
+              <mat-icon>autorenew</mat-icon>
+            </button>
+            <button mat-raised-button color="primary" type="button" (click)="selectAll()">全选</button>
+          </div>
           <mat-list *ngIf="auditedTable.lists" class="list">
             <mat-list-item *ngFor="let item of auditedTable.lists"
-                          (click)="selectItem(item)"
-                          class="list_item">
+                           (click)="selectItem(item)"
+                           class="list_item">
               <img [src]="item.avatarUrl" [alt]="item.name">
               <span>{{item.name}}</span>
             </mat-list-item>
@@ -24,7 +36,7 @@
             <p style="padding-top: 1em">已选医生：</p>
             <mat-list>
               <mat-list-item *ngFor="let select of selectedItems"
-                            class="list_select">
+                             class="list_select">
                 <img [src]="select.avatarUrl" [alt]="select.name">
                 <span>{{select.name}}</span>
                 <mat-icon class="close" (click)="removeItem(select)">close</mat-icon>
