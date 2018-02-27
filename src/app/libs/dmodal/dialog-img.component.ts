@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/materia
           <mat-icon>rotate_right</mat-icon>
         </button>
         <div style="width: 540px;height: 540px;padding: 20px;text-align: center">
-          <img [src]="option.image+'?imageView2/2/w/500/h/500/q/75|imageslim'" alt="{{option.title}}"
+          <img [src]="option.image" alt="{{option.title}}"
                [ngStyle]="{'transform': rotateDeg()}">
         </div>
       </div>
