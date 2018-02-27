@@ -52,6 +52,9 @@ export class HospitalComponent implements OnInit {
           this.hospitalTable.errorMessage = ERRMSG.nullMsg;
         } else if (res.code === 0 && res.data) {
           this.hospitalTable.totalPage = res.data.totalPages;
+          res.data.content.forEach(obj => {
+            obj.enableName = obj.enable == 1 ? '启用' : '禁用';
+          });
           this.hospitalTable.lists = res.data.content;
         } else {
           this.hospitalTable.errorMessage = res.msg || ERRMSG.otherMsg;

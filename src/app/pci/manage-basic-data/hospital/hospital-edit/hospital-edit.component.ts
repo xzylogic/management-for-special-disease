@@ -113,8 +113,8 @@ export class HospitalEditComponent implements OnInit {
         key: 'enable',
         value: data && data.enable || '',
         options: [
-          {id: 1, name: '启用'},
-          {id: 0, name: '禁用'}
+          {id: '1', name: '启用'},
+          {id: '0', name: '禁用'}
         ],
       })
     }
