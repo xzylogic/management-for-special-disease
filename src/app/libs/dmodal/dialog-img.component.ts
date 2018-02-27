@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/materia
   template: `
     <div style="position: relative">
       <h1 mat-dialog-title>{{option.title}}</h1>
+      <div *ngIf="option.desc" style="padding-bottom: 20px">{{option.desc}}</div>
       <div mat-dialog-content>
         <button style="position: absolute;top: 15px;right: 15px" mat-icon-button (click)="rotate()">
           <mat-icon>rotate_right</mat-icon>
@@ -19,7 +20,7 @@ import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/materia
   `
 })
 export class DialogImgComponent {
-  option: { title: string, image: string } = {title: '', image: ''};
+  option: { title: string, image: string, desc: string } = {title: '', image: '', desc: ''};
   deg = 0;
 
   constructor(
@@ -38,9 +39,9 @@ export class DialogImgComponent {
   }
 }
 
-export function ImageDialog(title, image, dialog) {
+export function ImageDialog(title, image, dialog, desc?) {
   const option: MatDialogConfig = <MatDialogConfig>{
-    data: {title: title, image: image}
+    data: {title: title, image: image, desc: desc || ''}
   };
   return dialog.open(DialogImgComponent, option);
 }
