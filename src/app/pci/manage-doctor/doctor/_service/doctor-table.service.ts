@@ -64,18 +64,6 @@ export class DoctorTableService {
         key: 'statusName'
       }),
       new TableTitle({
-        name: '已开通个人服务',
-        key: 'serviceList',
-        option: '查看',
-        controlType: ControlType.button,
-      }),
-      new TableTitle({
-        name: '服务明细',
-        key: 'serviceDetail',
-        option: '查看',
-        controlType: ControlType.button,
-      }),
-      new TableTitle({
         name: '编辑',
         key: 'editAudited',
         controlType: ControlType.button,
@@ -133,10 +121,6 @@ export class DoctorTableService {
         key: 'createTime'
       }),
       new TableTitle({
-        name: '医生服务号二维码',
-        key: 'createTime'
-      }),
-      new TableTitle({
         name: '剩余鲜花',
         key: 'accountBalance'
       }),
@@ -155,11 +139,17 @@ export class DoctorTableService {
         maxwidth: 70
       }),
       new TableTitle({
-        name: '当前积分',
-        key: 'integral',
+        name: '医生服务号二维码',
+        key: 'qrImage',
         option: '查看',
         controlType: ControlType.button,
       }),
+      // new TableTitle({
+      //   name: '当前积分',
+      //   key: 'integral',
+      //   option: '查看',
+      //   controlType: ControlType.button,
+      // }),
       new TableTitle({
         name: '已开通服务',
         key: 'serviceList',

@@ -242,9 +242,9 @@ export class DoctorComponent implements OnInit {
       this.action.dataChange('doctor', doctor);
       this.router.navigate(['/doctor/edit']);
     }
-    if (res.key === 'integral') {
-      this.router.navigate(['/doctor/integral'], {queryParams: {id: doctor.id}});
-    }
+    // if (res.key === 'integral') {
+    //   this.router.navigate(['/doctor/integral'], {queryParams: {id: doctor.id}});
+    // }
     if (res.key === 'serviceDetail') {
       this.router.navigate(['/doctor/service-detail'], {queryParams: {id: doctor.id}});
     }
@@ -253,9 +253,26 @@ export class DoctorComponent implements OnInit {
     }
     if (res.key === 'certificationUrl') {
       ImageDialog(
-        '职称证明和医院工牌', doctor.certificationUrl, this.dialog,
+        '职称证明和医院工牌', doctor.certificationUrl + `?imageView2/2/w/500/h/500/q/75|imageslim`, this.dialog,
         `${doctor.name || ''} ${doctor.tel || ''} ${doctor.hospitalName || ''} ${doctor.doctorTitleName || ''}`
       );
+    }
+    if (res.key === 'qrImage') {
+      this.doctorService.getDoctorQR(doctor.id)
+        .subscribe(sres => {
+          // console.log(sres);
+          if (sres) {
+            ImageDialog(
+              '医生服务号二维码', sres, this.dialog,
+              `${doctor.name || ''} ${doctor.tel || ''} ${doctor.hospitalName || ''} ${doctor.doctorTitleName || ''}`
+            );
+          } else {
+            HintDialog('获取医生二维码错误', this.dialog);
+          }
+        }, err => {
+          HintDialog('获取医生二维码网络错误', this.dialog);
+          throw new Error(err);
+        });
     }
     if (res.key === 'failureReason') {
       MessageDialog('拒绝理由', doctor.failureReason, this.dialog);

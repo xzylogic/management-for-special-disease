@@ -11,7 +11,8 @@ const PATH = {
   doctorAuditing: 'api/doctor/auditing', // 医生审核
   integralDetail: 'opt/integral/records/list', // 积分明细
   serviceDetail: 'api/doctor/orderServiceDetails',
-  serviceList: 'api/doctor/listService'
+  serviceList: 'api/doctor/listService',
+  doctorQR: 'api/doctor/getQr'
 };
 
 @Injectable()
@@ -105,6 +106,10 @@ export class DoctorService {
 
   getFailureDoctors(key: string, date: any, page: number, size: number) {
     return this.getDoctors(key, date, page, size, 3);
+  }
+
+  getDoctorQR(id) {
+    return this.httpService.getText(`${this.app.pci.BASE_URL}${PATH.doctorQR}?sceneId=${id}`);
   }
 
   /**
