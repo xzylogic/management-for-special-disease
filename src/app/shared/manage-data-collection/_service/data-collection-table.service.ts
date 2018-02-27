@@ -29,7 +29,7 @@ export class DataCollectionTableService {
       }),
       new TableTitle({
         name: '所属医院',
-        key: 'hospitalName'
+        key: 'doctorHospitalName'
       }),
       new TableTitle({
         name: '年龄',
