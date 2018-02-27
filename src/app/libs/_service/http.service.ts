@@ -65,6 +65,18 @@ export class HttpService {
   }
 
   /**
+   * HTTP GET METHOD
+   * @param  {string}     path
+   * @return {Observable}
+   */
+  getText(path: string): Observable<any> {
+    return this.http.get(path, {headers: this.headers, responseType: 'text'})
+    // .map(HttpService.checkForError)
+    // .catch(err => Observable.throw(err))
+    // .map(HttpService.getJson);
+  }
+
+  /**
    * HTTP POST METHOD
    * @param  {string}     path
    * @param  {any}        body

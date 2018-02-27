@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 import { TableOption, ControlType } from './dtable.entity';
 
@@ -7,7 +7,7 @@ import { TableOption, ControlType } from './dtable.entity';
   templateUrl: './dtable.component.html',
   styleUrls: ['./dtable.component.scss']
 })
-export class DTableComponent implements OnInit {
+export class DTableComponent implements OnChanges {
   @Input() table: TableOption;
   @Output() handleEmmit = new EventEmitter();
   @Output() pageEmitter = new EventEmitter();
@@ -18,7 +18,7 @@ export class DTableComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     if (this.table.ifPage) {
       this.getPageList(this.table.totalPage, this.table.currentPage);
     }
