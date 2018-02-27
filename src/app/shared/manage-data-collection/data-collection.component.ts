@@ -28,6 +28,10 @@ export class DataCollectionComponent implements OnInit {
   unhandledTable: TableOption;
   pages: any;
 
+  queryHospital: string;
+  queryTime: string;
+  hospitalList = [];
+
   constructor(
     @Inject('action') private action,
     private dataCollectionService: DataCollectionService,
@@ -56,6 +60,7 @@ export class DataCollectionComponent implements OnInit {
       ifPage: true
     });
     this.reset();
+    this.getHospitals();
   }
 
   reset() {
@@ -66,6 +71,8 @@ export class DataCollectionComponent implements OnInit {
   }
 
   reset0() {
+    this.queryHospital = '';
+    this.queryTime = '';
     this.waitingTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.pages = page;
@@ -101,7 +108,7 @@ export class DataCollectionComponent implements OnInit {
     this.pages[type] = page;
     this.action.pageChange('dataCollection', this.pages);
     list.reset(page);
-    this.dataCollectionService.getDataCollections(page, list.size, type)
+    this.dataCollectionService.getDataCollections(page, list.size, type, this.queryHospital, this.queryTime)
       .subscribe(
         res => {
           list.loading = false;
@@ -123,6 +130,15 @@ export class DataCollectionComponent implements OnInit {
           console.log(err);
           list.errorMessage = ERRMSG.netErrMsg;
         });
+  }
+
+  getHospitals() {
+    this.dataCollectionService.getHospitals()
+      .subscribe(res => {
+        if (res.code == 0 && res.data) {
+          this.hospitalList = res.data;
+        }
+      })
   }
 
   gotoHandle(data) {

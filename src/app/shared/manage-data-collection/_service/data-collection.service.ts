@@ -4,7 +4,8 @@ import { ContainerConfig } from '../../../libs/common/container/container.compon
 const PATH = {
   dataCollections: 'record/upload/list',
   dataCollection: 'record/upload',
-  drug: 'api/medicine/list'
+  drug: 'api/medicine/list',
+  hospital: 'hospitalList'
 };
 
 @Injectable()
@@ -46,8 +47,17 @@ export class DataCollectionService {
     })
   }
 
-  getDataCollections(page, size, type) {
-    return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.dataCollections}?page=${page}&size=${size}&type=${type}`);
+  getDataCollections(page, size, type, hospitalId?, time?) {
+    let query = `?page=${page}&size=${size}&type=${type}`
+    if (hospitalId) {
+      query += `&hospitalId=${hospitalId}`;
+    }
+    if (time) {
+      let start = (new Date(time.split(' 至 ')[0] + ' 00:00')).valueOf();
+      let end = (new Date(time.split(' 至 ')[1] + ' 24:00')).valueOf();
+      query += `&start=${start}&end=${end}`;
+    }
+    return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.dataCollections}${query}`);
   }
 
   getDataCollection(id) {
@@ -64,5 +74,9 @@ export class DataCollectionService {
 
   getDrugs(key) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.drug}?page=0&size=999999&keyword=${key}`);
+  }
+
+  getHospitals() {
+    return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.hospital}`);
   }
 }

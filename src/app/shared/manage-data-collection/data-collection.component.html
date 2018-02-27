@@ -1,7 +1,24 @@
-<app-container [config]="containerConfig"  *ngIf="containerConfig">
+<app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="content">
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <mat-tab label="待录入">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always" style="width: 300px">
+            <mat-select placeholder="患者所属医院" [(ngModel)]="queryHospital" name="type">
+              <mat-option [value]="opt.id" *ngFor="let opt of hospitalList"
+                          (click)="getDataCollections(waitingTable,0,0)">
+                {{opt.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-search [type]="'1'" [label]="'上传时间'" [(value)]="queryTime"></app-search>
+          <button mat-icon-button color="primary" type="button" (click)="getDataCollections(waitingTable,0,0)">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" type="button" (click)="reset0()">
+            <mat-icon>autorenew</mat-icon>
+          </button>
+        </form>
         <div *ngIf="!waitingTable.lists&&waitingTable.loading">Loading...</div>
         <div *ngIf="!waitingTable.lists&&!waitingTable.loading&&!!waitingTable.errorMessage" class="center">
           {{waitingTable.errorMessage}}

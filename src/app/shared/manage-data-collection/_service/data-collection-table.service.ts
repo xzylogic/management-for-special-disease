@@ -24,6 +24,14 @@ export class DataCollectionTableService {
         key: 'authenticate'
       }),
       new TableTitle({
+        name: '注册时间',
+        key: 'registerDate'
+      }),
+      new TableTitle({
+        name: '所属医院',
+        key: 'hospitalName'
+      }),
+      new TableTitle({
         name: '年龄',
         key: 'age'
       }),
