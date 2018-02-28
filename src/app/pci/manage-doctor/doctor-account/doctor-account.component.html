@@ -5,6 +5,18 @@
   <div class="content">
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <mat-tab label="全部账户">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
+            <input matInput type="text" placeholder="手机号／姓名搜索" name="queryKey"
+                   [(ngModel)]="doctorAccountTable.queryKey">
+          </mat-form-field>
+          <button mat-icon-button color="primary" type="button" (click)="getDoctorAccounts(0)">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" type="button" (click)="resetAccount()">
+            <mat-icon>autorenew</mat-icon>
+          </button>
+        </form>
         <div *ngIf="!doctorAccountTable.lists&&doctorAccountTable.loading">Loading...</div>
         <div *ngIf="!doctorAccountTable.lists&&!doctorAccountTable.loading&&!!doctorAccountTable.errorMessage"
              class="center">

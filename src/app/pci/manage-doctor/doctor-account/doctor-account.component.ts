@@ -50,6 +50,7 @@ export class DoctorAccountComponent implements OnInit {
   commodityExchangeTable: TableOption;
   @select(['doctorAccount', 'tab']) tab: Observable<number>;
   @select(['doctorAccount', 'page']) page: Observable<Array<number>>;
+  @select(['doctorAccount', 'data']) data: Observable<Array<number>>;
   count1: number;
   count2: number;
 
@@ -93,6 +94,11 @@ export class DoctorAccountComponent implements OnInit {
     });
   }
 
+  resetAccount() {
+    this.doctorAccountTable.queryKey = '';
+    this.getDoctorAccounts(0);
+  }
+
   reset1() {
     this.page.subscribe((page: Array<number>) => {
       this.getWithdrawDeposits(page[1]);
@@ -108,7 +114,7 @@ export class DoctorAccountComponent implements OnInit {
   getDoctorAccounts(page: number) {
     this.action.pageChange('doctorAccount', [page, this.withdrawDepositTable.currentPage, this.commodityExchangeTable.currentPage]);
     this.doctorAccountTable.reset(page);
-    this.doctorAccountService.getDoctorAccounts(page, this.doctorAccountTable.size)
+    this.doctorAccountService.getDoctorAccounts(page, this.doctorAccountTable.size, this.doctorAccountTable.queryKey)
       .subscribe(
         res => {
           this.doctorAccountTable.loading = false;
