@@ -30,7 +30,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.3",
     "file-saver": "^1.3.3",
-    "flatpickr": "^4.0.7",
+    "flatpickr": "^4.2.4",
     "hammerjs": "^2.0.8",
     "intl": "^1.2.5",
     "layui-laydate": "^5.0.9",

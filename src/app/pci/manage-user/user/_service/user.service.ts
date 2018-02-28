@@ -6,6 +6,7 @@ const PATH = {
   userOptionList: 'api/user/option', // 获取医院选项列表
   userCreate: 'api/user/add', // 新增患者
   userUpdate: 'api/user/update', // 编辑患者信息
+  sendMessage: 'api/user/sendMsg', // 短信提醒患者
   IntegralDetail: 'opt/integral/records/list/', // 个人积分明细
 };
 
@@ -25,6 +26,16 @@ export class UserService {
       ifHome: true,
       homeRouter: '/user',
       currentRouter: '/user'
+    });
+  }
+
+  userMessageConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '患者信息管理',
+      subTitle: '短信提醒患者',
+      ifHome: false,
+      homeRouter: '/user',
+      currentRouter: '/user/message'
     });
   }
 
@@ -54,9 +65,9 @@ export class UserService {
   //  * @param {number} page    [description]
   //  * @param {number} size    [description]
   //  */
-  getUsers(key: string, bind: boolean, page: number, size: number) {
+  getUsers(key: string, bind: any, registrationTime: any, page: number, size: number) {
     return this.httpService.get(
-      `${this.app.pci.BASE_URL}${PATH.userList}?keyword=${key}&binding=${bind}&page=${page}&size=${size}`
+      `${this.app.pci.BASE_URL}${PATH.userList}?keyword=${key}&binding=${bind}&registrationTime=${registrationTime}&page=${page}&size=${size}`
     );
   }
 
@@ -83,6 +94,14 @@ export class UserService {
    */
   userUpdate(body) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.userUpdate}`, body);
+  }
+
+  /**
+   * 编辑短信提醒患者
+   * @param {any} body [description]
+   */
+  sendMessage(body: any) {
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.sendMessage}`, body);
   }
 
   /**
