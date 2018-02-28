@@ -19,6 +19,14 @@
              class="center">
           {{userActivenessTable.errorMessage}}
         </div>
+        <div *ngIf="userStatistics">
+          <p style="text-align: center;font-weight: 700">
+            <span style="padding-right: 15px">当日启动总次数：{{userStatistics.loginTotal}}</span>
+            <span style="padding-right: 15px">当日启动人数：{{userStatistics.loginCount}}</span>
+            <span style="padding-right: 15px">当日启动率：{{userStatistics.loginRate}}</span>
+            <span style="padding-right: 15px">人均启动数：{{userStatistics.loginAverage}}</span>
+          </p>
+        </div>
         <div *ngIf="userActivenessTable.lists">
           <div class="content__table">
             <app-lib-table
@@ -45,6 +53,14 @@
         <div *ngIf="!doctorActivenessTable.lists&&!doctorActivenessTable.loading&&!!doctorActivenessTable.errorMessage"
              class="center">
           {{doctorActivenessTable.errorMessage}}
+        </div>
+        <div *ngIf="doctorStatistics">
+          <p style="text-align: center;font-weight: 700">
+            <span style="padding-right: 15px">当日启动总次数：{{doctorStatistics.loginTotal}}</span>
+            <span style="padding-right: 15px">当日启动人数：{{doctorStatistics.loginCount}}</span>
+            <span style="padding-right: 15px">当日启动率：{{doctorStatistics.loginRate}}</span>
+            <span style="padding-right: 15px">人均启动数：{{doctorStatistics.loginAverage}}</span>
+          </p>
         </div>
         <div *ngIf="doctorActivenessTable.lists">
           <div class="content__table">

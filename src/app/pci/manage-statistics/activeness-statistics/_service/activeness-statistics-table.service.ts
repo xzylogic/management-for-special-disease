@@ -7,12 +7,12 @@ export class ActivenessStatisticsTableService {
   setUserTitles() {
     const Titles: TableTitle[] = [
       new TableTitle({
-        name: '登录时间',
+        name: '启动时间',
         key: 'loginDate',
         minwidth: 70
       }),
       new TableTitle({
-        name: '登录人',
+        name: '启动用户',
         key: 'name'
       }),
       new TableTitle({
@@ -49,12 +49,12 @@ export class ActivenessStatisticsTableService {
   setDoctorTitles() {
     const Titles: TableTitle[] = [
       new TableTitle({
-        name: '登录时间',
+        name: '启动时间',
         key: 'loginDate',
         minwidth: 70
       }),
       new TableTitle({
-        name: '登录人',
+        name: '启动用户',
         key: 'name'
       }),
       new TableTitle({
