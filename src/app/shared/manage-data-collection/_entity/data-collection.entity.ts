@@ -22,7 +22,7 @@ export class Inspection {
   reference: string; // 参考值
   standard: string; // 标准
   unit: string; // 单位
-  type: string; // 参考值类型 0无 1范围
+  type: string | number; // 参考值类型 0无 1范围
   value: string; // 数值
   deleted: boolean; // 删除
 }

@@ -16,6 +16,7 @@ export class SendMessageComponent implements OnInit {
 
   auditedTable: TableOption;
   selectedItems: Array<any> = [];
+  queryKey = '';
 
   constructor(
     private doctorService: DoctorService,
@@ -29,10 +30,15 @@ export class SendMessageComponent implements OnInit {
     this.getAuditedDoctors(0);
   }
 
+  reset() {
+    this.queryKey = '';
+    this.getAuditedDoctors(0);
+  }
+
   getAuditedDoctors(page: number) {
     this.auditedTable.reset(page);
-    this.doctorService.getAuditedDoctors(
-      this.auditedTable.queryKey, page, 12)
+    this.doctorService.getAllDoctors(
+      this.queryKey, '', page, 12)
       .subscribe(res => {
         this.auditedTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -58,6 +64,20 @@ export class SendMessageComponent implements OnInit {
     });
     if (target) {
       this.selectedItems.push(item);
+    }
+  }
+
+  selectAll() {
+    if (this.auditedTable.lists) {
+      const ids = [];
+      this.selectedItems.forEach(obj => {
+        ids.push(obj.id);
+      });
+      this.auditedTable.lists.forEach(obj => {
+        if (ids.indexOf(obj.id) < 0) {
+          this.selectedItems.push(obj);
+        }
+      })
     }
   }
 
