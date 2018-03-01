@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatChipsModule, MatTabsModule } from '@angular/material';
+import { MatChipsModule, MatTabsModule, MatGridListModule, MatListModule } from '@angular/material';
 import { LibModule } from '../../../libs/common/lib.module';
 import { DFormModule } from '../../../libs/dform/dform.module';
 import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { UserComponent } from './user.component';
+import { SendMessageComponent } from './send-message/send-message.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { IntegralDetailComponent } from './integral-detail/integral-detail.component';
 import { AuthGuardService } from '../../_service/auth-guard.service';
@@ -18,6 +19,10 @@ const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
   component: UserComponent
+}, {
+  path: 'message',
+  component: SendMessageComponent,
+  canActivate: [AuthGuardService],
 }, {
   path: 'edit',
   component: UserEditComponent,
@@ -36,11 +41,14 @@ const routes: Routes = [{
     MatTabsModule,
     MatChipsModule,
     FormsModule,
+    MatGridListModule,
+    MatListModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
     UserComponent,
     UserEditComponent,
+    SendMessageComponent,
     IntegralDetailComponent
   ],
   providers: [

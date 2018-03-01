@@ -24,11 +24,13 @@ export class UserComponent implements OnInit {
   containerConfig: ContainerConfig;
   userTable: TableOption;
   queryBind: any;
+  RegisterDate: any;
   @select(['user', 'page']) page: Observable<Array<number>>;
 
   constructor(
     @Inject('action') private action,
     @Inject('common') private common,
+    @Inject('search') private search,
     private userService: UserService,
     private userTableService: UserTableService,
     private dialog: MatDialog,
@@ -43,23 +45,25 @@ export class UserComponent implements OnInit {
       titles: this.userTableService.setUserTitles(),
       ifPage: true
     });
+    // this.RegisterDate = this.search.setDefaultRange();
     this.reset();
-    console.log(this.userTableService.setUserTitles());
   }
 
   reset() {
     this.userTable.queryKey = '';
     this.queryBind = '';
+    this.RegisterDate = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUsers(page[0]);
     });
   }
 
   getUsers(page: number) {
+    // const option = this.search.getStartAndEnd(this.RegisterDate);
     this.action.pageChange('user', [page]);
     this.userTable.reset(page);
     this.userService.getUsers(
-      this.userTable.queryKey, this.queryBind, page, this.userTable.size)
+      this.userTable.queryKey, this.queryBind, this.RegisterDate, page, this.userTable.size)
       .subscribe(res => {
         this.userTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -98,6 +102,10 @@ export class UserComponent implements OnInit {
     this.router.navigate(['/user/edit']);
   }
 
+  toSendMessage() {
+    this.router.navigate(['/user/message']);
+  }
+
   gotoHandle(res) {
     const user = <User>res.value;
     if (res.key === 'integral') {
@@ -112,7 +120,7 @@ export class UserComponent implements OnInit {
 
   export() {
     let exportList;
-    this.userService.getUsers(this.userTable.queryKey, this.queryBind, 0, 99999)
+    this.userService.getUsers(this.userTable.queryKey, this.queryBind, '2', 0, 99999)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           exportList = this.common.toArray(res.data.content);
