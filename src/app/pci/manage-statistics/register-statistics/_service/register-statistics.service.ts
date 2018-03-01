@@ -53,18 +53,4 @@ export class RegisterStatisticsService {
     }
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorRegister}${query}`);
   }
-
-  // /**
-  //  * 获取医生注册总数 审核总数
-  //  */
-  // getDoctorTotals() {
-  //   return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorTotal}`);
-  // }
-  //
-  // /**
-  //  * 获取患者注册总数
-  //  */
-  // getUserTotals() {
-  //   return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userTotal}`);
-  // }
 }

@@ -84,7 +84,7 @@ export class RegisterStatisticsComponent implements OnInit, OnDestroy {
   }
 
   getDoctors(page: number) {
-    this.userTable.reset(page);
+    this.doctorTable.reset(page);
     this.subscribeDoctorTable = this.registerStatisticsService.getDoctors(page, this.doctorTable.size, this.doctorTable.queryKey)
       .subscribe(
         res => {

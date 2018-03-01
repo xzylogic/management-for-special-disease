@@ -70,6 +70,7 @@ export class ActivenessStatisticsComponent implements OnInit {
 
   getUserActivenessStatistics(page: number) {
     this.userActivenessTable.reset(page);
+    this.userStatistics = null;
     this.activenessStatisticsService.getUserActiveness(
       page,
       this.userActivenessTable.size,
@@ -101,6 +102,7 @@ export class ActivenessStatisticsComponent implements OnInit {
 
   getDoctorActivenessStatistics(page: number) {
     this.doctorActivenessTable.reset(page);
+    this.doctorStatistics = null;
     this.activenessStatisticsService.getDoctorActiveness(
       page,
       this.doctorActivenessTable.size,
