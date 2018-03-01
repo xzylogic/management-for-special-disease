@@ -2,10 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
-  doctorRegister: 'api/statistics/register/doctor', // 医生注册量统计
-  doctorTotal: 'api/statistics/register/doctor/total', // 注册总数 审核总数
-  userRegister: 'api/statistics/register/user', // 患者注册量统计
-  userTotal: 'api/statistics/register/user/total', // 患者注册总数
+  doctorRegister: 'api/statistics/doctor', // 医生注册量统计
+  userRegister: 'api/statistics/user', // 患者注册量统计
 };
 
 @Injectable()
@@ -19,7 +17,7 @@ export class RegisterStatisticsService {
   registerStatisticsConfig(): ContainerConfig {
     return new ContainerConfig({
       title: '数据统计',
-      subTitle: '注册量统计',
+      subTitle: '用户统计',
       ifHome: true,
       homeRouter: '/register-statistics',
       currentRouter: '/register-statistics'
@@ -31,8 +29,14 @@ export class RegisterStatisticsService {
    * @param {number} page   [description]
    * @param {number} size   [description]
    */
-  getUsers(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userRegister}?page=${page}&size=${size}`);
+  getUsers(page: number, size: number, date) {
+    let query = `?page=${page}&size=${size}`;
+    if (date) {
+      let start = date && new Date(date.split(' 至 ')[0] + ' 00:00').valueOf() || '';
+      let end = date && new Date(date.split(' 至 ')[1] + ' 24:00').valueOf() || '';
+      query += `&startTime=${start}&endTime=${end}`;
+    }
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userRegister}${query}`);
   }
 
   /**
@@ -40,21 +44,27 @@ export class RegisterStatisticsService {
    * @param {number} page   [description]
    * @param {number} size   [description]
    */
-  getDoctors(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorRegister}?page=${page}&size=${size}`);
+  getDoctors(page: number, size: number, date) {
+    let query = `?page=${page}&size=${size}`;
+    if (date) {
+      let start = date && new Date(date.split(' 至 ')[0] + ' 00:00').valueOf() || '';
+      let end = date && new Date(date.split(' 至 ')[1] + ' 24:00').valueOf() || '';
+      query += `&startTime=${start}&endTime=${end}`;
+    }
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorRegister}${query}`);
   }
 
-  /**
-   * 获取医生注册总数 审核总数
-   */
-  getDoctorTotals() {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorTotal}`);
-  }
-
-  /**
-   * 获取患者注册总数
-   */
-  getUserTotals() {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userTotal}`);
-  }
+  // /**
+  //  * 获取医生注册总数 审核总数
+  //  */
+  // getDoctorTotals() {
+  //   return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.doctorTotal}`);
+  // }
+  //
+  // /**
+  //  * 获取患者注册总数
+  //  */
+  // getUserTotals() {
+  //   return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.userTotal}`);
+  // }
 }

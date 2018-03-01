@@ -17,9 +17,8 @@ export class RegisterStatisticsComponent implements OnInit, OnDestroy {
   subscribeUserTable: any;
   subscribeDoctorTable: any;
 
-  userRegisterCount: number | string;
-  doctorRegisterCount: number | string;
-  doctorValidateCount: number | string;
+  userRegisterCount: any;
+  doctorRegisterCount: any;
 
   constructor(
     private registerStatisticsService: RegisterStatisticsService,
@@ -55,67 +54,25 @@ export class RegisterStatisticsComponent implements OnInit, OnDestroy {
   }
 
   reset0() {
+    this.userTable.queryKey = '';
     this.getUsers(0);
-    this.getUserCount();
   }
 
   reset1() {
+    this.doctorTable.queryKey = '';
     this.getDoctors(0);
-    this.getDoctorCount();
-  }
-
-  getUserCount() {
-    let count = this.registerStatisticsService.getUserTotals()
-      .subscribe(
-        data => {
-          if (data.code === 0) {
-            this.userRegisterCount = data.data.registerCount;
-            count.unsubscribe();
-          } else {
-            this.userRegisterCount = '未找到数据';
-            count.unsubscribe();
-          }
-        }, err => {
-          this.userRegisterCount = '网络出错';
-          count.unsubscribe();
-          return new Error(err);
-        }
-      )
-  }
-
-  getDoctorCount() {
-    let count = this.registerStatisticsService.getDoctorTotals()
-      .subscribe(
-        data => {
-          if (data.code === 0) {
-            this.doctorRegisterCount = data.data.registerCount;
-            this.doctorValidateCount = data.data.validateCount;
-            count.unsubscribe();
-          } else {
-            this.doctorRegisterCount = '未找到数据';
-            this.doctorValidateCount = '未找到数据';
-            count.unsubscribe();
-          }
-        }, err => {
-          this.doctorRegisterCount = '网络出错';
-          this.doctorValidateCount = '网络出错';
-          count.unsubscribe();
-          return new Error(err);
-        }
-      )
   }
 
   getUsers(page: number) {
     this.userTable.reset(page);
-    this.subscribeUserTable = this.registerStatisticsService.getUsers(page, this.userTable.size)
+    this.subscribeUserTable = this.registerStatisticsService.getUsers(page, this.userTable.size, this.userTable.queryKey)
       .subscribe(
         res => {
           this.userTable.loading = false;
-          if (res.data && res.data.length === 0 && res.code === 0) {
-            this.userTable.errorMessage = ERRMSG.nullMsg;
-          } else if (res.data && res.data.content && res.code === 0) {
-            this.userTable.totalPage = res.data.totalPages;
-            this.userTable.lists = res.data.content;
+          if (res.data && res.data.userDtos && res.data.userDtos.content && res.code === 0) {
+            this.userTable.totalPage = res.data.userDtos.totalPages;
+            this.userTable.lists = res.data.userDtos.content;
+            this.userRegisterCount = res.data;
           } else {
             this.userTable.errorMessage = res.msg || ERRMSG.otherMsg;
           }
@@ -128,15 +85,14 @@ export class RegisterStatisticsComponent implements OnInit, OnDestroy {
 
   getDoctors(page: number) {
     this.userTable.reset(page);
-    this.subscribeDoctorTable = this.registerStatisticsService.getDoctors(page, this.doctorTable.size)
+    this.subscribeDoctorTable = this.registerStatisticsService.getDoctors(page, this.doctorTable.size, this.doctorTable.queryKey)
       .subscribe(
         res => {
           this.doctorTable.loading = false;
-          if (res.data && res.data.length === 0 && res.code === 0) {
-            this.doctorTable.errorMessage = ERRMSG.nullMsg;
-          } else if (res.data && res.data.content && res.code === 0) {
-            this.doctorTable.totalPage = res.data.totalPages;
-            this.doctorTable.lists = res.data.content;
+          if (res.data && res.data.doctorDtos && res.data.doctorDtos.content && res.code === 0) {
+            this.doctorTable.totalPage = res.data.doctorDtos.totalPages;
+            this.doctorTable.lists = res.data.doctorDtos.content;
+            this.doctorRegisterCount = res.data;
           } else {
             this.doctorTable.errorMessage = res.msg || ERRMSG.otherMsg;
           }
