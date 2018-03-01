@@ -1,9 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
-import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
-// import { ImageDialog } from '../../../libs/dmodal/dialog-img.component';
 import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { InsuranceCertificationService } from './_service/insurance-certification.service';
 import { InsuranceCertificationTableService } from './_service/insurance-certification-table.service';
@@ -18,11 +14,7 @@ export class InsuranceCertificationComponent implements OnInit {
   containerConfig: ContainerConfig;
   insuranceCertificationTable: TableOption;
 
-  @select(['insuranceCertification', 'page']) page: Observable<Array<number>>;
-
   constructor(
-    @Inject('action') private action,
-    @Inject('nav') private navService,
     private insuranceCertificationService: InsuranceCertificationService,
     private insuranceCertificationTableService: InsuranceCertificationTableService
   ) {
@@ -39,14 +31,10 @@ export class InsuranceCertificationComponent implements OnInit {
 
   reset() {
     this.insuranceCertificationTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
-      this.getInsuranceList(page[0]);
-    });
+    this.getInsuranceList(0);
   }
 
   getInsuranceList(page: number) {
-    this.action.pageChange('medication',
-      [page]);
     this.insuranceCertificationTable.reset(page);
     this.insuranceCertificationService.getData(page, this.insuranceCertificationTable.size, this.insuranceCertificationTable.queryKey)
       .subscribe(
@@ -73,11 +61,4 @@ export class InsuranceCertificationComponent implements OnInit {
           this.insuranceCertificationTable.errorMessage = ERRMSG.netErrMsg;
         });
   }
-
-  // gotoHandle(res) {
-  //   if (res.key === 'idCardImageUrl') {
-  //     ImageDialog(res.value.name, res.value.idCardImageUrl, this.dialog);
-  //   }
-  // }
-
 }

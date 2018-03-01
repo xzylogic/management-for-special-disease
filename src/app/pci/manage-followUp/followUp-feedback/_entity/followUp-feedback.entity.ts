@@ -1,4 +1,4 @@
-export class FollowPlan {
+export class FollowFeedback {
   doctorName: string;
   doctorTel: string;
   userName: string;
@@ -6,7 +6,7 @@ export class FollowPlan {
   planDate: string;
   feedbacks: Array<any>;
 
-  constructor(obj?: FollowPlan) {
+  constructor(obj?: FollowFeedback) {
     this.doctorName = obj && obj.doctorName || '';
     this.doctorTel = obj && obj.doctorTel || '';
     this.userName = obj && obj.userName || '';

@@ -2,10 +2,10 @@ import { Injectable, Inject} from '@angular/core';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
-  followList: 'api/doctorPatient/flup', // 随访计划管理
+  followList: 'api/doctorPatient/flupFeedback', // 随访反馈管理
 };
 @Injectable()
-export class FollowPlanService {
+export class FollowFeedbackService {
 
   constructor(
     @Inject('app') private app,
@@ -14,23 +14,23 @@ export class FollowPlanService {
   }
 
 
-  followPlanConfig(): ContainerConfig {
+  followFeedbackConfig(): ContainerConfig {
     return new ContainerConfig({
-      title: '随访计划管理',
-      subTitle: '随访计划列表',
+      title: '随访反馈管理',
+      subTitle: '随访反馈列表',
       ifHome: true,
-      homeRouter: '/followUp-plan',
-      currentRouter: '/followUp-plan'
+      homeRouter: '/followUp-feedback',
+      currentRouter: '/followUp-feedback'
     });
   }
 
-  followPlanDetailConfig(): ContainerConfig {
+  followFeedbackDetailConfig(): ContainerConfig {
     return new ContainerConfig({
-      title: '随访计划列表',
-      subTitle: '随访计划详情',
+      title: '随访反馈列表',
+      subTitle: '随访反馈详情',
       ifHome: false,
-      homeRouter: '/followUp-plan',
-      currentRouter: '/followUp-plan/detail'
+      homeRouter: '/followUp-feedback',
+      currentRouter: '/followUp-feedback/detail'
     });
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ControlType, TableTitle } from '../../../../libs/dtable/dtable.entity';
 
 @Injectable()
-export class FollowPlanTableService {
+export class FollowFeedbackTableService {
 
   setTitles() {
     const Titles: TableTitle[] = [
@@ -29,16 +29,16 @@ export class FollowPlanTableService {
         key: 'userTel'
       }),
       new TableTitle({
-        name: '随访创建时间',
+        name: '设定随访时间',
         key: 'planDate'
       }),
       new TableTitle({
-        name: '初次随访时间',
-        key: 'firstFlupTime'
+        name: '随访项目',
+        key: 'item'
       }),
       new TableTitle({
-        name: '随访反馈率',
-        key: 'flupRate'
+        name: '反馈情况',
+        key: 'feedBackStatus'
       }),
       new TableTitle({
         name: '详情',

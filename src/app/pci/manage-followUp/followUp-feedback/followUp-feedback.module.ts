@@ -5,19 +5,19 @@ import { MatChipsModule, MatTabsModule, MatGridListModule, MatListModule } from 
 import { LibModule } from '../../../libs/common/lib.module';
 import { DFormModule } from '../../../libs/dform/dform.module';
 import { DTableModule } from '../../../libs/dtable/dtable.module';
-import { FollowPlanComponent } from './followUp-plan.component';
-import { PlanDetailComponent } from './plan-detail/plan-detail.component';
+import { FollowFeedbackComponent } from './followUp-feedback.component';
+import { FeedbackDetailComponent } from './feedback-detail/feedback-detail.component';
 import { AuthGuardService } from '../../_service/auth-guard.service';
-import { FollowPlanService } from './_service/followUp-plan.service';
-import { FollowPlanTableService } from './_service/followUp-plan-table.service';
+import { FollowFeedbackService } from './_service/followUp-feedback.service';
+import { FollowFeedbackTableService } from './_service/followUp-feedback-table.service';
 
 const routes: Routes = [{
   path: '',
   canActivate: [AuthGuardService],
-  component: FollowPlanComponent
+  component: FollowFeedbackComponent
 }, {
   path: 'detail',
-  component: PlanDetailComponent,
+  component: FeedbackDetailComponent,
   canActivate: [AuthGuardService],
 }];
 
@@ -34,13 +34,13 @@ const routes: Routes = [{
     RouterModule.forChild(routes)
   ],
   declarations: [
-    FollowPlanComponent,
-    PlanDetailComponent
+    FollowFeedbackComponent,
+    FeedbackDetailComponent
   ],
   providers: [
-    FollowPlanService,
-    FollowPlanTableService
+    FollowFeedbackService,
+    FollowFeedbackTableService
   ]
 })
-export class FollowPlanModule {
+export class FollowFeedbackModule {
 }

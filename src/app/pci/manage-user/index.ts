@@ -25,7 +25,5 @@ export const stores = {
   user: createReducer('user', [0], {}),
   userOrder: createReducer('userOrder', [0, 0, 0, 0], {}),
   userCertification: createReducer('userCertification', [0, 0, 0, 0], {}),
-  healthData: createReducer('healthData', [0, 0, 0, 0], {}),
-  medicationRemind: createReducer('medication', [0], {}),
-  insuranceCertification: createReducer('insurance', [0], {})
+  healthData: createReducer('healthData', [0, 0, 0, 0], {})
 };

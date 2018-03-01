@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
-// import { ImageDialog } from '../../../libs/dmodal/dialog-img.component';
 import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { FollowPlanService } from './_service/followUp-plan.service';
 import { FollowPlanTableService } from './_service/followUp-plan-table.service';
+import { FollowPlan } from './_entity/followUp-plan.entity';
 import { ERRMSG } from '../../_store/static';
 
 @Component({
@@ -27,8 +27,8 @@ export class FollowPlanComponent implements OnInit {
 
   constructor(
     @Inject('action') private action,
-    // @Inject('nav') private navService,
     @Inject('search') private search,
+    private router: Router,
     private followPlanService: FollowPlanService,
     private followPlanTableService: FollowPlanTableService
   ) {
@@ -40,7 +40,6 @@ export class FollowPlanComponent implements OnInit {
       titles: this.followPlanTableService.setTitles(),
       ifPage: true
     });
-    // this.createdDate = this.search.setDefaultRange();
     this.reset();
   }
 
@@ -62,7 +61,7 @@ export class FollowPlanComponent implements OnInit {
         end: 0
       };
     }
-    this.action.pageChange('medication',
+    this.action.pageChange('followPlan',
       [page]);
     this.followPlanTable.reset(page);
     this.followPlanService.getData(page, this.followPlanTable.size, this.followPlanTable.queryKey, this.option.start, this.option.end)
@@ -73,6 +72,9 @@ export class FollowPlanComponent implements OnInit {
             this.followPlanTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
             this.followPlanTable.totalPage = res.data.totalPages;
+            res.data.content.forEach(obj => {
+              obj.firstFlupTime = this.formatTime(obj.firstFlupTime)
+            })
             this.followPlanTable.lists = res.data.content;
           } else {
             this.followPlanTable.errorMessage = res.msg || ERRMSG.otherMsg;
@@ -85,10 +87,16 @@ export class FollowPlanComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    console.log(res)
-    if (res.key === 'idCardImageUrl') {
-
-    }
+    const followPlan = <FollowPlan>res.value;
+    this.action.dataChange('followPlan', followPlan);
+    this.router.navigate(['/followUp-plan/detail']);
   }
 
+  formatTime(time) {
+    let date = new Date(time),
+    Y = date.getFullYear() + '-',
+    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-',
+    D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    return Y + M + D;
+  }
 }
