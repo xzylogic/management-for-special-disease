@@ -47,35 +47,19 @@ export class UserTableService {
         minwidth: 40
       }),
       new TableTitle({
-        name: '手术医院',
-        key: 'hospital',
+        name: '实名认证',
+        key: 'validateState',
         minwidth: 80
       }),
       new TableTitle({
-        name: '手术医生',
-        key: 'surgeon',
+        name: '医保卡认证',
+        key: 'medicareCardStatus',
         minwidth: 80
       }),
       new TableTitle({
-        name: '最后手术时间',
-        key: 'lastOperationDate',
-        controlType: ControlType.date,
+        name: '来源渠道',
+        key: 'registerType',
         minwidth: 100
-      }),
-      new TableTitle({
-        name: '支架个数',
-        key: 'bracketNum',
-        minwidth: 80
-      }),
-      new TableTitle({
-        name: '病史',
-        key: 'caseHistory',
-        minwidth: 150
-      }),
-      new TableTitle({
-        name: '住址',
-        key: 'address',
-        minwidth: 150
       }),
       new TableTitle({
         name: '注册时间',

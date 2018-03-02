@@ -38,9 +38,17 @@ export class RelationshipTableService {
         minwidth: 85
       }),
       new TableTitle({
+        name: '是否认证',
+        key: 'validateStatus'
+      }),
+      new TableTitle({
         name: '申请时间',
         key: 'date',
         minwidth: 70
+      }),
+      new TableTitle({
+        name: '关联渠道',
+        key: 'channel'
       }),
       new TableTitle({
         name: '状态',

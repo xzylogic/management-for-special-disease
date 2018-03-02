@@ -77,8 +77,8 @@ export class DoctorAccountService {
   /**
    * 所有账户列表
    */
-  getDoctorAccounts(page: number, size: number) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeList}?size=${size}&page=${page}`);
+  getDoctorAccounts(page: number, size: number, key: string) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.incomeList}?size=${size}&page=${page}&param=${key}`);
   }
 
   /**

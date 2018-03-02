@@ -14,12 +14,15 @@
       </button>
       <div>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="小区经度" readonly  [formControlName]="config.longitude.key" [(ngModel)]="config.longitude.value">
+          <input matInput placeholder="小区经度" readonly [formControlName]="config.longitude.key"
+                 [(ngModel)]="config.longitude.value">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="小区纬度" readonly  [formControlName]="config.latitude.key" [(ngModel)]="config.latitude.value">
+          <input matInput placeholder="小区纬度" readonly [formControlName]="config.latitude.key"
+                 [(ngModel)]="config.latitude.value">
         </mat-form-field>
       </div>
+      <app-input-dropdown [form]="form" [data]="config.enable" [value]="config.enable.value"></app-input-dropdown>
       <baidu-map
         *ngIf="baidu"
         ak="kk444e2vQ7GHv11tL1hd21k3T6oKxMjm"

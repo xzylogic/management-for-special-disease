@@ -1,5 +1,6 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="addition">
+    <button mat-raised-button (click)="toSendMessage()">短信提醒患者</button>
     <button mat-raised-button (click)="export()">导出</button>
     <button mat-raised-button (click)="newData()">新增患者</button>
   </div>
@@ -15,6 +16,7 @@
           <mat-option [value]="false">否</mat-option>
         </mat-select>
       </mat-form-field>
+      <app-search [type]="'1'" [label]="'注册时间'" [(value)]="RegisterDate"></app-search>
       <button mat-icon-button color="primary" type="button" (click)="getUsers(0)">
         <mat-icon>search</mat-icon>
       </button>

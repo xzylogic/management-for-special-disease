@@ -7,19 +7,19 @@ export class PeriodStatisticsTableService {
   setTitles() {
     const Titles: TableTitle[] = [
       new TableTitle({
-        name: '时间段内登录总数',
+        name: '时间段内启动总次数',
         key: 'totalLoginCount'
       }),
       new TableTitle({
-        name: '登录人数',
+        name: '启动人数',
         key: 'loginGroupCount'
       }),
       new TableTitle({
-        name: '登录率',
+        name: '启动率',
         key: 'loginRate'
       }),
       new TableTitle({
-        name: '人均登录数',
+        name: '人均时间段启动数',
         key: 'averageLogin'
       })
     ];

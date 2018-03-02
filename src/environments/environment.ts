@@ -10,6 +10,7 @@ export const environment = {
 export const app = {
   pci: {
     BASE_URL: 'http://10.2.10.10/pci-operation/',
+    // BASE_URL: 'http://10.2.10.141:8082/',
     COMMON_URL: 'http://10.2.10.10/pro-health/',
     UPLOAD_URL: 'http://10.2.10.10/pci-operation/api/upload'
   },

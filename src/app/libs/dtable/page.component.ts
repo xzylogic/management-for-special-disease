@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-lib-page',
   templateUrl: './page.component.html',
   styleUrls: ['./dtable.component.scss']
 })
-export class DPageComponent implements OnInit {
+export class DPageComponent implements OnChanges {
   @Input() page: number;
   @Input() total: number;
   @Output() pageEmitter = new EventEmitter();
@@ -15,7 +15,7 @@ export class DPageComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.getPageList(this.total, this.page);
   }
 

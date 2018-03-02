@@ -13,6 +13,7 @@ export class RelationshipComponent implements OnInit {
   containerConfig: ContainerConfig;
   relationshipTable: TableOption = new TableOption();
   queryStatus: any;
+  queryChannel: any;
 
   constructor(
     private relationshipService: RelationshipService,
@@ -31,12 +32,19 @@ export class RelationshipComponent implements OnInit {
 
   reset() {
     this.relationshipTable.queryKey = '';
+    this.queryStatus = '';
+    this.queryChannel = '';
     this.getRelationships(0);
   }
 
   getRelationships(page) {
     this.relationshipTable.reset(page);
-    this.relationshipService.getRelationships(page, this.relationshipTable.size, this.relationshipTable.queryKey, this.queryStatus)
+    this.relationshipService.getRelationships(
+      page, this.relationshipTable.size,
+      this.relationshipTable.queryKey,
+      this.queryStatus,
+      this.queryChannel
+    )
       .subscribe(
         res => {
           this.relationshipTable.loading = false;

@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import { OfflineOptions, ControlAnchor, NavigationControlType } from 'angular2-baidu-map';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import { FormDropdown } from '../../../../libs/dform/_entity/form-dropdown';
 import { FormFile } from '../../../../libs/dform/_entity/form-file';
 import { FormText } from '../../../../libs/dform/_entity/form-text';
 import { HintDialog } from '../../../../libs/dmodal/dialog.component';
@@ -76,6 +77,7 @@ export class HospitalEditComponent implements OnInit {
       hospitalAddress: new FormControl({value: ''}, Validators.required),
       longitude: new FormControl({value: ''}, Validators.required),
       latitude: new FormControl({value: ''}, Validators.required),
+      enable: new FormControl({value: ''}, Validators.required),
     });
     this.config = {
       imageUrl: new FormFile({
@@ -106,6 +108,15 @@ export class HospitalEditComponent implements OnInit {
         value: data && data.latitude || '',
         disabled: true
       }),
+      enable: new FormDropdown({
+        label: '状态',
+        key: 'enable',
+        value: data && data.enable || '',
+        options: [
+          {id: '1', name: '启用'},
+          {id: '0', name: '禁用'}
+        ],
+      })
     }
   }
 

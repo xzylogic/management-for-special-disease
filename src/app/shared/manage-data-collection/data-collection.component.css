@@ -75,3 +75,20 @@ ul.data-list > li:first-child {
 .right-button {
   text-align: right;
 }
+
+.form-content {
+  padding-bottom: 10px;
+}
+
+.header-data {
+  padding: 15px 0 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.header-margin {
+  margin-bottom: 20px;
+}
+
+.button-padding {
+  padding: 15px 0;
+}

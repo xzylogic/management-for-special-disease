@@ -13,6 +13,12 @@ export const routes: Routes = [{
 }, {
   path: 'health-data',
   loadChildren: 'app/pci/manage-user/health-data/health-data.module#HealthDataModule'
+}, {
+  path: 'medication-remind',
+  loadChildren: 'app/pci/manage-user/medication-remind/medication-remind.module#MedicationRemindModule'
+}, {
+  path: 'insurance-certification',
+  loadChildren: 'app/pci/manage-user/insurance-certification/insurance-certification.module#InsuranceCertificationModule'
 }];
 
 export const stores = {

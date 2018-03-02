@@ -2,6 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../libs/common/container/container.component';
+import { FormText } from '../../libs/dform/_entity/form-text';
+import { EditDialog } from '../../libs/dmodal/dialog-edit.component';
+import { HintDialog } from '../../libs/dmodal/dialog.component';
+import { DialogEdit } from '../../libs/dmodal/dialog.entity';
 import { TableOption } from '../../libs/dtable/dtable.entity';
 import { DataCollectionService } from './_service/data-collection.service';
 import { DataCollectionTableService } from './_service/data-collection-table.service';
@@ -23,6 +27,10 @@ export class DataCollectionComponent implements OnInit {
   auditedTable: TableOption;
   unhandledTable: TableOption;
   pages: any;
+
+  queryHospital: string;
+  queryTime: string;
+  hospitalList = [];
 
   constructor(
     @Inject('action') private action,
@@ -52,6 +60,7 @@ export class DataCollectionComponent implements OnInit {
       ifPage: true
     });
     this.reset();
+    this.getHospitals();
   }
 
   reset() {
@@ -62,6 +71,8 @@ export class DataCollectionComponent implements OnInit {
   }
 
   reset0() {
+    this.queryHospital = '';
+    this.queryTime = '';
     this.waitingTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.pages = page;
@@ -97,7 +108,7 @@ export class DataCollectionComponent implements OnInit {
     this.pages[type] = page;
     this.action.pageChange('dataCollection', this.pages);
     list.reset(page);
-    this.dataCollectionService.getDataCollections(page, list.size, type)
+    this.dataCollectionService.getDataCollections(page, list.size, type, this.queryHospital, this.queryTime)
       .subscribe(
         res => {
           list.loading = false;
@@ -121,22 +132,38 @@ export class DataCollectionComponent implements OnInit {
         });
   }
 
+  getHospitals() {
+    this.dataCollectionService.getHospitals()
+      .subscribe(res => {
+        if (res.code == 0 && res.data) {
+          this.hospitalList = res.data;
+        }
+      })
+  }
+
   gotoHandle(data) {
-    //   // console.log(data);
-    //   if(data.key === 'dataTypein') {
-    //     this.router.navigate(['/data-collection/edit', data.value.id]);
-    //   }
-    //   if(data.key === 'showData') {
-    //     this.router.navigate(['/data-collection/detail', data.value.id]);
-    //   }
-    //   if(data.key === 'keepData') {
-    //     this.id = data.value.id;
-    //     this.handleEnable = true;
-    //   }
-    //   if(data.key === 'tapeOut') {
-    //     this.id = data.value.id;
-    //     this.auditingEnable = true;
-    //   }
+    console.log(data);
+    if (data.key === 'dataTypein') {
+      this.router.navigate(['/data-collection/edit', data.value.id]);
+    }
+    if (data.key === 'showData') {
+      this.router.navigate(['/data-collection/detail', data.value.id]);
+    }
+    if (data.key === 'keepData') {
+      auditData(
+        data.value.id, '您确定暂不处理该用户资料？', 2,
+        this.dialog, this.dataCollectionService, () => {
+          // console.log('success');
+          this.reset();
+        });
+    }
+    if (data.key === 'tapeOut') {
+      auditData(data.value.id, '您确定要将资料提交到审核中？', 1,
+        this.dialog, this.dataCollectionService, () => {
+          // console.log('success');
+          this.reset();
+        });
+    }
   }
 
   format(data) {
@@ -167,4 +194,96 @@ export class DataCollectionComponent implements OnInit {
   change(index) {
     this.action.tabChange('dataCollection', index);
   }
+
+  // auditData(id, title, status) {
+  //   const config: DialogEdit = new DialogEdit({
+  //     title: title,
+  //     button: '提交',
+  //     form: status == 2 ?
+  //       [
+  //         new FormText({
+  //           key: 'auditName',
+  //           label: '审核人姓名',
+  //           value: '',
+  //           required: true
+  //         }),
+  //         new FormText({
+  //           key: 'remark',
+  //           label: '备注',
+  //           value: '',
+  //           required: true
+  //         })
+  //       ] : [
+  //         new FormText({
+  //           key: 'auditName',
+  //           label: '审核人姓名',
+  //           value: '',
+  //           required: true
+  //         })]
+  //   });
+  //   EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+  //     if (result && result.auditName) {
+  //       result.status = status;
+  //       this.dataCollectionService.statusChanged(id, result)
+  //         .subscribe(res => {
+  //           if (res.code == 0) {
+  //             HintDialog('提交成功', this.dialog);
+  //             this.reset();
+  //           } else {
+  //             HintDialog('提交失败', this.dialog);
+  //           }
+  //         }, err => {
+  //           HintDialog('请求服务器出错', this.dialog);
+  //           throw new Error(err);
+  //         })
+  //     }
+  //   });
+  // }
+}
+
+export function auditData(id, title, status, dialog, service, callback) {
+  const config: DialogEdit = new DialogEdit({
+    title: title,
+    button: '提交',
+    form: status == 2 ?
+      [
+        new FormText({
+          key: 'auditName',
+          label: '审核人姓名',
+          value: '',
+          required: true
+        }),
+        new FormText({
+          key: 'remark',
+          label: '备注',
+          value: '',
+          required: true
+        })
+      ] : [
+        new FormText({
+          key: 'auditName',
+          label: '审核人姓名',
+          value: '',
+          required: true
+        })]
+  });
+  EditDialog(config, dialog).afterClosed().subscribe(result => {
+    if (result && result.auditName) {
+      result.status = status;
+      service.statusChanged(id, result)
+        .subscribe(res => {
+          if (res.code == 0) {
+            let subscribeDialog = HintDialog('提交成功', dialog).afterClosed().subscribe(() => {
+              callback();
+              subscribeDialog.unsubscribe();
+            });
+          } else {
+            HintDialog('提交失败', dialog);
+          }
+        }, err => {
+          HintDialog('请求服务器出错', dialog);
+          throw new Error(err);
+        })
+    }
+  });
 }

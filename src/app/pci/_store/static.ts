@@ -115,6 +115,35 @@ export let NAVBARS = [
         title: '患者体征数据管理',
         link: '/health-data',
         tag: 0
+      }),
+      new Navbar({
+        key: 'medicationmind',
+        title: '患者用药提醒管理',
+        link: '/medication-remind',
+        tag: 0
+      }),
+      new Navbar({
+        key: 'insurancecertification',
+        title: '医保卡认证管理',
+        link: '/insurance-certification',
+        tag: 0
+      }),
+    ]
+  }),
+  new Navbar({
+    key: 'followUp',
+    title: '随访管理',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'followUp-plan',
+        title: '随访计划管理',
+        link: '/followUp-plan'
+      }),
+      new Navbar({
+        key: 'followUp-feedback',
+        title: '随访反馈管理',
+        link: '/followUp-feedback'
       })
     ]
   }),
@@ -294,7 +323,7 @@ export let NAVBARS = [
   new Navbar({
     key: 'datacollection',
     title: '病史资料录入',
-    link: '/old'
+    link: '/data-collection'
   }),
   new Navbar({
     key: 'versioncontrol',

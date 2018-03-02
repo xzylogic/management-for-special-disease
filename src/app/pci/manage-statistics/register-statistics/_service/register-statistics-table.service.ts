@@ -11,8 +11,16 @@ export class RegisterStatisticsTableService {
         key: 'date'
       }),
       new TableTitle({
-        name: '注册数量',
+        name: '注册用户数',
         key: 'registerCount'
+      }),
+      new TableTitle({
+        name: '实名认证用户数',
+        key: 'validateCount'
+      }),
+      new TableTitle({
+        name: '申请医患关联用户数',
+        key: 'relationCount'
       }),
     ];
     return Titles;
@@ -25,12 +33,16 @@ export class RegisterStatisticsTableService {
         key: 'date'
       }),
       new TableTitle({
-        name: '注册数量',
+        name: '注册医生数',
         key: 'registerCount'
       }),
       new TableTitle({
-        name: '审核通过',
+        name: '审核通过医生数',
         key: 'validateCount'
+      }),
+      new TableTitle({
+        name: '加入小组医生数',
+        key: 'doctorGroupCount'
       }),
     ];
     return Titles;
