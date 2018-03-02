@@ -16,6 +16,7 @@ export class SendMessageComponent implements OnInit {
   UserTable: TableOption;
   selectedItems: Array<any> = [];
   queryKey = '';
+  userAllList: any;
 
   constructor(
     private userService: UserService,
@@ -27,11 +28,13 @@ export class SendMessageComponent implements OnInit {
     this.containerConfig = this.userService.userMessageConfig();
     this.UserTable = new TableOption();
     this.getUsers(0);
+    this.getusersAll(0);
   }
 
   reset() {
     this.queryKey = '';
     this.getUsers(0);
+    this.getusersAll(0);
   }
 
   getUsers(page: number) {
@@ -54,6 +57,23 @@ export class SendMessageComponent implements OnInit {
       })
   }
 
+  getusersAll(page: number) {
+    this.userService.getUsers(
+      this.queryKey, '', '', page, 999999)
+      .subscribe(res => {
+        this.UserTable.loading = false;
+        if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
+          console.log('数据为空')
+        } else if (res.code === 0 && res.data && res.data.content) {
+          this.userAllList = res.data.content;
+        } else {
+          console.log('未知错误')
+        }
+      }, err => {
+        console.log(err);
+      });
+  }
+
   selectItem(item) {
     let target = true;
     this.selectedItems.forEach(obj => {
@@ -62,22 +82,20 @@ export class SendMessageComponent implements OnInit {
       }
     });
     if (target) {
-      this.selectedItems.push(item);
+      this.selectedItems.unshift(item);
     }
   }
 
   selectAll() {
-    if (this.UserTable.lists) {
-      const ids = [];
-      this.selectedItems.forEach(obj => {
-        ids.push(obj.id);
-      });
-      this.UserTable.lists.forEach(obj => {
-        if (ids.indexOf(obj.id) < 0) {
-          this.selectedItems.push(obj);
-        }
-      })
-    }
+    const ids = [];
+    this.selectedItems.forEach(obj => {
+      ids.push(obj.id);
+    });
+    this.userAllList.forEach(obj => {
+      if (ids.indexOf(obj.id) < 0) {
+        this.selectedItems.unshift(obj);
+      }
+    })
   }
 
   removeItem(item) {
