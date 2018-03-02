@@ -63,22 +63,41 @@ export class SendMessageComponent implements OnInit {
       }
     });
     if (target) {
-      this.selectedItems.push(item);
+      this.selectedItems.unshift(item);
     }
   }
 
   selectAll() {
-    if (this.auditedTable.lists) {
-      const ids = [];
-      this.selectedItems.forEach(obj => {
-        ids.push(obj.id);
-      });
-      this.auditedTable.lists.forEach(obj => {
-        if (ids.indexOf(obj.id) < 0) {
-          this.selectedItems.push(obj);
+    this.doctorService.getAllDoctors('', '', 0, 999999)
+      .subscribe(res => {
+        if (res.code === 0 && res.data && res.data.content) {
+          let auditedLists = res.data.content;
+          const ids = [];
+          this.selectedItems.forEach(obj => {
+            ids.push(obj.id);
+          });
+          auditedLists.forEach(obj => {
+            if (ids.indexOf(obj.id) < 0) {
+              this.selectedItems.unshift(obj);
+            }
+          });
         }
-      })
-    }
+      });
+    // if (this.auditedTable.lists) {
+    //   const ids = [];
+    //   this.selectedItems.forEach(obj => {
+    //     ids.push(obj.id);
+    //   });
+    //   this.auditedTable.lists.forEach(obj => {
+    //     if (ids.indexOf(obj.id) < 0) {
+    //       this.selectedItems.push(obj);
+    //     }
+    //   })
+    // }
+  }
+
+  clearAll() {
+    this.selectedItems = [];
   }
 
   removeItem(item) {

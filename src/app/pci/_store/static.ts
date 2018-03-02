@@ -8,7 +8,7 @@ export let NAVBARS = [
     subBars: [
       new Navbar({
         key: 'registerstatistics',
-        title: '注册量统计',
+        title: '用户统计',
         link: '/register-statistics'
       }),
       new Navbar({
