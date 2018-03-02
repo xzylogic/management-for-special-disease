@@ -12,6 +12,11 @@ export let NAVBARS = [
         link: '/register-statistics'
       }),
       new Navbar({
+        key: 'hospitalstatistics',
+        title: '医院渠道统计',
+        link: '/hospital-statistics'
+      }),
+      new Navbar({
         key: 'activenessstatistics',
         title: '日活跃度统计',
         link: '/activeness-statistics'
