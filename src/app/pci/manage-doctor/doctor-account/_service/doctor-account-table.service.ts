@@ -220,7 +220,7 @@ export class DoctorAccountTableService {
       }),
       new TableTitle({
         name: '兑换商品',
-        key: 'name'
+        key: 'goodsTitle'
       }),
       new TableTitle({
         name: '兑换数量',
