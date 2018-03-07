@@ -33,8 +33,9 @@ export class DoctorEditComponent implements OnInit {
     this.doctorService.getOptions().subscribe(res => {
       if (res.code === 0 && res.data) {
         this.doctor.subscribe(data => {
-          this.state = data.state;
+          console.log(data);
           if (data.id === 0) {
+            this.state = null;
             this.containerConfig = this.doctorService.doctorEditConfig(true);
             this.form = this.doctorFormService.setForm(
               res.data.hospitalList,
@@ -42,6 +43,7 @@ export class DoctorEditComponent implements OnInit {
               res.data.doctorTitleList
             );
           } else {
+            this.state = (data.statusIndex == 2);
             this.containerConfig = this.doctorService.doctorEditConfig(false);
             this.form = this.doctorFormService.setForm(
               res.data.hospitalList,
@@ -61,7 +63,7 @@ export class DoctorEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
+    // console.log(value);
     if (this.state === true) {
       this.doctorService.doctorAuditedUpdate(value)
         .subscribe(res => {
