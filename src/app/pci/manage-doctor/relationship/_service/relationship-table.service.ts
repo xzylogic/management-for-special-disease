@@ -58,10 +58,10 @@ export class RelationshipTableService {
         name: '加入小组',
         key: 'groupName'
       }),
-      new TableTitle({
-        name: '是否赠送服务',
-        key: 'whetherToGiveFreeService'
-      })
+      // new TableTitle({
+      //   name: '是否赠送服务',
+      //   key: 'whetherToGiveFreeService'
+      // })
     ];
 
     return Titles;
