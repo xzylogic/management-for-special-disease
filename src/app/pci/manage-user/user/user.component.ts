@@ -120,7 +120,7 @@ export class UserComponent implements OnInit {
 
   export() {
     let exportList;
-    this.userService.getUsers(this.userTable.queryKey, this.queryBind, '2', 0, 99999)
+    this.userService.getUsers(this.userTable.queryKey, this.queryBind, '', 0, 99999)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           exportList = this.common.toArray(res.data.content);

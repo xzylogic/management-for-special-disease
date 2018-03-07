@@ -37,12 +37,8 @@ export class InsuranceCertificationTableService {
         key: 'idCardNumber'
       }),
       new TableTitle({
-        name: '申请认证时间',
-        key: 'validateDate'
-      }),
-      new TableTitle({
         name: '通过时间',
-        key: 'callbackDate'
+        key: 'medicareCardDate'
       })
     ];
 

@@ -50,6 +50,7 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() type: SearchType;
   @Input() label: string;
   @Input() value: any;
+  @Input() maxDate: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
   @ViewChild('date') date: any;
   @ViewChild('range') range: any;
@@ -74,7 +75,8 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
       this.datepicker = flatpickr(this.range.nativeElement, {
         'locale': Mandarin,
         'mode': 'range',
-        'defaultDate': this.value || ''
+        'defaultDate': this.value || '',
+        'maxDate': this.maxDate || ''
       });
     }
   }
