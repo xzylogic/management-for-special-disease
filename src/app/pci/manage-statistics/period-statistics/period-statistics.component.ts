@@ -43,6 +43,9 @@ export class PeriodStatisticsComponent implements OnInit {
   }
 
   getUserQueryResult() {
+    if (this.queryUserDate && this.queryUserDate.indexOf('至') < 0) {
+      this.queryUserDate += ` 至 ${this.queryUserDate}`;
+    }
     this.userPeriodTable.reset();
     const option = this.search.getStartAndEnd(this.queryUserDate);
     this.periodStatisticsservice.getUserResult(option.start, option.end)
@@ -61,6 +64,9 @@ export class PeriodStatisticsComponent implements OnInit {
   }
 
   getDoctorQueryResult() {
+    if (this.queryDoctorDate && this.queryDoctorDate.indexOf('至') < 0) {
+      this.queryDoctorDate += ` 至 ${this.queryDoctorDate}`;
+    }
     this.doctorPeriodTable.reset();
     const option = this.search.getStartAndEnd(this.queryDoctorDate);
     this.periodStatisticsservice.getDoctorResult(option.start, option.end)

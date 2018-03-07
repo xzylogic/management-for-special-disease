@@ -49,6 +49,9 @@ export class DownloadStatisticsComponent implements OnInit {
   }
 
   getMainQueryResult() {
+    if (this.queryMainDate && this.queryMainDate.indexOf('至') < 0) {
+      this.queryMainDate += ` 至 ${this.queryMainDate}`;
+    }
     this.mainTable.reset();
     const option = this.search.getStartAndEnd(this.queryMainDate);
     this.service.getDownloadStatistics(option.start, option.end, 2)
@@ -67,6 +70,9 @@ export class DownloadStatisticsComponent implements OnInit {
   }
 
   getUserQueryResult() {
+    if (this.queryUserDate && this.queryUserDate.indexOf('至') < 0) {
+      this.queryUserDate += ` 至 ${this.queryUserDate}`;
+    }
     this.userTable.reset();
     const option = this.search.getStartAndEnd(this.queryUserDate);
     this.service.getDownloadStatistics(option.start, option.end, 0)
@@ -86,6 +92,9 @@ export class DownloadStatisticsComponent implements OnInit {
   }
 
   getDoctorQueryResult() {
+    if (this.queryDoctorDate && this.queryDoctorDate.indexOf('至') < 0) {
+      this.queryDoctorDate += ` 至 ${this.queryDoctorDate}`;
+    }
     this.doctorTable.reset();
     const option = this.search.getStartAndEnd(this.queryDoctorDate);
     this.service.getDownloadStatistics(option.start, option.end, 1)

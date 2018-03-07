@@ -50,6 +50,9 @@ export class BusinessStatisticsComponent implements OnInit {
   }
 
   getUserData() {
+    if (this.queryUserDate && this.queryUserDate.indexOf('至') < 0) {
+      this.queryUserDate += ` 至 ${this.queryUserDate}`;
+    }
     const option = this.search.getStartAndEnd(this.queryUserDate);
     this.businessUserTable.reset();
     this.businessservice.getData(option.start, option.end)
@@ -70,6 +73,9 @@ export class BusinessStatisticsComponent implements OnInit {
   }
 
   getDoctorData() {
+    if (this.queryDoctorDate && this.queryDoctorDate.indexOf('至') < 0) {
+      this.queryDoctorDate += ` 至 ${this.queryDoctorDate}`;
+    }
     const option = this.search.getStartAndEnd(this.queryDoctorDate);
     this.businessDoctorTable.reset();
     this.businessservice.getData(option.start, option.end)

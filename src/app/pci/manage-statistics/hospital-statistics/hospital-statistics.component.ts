@@ -44,6 +44,9 @@ export class HospitalStatisticsComponent implements OnInit, OnDestroy {
   }
 
   getUsers(page: number) {
+    if (this.userTable.queryKey && this.userTable.queryKey.date && this.userTable.queryKey.date.indexOf('至') < 0) {
+      this.userTable.queryKey.date += ` 至 ${this.userTable.queryKey.date}`;
+    }
     this.userTable.reset(page);
     this.subscribeUserTable = this.hospitalStatisticsService.getUsers(
       page, this.userTable.size,
