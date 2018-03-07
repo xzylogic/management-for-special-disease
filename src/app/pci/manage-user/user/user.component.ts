@@ -88,10 +88,10 @@ export class UserComponent implements OnInit {
     list.forEach(data => {
       // data.hospitalId = data.hospital && data.hospital.id || '';
       // data.hospitalName = data.hospital && data.hospital.name || '';
-      if (data.sex === 0) {
+      if (data.sex === '0') {
         data.sexName = '男';
       }
-      if (data.sex === 1) {
+      if (data.sex === '1') {
         data.sexName = '女';
       }
     })
