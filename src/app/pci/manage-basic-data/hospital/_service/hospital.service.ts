@@ -5,6 +5,7 @@ const PATH = {
   hospitalList: 'api/hospital/all', // 医院列表
   hospitalCreate: 'api/hospital/edit', // 新建医院
   hospitalEdit: 'api/hospital/edit', // 编辑医院
+  hospitalqr: 'api/hospital/getQr', // 编辑医院
 };
 
 @Injectable()
@@ -55,5 +56,13 @@ export class HospitalService {
    */
   hospitalEdit(data) {
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.hospitalEdit}`, data);
+  }
+
+  /**
+   * 获取医院二维码
+   * @param id
+   */
+  getHospitalQr(id) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.hospitalqr}?sceneId=${id}`)
   }
 }

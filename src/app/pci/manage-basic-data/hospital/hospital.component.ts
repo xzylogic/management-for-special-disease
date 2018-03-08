@@ -5,6 +5,8 @@ import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angu
 import { OfflineOptions, ControlAnchor, NavigationControlType } from 'angular2-baidu-map';
 import { Router } from '@angular/router';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ImageDialog } from '../../../libs/dmodal/dialog-img.component';
+import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { TableOption } from '../../../libs/dtable/dtable.entity';
 import { HospitalService } from './_service/hospital.service';
 import { HospitalTableService } from './_service/hospital-table.service';
@@ -81,6 +83,22 @@ export class HospitalComponent implements OnInit {
       const config = new MatDialogConfig();
       config.data = hospital;
       this.dialog.open(DialogComponent, config);
+    }
+    if (res.key === 'qrcode') {
+      this.hospitalService.getHospitalQr(hospital.id)
+        .subscribe(sres => {
+          if (sres && sres.code == 0 && sres.data) {
+            ImageDialog(
+              '医院服务号二维码', sres.data, this.dialog,
+              `${hospital.name || ''}`
+            );
+          } else {
+            HintDialog('获取医院二维码错误', this.dialog);
+          }
+        }, err => {
+          HintDialog('获取医院二维码网络错误', this.dialog);
+          throw new Error(err);
+        });
     }
   }
 }

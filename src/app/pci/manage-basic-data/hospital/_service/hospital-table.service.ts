@@ -25,6 +25,13 @@ export class HospitalTableService {
         key: 'num',
       }),
       new TableTitle({
+        name: '医院服务二维码',
+        key: 'qrcode',
+        minwidth: 85,
+        option: '查看',
+        controlType: ControlType.button,
+      }),
+      new TableTitle({
         name: '地理位置',
         key: 'geography',
         minwidth: 85,
