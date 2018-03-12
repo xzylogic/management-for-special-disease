@@ -74,6 +74,7 @@ export class FollowFeedbackComponent implements OnInit {
           this.followFeedbackTable.loading = false;
           if (res.code === 0 && res.data && res.data.flupFeedbackDto && res.data.flupFeedbackDto.content && res.data.flupFeedbackDto.content.length === 0) {
             this.followFeedbackTable.errorMessage = ERRMSG.nullMsg;
+            this.followRate = res.data.feedBackRate;
           } else if (res.code === 0 && res.data && res.data.flupFeedbackDto && res.data.flupFeedbackDto.content) {
             this.followFeedbackTable.totalPage = res.data.flupFeedbackDto.totalPages;
             this.followRate = res.data.feedBackRate;

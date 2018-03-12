@@ -9,6 +9,8 @@
       </mat-form-field>
       <mat-form-field floatPlaceholder="always">
         <mat-select placeholder="状态" name="queryBind" [(ngModel)]="deleted">
+          <mat-option [value]="''">全部</mat-option>
+          <mat-option [value]="false">未删除</mat-option>
           <mat-option [value]="true">已删除</mat-option>
         </mat-select>
       </mat-form-field>

@@ -60,7 +60,7 @@ export class MedicationRemindComponent implements OnInit {
               if (obj.deleted == true) {
                 obj.deleted = '已删除'
               } else {
-                obj.deleted = ''
+                obj.deleted = '未删除'
               }
               if (obj.remind == false) {
                 obj.remind = '关闭'
