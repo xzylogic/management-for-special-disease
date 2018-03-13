@@ -66,8 +66,8 @@ export class UserOrderTableService {
       new TableTitle({
         name: '使用情况',
         key: 'usage',
+        controlType: ControlType.textButton,
         option: '查看',
-        controlType: ControlType.button
       }),
       new TableTitle({
         name: '状态',
@@ -408,8 +408,8 @@ export class UserOrderTableService {
       new TableTitle({
         name: '使用情况',
         key: 'usage',
-        option: '查看',
-        controlType: ControlType.button
+        controlType: ControlType.textButton,
+        option: '查看'
       }),
       new TableTitle({
         name: 'Ping++订单号',

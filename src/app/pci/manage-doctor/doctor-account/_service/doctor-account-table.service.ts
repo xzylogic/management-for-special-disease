@@ -40,12 +40,14 @@ export class DoctorAccountTableService {
       new TableTitle({
         name: '收到鲜花',
         key: 'totalRevenue',
-        controlType: ControlType.button
+        controlType: ControlType.textButton,
+        option: '查看'
       }),
       new TableTitle({
         name: '已兑换',
         key: 'totalExpenses',
-        controlType: ControlType.button
+        controlType: ControlType.textButton,
+        option: '查看'
       }),
       new TableTitle({
         name: '剩余',
