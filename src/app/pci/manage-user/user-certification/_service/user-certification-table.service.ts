@@ -21,6 +21,10 @@ export class UserCertificationTableService {
         key: 'name'
       }),
       new TableTitle({
+        name: 'ID',
+        key: 'id'
+      }),
+      new TableTitle({
         name: '性别',
         key: 'sexValue'
       }),
@@ -76,6 +80,10 @@ export class UserCertificationTableService {
         key: 'name'
       }),
       new TableTitle({
+        name: 'ID',
+        key: 'id'
+      }),
+      new TableTitle({
         name: '性别',
         key: 'sexValue'
       }),
@@ -113,6 +121,10 @@ export class UserCertificationTableService {
       new TableTitle({
         name: '姓名',
         key: 'name'
+      }),
+      new TableTitle({
+        name: 'ID',
+        key: 'id'
       }),
       new TableTitle({
         name: '性别',
@@ -163,6 +175,10 @@ export class UserCertificationTableService {
       new TableTitle({
         name: '姓名',
         key: 'name'
+      }),
+      new TableTitle({
+        name: 'ID',
+        key: 'id'
       }),
       new TableTitle({
         name: '性别',
