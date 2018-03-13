@@ -28,6 +28,9 @@ export class InspectionItemFormComponent implements OnInit {
 
   ngOnInit() {
     this.info = this.data;
+    if (!this.info.standard) {
+      this.info.standard = '1'
+    }
   }
 
   saveAsDraft() {
