@@ -21,7 +21,7 @@ export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.initSidebars();
+    // this.initSidebars();
   }
 
   ngAfterViewInit() {

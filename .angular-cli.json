@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "management-pci",
+      "outDir": "medical-record",
       "assets": [
         "favicon.ico"
       ],

@@ -41,6 +41,7 @@ export class AuthService {
   isAuthorized(): boolean {
     const admin = window.sessionStorage.getItem(this.JWT_KEY);
     if (admin) {
+      console.log(admin);
       this.mainAction.setAdmin({id: JSON.parse(admin).id, name: JSON.parse(admin).name});
     }
     return Boolean(admin);

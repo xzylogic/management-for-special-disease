@@ -4,10 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve -p 4203",
-    "copy": "cp -rf WEB-INF management-pci",
-    "build-pci-test": "ng build --prod --env=test --bh /management-pci/ && npm run copy",
-    "build-pci": "ng build --prod --env=pci --bh /management-pci/ && npm run copy",
-    "build": "npm run build-pci"
+    "copy": "cp -rf WEB-INF medical-record",
+    "build-test": "ng build --prod --env=test --bh /medical-record/ && npm run copy",
+    "build": "ng build --prod --env=prod --bh /medical-record/ && npm run copy"
   },
   "private": true,
   "dependencies": {
