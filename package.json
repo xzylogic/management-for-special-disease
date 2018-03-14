@@ -5,11 +5,9 @@
   "scripts": {
     "start": "ng serve -p 4203",
     "copy": "cp -rf WEB-INF management-pci",
-    "old": "mkdir management-pci/old && cp old/** management-pci/old",
-    "old-test": "mkdir management-pci/old && cp old-test/** management-pci/old",
-    "build-test": "ng build --prod --env=test --bh /management-pci/ && npm run copy && npm run old-test",
-    "build-pci": "ng build --prod --env=pci --bh /management-pci/ && npm run copy && npm run old",
-    "build": "npm run build-pci && npm run copy"
+    "build-pci-test": "ng build --prod --env=test --bh /management-pci/ && npm run copy",
+    "build-pci": "ng build --prod --env=pci --bh /management-pci/ && npm run copy",
+    "build": "npm run build-pci"
   },
   "private": true,
   "dependencies": {
