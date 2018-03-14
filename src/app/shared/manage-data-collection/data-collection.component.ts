@@ -19,8 +19,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class DataCollectionComponent implements OnInit {
   containerConfig: ContainerConfig;
-  @select(['doctor', 'tab']) tab: Observable<number>;
-  @select(['doctor', 'page']) page: Observable<Array<number>>;
+  @select(['dataCollection', 'tab']) tab: Observable<number>;
+  @select(['dataCollection', 'page']) page: Observable<Array<number>>;
 
   waitingTable: TableOption;
   auditingTable: TableOption;

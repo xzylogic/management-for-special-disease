@@ -1,0 +1,11 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <h1>心血管家后台管理系统 —— 病史资料录入</h1>
+  <span class="toolbar__spacer"></span>
+  <span class="toolbar__info">你好，{{username | async}} ！</span>
+  <button mat-mini-fab (click)="logout()">退出</button>
+</mat-toolbar>
+<mat-sidenav-container class="app-container">
+  <div class="app-main">
+    <ng-content></ng-content>
+  </div>
+</mat-sidenav-container>
