@@ -278,7 +278,7 @@ export function auditData(id, title, status, dialog, service, callback) {
               subscribeDialog.unsubscribe();
             });
           } else {
-            HintDialog('提交失败', dialog);
+            HintDialog(res.msg || '提交失败', dialog);
           }
         }, err => {
           HintDialog('请求服务器出错', dialog);
