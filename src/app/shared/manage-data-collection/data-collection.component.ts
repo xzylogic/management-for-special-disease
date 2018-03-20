@@ -19,8 +19,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class DataCollectionComponent implements OnInit {
   containerConfig: ContainerConfig;
-  @select(['dataCollection', 'tab']) tab: Observable<number>;
-  @select(['dataCollection', 'page']) page: Observable<Array<number>>;
+  @select(['dataCollection', 'tab']) tab: Observable < number > ;
+  @select(['dataCollection', 'page']) page: Observable < Array < number >> ;
 
   waitingTable: TableOption;
   auditingTable: TableOption;
@@ -38,8 +38,7 @@ export class DataCollectionComponent implements OnInit {
     private dataCollectionTableService: DataCollectionTableService,
     private dialog: MatDialog,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.containerConfig = this.dataCollectionService.dataCollectionConfig();
@@ -74,7 +73,7 @@ export class DataCollectionComponent implements OnInit {
     this.queryHospital = '';
     this.queryTime = '';
     this.waitingTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
+    this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.waitingTable, 0, page[0]);
     });
@@ -82,7 +81,7 @@ export class DataCollectionComponent implements OnInit {
 
   reset1() {
     this.auditingTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
+    this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.auditingTable, 1, page[1]);
     });
@@ -90,7 +89,7 @@ export class DataCollectionComponent implements OnInit {
 
   reset2() {
     this.auditedTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
+    this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.auditedTable, 3, page[2]);
     });
@@ -98,7 +97,7 @@ export class DataCollectionComponent implements OnInit {
 
   reset3() {
     this.unhandledTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
+    this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.unhandledTable, 2, page[2]);
     });
@@ -245,27 +244,27 @@ export function auditData(id, title, status, dialog, service, callback) {
   const config: DialogEdit = new DialogEdit({
     title: title,
     button: '提交',
-    form: status == 2 ?
-      [
-        new FormText({
-          key: 'auditName',
-          label: '审核人姓名',
-          value: '',
-          required: true
-        }),
-        new FormText({
-          key: 'remark',
-          label: '备注',
-          value: '',
-          required: true
-        })
-      ] : [
-        new FormText({
-          key: 'auditName',
-          label: '审核人姓名',
-          value: '',
-          required: true
-        })]
+    form: status == 2 ? [
+      new FormText({
+        key: 'auditName',
+        label: '审核人姓名',
+        value: '',
+        required: true
+      }),
+      new FormText({
+        key: 'remark',
+        label: '备注',
+        value: '',
+        required: true
+      })
+    ] : [
+      new FormText({
+        key: 'auditName',
+        label: '审核人姓名',
+        value: '',
+        required: true
+      })
+    ]
   });
   EditDialog(config, dialog).afterClosed().subscribe(result => {
     if (result && result.auditName) {
@@ -278,7 +277,7 @@ export function auditData(id, title, status, dialog, service, callback) {
               subscribeDialog.unsubscribe();
             });
           } else {
-            HintDialog('提交失败', dialog);
+            HintDialog(res.msg || '提交失败', dialog);
           }
         }, err => {
           HintDialog('请求服务器出错', dialog);
