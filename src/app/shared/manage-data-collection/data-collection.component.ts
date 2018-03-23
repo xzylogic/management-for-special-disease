@@ -193,78 +193,33 @@ export class DataCollectionComponent implements OnInit {
   change(index) {
     this.action.tabChange('dataCollection', index);
   }
-
-  // auditData(id, title, status) {
-  //   const config: DialogEdit = new DialogEdit({
-  //     title: title,
-  //     button: '提交',
-  //     form: status == 2 ?
-  //       [
-  //         new FormText({
-  //           key: 'auditName',
-  //           label: '审核人姓名',
-  //           value: '',
-  //           required: true
-  //         }),
-  //         new FormText({
-  //           key: 'remark',
-  //           label: '备注',
-  //           value: '',
-  //           required: true
-  //         })
-  //       ] : [
-  //         new FormText({
-  //           key: 'auditName',
-  //           label: '审核人姓名',
-  //           value: '',
-  //           required: true
-  //         })]
-  //   });
-  //   EditDialog(config, this.dialog).afterClosed().subscribe(result => {
-  //     if (result && result.auditName) {
-  //       result.status = status;
-  //       this.dataCollectionService.statusChanged(id, result)
-  //         .subscribe(res => {
-  //           if (res.code == 0) {
-  //             HintDialog('提交成功', this.dialog);
-  //             this.reset();
-  //           } else {
-  //             HintDialog('提交失败', this.dialog);
-  //           }
-  //         }, err => {
-  //           HintDialog('请求服务器出错', this.dialog);
-  //           throw new Error(err);
-  //         })
-  //     }
-  //   });
-  // }
 }
 
 export function auditData(id, title, status, dialog, service, callback) {
   const config: DialogEdit = new DialogEdit({
     title: title,
     button: '提交',
-    form: status == 2 ? [
-      new FormText({
-        key: 'auditName',
-        label: '审核人姓名',
-        value: '',
-        required: true
-      }),
-      new FormText({
-        key: 'remark',
-        label: '备注',
-        value: '',
-        required: true
-      })
-    ] : [
-      new FormText({
-        key: 'auditName',
-        label: '审核人姓名',
-        value: '',
-        required: true
-      })
-    ]
+    form: status == 2 ?
+      [
+        new FormText({
+          key: 'auditName',
+          label: '提交人姓名',
+          value: '',
+          required: true
+        }),
+        new FormText({
+          key: 'remark',
+          label: '备注',
+          value: '',
+          required: true
+        })
+      ] : [
+        new FormText({
+          key: 'auditName',
+          label: '提交人姓名',
+          value: '',
+          required: true
+        })]
   });
   EditDialog(config, dialog).afterClosed().subscribe(result => {
     if (result && result.auditName) {

@@ -27,7 +27,8 @@
         "dev": "environments/environment.ts",
         "test": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
-        "pci": "environments/environment.pci.ts"
+        "pci": "environments/environment.pci.ts",
+        "https": "environments/environment.https.ts"
       }
     }
   ],

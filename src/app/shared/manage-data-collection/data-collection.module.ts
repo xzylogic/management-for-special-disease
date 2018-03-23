@@ -10,10 +10,6 @@ import { ImageFormComponent } from './data-collection-edit/imageForm/image-form.
 import { InspectionFormComponent } from './data-collection-edit/inspectionForm/inspection-form.component';
 import { InspectionItemFormComponent } from './data-collection-edit/inspectionItemForm/inspection-item-form.component';
 import { MedicineFormComponent } from './data-collection-edit/medicineForm/medicine-form.component';
-import { HandleAuditingComponent } from './handle/handle-auditing.component';
-import { HandlePassComponent } from './handle/handle-pass.component';
-import { HandleUnhandleComponent } from './handle/handle-unhandle.component';
-import { HandleUnpassComponent } from './handle/handle-unpass.component';
 import { ImageShowComponent } from './imageShow/imageShow.component';
 import { UserInfoComponent } from './userInfo/userInfo.component';
 import { DataCollectionEditComponent } from './data-collection-edit/data-collection-edit.component';
@@ -68,10 +64,6 @@ const routes: Routes = [{
     InspectionItemFormComponent,
     MedicineFormComponent,
     DataCollectionEditComponent,
-    HandleAuditingComponent,
-    HandlePassComponent,
-    HandleUnhandleComponent,
-    HandleUnpassComponent,
     ImageShowComponent
   ],
   providers: [

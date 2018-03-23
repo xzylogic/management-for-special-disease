@@ -6,7 +6,9 @@
     "start": "ng serve -p 4203",
     "copy": "cp -rf WEB-INF medical-record",
     "build-test": "ng build --prod --env=test --bh /medical-record/ && npm run copy",
-    "build": "ng build --prod --env=prod --bh /medical-record/ && npm run copy"
+    "build-pci": "ng build --prod --env=prod --bh /medical-record/ && npm run copy",
+    "build-https": "ng build --prod --env=https --bh /medical-record/ && npm run copy",
+    "build": "npm run build-pci"
   },
   "private": true,
   "dependencies": {
