@@ -6,7 +6,7 @@ export const app = {
   pci: {
     BASE_URL: 'https://www.qcxin.com/pci-operation/',
     COMMON_URL: 'https://www.qcxin.com/pro-health/',
-    UPLOAD_URL: 'http://www.qcxin.com/pci-operation/api/upload'
+    UPLOAD_URL: 'https://www.qcxin.com/pci-operation/api/upload'
   },
   kidney: {
     BASE_URL: 'https://www.qcxin.com/kidney-backend-test/',
