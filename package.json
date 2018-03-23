@@ -7,6 +7,7 @@
     "copy": "cp -rf WEB-INF management-pci",
     "build-pci-test": "ng build --prod --env=test --bh /management-pci/ && npm run copy",
     "build-pci": "ng build --prod --env=pci --bh /management-pci/ && npm run copy",
+    "build-https": "ng build --prod --env=https --bh /management-pci/ && npm run copy",
     "build": "npm run build-pci"
   },
   "private": true,
