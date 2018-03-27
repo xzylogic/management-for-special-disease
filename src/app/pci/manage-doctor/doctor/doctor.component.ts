@@ -45,7 +45,6 @@ export class DoctorComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.initData);
     this.containerConfig = this.doctorService.doctorConfig();
     this.allTable = new TableOption({
       titles: this.doctorTableService.setDoctorAllTitles(),
