@@ -263,7 +263,8 @@ export class DoctorComponent implements OnInit {
           if (sres) {
             ImageDialog(
               '医生服务号二维码', sres, this.dialog,
-              `${doctor.name || ''} ${doctor.tel || ''} ${doctor.hospitalName || ''} ${doctor.doctorTitleName || ''}`
+              `${doctor.name || ''} ${doctor.tel || ''} ${doctor.hospitalName || ''} ${doctor.doctorTitleName || ''}`,
+              {avatarUrl: doctor.avatarUrl, name: doctor.name}
             );
           } else {
             HintDialog('获取医生二维码错误', this.dialog);
