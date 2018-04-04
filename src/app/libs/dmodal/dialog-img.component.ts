@@ -27,7 +27,7 @@ import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/materia
   styleUrls: ['./dialog-img.component.scss']
 })
 export class DialogImgComponent {
-  option: { title: string, image: string, desc: string } = {title: '', image: '', desc: ''};
+  option: { title: string, image: string, desc: string, name: string } = {title: '', image: '', desc: '', name: ''};
   deg = 0;
 
   constructor(
