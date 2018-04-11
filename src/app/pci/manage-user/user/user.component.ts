@@ -116,6 +116,10 @@ export class UserComponent implements OnInit {
       this.action.dataChange('user', user);
       this.router.navigate(['/user/edit']);
     }
+    if (res.key === 'upload') {
+      this.action.dataChange('user', user);
+      this.router.navigate(['/user/upload']);
+    }
   }
 
   export() {

@@ -8,6 +8,7 @@ import { DTableModule } from '../../../libs/dtable/dtable.module';
 import { UserComponent } from './user.component';
 import { SendMessageComponent } from './send-message/send-message.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserUploadComponent } from './user-upload/user-upload.component';
 import { IntegralDetailComponent } from './integral-detail/integral-detail.component';
 import { AuthGuardService } from '../../_service/auth-guard.service';
 import { UserService } from './_service/user.service';
@@ -31,6 +32,10 @@ const routes: Routes = [{
   path: 'integral',
   component: IntegralDetailComponent,
   canActivate: [AuthGuardService],
+}, {
+  path: 'upload',
+  component: UserUploadComponent,
+  canActivate: [AuthGuardService],
 }];
 
 @NgModule({
@@ -49,7 +54,8 @@ const routes: Routes = [{
     UserComponent,
     UserEditComponent,
     SendMessageComponent,
-    IntegralDetailComponent
+    IntegralDetailComponent,
+    UserUploadComponent
   ],
   providers: [
     UserService,

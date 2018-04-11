@@ -8,6 +8,7 @@ const PATH = {
   userUpdate: 'api/user/update', // 编辑患者信息
   sendMessage: 'api/user/sendMsg', // 短信提醒患者
   IntegralDetail: 'opt/integral/records/list/', // 个人积分明细
+  photoUpload: '/record/photo/upload' // 上传病历
 };
 
 @Injectable()
@@ -56,6 +57,15 @@ export class UserService {
       ifHome: false,
       homeRouter: '/user',
       currentRouter: '/user/integral'
+    });
+  }
+  userUploadConfig(): ContainerConfig {
+    return new ContainerConfig({
+      title: '患者信息管理',
+      subTitle: '上传病历',
+      ifHome: false,
+      homeRouter: '/user',
+      currentRouter: '/user/upload'
     });
   }
 
@@ -109,5 +119,12 @@ export class UserService {
    */
   userIntegralDetail(traderId: number, page: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.IntegralDetail}${traderId}/0?flag=${page}`);
+  }
+
+  /**
+   * 上传病历
+   */
+  userUpload(body: any) {
+    return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.photoUpload}`, body);
   }
 }

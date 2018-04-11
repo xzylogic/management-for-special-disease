@@ -136,4 +136,38 @@ export class UserFormService {
 
     return forms.sort((a, b) => a.order - b.order);
   }
+
+  setUploadForm(data) {
+
+    const forms: FormBase<any> [] = [];
+
+    forms.push(
+      new FormText({
+        key: 'userId',
+        label: '用户ID',
+        value: data && data.id || '',
+        readonly: true,
+        required: true,
+        order: 1
+      }),
+      new FormDate({
+        key: 'checkDate',
+        label: '报告检查时间',
+        value: '',
+        required: true,
+        order: 2
+      }),
+      new FormFile({
+        key: 'imgUrlList',
+        label: '病历图片',
+        value: '',
+        multiple: true,
+        url: `${this.app.pci.BASE_URL}api/upload/list`,
+        required: true,
+        order: 3
+      }),
+    );
+
+    return forms.sort((a, b) => a.order - b.order);
+  }
 }
