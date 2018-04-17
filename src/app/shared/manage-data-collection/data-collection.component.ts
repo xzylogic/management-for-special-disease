@@ -32,6 +32,8 @@ export class DataCollectionComponent implements OnInit {
   queryTime: string;
   hospitalList = [];
 
+  auth: boolean;
+
   constructor(
     @Inject('action') private action,
     private dataCollectionService: DataCollectionService,
@@ -61,6 +63,7 @@ export class DataCollectionComponent implements OnInit {
     });
     this.reset();
     this.getHospitals();
+    this.getAuthName();
   }
 
   reset() {
@@ -141,8 +144,21 @@ export class DataCollectionComponent implements OnInit {
       })
   }
 
+  /**
+   * 判断是否兼职人员录入病史资料
+   * @param auth 为 caozuoyuan 代表兼职人员
+   */
+  getAuthName() {
+    const admin = window.sessionStorage.getItem('pci_login_token');
+    const name = JSON.parse(admin).name.substring(0, 10);
+    if (name == 'caozuoyuan') {
+      this.auth = false;
+    } else {
+      this.auth = true;
+    }
+  }
+
   gotoHandle(data) {
-    console.log(data);
     if (data.key === 'dataTypein') {
       this.router.navigate(['/data-collection/edit', data.value.id]);
     }

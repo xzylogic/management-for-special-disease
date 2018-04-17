@@ -19,7 +19,7 @@ import { FormFile } from '../../_entity/form-file';
             <mat-icon (click)="fileDel()">close</mat-icon>
           </div>
           <div *ngIf="data.multiple">
-            <div class="upload_content 123" *ngFor="let item of value">
+            <div class="upload_content" *ngFor="let item of value">
               <img class="image" [src]="item">
               <mat-icon (click)="fileDel(item)">close</mat-icon>
             </div>
@@ -68,7 +68,9 @@ export class LibInputFileComponent implements OnInit {
             if (!this.value) {
               this.value = [];
             }
-            this.value = res.data;
+            for (let i = 0; i < res.data.length; i ++) {
+              this.value.push(res.data[i]);
+            }
           }
           this.cdr.detectChanges();
         } else {

@@ -278,6 +278,11 @@ export class DataCollectionEditComponent implements OnInit {
     this.getDataCollection();
   }
 
+  // 修改图片
+  toUpdateImg() {
+    this.router.navigate(['/data-collection/updateImg', this.id]);
+  }
+
   toPass() {
     auditData(this.id, '您确定要将资料提交到审核中？', 1,
       this.dialog, this.dataCollectionService, () => {
