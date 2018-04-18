@@ -5,7 +5,9 @@ const PATH = {
   dataCollections: 'record/upload/list',
   dataCollection: 'record/upload',
   drug: 'api/medicine/list',
-  hospital: 'hospitalList'
+  hospital: 'hospitalList',
+  imglist: 'record/photo/getPhoto',
+  updateimg: 'record/photo/update'
 };
 
 @Injectable()
@@ -47,6 +49,16 @@ export class DataCollectionService {
     })
   }
 
+  updateImageConfig() {
+    return new ContainerConfig({
+      title: '病史资料录入',
+      subTitle: '修改病史图片',
+      ifHome: false,
+      homeRouter: '/data-collection',
+      currentRouter: '/data-collection/updateImg'
+    })
+  }
+
   getDataCollections(page, size, type, hospitalId?, time?) {
     let query = `?page=${page}&size=${size}&type=${type}`
     if (hospitalId) {
@@ -78,5 +90,13 @@ export class DataCollectionService {
 
   getHospitals() {
     return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.hospital}`);
+  }
+
+  getImageList(id) {
+    return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.imglist}?recordId=${id}`);
+  }
+
+  UpdateImage(data) {
+    return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.updateimg}?recordId=${data.id}&imgUrlList=${data.imglist}`);
   }
 }

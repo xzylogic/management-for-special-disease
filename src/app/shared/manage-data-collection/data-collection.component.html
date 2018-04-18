@@ -33,7 +33,7 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="待审核">
+      <mat-tab label="待审核" *ngIf="auth">
         <div *ngIf="!auditingTable.lists&&auditingTable.loading">Loading...</div>
         <div *ngIf="!auditingTable.lists&&!auditingTable.loading&&!!auditingTable.errorMessage" class="center">
           {{auditingTable.errorMessage}}
@@ -48,7 +48,7 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="审核通过">
+      <mat-tab label="审核通过" *ngIf="auth">
         <div *ngIf="!auditedTable.lists&&auditedTable.loading">Loading...</div>
         <div *ngIf="!auditedTable.lists&&!auditedTable.loading&&!!auditedTable.errorMessage" class="center">
           {{auditedTable.errorMessage}}
@@ -63,7 +63,7 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="未处理">
+      <mat-tab label="未处理" *ngIf="auth">
         <div *ngIf="!unhandledTable.lists&&unhandledTable.loading">Loading...</div>
         <div *ngIf="!unhandledTable.lists&&!unhandledTable.loading&&!!unhandledTable.errorMessage" class="center">
           {{unhandledTable.errorMessage}}

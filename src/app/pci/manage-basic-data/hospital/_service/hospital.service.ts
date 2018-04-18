@@ -40,8 +40,8 @@ export class HospitalService {
   /**
    * 获取医院列表
    */
-  getHospital(page) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.hospitalList}?page=${page}`);
+  getHospital(page, size) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.hospitalList}?pageSize=${size}&pageNumber=${page}`);
   }
 
   /**

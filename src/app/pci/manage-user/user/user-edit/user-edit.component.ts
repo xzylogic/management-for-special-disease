@@ -41,7 +41,6 @@ export class UserEditComponent implements OnInit {
             );
           } else {
             this.containerConfig = this.userService.userEditConfig(false);
-            console.log(data);
             this.form = this.userFormService.setForm(
               res.data.hospitalList,
               data

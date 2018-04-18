@@ -57,6 +57,10 @@ export class HospitalStatisticsService {
         key: 'validateCount'
       }),
       new TableTitle({
+        name: '二维码扫描数',
+        key: 'click'
+      }),
+      new TableTitle({
         name: '申请医患关联用户数',
         key: 'relationCount'
       }),
