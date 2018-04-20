@@ -8,7 +8,8 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class HttpService {
   protected headers: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'healthClient': 'pci'
   });
 
   constructor(private http: HttpClient) {

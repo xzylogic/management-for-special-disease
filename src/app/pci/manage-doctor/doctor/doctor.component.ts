@@ -45,7 +45,6 @@ export class DoctorComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.initData);
     this.containerConfig = this.doctorService.doctorConfig();
     this.allTable = new TableOption({
       titles: this.doctorTableService.setDoctorAllTitles(),
@@ -264,7 +263,8 @@ export class DoctorComponent implements OnInit {
           if (sres) {
             ImageDialog(
               '医生服务号二维码', sres, this.dialog,
-              `${doctor.name || ''} ${doctor.tel || ''} ${doctor.hospitalName || ''} ${doctor.doctorTitleName || ''}`
+              `${doctor.name || ''} ${doctor.tel || ''} ${doctor.hospitalName || ''} ${doctor.doctorTitleName || ''}`,
+              doctor.name
             );
           } else {
             HintDialog('获取医生二维码错误', this.dialog);

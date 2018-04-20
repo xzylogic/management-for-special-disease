@@ -116,23 +116,52 @@ export class UserComponent implements OnInit {
       this.action.dataChange('user', user);
       this.router.navigate(['/user/edit']);
     }
+    if (res.key === 'upload') {
+      this.action.dataChange('user', user);
+      this.router.navigate(['/user/upload']);
+    }
   }
 
   export() {
     let exportList;
-    this.userService.getUsers(this.userTable.queryKey, this.queryBind, '', 0, 99999)
+    this.userService.getUsers(this.userTable.queryKey, this.queryBind, '', 0, 2000)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
-          exportList = this.common.toArray(res.data.content);
-          /* generate worksheet */
-          const ws = XLSX.utils.aoa_to_sheet(exportList);
-          /* generate workbook and add the worksheet */
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
-          /* save to file */
-          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-          const fileName = `全程心管家患者信息列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
-          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          if (res.data.totalPages == 1) {
+            exportList = this.common.toArray(res.data.content);
+            /* generate worksheet */
+            const ws = XLSX.utils.aoa_to_sheet(exportList);
+            /* generate workbook and add the worksheet */
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+            /* save to file */
+            const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            const fileName = `全程心管家患者信息列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+            saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          } else {
+            const getUserList = [];
+            let dataList = res.data.content;
+            for (let i = 1; i < res.data.totalPages; i++) {
+              getUserList.push(this.userService.getUsers(this.userTable.queryKey, this.queryBind, '', i, 2000))
+            }
+            Observable.forkJoin(getUserList).subscribe((resList: Array<any>) => {
+              for (let i = 0; i < getUserList.length; i++) {
+                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
+                  dataList = [...dataList, ...resList[i].data.content]
+                }
+              }
+              exportList = this.common.toArray(dataList);
+              /* generate worksheet */
+              const ws = XLSX.utils.aoa_to_sheet(exportList);
+              /* generate workbook and add the worksheet */
+              const wb = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+              /* save to file */
+              const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+              const fileName = `全程心管家患者信息列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+              saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+            });
+          }
         } else {
           HintDialog('导出数据错误，请重新尝试', this.dialog);
         }

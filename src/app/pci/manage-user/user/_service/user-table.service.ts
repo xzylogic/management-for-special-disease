@@ -79,6 +79,12 @@ export class UserTableService {
         minwidth: 50
       }),
       new TableTitle({
+        name: '上传病历',
+        key: 'upload',
+        controlType: ControlType.button,
+        minwidth: 65
+      }),
+      new TableTitle({
         name: '编辑',
         key: 'edit',
         controlType: ControlType.button,

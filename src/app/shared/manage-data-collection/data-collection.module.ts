@@ -10,6 +10,7 @@ import { ImageFormComponent } from './data-collection-edit/imageForm/image-form.
 import { InspectionFormComponent } from './data-collection-edit/inspectionForm/inspection-form.component';
 import { InspectionItemFormComponent } from './data-collection-edit/inspectionItemForm/inspection-item-form.component';
 import { MedicineFormComponent } from './data-collection-edit/medicineForm/medicine-form.component';
+import { UpdateImageComponent } from './data-collection-edit/update-image/update-image.component';
 import { ImageShowComponent } from './imageShow/imageShow.component';
 import { UserInfoComponent } from './userInfo/userInfo.component';
 import { DataCollectionEditComponent } from './data-collection-edit/data-collection-edit.component';
@@ -26,16 +27,24 @@ import { MedicalDetailComponent } from './data-collection-detail/medicalDetail/m
 import { OtherDetailComponent } from './data-collection-detail/otherDetail/other-detail.component';
 import { RecordDetailComponent } from './data-collection-detail/recordDetail/record-detail.component';
 import { ReportDetailComponent } from './data-collection-detail/reportDetail/report-detail.component';
+// import { AuthGuardService } from '../../medical-record/_service/auth-guard.service';
 
 const routes: Routes = [{
   path: '',
+  // canActivate: [AuthGuardService],
   component: DataCollectionComponent
 }, {
   path: 'detail/:id',
+  // canActivate: [AuthGuardService],
   component: DataCollectionDetailComponent
 }, {
   path: 'edit/:id',
+  // canActivate: [AuthGuardService],
   component: DataCollectionEditComponent
+}, {
+  path: 'updateImg/:id',
+  // canActivate: [AuthGuardService],
+  component: UpdateImageComponent
 }
 ];
 
@@ -53,6 +62,7 @@ const routes: Routes = [{
     DataCollectionComponent,
     BriefDetailComponent,
     MedicalDetailComponent,
+    UpdateImageComponent,
     OtherDetailComponent,
     RecordDetailComponent,
     ReportDetailComponent,

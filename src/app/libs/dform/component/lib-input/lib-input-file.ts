@@ -10,7 +10,7 @@ import { FormFile } from '../../_entity/form-file';
   template: `
     <div [formGroup]="form">
       <div class="input_container">
-        <input class="input_content" #file type="file" (change)="uploadChange($event)">
+        <input class="input_content" #file type="file" multiple="multiple" (change)="uploadChange($event)">
         <span class="input_span">{{data.label}}</span>
         <input type="hidden" [formControlName]="data.key" [(ngModel)]="value" (change)="change()">
         <div class="upload_container">
@@ -54,7 +54,10 @@ export class LibInputFileComponent implements OnInit {
   // 上传图片操作
   uploadChange(files) {
     const myForm = new FormData();
-    myForm.append('file', files.target.files[0]);
+    const fileList = files.target.files
+    for (let i = 0; i < fileList.length; i ++) {
+      myForm.append('file', fileList[i]);
+    }
     this.uploadService.upload(this.data.url, myForm)
       .subscribe(res => {
         if (res.code === 0) {
@@ -65,7 +68,9 @@ export class LibInputFileComponent implements OnInit {
             if (!this.value) {
               this.value = [];
             }
-            this.value.push(res.data);
+            for (let i = 0; i < res.data.length; i ++) {
+              this.value.push(res.data[i]);
+            }
           }
           this.cdr.detectChanges();
         } else {

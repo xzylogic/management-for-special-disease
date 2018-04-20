@@ -47,7 +47,7 @@ export class HospitalComponent implements OnInit {
 
   getHospital(page) {
     this.hospitalTable.reset(page);
-    this.hospitalService.getHospital(page)
+    this.hospitalService.getHospital(page, this.hospitalTable.size)
       .subscribe(res => {
         this.hospitalTable.loading = false;
         if (res.code === 0 && res.data && res.data.length === 0) {
