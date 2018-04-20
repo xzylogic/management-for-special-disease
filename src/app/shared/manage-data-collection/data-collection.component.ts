@@ -26,6 +26,7 @@ export class DataCollectionComponent implements OnInit {
   auditingTable: TableOption;
   auditedTable: TableOption;
   unhandledTable: TableOption;
+  defeatedTable: TableOption;
   pages: any;
 
   queryHospital: string;
@@ -58,6 +59,10 @@ export class DataCollectionComponent implements OnInit {
       titles: this.dataCollectionTableService.setUnhandledTitles(),
       ifPage: true
     });
+    this.defeatedTable = new TableOption({
+      titles: this.dataCollectionTableService.setDefeatedTitles(),
+      ifPage: true
+    })
     this.reset();
     this.getHospitals();
   }
@@ -67,6 +72,7 @@ export class DataCollectionComponent implements OnInit {
     this.reset1();
     this.reset2();
     this.reset3();
+    this.reset4();
   }
 
   reset0() {
@@ -100,6 +106,14 @@ export class DataCollectionComponent implements OnInit {
     this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.unhandledTable, 2, page[2]);
+    });
+  }
+
+  reset4() {
+    this.unhandledTable.queryKey = '';
+    this.page.subscribe((page: Array < number > ) => {
+      this.pages = page;
+      this.getDataCollections(this.defeatedTable, 4, page[2]);
     });
   }
 
