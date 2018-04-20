@@ -28,7 +28,7 @@ export class DataCollectionTableService {
         key: 'registerDate'
       }),
       new TableTitle({
-        name: '所属医院',
+        name: '来源渠道',
         key: 'doctorHospitalName'
       }),
       new TableTitle({
@@ -296,18 +296,19 @@ export class DataCollectionTableService {
         minwidth: 70
       }),
       new TableTitle({
-        name: '备注',
-        key: 'remark'
+        name: '失败理由',
+        key: 'remark',
+        maxwidth: 200
       }),
       new TableTitle({
         name: '是否删除',
         key: 'deleted'
       }),
-      // new TableTitle({
-      //   name: '录入资料',
-      //   key: 'dataTypein',
-      //   controlType: ControlType.button
-      // })
+      new TableTitle({
+        name: '录入资料',
+        key: 'dataTypein',
+        controlType: ControlType.button
+      })
     ];
 
     return Titles;

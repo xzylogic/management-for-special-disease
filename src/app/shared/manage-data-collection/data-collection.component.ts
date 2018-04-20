@@ -12,6 +12,7 @@ import { DataCollectionTableService } from './_service/data-collection-table.ser
 import { ERRMSG } from '../../pci/_store/static';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { _switch } from 'rxjs/operator/switch';
 
 @Component({
   selector: 'app-data-collection',
@@ -210,11 +211,20 @@ export class DataCollectionComponent implements OnInit {
 }
 
 export function auditData(id, title, status, dialog, service, callback) {
-  const config: DialogEdit = new DialogEdit({
-    title: title,
-    button: '提交',
-    form: status == 2 ?
-      [
+  let form;
+  switch (status) {
+    case 1 || 3 :
+      form = [
+        new FormText({
+          key: 'auditName',
+          label: '提交人姓名',
+          value: '',
+          required: true
+        })
+      ];
+      break;
+    case 2 :
+      form = [
         new FormText({
           key: 'auditName',
           label: '提交人姓名',
@@ -227,13 +237,38 @@ export function auditData(id, title, status, dialog, service, callback) {
           value: '',
           required: true
         })
-      ] : [
+      ];
+      break;
+    case 3 :
+      form = [
         new FormText({
           key: 'auditName',
           label: '提交人姓名',
           value: '',
           required: true
-        })]
+        })
+      ];
+      break;
+    case 4 :
+      form = [
+        new FormText({
+          key: 'auditName',
+          label: '提交人姓名',
+          value: '',
+          required: true
+        }),
+        new FormText({
+          key: 'failedReason',
+          label: '拒绝理由',
+          value: '',
+          required: true
+        })
+      ]
+  }
+  const config: DialogEdit = new DialogEdit({
+    title: title,
+    button: '提交',
+    form: form
   });
   EditDialog(config, dialog).afterClosed().subscribe(result => {
     if (result && result.auditName) {
