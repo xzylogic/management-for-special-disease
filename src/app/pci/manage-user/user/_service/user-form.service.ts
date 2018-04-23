@@ -82,14 +82,14 @@ export class UserFormService {
         required: true,
         order: 5
       }),
-      new FormDropdown({
-        key: 'hospitalId',
-        label: '手术医院',
-        value: data && data.hospitalId || 0,
-        required: false,
-        options: hospitalList,
-        order: 6
-      }),
+      // new FormDropdown({
+      //   key: 'hospitalId',
+      //   label: '手术医院',
+      //   value: data && data.hospitalId || 0,
+      //   required: false,
+      //   options: hospitalList,
+      //   order: 6
+      // }),
       new FormText({
         key: 'surgeon',
         label: '手术医生',

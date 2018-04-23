@@ -1,4 +1,7 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="addition">
+    <button mat-raised-button (click)="export()">导出</button>
+  </div>
   <div class="content">
     <form style="padding: 16px">
       <mat-form-field floatPlaceholder="always">

@@ -124,7 +124,7 @@ export class UserComponent implements OnInit {
 
   export() {
     let exportList;
-    this.userService.getUsers(this.userTable.queryKey, this.queryBind, '', 0, 2000)
+    this.userService.getUsers(this.userTable.queryKey, this.queryBind, this.RegisterDate, 0, 2000)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           if (res.data.totalPages == 1) {
@@ -142,7 +142,7 @@ export class UserComponent implements OnInit {
             const getUserList = [];
             let dataList = res.data.content;
             for (let i = 1; i < res.data.totalPages; i++) {
-              getUserList.push(this.userService.getUsers(this.userTable.queryKey, this.queryBind, '', i, 2000))
+              getUserList.push(this.userService.getUsers(this.userTable.queryKey, this.queryBind, this.RegisterDate, i, 2000))
             }
             Observable.forkJoin(getUserList).subscribe((resList: Array<any>) => {
               for (let i = 0; i < getUserList.length; i++) {

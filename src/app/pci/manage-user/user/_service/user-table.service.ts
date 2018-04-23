@@ -47,6 +47,11 @@ export class UserTableService {
         minwidth: 40
       }),
       new TableTitle({
+        name: '手术医院',
+        key: 'hospitalIdms',
+        minwidth: 100
+      }),
+      new TableTitle({
         name: '实名认证',
         key: 'validateState',
         minwidth: 80
