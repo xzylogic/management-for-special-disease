@@ -34,6 +34,9 @@ export class DataCollectionComponent implements OnInit {
   queryTime: string;
   hospitalList = [];
 
+  queryThroughTime: string;
+  queryMedicalHospital: string;
+
   auth: boolean;
 
   constructor(

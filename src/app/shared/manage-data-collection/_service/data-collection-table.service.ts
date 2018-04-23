@@ -19,10 +19,10 @@ export class DataCollectionTableService {
         key: 'tel',
         minwidth: 85
       }),
-      new TableTitle({
-        name: '实名认证',
-        key: 'authenticate'
-      }),
+      // new TableTitle({
+      //   name: '实名认证',
+      //   key: 'authenticate'
+      // }),
       new TableTitle({
         name: '注册时间',
         key: 'registerDate'
@@ -31,22 +31,22 @@ export class DataCollectionTableService {
         name: '来源渠道',
         key: 'doctorHospitalName'
       }),
-      new TableTitle({
-        name: '年龄',
-        key: 'age'
-      }),
-      new TableTitle({
-        name: '性别',
-        key: 'sex'
-      }),
-      new TableTitle({
-        name: '手术医院',
-        key: 'hospitalName',
-      }),
-      new TableTitle({
-        name: '手术医生',
-        key: 'doctorName'
-      }),
+      // new TableTitle({
+      //   name: '年龄',
+      //   key: 'age'
+      // }),
+      // new TableTitle({
+      //   name: '性别',
+      //   key: 'sex'
+      // }),
+      // new TableTitle({
+      //   name: '手术医院',
+      //   key: 'hospitalName',
+      // }),
+      // new TableTitle({
+      //   name: '手术医生',
+      //   key: 'doctorName'
+      // }),
       new TableTitle({
         name: '上传时间',
         key: 'uploadDate',
@@ -85,28 +85,28 @@ export class DataCollectionTableService {
         key: 'tel',
         minwidth: 85
       }),
+      // new TableTitle({
+      //   name: '实名认证',
+      //   key: 'authenticate'
+      // }),
+      // new TableTitle({
+      //   name: '年龄',
+      //   key: 'age'
+      // }),
+      // new TableTitle({
+      //   name: '性别',
+      //   key: 'sex'
+      // }),
       new TableTitle({
-        name: '实名认证',
-        key: 'authenticate'
-      }),
-      new TableTitle({
-        name: '年龄',
-        key: 'age'
-      }),
-      new TableTitle({
-        name: '性别',
-        key: 'sex'
-      }),
-      new TableTitle({
-        name: '手术医院',
-        key: 'doctorName'
-      }),
-      new TableTitle({
-        name: '手术医生',
+        name: '病历医院',
         key: 'hospitalName'
       }),
+      // new TableTitle({
+      //   name: '手术医生',
+      //   key: 'hospitalName'
+      // }),
       new TableTitle({
-        name: '上传时间',
+        name: '提交时间',
         key: 'uploadData',
         minwidth: 70
       }),
@@ -146,26 +146,26 @@ export class DataCollectionTableService {
         key: 'tel',
         minwidth: 85
       }),
-      new TableTitle({
-        name: '实名认证',
-        key: 'authenticate'
-      }),
-      new TableTitle({
-        name: '年龄',
-        key: 'age'
-      }),
-      new TableTitle({
-        name: '性别',
-        key: 'sex'
-      }),
-      new TableTitle({
-        name: '手术医院',
-        key: 'hospitalName'
-      }),
-      new TableTitle({
-        name: '手术医生',
-        key: 'doctorName'
-      }),
+      // new TableTitle({
+      //   name: '实名认证',
+      //   key: 'authenticate'
+      // }),
+      // new TableTitle({
+      //   name: '年龄',
+      //   key: 'age'
+      // }),
+      // new TableTitle({
+      //   name: '性别',
+      //   key: 'sex'
+      // }),
+      // new TableTitle({
+      //   name: '手术医院',
+      //   key: 'hospitalName'
+      // }),
+      // new TableTitle({
+      //   name: '手术医生',
+      //   key: 'doctorName'
+      // }),
       new TableTitle({
         name: '上传时间',
         key: 'uploadDate',
@@ -213,26 +213,26 @@ export class DataCollectionTableService {
         key: 'tel',
         minwidth: 85
       }),
-      new TableTitle({
-        name: '实名认证',
-        key: 'authenticate'
-      }),
-      new TableTitle({
-        name: '年龄',
-        key: 'age'
-      }),
-      new TableTitle({
-        name: '性别',
-        key: 'sex'
-      }),
-      new TableTitle({
-        name: '手术医院',
-        key: 'hospitalName'
-      }),
-      new TableTitle({
-        name: '手术医生',
-        key: 'doctorName'
-      }),
+      // new TableTitle({
+      //   name: '实名认证',
+      //   key: 'authenticate'
+      // }),
+      // new TableTitle({
+      //   name: '年龄',
+      //   key: 'age'
+      // }),
+      // new TableTitle({
+      //   name: '性别',
+      //   key: 'sex'
+      // }),
+      // new TableTitle({
+      //   name: '手术医院',
+      //   key: 'hospitalName'
+      // }),
+      // new TableTitle({
+      //   name: '手术医生',
+      //   key: 'doctorName'
+      // }),
       new TableTitle({
         name: '上传时间',
         key: 'uploadDate',
@@ -270,26 +270,26 @@ export class DataCollectionTableService {
         key: 'tel',
         minwidth: 85
       }),
-      new TableTitle({
-        name: '实名认证',
-        key: 'authenticate'
-      }),
-      new TableTitle({
-        name: '年龄',
-        key: 'age'
-      }),
-      new TableTitle({
-        name: '性别',
-        key: 'sex'
-      }),
-      new TableTitle({
-        name: '手术医院',
-        key: 'hospitalName'
-      }),
-      new TableTitle({
-        name: '手术医生',
-        key: 'doctorName'
-      }),
+      // new TableTitle({
+      //   name: '实名认证',
+      //   key: 'authenticate'
+      // }),
+      // new TableTitle({
+      //   name: '年龄',
+      //   key: 'age'
+      // }),
+      // new TableTitle({
+      //   name: '性别',
+      //   key: 'sex'
+      // }),
+      // new TableTitle({
+      //   name: '手术医院',
+      //   key: 'hospitalName'
+      // }),
+      // new TableTitle({
+      //   name: '手术医生',
+      //   key: 'doctorName'
+      // }),
       new TableTitle({
         name: '上传时间',
         key: 'uploadDate',
