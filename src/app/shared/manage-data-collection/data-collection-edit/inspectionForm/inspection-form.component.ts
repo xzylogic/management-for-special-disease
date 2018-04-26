@@ -17,6 +17,7 @@ export class InspectionFormComponent implements OnInit {
   inspectionType: any;
   inspectionList: any;
   selectedType = null;
+  examinationItemCheckDate: any;
 
   inspectionFormList: Inspection[] = [];
 
@@ -47,7 +48,6 @@ export class InspectionFormComponent implements OnInit {
       this.selectedType = this.info.itemId;
       this.getInspectionItems(this.selectedType);
     }
-    // console.log(this.info);
     this.dataChange.emit();
   }
 

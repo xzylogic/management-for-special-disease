@@ -57,5 +57,11 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <div class="col-l-3" style="display: none;">
+      <mat-form-field floatPlaceholder="never" style="width: 100%">
+        <input matInput type="text" name="value" [value]="examinationItemCheckDate" [(ngModel)]="info.examinationItemCheckDate"
+               >
+      </mat-form-field>
+    </div>
   </div>
 </div>

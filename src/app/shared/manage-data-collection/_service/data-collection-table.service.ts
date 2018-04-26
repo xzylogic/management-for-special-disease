@@ -107,7 +107,7 @@ export class DataCollectionTableService {
       // }),
       new TableTitle({
         name: '提交时间',
-        key: 'uploadData',
+        key: 'submitDate',
         minwidth: 70
       }),
       new TableTitle({
@@ -167,8 +167,12 @@ export class DataCollectionTableService {
       //   key: 'doctorName'
       // }),
       new TableTitle({
-        name: '上传时间',
-        key: 'uploadDate',
+        name: '病历医院',
+        key: 'hospitalName'
+      }),
+      new TableTitle({
+        name: '审核通过时间',
+        key: 'auditDate',
         minwidth: 70
       }),
       new TableTitle({
@@ -269,6 +273,10 @@ export class DataCollectionTableService {
         name: '手机号',
         key: 'tel',
         minwidth: 85
+      }),
+      new TableTitle({
+        name: '病历医院',
+        key: 'hospitalName'
       }),
       // new TableTitle({
       //   name: '实名认证',

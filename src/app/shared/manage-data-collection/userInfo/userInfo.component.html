@@ -19,4 +19,21 @@
   <!--<div class="row" style="padding: 8px 0;border-bottom: 1px solid #eee">-->
     <!--<div class="col-6"><strong>手术医生：</strong>{{user?.doctorName}}</div>-->
   <!--</div>-->
+
+    <div class="form-content" style="padding: 20px 10px;" *ngIf="type">
+      <form class="example-form">
+        <mat-form-field floatPlaceholder="always" style="width: 100%;">
+          <input matInput placeholder="病历医院(输入医院名称可进行搜索)" name="hospitalName" [(ngModel)]="hospitalName"
+                  (change)="search($event)" (keyup)="search($event)" required>
+        </mat-form-field>
+        <div class="ui middle aligned divided selection list" style="background-color: #fff;margin-bottom: 20px">
+          <div class="item" *ngFor="let result of results$;let i=index">
+            <div class="content" *ngIf="i < 20">
+              <div class="header" (click)="selected(result)">{{result&&result.name}}</div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
 </div>
+

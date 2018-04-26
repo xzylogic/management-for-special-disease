@@ -25,6 +25,7 @@ export class Inspection {
   type: string | number; // 参考值类型 0无 1范围
   value: string; // 数值
   deleted: boolean; // 删除
+  examinationItemCheckDate: string; // 检查时间
 }
 
 export class Image {

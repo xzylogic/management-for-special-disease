@@ -27,8 +27,8 @@
     </div>
     <div class="form-content">
       <mat-form-field floatPlaceholder="always" style="width: 100%">
-        <input matInput placeholder="医院" name="hospitalName" [(ngModel)]="info.hospitalName"
-               (blur)="saveAsDraft()" (change)="saveAsDraft()" required>
+        <input matInput placeholder="医院" name="hospitalName" [value]="hospitalName" [(ngModel)]="info.hospitalName"
+               (blur)="saveAsDraft()">
       </mat-form-field>
     </div>
     <div class="form-content">

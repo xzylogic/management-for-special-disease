@@ -6,8 +6,10 @@ const PATH = {
   dataCollection: 'record/upload',
   drug: 'api/medicine/list',
   hospital: 'hospitalList',
+  medicalHospitals: 'api/hospital/hospitals',
   imglist: 'record/photo/getPhoto',
-  updateimg: 'record/photo/update'
+  updateimg: 'record/photo/update',
+  searchHospital: 'api/hospital/getHospital'
 };
 
 @Injectable()
@@ -59,7 +61,16 @@ export class DataCollectionService {
     })
   }
 
-  getDataCollections(page, size, type, hospitalId?, time?) {
+  /**
+   * @param {page} 页码
+   * @param {size} 每页显示的数量
+   * @param {type} 病史类型
+   * @param {hospitalId} 患者所属的医院
+   * @param {time} 待录入列表中上传时间或者审核通过列表中审核通过时间
+   * @param {hospitalName} 病历医院筛选
+   * @param {operation} 录入人筛选
+   */
+  getDataCollections(page, size, type, hospitalId?, time?, hospitalName?, operation?) {
     let query = `?page=${page}&size=${size}&type=${type}`
     if (hospitalId) {
       query += `&hospitalId=${hospitalId}`;
@@ -68,6 +79,12 @@ export class DataCollectionService {
       let start = (new Date(time.split(' 至 ')[0] + ' 00:00')).valueOf();
       let end = (new Date(time.split(' 至 ')[1] + ' 24:00')).valueOf();
       query += `&start=${start}&end=${end}`;
+    }
+    if (hospitalName) {
+      query += `&hospitalName=${hospitalName}`;
+    }
+    if (operation) {
+      query += `&operation=${operation}`;
     }
     return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.dataCollections}${query}`);
   }
@@ -92,11 +109,19 @@ export class DataCollectionService {
     return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.hospital}`);
   }
 
+  getMedicalHospitals() {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.medicalHospitals}`);
+  }
+
   getImageList(id) {
     return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.imglist}?recordId=${id}`);
   }
 
   UpdateImage(data) {
     return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.updateimg}?recordId=${data.id}&imgUrlList=${data.imglist}`);
+  }
+
+  getHospitalAll(key) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.searchHospital}?hospitalName=${key}`);
   }
 }

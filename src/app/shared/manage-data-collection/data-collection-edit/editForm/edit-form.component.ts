@@ -1,7 +1,7 @@
 import {
   Component, OnInit,
   Input, Output, EventEmitter,
-  ChangeDetectorRef, AfterViewChecked, AfterViewInit
+  ChangeDetectorRef, AfterViewChecked, AfterViewInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { HintDialog } from '../../../../libs/dmodal/dialog.component';
@@ -18,6 +18,7 @@ const typeList = ['检验报告', '出院小结', '影像资料', '用药清单'
 })
 export class EditFormComponent implements OnInit, AfterViewInit {
   @Input() id;
+  @Input() hospitalName;
   @Input() editFormData: Collection;
   @Input() images: any[];
   @Input() index;
@@ -30,6 +31,7 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   typeList = typeList;
 
   recordPhotos: Array<number> = [];
+  results$: Array<any>;
 
   inspectionFormList: InspectionFormList[] = [];
   medicineFormList: Medicine[] = [];
@@ -198,7 +200,7 @@ export class EditFormComponent implements OnInit, AfterViewInit {
     this.info = new Collection();
     this.info.recordHistoryType = data.recordHistoryType;
     this.info.checkDate = data.checkDate || '';
-    this.info.hospitalName = data.hospitalName || '';
+    this.info.hospitalName = this.hospitalName || '';
     this.info.officeName = data.officeName || '';
     this.info.medicalRecordPhotoList = data.medicalRecordPhotoList || [];
     this.saveAsDraft();
@@ -226,7 +228,6 @@ export class EditFormComponent implements OnInit, AfterViewInit {
     if (!this.info.medicalRecordPhotoList || this.info.medicalRecordPhotoList.length == 0) {
       HintDialog('请选择图片！', this.dialog);
     } else {
-      // console.log("SaveData:"+JSON.stringify(this.info));
       this._dataCollectionService.dataCollectionCreate(this.id, this.info)
         .subscribe(res => {
           // console.log(res);

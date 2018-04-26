@@ -33,8 +33,8 @@ export class DataCollectionComponent implements OnInit {
   queryHospital: string;
   queryTime: string;
   hospitalList = [];
+  MedicalHospitalsList = [];
 
-  queryThroughTime: string;
   queryMedicalHospital: string;
 
   auth: boolean;
@@ -71,6 +71,7 @@ export class DataCollectionComponent implements OnInit {
     })
     this.reset();
     this.getHospitals();
+    this.getMedicalHospitals();
     this.getAuthName();
   }
 
@@ -102,6 +103,8 @@ export class DataCollectionComponent implements OnInit {
 
   reset2() {
     this.auditedTable.queryKey = '';
+    this.queryMedicalHospital = '';
+    this.queryTime = '';
     this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.auditedTable, 3, page[2]);
@@ -128,7 +131,7 @@ export class DataCollectionComponent implements OnInit {
     this.pages[type] = page;
     this.action.pageChange('dataCollection', this.pages);
     list.reset(page);
-    this.dataCollectionService.getDataCollections(page, list.size, type, this.queryHospital, this.queryTime)
+    this.dataCollectionService.getDataCollections(page, list.size, type, this.queryHospital, this.queryTime, this.queryMedicalHospital, list.queryKey)
       .subscribe(
         res => {
           list.loading = false;
@@ -157,6 +160,15 @@ export class DataCollectionComponent implements OnInit {
       .subscribe(res => {
         if (res.code == 0 && res.data) {
           this.hospitalList = res.data;
+        }
+      })
+  }
+
+  getMedicalHospitals() {
+    this.dataCollectionService.getMedicalHospitals()
+      .subscribe(res => {
+        if (res.code == 0 && res.data) {
+          this.MedicalHospitalsList = res.data;
         }
       })
   }

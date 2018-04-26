@@ -55,17 +55,17 @@
           </mat-form-field>
           <mat-form-field floatPlaceholder="always" style="width: 300px">
             <mat-select placeholder="病历医院" [(ngModel)]="queryMedicalHospital" name="type">
-              <mat-option [value]="opt.id" *ngFor="let opt of hospitalList"
-                          (click)="getDataCollections(auditedTable,2,0)">
+              <mat-option [value]="opt.name" *ngFor="let opt of MedicalHospitalsList"
+                          (click)="getDataCollections(auditedTable,3,0)">
                 {{opt.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <app-search [type]="'1'" [label]="'审核通过时间'" [(value)]="queryThroughTime"></app-search>
-          <button mat-icon-button color="primary" type="button" (click)="getDataCollections(auditedTable,2,0)">
+          <app-search [type]="'1'" [label]="'审核通过时间'" [(value)]="queryTime"></app-search>
+          <button mat-icon-button color="primary" type="button" (click)="getDataCollections(auditedTable,3,0)">
             <mat-icon>search</mat-icon>
           </button>
-          <button mat-icon-button color="primary" type="button" (click)="reset0()">
+          <button mat-icon-button color="primary" type="button" (click)="reset2()">
             <mat-icon>autorenew</mat-icon>
           </button>
         </form>
