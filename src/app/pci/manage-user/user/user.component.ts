@@ -126,10 +126,11 @@ export class UserComponent implements OnInit {
     const myForm = new FormData();
     const fileList = files.target.files[0];
     myForm.append('file', fileList);
+    console.log(fileList)
     this.userService.batchRegisterUser(myForm)
       .subscribe(res => {
         if (res.code === 0) {
-          HintDialog('注册成功！', this.dialog);
+          HintDialog(res.msg || '注册成功！', this.dialog);
         } else {
           HintDialog(res.msg || '注册失败！', this.dialog);
         }
