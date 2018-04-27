@@ -191,7 +191,7 @@ export class DataCollectionEditComponent implements OnInit {
       this.dataCollectionService.getDataCollection(+params['id'])
         .subscribe(res => {
           if (res.code === 0 && res.data) {
-            if (res.data.status == 1 || res.data.status == 3) {
+            if (res.data.status == 3) {
               HintDialog('该用户资料已录入哦！', this.dialog);
             } else {
               this.userInfo = res.data;
@@ -290,6 +290,27 @@ export class DataCollectionEditComponent implements OnInit {
 
   toPass() {
     auditData(this.id, '您确定要将资料提交到审核中？', 1,
+      this.dialog, this.dataCollectionService, () => {
+        this.router.navigate(['/data-collection']);
+      });
+  }
+
+  toAudit() {
+    auditData(this.id, '您确定要将资料提交到审核中？', 1,
+      this.dialog, this.dataCollectionService, () => {
+        this.router.navigate(['/data-collection']);
+      });
+  }
+
+  toOnline() {
+    auditData(this.id, '您确定要通过审核？', 3,
+      this.dialog, this.dataCollectionService, () => {
+        this.router.navigate(['/data-collection']);
+      });
+  }
+
+  toUnpass() {
+    auditData(this.id, '您确定审核不通过？', 4,
       this.dialog, this.dataCollectionService, () => {
         this.router.navigate(['/data-collection']);
       });
