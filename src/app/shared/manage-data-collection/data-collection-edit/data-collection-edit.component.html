@@ -8,13 +8,14 @@
          *ngIf="userInfo&&userInfo.status!==1&&userInfo.status!==3&&userInfo.recordHistoryDtoList">
       <div class="row">
         <div class="col-3">
-          <app-userinfo [user]="userInfo"></app-userinfo>
+          <app-userinfo [user]="userInfo" [type]="true" (onChangehospital)="onChangehospital($event)"></app-userinfo>
           <div id="dataShow" class="show-container">
             <div *ngFor="let obj of userInfo.recordHistoryDtoList;let i=index" class="show-content">
               <h4 class="header-data">病史资料{{i+1}}</h4>
               <ul class="data-list">
                 <li #edit hidden="true">
                   <app-edit-form *ngIf="!edit.hidden" [id]="userInfo.id"
+                                 [hospitalName] = "hospitalName"
                                  [editFormData]="setUpdateData(obj,obj.recordHistoryType)"
                                  [images]="userInfo.medicalRecordPhotoList" (saveSuccess)="saveSuccess($event)"
                                  (cancelEmmiter)="tocancel(edit)" index="{{obj.id}}edit"></app-edit-form>
@@ -59,7 +60,7 @@
                   删除病史资料{{i+1}}<i class="remove icon"></i></button>
               </div>
               <h3 class="header-data header-margin">新增病史资料{{i+1}}</h3>
-              <app-edit-form [id]="userInfo.id" [editFormData]="editForm" (dataChange)="dataChange($event,i)"
+              <app-edit-form [id]="userInfo.id" [hospitalName] = "hospitalName" [editFormData]="editForm" (dataChange)="dataChange($event,i)"
                              [images]="userInfo.medicalRecordPhotoList" (saveSuccess)="saveSuccess($event)"
                              index="{{i}}add"></app-edit-form>
               <hr/>

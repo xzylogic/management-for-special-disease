@@ -8,6 +8,7 @@ import { Inspection } from '../../_entity/data-collection.entity';
 })
 export class InspectionItemFormComponent implements OnInit {
   @Input() data: any;
+  @Input() examinationItemCheckDate: any;
   @Output() dataChange: EventEmitter<any> = new EventEmitter();
 
   info: Inspection = new Inspection();
@@ -34,13 +35,13 @@ export class InspectionItemFormComponent implements OnInit {
   }
 
   saveAsDraft() {
-    // console.log(this.info);
     if (this.info && this.info.type == '1' && this.info.value) {
       if (parseFloat(this.info.value) > parseFloat(this.info.max)) {
         this.info.standard = '2';
       } else {
         this.info.standard = parseFloat(this.info.value) < parseFloat(this.info.min) ? '0' : '1';
       }
+      this.info.examinationItemCheckDate = this.examinationItemCheckDate;
     }
     this.dataChange.emit();
   }

@@ -27,23 +27,23 @@ import { MedicalDetailComponent } from './data-collection-detail/medicalDetail/m
 import { OtherDetailComponent } from './data-collection-detail/otherDetail/other-detail.component';
 import { RecordDetailComponent } from './data-collection-detail/recordDetail/record-detail.component';
 import { ReportDetailComponent } from './data-collection-detail/reportDetail/report-detail.component';
-import { AuthGuardService } from '../../pci/_service/auth-guard.service';
+// import { AuthGuardService } from '../../medical-record/_service/auth-guard.service';
 
 const routes: Routes = [{
   path: '',
-  canActivate: [AuthGuardService],
+  // canActivate: [AuthGuardService],
   component: DataCollectionComponent
 }, {
   path: 'detail/:id',
-  canActivate: [AuthGuardService],
+  // canActivate: [AuthGuardService],
   component: DataCollectionDetailComponent
 }, {
   path: 'edit/:id',
-  canActivate: [AuthGuardService],
+  // canActivate: [AuthGuardService],
   component: DataCollectionEditComponent
 }, {
   path: 'updateImg/:id',
-  canActivate: [AuthGuardService],
+  // canActivate: [AuthGuardService],
   component: UpdateImageComponent
 }
 ];

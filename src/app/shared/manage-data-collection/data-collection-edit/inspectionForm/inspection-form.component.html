@@ -7,6 +7,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <app-search [type]="'0'" [label]="'检查时间'" [(value)]="examinationItemCheckDate"></app-search>
 </div>
 <div *ngIf="selectedType&&this.info&&this.info.list">
   <div class="grid-container clear">
@@ -21,6 +22,6 @@
     </div>
   </div>
   <div *ngFor="let item of this.info.list">
-    <app-inspection-item-form [data]="item" (dataChange)="saveAsDraft()"></app-inspection-item-form>
+    <app-inspection-item-form [data]="item" [examinationItemCheckDate]="examinationItemCheckDate" (dataChange)="saveAsDraft()"></app-inspection-item-form>
   </div>
 </div>

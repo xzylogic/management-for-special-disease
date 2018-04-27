@@ -119,7 +119,7 @@ export class InspectionItemEditComponent implements OnInit {
         type: 'text',
         label: '下限值',
         key: 'min',
-        value: data && (data.max == 0 ? data.max : data.max || '')
+        value: data && (data.min == 0 ? data.min : data.min || '')
       }),
       reference: new FormText({
         type: 'text',

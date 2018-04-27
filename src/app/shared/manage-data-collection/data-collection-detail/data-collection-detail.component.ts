@@ -95,7 +95,7 @@ export class DataCollectionDetailComponent implements OnInit {
   }
 
   toUnpass() {
-    auditData(this.id, '您确定审核不通过？', 0,
+    auditData(this.id, '您确定审核不通过？', 4,
       this.dialog, this.dataCollectionService, () => {
         this.router.navigate(['/data-collection']);
       });

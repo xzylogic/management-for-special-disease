@@ -9,7 +9,7 @@
         <div class="grid-container clear">
           <div class="row">
             <div class="col-3">
-              <app-userinfo [user]="userInfo"></app-userinfo>
+              <app-userinfo [user]="userInfo" [type]="false"></app-userinfo>
               <div id="dataShow" class="show-container" *ngIf="userInfo.recordHistoryDtoList&&commonList">
                 <div *ngFor="let obj of userInfo.recordHistoryDtoList;let i=index" class="show-content">
                   <h3 style="padding: 10px 0;border-bottom: 2px solid #eee;margin-bottom: 15px;">病史资料{{i+1}}</h3>

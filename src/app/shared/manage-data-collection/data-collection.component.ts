@@ -12,6 +12,7 @@ import { DataCollectionTableService } from './_service/data-collection-table.ser
 import { ERRMSG } from '../../pci/_store/static';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { _switch } from 'rxjs/operator/switch';
 
 @Component({
   selector: 'app-data-collection',
@@ -19,18 +20,22 @@ import { Observable } from 'rxjs/Observable';
 })
 export class DataCollectionComponent implements OnInit {
   containerConfig: ContainerConfig;
-  @select(['doctor', 'tab']) tab: Observable<number>;
-  @select(['doctor', 'page']) page: Observable<Array<number>>;
+  @select(['dataCollection', 'tab']) tab: Observable < number > ;
+  @select(['dataCollection', 'page']) page: Observable < Array < number >> ;
 
   waitingTable: TableOption;
   auditingTable: TableOption;
   auditedTable: TableOption;
   unhandledTable: TableOption;
+  defeatedTable: TableOption;
   pages: any;
 
   queryHospital: string;
   queryTime: string;
   hospitalList = [];
+  MedicalHospitalsList = [];
+
+  queryMedicalHospital: string;
 
   auth: boolean;
 
@@ -40,8 +45,7 @@ export class DataCollectionComponent implements OnInit {
     private dataCollectionTableService: DataCollectionTableService,
     private dialog: MatDialog,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.containerConfig = this.dataCollectionService.dataCollectionConfig();
@@ -61,8 +65,13 @@ export class DataCollectionComponent implements OnInit {
       titles: this.dataCollectionTableService.setUnhandledTitles(),
       ifPage: true
     });
+    this.defeatedTable = new TableOption({
+      titles: this.dataCollectionTableService.setDefeatedTitles(),
+      ifPage: true
+    })
     this.reset();
     this.getHospitals();
+    this.getMedicalHospitals();
     this.getAuthName();
   }
 
@@ -71,13 +80,14 @@ export class DataCollectionComponent implements OnInit {
     this.reset1();
     this.reset2();
     this.reset3();
+    this.reset4();
   }
 
   reset0() {
     this.queryHospital = '';
     this.queryTime = '';
     this.waitingTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
+    this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.waitingTable, 0, page[0]);
     });
@@ -85,7 +95,7 @@ export class DataCollectionComponent implements OnInit {
 
   reset1() {
     this.auditingTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
+    this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.auditingTable, 1, page[1]);
     });
@@ -93,7 +103,9 @@ export class DataCollectionComponent implements OnInit {
 
   reset2() {
     this.auditedTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
+    this.queryMedicalHospital = '';
+    this.queryTime = '';
+    this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.auditedTable, 3, page[2]);
     });
@@ -101,9 +113,17 @@ export class DataCollectionComponent implements OnInit {
 
   reset3() {
     this.unhandledTable.queryKey = '';
-    this.page.subscribe((page: Array<number>) => {
+    this.page.subscribe((page: Array < number > ) => {
       this.pages = page;
       this.getDataCollections(this.unhandledTable, 2, page[2]);
+    });
+  }
+
+  reset4() {
+    this.unhandledTable.queryKey = '';
+    this.page.subscribe((page: Array < number > ) => {
+      this.pages = page;
+      this.getDataCollections(this.defeatedTable, 4, page[2]);
     });
   }
 
@@ -111,7 +131,7 @@ export class DataCollectionComponent implements OnInit {
     this.pages[type] = page;
     this.action.pageChange('dataCollection', this.pages);
     list.reset(page);
-    this.dataCollectionService.getDataCollections(page, list.size, type, this.queryHospital, this.queryTime)
+    this.dataCollectionService.getDataCollections(page, list.size, type, this.queryHospital, this.queryTime, this.queryMedicalHospital, list.queryKey)
       .subscribe(
         res => {
           list.loading = false;
@@ -140,6 +160,15 @@ export class DataCollectionComponent implements OnInit {
       .subscribe(res => {
         if (res.code == 0 && res.data) {
           this.hospitalList = res.data;
+        }
+      })
+  }
+
+  getMedicalHospitals() {
+    this.dataCollectionService.getMedicalHospitals()
+      .subscribe(res => {
+        if (res.code == 0 && res.data) {
+          this.MedicalHospitalsList = res.data;
         }
       })
   }
@@ -213,11 +242,20 @@ export class DataCollectionComponent implements OnInit {
 }
 
 export function auditData(id, title, status, dialog, service, callback) {
-  const config: DialogEdit = new DialogEdit({
-    title: title,
-    button: '提交',
-    form: status == 2 ?
-      [
+  let form;
+  switch (status) {
+    case 1 || 3 :
+      form = [
+        new FormText({
+          key: 'auditName',
+          label: '提交人姓名',
+          value: '',
+          required: true
+        })
+      ];
+      break;
+    case 2 :
+      form = [
         new FormText({
           key: 'auditName',
           label: '提交人姓名',
@@ -230,13 +268,38 @@ export function auditData(id, title, status, dialog, service, callback) {
           value: '',
           required: true
         })
-      ] : [
+      ];
+      break;
+    case 3 :
+      form = [
         new FormText({
           key: 'auditName',
           label: '提交人姓名',
           value: '',
           required: true
-        })]
+        })
+      ];
+      break;
+    case 4 :
+      form = [
+        new FormText({
+          key: 'auditName',
+          label: '提交人姓名',
+          value: '',
+          required: true
+        }),
+        new FormText({
+          key: 'failedReason',
+          label: '拒绝理由',
+          value: '',
+          required: true
+        })
+      ]
+  }
+  const config: DialogEdit = new DialogEdit({
+    title: title,
+    button: '提交',
+    form: form
   });
   EditDialog(config, dialog).afterClosed().subscribe(result => {
     if (result && result.auditName) {

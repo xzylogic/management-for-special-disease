@@ -26,6 +26,7 @@ export class DataCollectionEditComponent implements OnInit {
   commonList: any;
   editFormList: Collection[] = [];
   errorMessage = '';
+  hospitalName = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -213,6 +214,10 @@ export class DataCollectionEditComponent implements OnInit {
   dataChange(data, i) {
     this.editFormList[i] = data;
     this.setLocalStorage(`inputData${this.userInfo.id}`, this.editFormList);
+  }
+
+  onChangehospital(name) {
+    this.hospitalName = name;
   }
 
   delForm(i) {
