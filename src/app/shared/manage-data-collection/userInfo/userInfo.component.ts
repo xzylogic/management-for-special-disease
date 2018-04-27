@@ -26,7 +26,6 @@ export class UserInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.user);
     this.searchStream
       .debounceTime(500)
       .distinctUntilChanged()

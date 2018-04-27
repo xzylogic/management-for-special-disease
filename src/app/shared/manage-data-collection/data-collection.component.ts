@@ -191,6 +191,9 @@ export class DataCollectionComponent implements OnInit {
     if (data.key === 'dataTypein') {
       this.router.navigate(['/data-collection/edit', data.value.id]);
     }
+    if (data.key === 'editData') {
+      this.router.navigate(['/data-collection/edit', data.value.id]);
+    }
     if (data.key === 'showData') {
       this.router.navigate(['/data-collection/detail', data.value.id]);
     }

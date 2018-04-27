@@ -124,7 +124,7 @@ export class DataCollectionTableService {
       }),
       new TableTitle({
         name: '查看资料',
-        key: 'showData',
+        key: 'editData',
         controlType: ControlType.button
       })
     ];

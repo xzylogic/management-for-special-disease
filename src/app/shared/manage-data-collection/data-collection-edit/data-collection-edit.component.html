@@ -5,7 +5,7 @@
       <button mat-button type="button" (click)="getDataCollection()">点击刷新</button>
     </div>
     <div class="grid-container clear"
-         *ngIf="userInfo&&userInfo.status!==1&&userInfo.status!==3&&userInfo.recordHistoryDtoList">
+         *ngIf="userInfo&&userInfo.status!==3&&userInfo.recordHistoryDtoList">
       <div class="row">
         <div class="col-3">
           <app-userinfo [user]="userInfo" [type]="true" (onChangehospital)="onChangehospital($event)"></app-userinfo>
@@ -69,9 +69,14 @@
               <button mat-raised-button type="button" (click)="newForm()">+添加一项资料</button>
             </div>
           </div>
-          <div class="button-padding">
+          <div class="button-padding" *ngIf="userInfo.status!==1">
             <button mat-raised-button type="button" color="primary" (click)="toPass()">提交审核</button>
             <button mat-raised-button type="button" color="primary" (click)="toUpdateImg()">修改图片</button>
+          </div>
+          <div class="button-padding" *ngIf="userInfo.status==1">
+            <button mat-raised-button (click)="toAudit()">提交复审</button>
+            <button mat-raised-button (click)="toUnpass()">审核不通过</button>
+            <button mat-raised-button (click)="toOnline()">通过上线</button>
           </div>
         </div>
         <div class="col-3" *ngIf="userInfo&&userInfo.medicalRecordPhotoList">
