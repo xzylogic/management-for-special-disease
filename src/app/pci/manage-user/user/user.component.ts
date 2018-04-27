@@ -122,6 +122,23 @@ export class UserComponent implements OnInit {
     }
   }
 
+  batchRegisterUser(files) {
+    const myForm = new FormData();
+    const fileList = files.target.files[0];
+    myForm.append('file', fileList);
+    this.userService.batchRegisterUser(myForm)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog('注册成功！', this.dialog);
+        } else {
+          HintDialog(res.msg || '注册失败！', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('注册失败！', this.dialog);
+      });
+  }
+
   export() {
     let exportList;
     this.userService.getUsers(this.userTable.queryKey, this.queryBind, this.RegisterDate, 0, 2000)

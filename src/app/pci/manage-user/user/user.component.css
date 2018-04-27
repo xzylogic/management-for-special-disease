@@ -46,3 +46,17 @@
   margin-top: -200px !important;
   margin-left: -250px !important;
 }
+.register-btn{
+  position: relative;
+}
+.batchRegister{
+  cursor: pointer;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}

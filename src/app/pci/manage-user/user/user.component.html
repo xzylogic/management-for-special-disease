@@ -3,6 +3,10 @@
     <button mat-raised-button (click)="toSendMessage()">短信提醒患者</button>
     <button mat-raised-button (click)="export()">导出</button>
     <button mat-raised-button (click)="newData()">新增患者</button>
+    <button mat-raised-button  class="register-btn">
+      <input type="file" class="batchRegister" (change)="batchRegisterUser($event)">
+      批量注册患者
+    </button>
   </div>
   <div class="content">
     <form style="padding: 16px">

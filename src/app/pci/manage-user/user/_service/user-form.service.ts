@@ -70,8 +70,8 @@ export class UserFormService {
         value: data && data.sex || 0,
         required: true,
         options: [
-          {id: 0, name: '男'},
-          {id: 1, name: '女'}
+          {id: '0', name: '男'},
+          {id: '1', name: '女'}
         ],
         order: 4
       }),

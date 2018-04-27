@@ -8,7 +8,8 @@ const PATH = {
   userUpdate: 'api/user/update', // 编辑患者信息
   sendMessage: 'api/user/sendMsg', // 短信提醒患者
   IntegralDetail: 'opt/integral/records/list/', // 个人积分明细
-  photoUpload: '/record/photo/upload' // 上传病历
+  photoUpload: '/record/photo/upload', // 上传病历
+  importExcel: 'api/user/importExcel' // 批量注册患者
 };
 
 @Injectable()
@@ -126,5 +127,12 @@ export class UserService {
    */
   userUpload(body: any) {
     return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.photoUpload}`, body);
+  }
+
+  /**
+   * 批量注册患者
+   */
+  batchRegisterUser(data: any) {
+    return this.httpService.upload(`${this.app.pci.BASE_URL}${PATH.importExcel}`, data);
   }
 }
