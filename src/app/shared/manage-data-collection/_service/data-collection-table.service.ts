@@ -305,7 +305,7 @@ export class DataCollectionTableService {
       }),
       new TableTitle({
         name: '失败理由',
-        key: 'remark',
+        key: 'failedReason',
         maxwidth: 200
       }),
       new TableTitle({
