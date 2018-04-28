@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve -p 4203",
-    "copy": "cp -rf WEB-INF medical-record",
+    "copy": "cp -rf WEB-INF management-pci",
     "build-test": "ng build --prod --env=test --bh /management-pci/ && npm run copy",
     "build-pci": "ng build --prod --env=prod --bh /management-pci/ && npm run copy",
     "build-https": "ng build --prod --env=https --bh /management-pci/ && npm run copy",
