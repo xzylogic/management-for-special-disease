@@ -98,7 +98,7 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="审核失败">
+      <mat-tab label="审核失败" *ngIf="auth">
         <div *ngIf="!defeatedTable.lists&&defeatedTable.loading">Loading...</div>
         <div *ngIf="!defeatedTable.lists&&!defeatedTable.loading&&!!defeatedTable.errorMessage" class="center">
           {{defeatedTable.errorMessage}}
