@@ -50,7 +50,6 @@ export class EditFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.info = this.editFormData;
-
     this.recordPhotos = (this.info.medicalRecordPhotoList &&
       this.info.medicalRecordPhotoList.length !== 0) ?
       this.info.medicalRecordPhotoList : [];

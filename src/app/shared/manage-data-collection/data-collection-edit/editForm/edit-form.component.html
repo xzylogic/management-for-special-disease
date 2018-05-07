@@ -356,6 +356,18 @@
         </mat-form-field>
       </div>
     </div>
+    <div class="form-content" *ngIf="info.recordHistoryType==3">
+      <mat-form-field floatPlaceholder="always" style="width: 100%">
+        <textarea matInput placeholder="诊断" name="reason" [(ngModel)]="info.reason"
+                  (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="form-content" *ngIf="info.recordHistoryType==6">
+      <mat-form-field floatPlaceholder="always" style="width: 100%">
+        <textarea matInput placeholder="备注" name="reason" [(ngModel)]="info.remark"
+                  (blur)="saveAsDraft()" (change)="saveAsDraft()"></textarea>
+      </mat-form-field>
+    </div>
     <div class="form-content button-padding header-margin">
       <button mat-raised-button type="button" *ngIf="!this.info.id" (click)="saveAsDraft()">保存草稿</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="!inputForm.valid">保存</button>

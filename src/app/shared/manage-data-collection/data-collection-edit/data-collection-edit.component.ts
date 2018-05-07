@@ -136,6 +136,7 @@ export class DataCollectionEditComponent implements OnInit {
       updateData.checkDate = data.checkDate || '';
       updateData.hospitalName = data.hospitalName || '';
       updateData.officeName = data.officeName || '';
+      updateData.reason = data.reason || '';
       updateData.medicalRecordPhotoList = this.getImageList(data.medicalRecordPhotoList) || [];
     }
 
@@ -165,6 +166,7 @@ export class DataCollectionEditComponent implements OnInit {
       updateData.checkDate = data.checkDate || '';
       updateData.hospitalName = data.hospitalName || '';
       updateData.officeName = data.officeName || '';
+      updateData.remark = data.remark || '';
       updateData.medicalRecordPhotoList = this.getImageList(data.medicalRecordPhotoList) || [];
       updateData.title = data.object && data.object.title || '';
     }

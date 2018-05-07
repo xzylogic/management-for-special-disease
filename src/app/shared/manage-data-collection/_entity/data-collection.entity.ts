@@ -63,7 +63,9 @@ export class Collection {
   recordPrescriptionMedicineList: Medicine[]; // 用药清单
   recordImagingReportList: Image[]; // 用药清单
   content: string; // 就诊记录-诊断
-  title: string; // 其他-备注
+  reason: string; // 影像资料-诊断
+  title: string; // 其他-标题名
+  remark: string; // 其他-备注
 
   hospitalNo: string; // 住院号
   pathobiologyNo: string; // 病理号

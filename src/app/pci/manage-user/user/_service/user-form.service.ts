@@ -36,7 +36,20 @@ export class UserFormService {
           readonly: true,
           required: true,
           order: 1
-        }));
+        }),
+        new FormDropdown({
+          key: 'sex',
+          label: '性别',
+          value: data && data.sex || 0,
+          required: true,
+          disabled: true,
+          options: [
+            {id: '0', name: '男'},
+            {id: '1', name: '女'}
+          ],
+          order: 4
+        })
+      );
     } else {
       forms.push(
         new FormText({
@@ -45,7 +58,19 @@ export class UserFormService {
           value: data && data.tel || '',
           required: true,
           order: 1
-        }));
+        }),
+        new FormDropdown({
+          key: 'sex',
+          label: '性别',
+          value: data && data.sex || 0,
+          required: true,
+          options: [
+            {id: '0', name: '男'},
+            {id: '1', name: '女'}
+          ],
+          order: 4
+        }),
+      );
     }
 
     forms.push(
@@ -64,17 +89,6 @@ export class UserFormService {
         required: false,
         order: 3
       }),
-      new FormDropdown({
-        key: 'sex',
-        label: '性别',
-        value: data && data.sex || 0,
-        required: true,
-        options: [
-          {id: '0', name: '男'},
-          {id: '1', name: '女'}
-        ],
-        order: 4
-      }),
       new FormText({
         key: 'age',
         label: '年龄',
@@ -82,14 +96,14 @@ export class UserFormService {
         required: true,
         order: 5
       }),
-      // new FormDropdown({
-      //   key: 'hospitalId',
-      //   label: '手术医院',
-      //   value: data && data.hospitalId || 0,
-      //   required: false,
-      //   options: hospitalList,
-      //   order: 6
-      // }),
+      new FormDropdown({
+        key: 'hospitalId',
+        label: '手术医院',
+        value: data && data.hospitalId || 0,
+        required: false,
+        options: hospitalList,
+        order: 6
+      }),
       new FormText({
         key: 'surgeon',
         label: '手术医生',
