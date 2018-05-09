@@ -108,7 +108,8 @@ export class DataCollectionDetailService {
 
   setOtherList() {
     return [
-      new DataOption('title', '备注')
+      new DataOption('title', '标题名'),
+      new DataOption('remark', '备注'),
     ];
   }
 

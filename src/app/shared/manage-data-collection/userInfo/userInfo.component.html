@@ -23,7 +23,7 @@
     <div class="form-content" style="padding: 20px 10px;" *ngIf="type">
       <form class="example-form">
         <mat-form-field floatPlaceholder="always" style="width: 100%;">
-          <input matInput placeholder="病历医院(输入医院名称可进行搜索)" name="hospitalName" [(ngModel)]="hospitalName"
+          <input matInput placeholder="病历医院(输入医院名称可进行搜索)" name="hospitalName" [(ngModel)]="user.hospitalName"
                   (change)="search($event)" (keyup)="search($event)" required>
         </mat-form-field>
         <div class="ui middle aligned divided selection list" style="background-color: #fff;margin-bottom: 20px">

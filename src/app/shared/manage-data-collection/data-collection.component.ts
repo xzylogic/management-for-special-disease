@@ -30,6 +30,7 @@ export class DataCollectionComponent implements OnInit {
   defeatedTable: TableOption;
   pages: any;
 
+  entering: string;
   queryHospital: string;
   queryTime: string;
   hospitalList = [];
@@ -131,7 +132,7 @@ export class DataCollectionComponent implements OnInit {
     this.pages[type] = page;
     this.action.pageChange('dataCollection', this.pages);
     list.reset(page);
-    this.dataCollectionService.getDataCollections(page, list.size, type, this.queryHospital, this.queryTime, this.queryMedicalHospital, list.queryKey)
+    this.dataCollectionService.getDataCollections(page, list.size, type, list.queryKey, this.queryHospital, this.queryTime, this.queryMedicalHospital, this.entering)
       .subscribe(
         res => {
           list.loading = false;

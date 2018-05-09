@@ -149,32 +149,32 @@
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="体检T" name="physicalTemperature" [(ngModel)]="info.physicalTemperature"
+          <input matInput placeholder="体检T(请输入数字)" type="number" name="physicalTemperature" [(ngModel)]="info.physicalTemperature"
                  (blur)="saveAsDraft()" (change)="saveAsDraft()">
         </mat-form-field>
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="体检P" name="physicalPulse" [(ngModel)]="info.physicalPulse"
+          <input matInput placeholder="体检P(请输入数字)" type="number" name="physicalPulse" [(ngModel)]="info.physicalPulse"
                  (blur)="saveAsDraft()" (change)="saveAsDraft()">
         </mat-form-field>
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="体检R" name="physicalRespiration" [(ngModel)]="info.physicalRespiration"
+          <input matInput placeholder="体检R(请输入数字)" type="number" name="physicalRespiration" [(ngModel)]="info.physicalRespiration"
                  (blur)="saveAsDraft()" (change)="saveAsDraft()">
         </mat-form-field>
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="体检BP 低压" name="physicalBloodPressureDiastolic"
+          <input matInput placeholder="体检BP 低压(请输入数字)" type="number" name="physicalBloodPressureDiastolic"
                  [(ngModel)]="info.physicalBloodPressureDiastolic"
                  (blur)="saveAsDraft()" (change)="saveAsDraft()">
         </mat-form-field>
       </div>
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
-          <input matInput placeholder="体检BP 高压" name="physicalBloodPressureSystolic"
+          <input matInput placeholder="体检BP 高压(请输入数字)" type="number" name="physicalBloodPressureSystolic"
                  [(ngModel)]="info.physicalBloodPressureSystolic"
                  (blur)="saveAsDraft()" (change)="saveAsDraft()">
         </mat-form-field>

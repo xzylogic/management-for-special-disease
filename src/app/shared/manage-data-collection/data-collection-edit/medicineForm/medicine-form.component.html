@@ -20,7 +20,7 @@
 </div>
 <div class="form-content">
   <mat-form-field floatPlaceholder="always" style="width: 100%">
-    <input matInput placeholder="服用剂量" name="take" [(ngModel)]="info.take"
+    <input matInput placeholder="服用剂量(请输入数字)" name="take" type="number" [(ngModel)]="info.take"
            (blur)="saveAsDraft()" (change)="saveAsDraft()" required>
   </mat-form-field>
 </div>

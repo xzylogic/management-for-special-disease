@@ -21,6 +21,7 @@ export class RecordDetailComponent implements OnInit {
   }
 
   getTitle() {
+    console.log(this.info);
     this.recordList = this.dataCollectionDetailService.setRecordList();
   }
 }

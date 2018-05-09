@@ -36,18 +36,6 @@ export class UserFormService {
           readonly: true,
           required: true,
           order: 1
-        }),
-        new FormDropdown({
-          key: 'sex',
-          label: '性别',
-          value: data && data.sex || 0,
-          required: true,
-          disabled: true,
-          options: [
-            {id: '0', name: '男'},
-            {id: '1', name: '女'}
-          ],
-          order: 4
         })
       );
     } else {
@@ -58,17 +46,6 @@ export class UserFormService {
           value: data && data.tel || '',
           required: true,
           order: 1
-        }),
-        new FormDropdown({
-          key: 'sex',
-          label: '性别',
-          value: data && data.sex || 0,
-          required: true,
-          options: [
-            {id: '0', name: '男'},
-            {id: '1', name: '女'}
-          ],
-          order: 4
         }),
       );
     }
@@ -95,6 +72,17 @@ export class UserFormService {
         value: data && data.age || '',
         required: true,
         order: 5
+      }),
+      new FormDropdown({
+        key: 'sex',
+        label: '性别',
+        value: data && data.sex || 0,
+        required: true,
+        options: [
+          {id: '0', name: '男'},
+          {id: '1', name: '女'}
+        ],
+        order: 4
       }),
       new FormDropdown({
         key: 'hospitalId',
@@ -146,40 +134,6 @@ export class UserFormService {
         required: false,
         order: 11
       })
-    );
-
-    return forms.sort((a, b) => a.order - b.order);
-  }
-
-  setUploadForm(data) {
-
-    const forms: FormBase<any> [] = [];
-
-    forms.push(
-      new FormText({
-        key: 'userId',
-        label: '用户ID',
-        value: data && data.id || '',
-        readonly: true,
-        required: true,
-        order: 1
-      }),
-      new FormDate({
-        key: 'checkDate',
-        label: '报告检查时间',
-        value: '',
-        required: true,
-        order: 2
-      }),
-      new FormFile({
-        key: 'imgUrlList',
-        label: '病历图片',
-        value: '',
-        multiple: true,
-        url: `${this.app.pci.BASE_URL}api/upload/list`,
-        required: true,
-        order: 3
-      }),
     );
 
     return forms.sort((a, b) => a.order - b.order);

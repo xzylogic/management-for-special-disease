@@ -70,7 +70,7 @@ export class DataCollectionService {
    * @param {hospitalName} 病历医院筛选
    * @param {operation} 录入人筛选
    */
-  getDataCollections(page, size, type, hospitalId?, time?, hospitalName?, operation?) {
+  getDataCollections(page, size, type, mobileOrName?, hospitalId?, time?, hospitalName?, operation?) {
     let query = `?page=${page}&size=${size}&type=${type}`
     if (hospitalId) {
       query += `&hospitalId=${hospitalId}`;
@@ -85,6 +85,9 @@ export class DataCollectionService {
     }
     if (operation) {
       query += `&operation=${operation}`;
+    }
+    if (mobileOrName) {
+      query += `&mobileOrName=${mobileOrName}`;
     }
     return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.dataCollections}${query}`);
   }

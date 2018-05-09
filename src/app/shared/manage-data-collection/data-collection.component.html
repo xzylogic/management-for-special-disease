@@ -3,13 +3,16 @@
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <mat-tab label="待录入">
         <form style="padding: 16px">
-          <mat-form-field floatPlaceholder="always" style="width: 300px">
+          <mat-form-field floatPlaceholder="always" style="width: 250px">
             <mat-select placeholder="患者所属医院" [(ngModel)]="queryHospital" name="type">
               <mat-option [value]="opt.id" *ngFor="let opt of hospitalList"
                           (click)="getDataCollections(waitingTable,0,0)">
                 {{opt.name}}
               </mat-option>
             </mat-select>
+          </mat-form-field>
+          <mat-form-field floatPlaceholder="always">
+            <input matInput type="text" placeholder="手机号/患者姓名搜索" name="queryKey" [(ngModel)]="waitingTable.queryKey">
           </mat-form-field>
           <app-search [type]="'1'" [label]="'上传时间'" [(value)]="queryTime"></app-search>
           <button mat-icon-button color="primary" type="button" (click)="getDataCollections(waitingTable,0,0)">
@@ -34,6 +37,17 @@
         </div>
       </mat-tab>
       <mat-tab label="待审核" *ngIf="auth">
+        <form style="padding: 16px">
+          <mat-form-field floatPlaceholder="always">
+            <input matInput type="text" placeholder="手机号/患者姓名搜索" name="queryKey" [(ngModel)]="auditingTable.queryKey">
+          </mat-form-field>
+          <button mat-icon-button color="primary" type="button" (click)="getDataCollections(auditingTable,0,0)">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" type="button" (click)="reset1()">
+            <mat-icon>autorenew</mat-icon>
+          </button>
+        </form>
         <div *ngIf="!auditingTable.lists&&auditingTable.loading">Loading...</div>
         <div *ngIf="!auditingTable.lists&&!auditingTable.loading&&!!auditingTable.errorMessage" class="center">
           {{auditingTable.errorMessage}}
@@ -51,9 +65,12 @@
       <mat-tab label="审核通过" *ngIf="auth">
         <form style="padding: 16px">
           <mat-form-field floatPlaceholder="always">
-            <input matInput type="text" placeholder="录入人搜索" name="queryKey" [(ngModel)]="auditedTable.queryKey">
+            <input matInput type="text" placeholder="录入人搜索" name="entering" [(ngModel)]="entering">
           </mat-form-field>
-          <mat-form-field floatPlaceholder="always" style="width: 300px">
+          <mat-form-field floatPlaceholder="always">
+            <input matInput type="text" placeholder="手机号/患者姓名搜索" name="queryKey" [(ngModel)]="auditedTable.queryKey">
+          </mat-form-field>
+          <mat-form-field floatPlaceholder="always" style="width: 250px">
             <mat-select placeholder="病历医院" [(ngModel)]="queryMedicalHospital" name="type">
               <mat-option [value]="opt.name" *ngFor="let opt of MedicalHospitalsList"
                           (click)="getDataCollections(auditedTable,3,0)">

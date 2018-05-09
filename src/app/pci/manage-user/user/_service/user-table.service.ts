@@ -48,7 +48,7 @@ export class UserTableService {
       }),
       new TableTitle({
         name: '手术医院',
-        key: 'hospitalIdms',
+        key: 'hospitalName',
         minwidth: 100
       }),
       new TableTitle({

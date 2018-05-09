@@ -309,6 +309,10 @@ export class DataCollectionTableService {
         maxwidth: 200
       }),
       new TableTitle({
+        name: '录入人',
+        key: 'inputName'
+      }),
+      new TableTitle({
         name: '是否删除',
         key: 'deleted'
       }),

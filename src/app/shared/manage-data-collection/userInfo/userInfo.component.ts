@@ -30,12 +30,12 @@ export class UserInfoComponent implements OnInit, OnDestroy {
       .debounceTime(500)
       .distinctUntilChanged()
       .subscribe(searchText => {
-        this.loadData(this.hospitalName);
+        this.loadData(this.user.hospitalName);
       });
   }
 
   search($event) {
-    this.searchStream.next(this.hospitalName);
+    this.searchStream.next(this.user.hospitalName);
   }
 
   ngOnDestroy() {
@@ -54,7 +54,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
   }
 
   selected(data) {
-    this.hospitalName = data.name;
+    this.user.hospitalName = data.name;
     this.results$ = [];
     this.onChangehospital.emit(data.name);
   }
