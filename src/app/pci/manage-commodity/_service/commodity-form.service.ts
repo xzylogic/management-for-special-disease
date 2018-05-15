@@ -44,7 +44,7 @@ export class CommodityFormService {
         key: 'pictures',
         label: '详情图片',
         value: data && data.pictures || [],
-        url: `${this.app.pci.BASE_URL}api/upload`,
+        url: `${this.app.pci.BASE_URL}api/upload/list`,
         multiple: true,
         required: false,
         order: 2
