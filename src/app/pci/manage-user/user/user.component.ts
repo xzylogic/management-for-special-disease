@@ -25,6 +25,10 @@ export class UserComponent implements OnInit {
   userTable: TableOption;
   queryBind: any;
   RegisterDate: any;
+  hospitalList: any;
+  sourceList: any;
+  hospital: any;
+  source: any;
   @select(['user', 'page']) page: Observable<Array<number>>;
 
   constructor(
@@ -47,12 +51,16 @@ export class UserComponent implements OnInit {
     });
     // this.RegisterDate = this.search.setDefaultRange();
     this.reset();
+    this.getHospital();
+    this.getQrType();
   }
 
   reset() {
     this.userTable.queryKey = '';
     this.queryBind = '';
     this.RegisterDate = '';
+    this.hospital = '';
+    this.source = '';
     this.page.subscribe((page: Array<number>) => {
       this.getUsers(page[0]);
     });
@@ -63,7 +71,7 @@ export class UserComponent implements OnInit {
     this.action.pageChange('user', [page]);
     this.userTable.reset(page);
     this.userService.getUsers(
-      this.userTable.queryKey, this.queryBind, this.RegisterDate, page, this.userTable.size)
+      this.userTable.queryKey, this.queryBind, this.RegisterDate, page, this.userTable.size, this.hospital, this.source)
       .subscribe(res => {
         this.userTable.loading = false;
         if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
@@ -81,6 +89,29 @@ export class UserComponent implements OnInit {
         this.userTable.loading = false;
         this.userTable.errorMessage = ERRMSG.netErrMsg;
       })
+  }
+
+  getHospital() {
+    this.userService.getOptions().subscribe(res => {
+      if (res.code == 0 && res.data) {
+        this.hospitalList = res.data.hospitalList
+      } else {
+        console.log(res)
+      }
+    }, err => {
+      console.log(err)
+    })
+  }
+
+  getQrType() {
+    this.userService.getQrType().subscribe(res => {
+      console.log(res)
+      if (res.code == 0 && res.data) {
+        this.sourceList = res.data
+      }
+    }, err => {
+      console.log(err)
+    })
   }
 
   // 转换

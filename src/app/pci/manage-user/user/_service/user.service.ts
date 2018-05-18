@@ -4,6 +4,7 @@ import { ContainerConfig } from '../../../../libs/common/container/container.com
 const PATH = {
   userList: 'api/user/list', // 查询患者列表
   userOptionList: 'api/user/option', // 获取医院选项列表
+  sourceList: 'api/user/getQrType', // 获取渠道列表
   userCreate: 'api/user/add', // 新增患者
   userUpdate: 'api/user/update', // 编辑患者信息
   sendMessage: 'api/user/sendMsg', // 短信提醒患者
@@ -76,9 +77,19 @@ export class UserService {
   //  * @param {number} page    [description]
   //  * @param {number} size    [description]
   //  */
-  getUsers(key: string, bind: any, registrationTime: any, page: number, size: number) {
+  getUsers(key: string, bind: any, registrationTime: any, page: number, size: number, hospitalId?: number, type?: number) {
+    let query = `?keyword=${key}&binding=${bind}&registrationTime=${registrationTime}&page=${page}&size=${size}`
+    if (hospitalId) {
+      query += `&hospitalId=${hospitalId}`;
+    }
+    if (type) {
+      query += `&type=${type}`
+    }
+    if (type == 0) {
+      query += `&sceneId=${hospitalId}`
+    }
     return this.httpService.get(
-      `${this.app.pci.BASE_URL}${PATH.userList}?keyword=${key}&binding=${bind}&registrationTime=${registrationTime}&page=${page}&size=${size}`
+      `${this.app.pci.BASE_URL}${PATH.userList}${query}`
     );
   }
 
@@ -88,6 +99,15 @@ export class UserService {
   getOptions() {
     return this.httpService.get(
       `${this.app.pci.BASE_URL}${PATH.userOptionList}`
+    )
+  }
+
+  /**
+   * 获取渠道列表
+   */
+  getQrType() {
+    return this.httpService.get(
+      `${this.app.pci.BASE_URL}${PATH.sourceList}`
     )
   }
 

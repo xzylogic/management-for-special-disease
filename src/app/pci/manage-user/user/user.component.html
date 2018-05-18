@@ -20,6 +20,22 @@
           <mat-option [value]="false">否</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field floatPlaceholder="always">
+        <mat-select placeholder="手术医院" name="hospital" [(ngModel)]="hospital">
+          <mat-option [value]="opt.id" *ngFor="let opt of hospitalList"
+                      (click)="getUsers(0)">
+            {{opt.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field floatPlaceholder="always">
+        <mat-select placeholder="来源渠道" name="source" [(ngModel)]="source">
+          <mat-option [value]="opt.type" *ngFor="let opt of sourceList"
+                      (click)="getUsers(0)">
+            {{opt.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <app-search [type]="'1'" [label]="'注册时间'" [(value)]="RegisterDate"></app-search>
       <button mat-icon-button color="primary" type="button" (click)="getUsers(0)">
         <mat-icon>search</mat-icon>
