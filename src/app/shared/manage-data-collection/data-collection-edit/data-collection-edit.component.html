@@ -78,6 +78,7 @@
             <button mat-raised-button (click)="toUnpass()">审核不通过</button>
             <button mat-raised-button (click)="toOnline()">通过上线</button>
           </div>
+          <div *ngIf="userInfo.failedReason">审核失败理由：{{userInfo.failedReason}}</div>
         </div>
         <div class="col-3" *ngIf="userInfo&&userInfo.medicalRecordPhotoList">
           <app-image-show [imgList]="userInfo.medicalRecordPhotoList"></app-image-show>
