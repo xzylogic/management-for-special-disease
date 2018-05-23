@@ -176,6 +176,11 @@ export class DataCollectionTableService {
         minwidth: 70
       }),
       new TableTitle({
+        name: '上传时间',
+        key: 'uploadDate',
+        minwidth: 70
+      }),
+      new TableTitle({
         name: '录入人',
         key: 'inputName'
       }),
