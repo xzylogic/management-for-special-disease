@@ -47,6 +47,11 @@ export class RelationshipTableService {
         minwidth: 70
       }),
       new TableTitle({
+        name: '通过时间',
+        key: 'agreeDate',
+        minwidth: 70
+      }),
+      new TableTitle({
         name: '关联渠道',
         key: 'channel'
       }),
