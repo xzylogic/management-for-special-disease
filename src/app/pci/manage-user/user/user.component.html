@@ -20,19 +20,19 @@
           <mat-option [value]="false">否</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field floatPlaceholder="always" style="width: 270px;">
+        <mat-select placeholder="来源渠道（为医院二维码时手术医院必须选择）" name="source" [(ngModel)]="source">
+          <mat-option [value]="opt.type" *ngFor="let opt of sourceList"
+                      (click)="getUsers(0)">
+            {{opt.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <mat-form-field floatPlaceholder="always">
         <mat-select placeholder="手术医院" name="hospital" [(ngModel)]="hospital">
           <mat-option [value]="opt.id" *ngFor="let opt of hospitalList"
                       (click)="getUsers(0)">
             {{opt.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field floatPlaceholder="always">
-        <mat-select placeholder="来源渠道" name="source" [(ngModel)]="source">
-          <mat-option [value]="opt.type" *ngFor="let opt of sourceList"
-                      (click)="getUsers(0)">
-            {{opt.description}}
           </mat-option>
         </mat-select>
       </mat-form-field>
