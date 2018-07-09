@@ -111,7 +111,7 @@ export class EditFormComponent implements OnInit, AfterViewInit {
         this.recordPhotos.push(image.id);
       }
     });
-    console.log(this.recordPhotos);
+    // console.log(this.recordPhotos);
     this.info.medicalRecordPhotoList = this.recordPhotos;
     this.saveAsDraft();
   }
@@ -186,11 +186,13 @@ export class EditFormComponent implements OnInit, AfterViewInit {
     if (!this.info.id) {
       if (data) {
         this.info[data] = moment(this.info[data]).format('YYYY-MM-DD');
-        // console.log(this.info[data]);
       }
       // console.log('save' + JSON.stringify(this.info));
       // console.log('saveAsDraft');
       this.dataChange.emit(this.info);
+    } else if (this.info.id && data) {
+      this.info[data] = moment(this.info[data]).format('YYYY-MM-DD');
+      // console.log(this.info[data]);
     }
   }
 
@@ -206,6 +208,7 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   }
 
   save() {
+    // console.log(this.info);
     if (this.info.InspectionFormList) {
       this.info.recordExaminationItemList = [];
       this.info.InspectionFormList.forEach(obj => {
