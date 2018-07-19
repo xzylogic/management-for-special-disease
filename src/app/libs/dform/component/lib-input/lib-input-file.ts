@@ -56,10 +56,10 @@ export class LibInputFileComponent implements OnInit {
     const myForm = new FormData();
     const fileList = files.target.files;
     for (let i = 0; i < fileList.length; i++) {
-      // console.log(fileList[i]);
-      if (fileList[i].size > 5 * 1024 * 1024) {
-        this.photoCompress(fileList[i], 1536, (value) => {
-          // console.log(value);
+      console.log(fileList[i].size / (1024 * 1024));
+      if (fileList[i].size > 3 * 1024 * 1024 && this.data.ifCompress) {
+        this.photoCompress(fileList[i], 1360, (value) => {
+          console.log(value.size / (1024 * 1024));
           myForm.append('file', value);
           this.fileUpload(myForm)
         })
