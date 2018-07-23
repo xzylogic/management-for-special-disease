@@ -108,6 +108,10 @@ export class DataCollectionService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.drug}?page=0&size=999999&keyword=${key}`);
   }
 
+  getAdopt(){
+    return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.hospital}`);
+  }
+
   getHospitals() {
     return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.hospital}`);
   }

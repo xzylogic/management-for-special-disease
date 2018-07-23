@@ -4,6 +4,77 @@ import { ControlType, TableTitle } from '../../../libs/dtable/dtable.entity';
 @Injectable()
 export class DataCollectionTableService {
 
+  setPretrialTitles() {
+    const Titles: TableTitle[] = [
+      new TableTitle({
+        name: '序号',
+        key: 'id'
+      }),
+      new TableTitle({
+        name: '患者姓名',
+        key: 'name'
+      }),
+      new TableTitle({
+        name: '手机号',
+        key: 'tel',
+        minwidth: 85
+      }),
+      // new TableTitle({
+      //   name: '实名认证',
+      //   key: 'authenticate'
+      // }),
+      new TableTitle({
+        name: '注册时间',
+        key: 'registerDate'
+      }),
+      new TableTitle({
+        name: '来源渠道',
+        key: 'doctorHospitalName'
+      }),
+      // new TableTitle({
+      //   name: '年龄',
+      //   key: 'age'
+      // }),
+      // new TableTitle({
+      //   name: '性别',
+      //   key: 'sex'
+      // }),
+      // new TableTitle({
+      //   name: '手术医院',
+      //   key: 'hospitalName',
+      // }),
+      // new TableTitle({
+      //   name: '手术医生',
+      //   key: 'doctorName'
+      // }),
+      new TableTitle({
+        name: '上传时间',
+        key: 'uploadDate',
+        minwidth: 70
+      }),
+      new TableTitle({
+        name: '是否删除',
+        key: 'deleted'
+      }),
+      new TableTitle({
+        name: '资料录入',
+        key: 'dataTypein',
+        controlType: ControlType.button
+      }),
+      new TableTitle({
+        name: '通过',
+        key: 'adopt',
+        controlType: ControlType.button
+      }),
+      new TableTitle({
+        name: '暂不处理',
+        key: 'keepData',
+        controlType: ControlType.button
+      })
+    ];
+    return Titles;
+  }
+
   setWaitingTitles() {
     const Titles: TableTitle[] = [
       new TableTitle({

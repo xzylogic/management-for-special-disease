@@ -23,6 +23,7 @@ export class DataCollectionComponent implements OnInit {
   @select(['dataCollection', 'tab']) tab: Observable < number > ;
   @select(['dataCollection', 'page']) page: Observable < Array < number >> ;
 
+  pretrialTable: TableOption;
   waitingTable: TableOption;
   auditingTable: TableOption;
   auditedTable: TableOption;
@@ -33,6 +34,7 @@ export class DataCollectionComponent implements OnInit {
   entering: string;
   queryHospital: string;
   queryTime: string;
+  adoptList = [];
   hospitalList = [];
   MedicalHospitalsList = [];
 
@@ -50,6 +52,10 @@ export class DataCollectionComponent implements OnInit {
 
   ngOnInit() {
     this.containerConfig = this.dataCollectionService.dataCollectionConfig();
+    this.pretrialTable = new TableOption({
+      titles: this.dataCollectionTableService.setPretrialTitles(),
+      ifPage: true
+    });
     this.waitingTable = new TableOption({
       titles: this.dataCollectionTableService.setWaitingTitles(),
       ifPage: true
@@ -69,8 +75,9 @@ export class DataCollectionComponent implements OnInit {
     this.defeatedTable = new TableOption({
       titles: this.dataCollectionTableService.setDefeatedTitles(),
       ifPage: true
-    })
+    });
     this.reset();
+    this.getAdopt();
     this.getHospitals();
     this.getMedicalHospitals();
     this.getAuthName();
@@ -82,6 +89,7 @@ export class DataCollectionComponent implements OnInit {
     this.reset2();
     this.reset3();
     this.reset4();
+    this.reset5();
   }
 
   reset0() {
@@ -128,6 +136,16 @@ export class DataCollectionComponent implements OnInit {
     });
   }
 
+  reset5() {
+    this.queryHospital = '';
+    this.queryTime = '';
+    this.pretrialTable.queryKey = '';
+    this.page.subscribe((page: Array < number > ) => {
+      this.pages = page;
+      this.getDataCollections(this.pretrialTable, 0, page[0]);
+    });
+  }
+
   getDataCollections(list: TableOption, type, page) {
     this.pages[type] = page;
     this.action.pageChange('dataCollection', this.pages);
@@ -142,7 +160,7 @@ export class DataCollectionComponent implements OnInit {
             list.lists = res.data.content;
             list.lists.forEach(obj => {
               this.format(obj);
-            })
+            });
             this.formatList(list.lists);
             // console.log(list.lists);
             list.totalPage = res.data.totalPages;
@@ -154,6 +172,14 @@ export class DataCollectionComponent implements OnInit {
           console.log(err);
           list.errorMessage = ERRMSG.netErrMsg;
         });
+  }
+  getAdopt(){
+    this.dataCollectionService.getAdopt()
+      .subscribe(res => {
+        if (res.code == 0 && res.data) {
+          this.adoptList = res.data;
+        }
+      })
   }
 
   getHospitals() {
@@ -197,6 +223,16 @@ export class DataCollectionComponent implements OnInit {
     }
     if (data.key === 'showData') {
       this.router.navigate(['/data-collection/detail', data.value.id]);
+    }
+
+    console.log(data)
+    if (data.key === 'adopt') {
+      auditData(
+        data.value.id, '您确定审核通过？', 2,
+        this.dialog, this.dataCollectionService, () => {
+          // console.log('success');
+          this.reset();
+        });
     }
     if (data.key === 'keepData') {
       auditData(
@@ -306,6 +342,7 @@ export function auditData(id, title, status, dialog, service, callback) {
     form: form
   });
   EditDialog(config, dialog).afterClosed().subscribe(result => {
+    console.log(result)
     if (result && result.auditName) {
       result.status = status;
       service.statusChanged(id, result)
