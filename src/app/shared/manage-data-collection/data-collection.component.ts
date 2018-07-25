@@ -32,6 +32,8 @@ export class DataCollectionComponent implements OnInit {
   pages: any;
 
   entering: string;
+  queryHospitalY: string;
+  queryTimeY: string;
   queryHospital: string;
   queryTime: string;
   adoptList = [];
@@ -78,7 +80,6 @@ export class DataCollectionComponent implements OnInit {
       ifPage: true
     });
     this.reset();
-    this.getAdopt();
     this.getHospitals();
     this.getMedicalHospitals();
     this.getAuthName();
@@ -138,12 +139,12 @@ export class DataCollectionComponent implements OnInit {
   }
 
   reset5() {
-    this.queryHospital = '';
-    this.queryTime = '';
+    this.queryHospitalY = '';
+    this.queryTimeY = '';
     this.pretrialTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.pages = page;
-      this.getDataCollections(this.pretrialTable, 0, page[0]);
+      this.getDataCollections(this.pretrialTable, 5, page[0]);
     });
   }
 
@@ -173,15 +174,6 @@ export class DataCollectionComponent implements OnInit {
           console.log(err);
           list.errorMessage = ERRMSG.netErrMsg;
         });
-  }
-
-  getAdopt() {
-    this.dataCollectionService.getAdopt()
-      .subscribe(res => {
-        if (res.code == 0 && res.data) {
-          this.adoptList = res.data;
-        }
-      })
   }
 
   getHospitals() {
@@ -244,10 +236,22 @@ export class DataCollectionComponent implements OnInit {
             value: '',
             options: [{
               id: 1,
-              name: '234'
+              name: '检验报告'
             }, {
               id: 2,
-              name: '345'
+              name: '出院小结'
+            },{
+              id: 3,
+              name: '影像资料'
+            }, {
+              id: 4,
+              name: '用药清单'
+            },{
+              id: 5,
+              name: '就诊记录'
+            }, {
+              id: 6,
+              name: '其他'
             }],
             required: true
           })
@@ -309,10 +313,13 @@ export class DataCollectionComponent implements OnInit {
     this.action.tabChange('dataCollection', index);
   }
 
-  passData(id, typeIdx) {
-    // this.dataCollectionService.getAdopt(id, typeIdx).subscribe(res => {
-    //
-    // })
+  passData(id, typeId) {
+    this.dataCollectionService.getAdopt(id, typeId).subscribe(res => {
+      if (res.code == 0 && res.data) {
+        this.adoptList = res.data;
+        this.reset();
+      }
+    })
   }
 }
 
@@ -377,7 +384,7 @@ export function auditData(id, title, status, dialog, service, callback) {
     form: form
   });
   EditDialog(config, dialog).afterClosed().subscribe(result => {
-    console.log(result)
+    console.log(result);
     if (result && result.auditName) {
       result.status = status;
       service.statusChanged(id, result)

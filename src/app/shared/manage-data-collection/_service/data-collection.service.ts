@@ -4,6 +4,7 @@ import { ContainerConfig } from '../../../libs/common/container/container.compon
 const PATH = {
   dataCollections: 'record/upload/list',
   dataCollection: 'record/upload',
+  dataCollectionY:'record/update',
   drug: 'api/medicine/list',
   hospital: 'hospitalList',
   medicalHospitals: 'api/hospital/hospitals',
@@ -108,8 +109,8 @@ export class DataCollectionService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.drug}?page=0&size=999999&keyword=${key}`);
   }
 
-  getAdopt(){
-    return this.httpService.post(`${this.app.pci.COMMON_URL}${PATH.hospital}`);
+  getAdopt(id,data){
+    return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.dataCollectionY}/${id}/${data}`);
   }
 
   getHospitals() {
