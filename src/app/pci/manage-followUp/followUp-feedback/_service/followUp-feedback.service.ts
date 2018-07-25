@@ -2,7 +2,8 @@ import { Injectable, Inject} from '@angular/core';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
-  followList: 'api/doctorPatient/flupFeedback', // 随访反馈管理
+  // followList: 'api/doctorPatient/flupFeedback', // 随访反馈管理
+  followList: 'api/follow-up/flupFeedback', // 随访反馈管理
 };
 @Injectable()
 export class FollowFeedbackService {

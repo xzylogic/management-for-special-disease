@@ -7,6 +7,10 @@ import { FollowPlanService } from '../_service/followUp-plan.service';
 import { FollowPlanTableService } from '../_service/followUp-plan-table.service';
 import { FollowPlan } from '../_entity/followUp-plan.entity';
 
+const PATH = {
+  // followList: 'api/doctorPatient/flup', // 随访计划详情列表
+  followList: 'api/follow-up/flup/detail', // 随访计划详情列表
+};
 @Component({
   selector: 'app-plan-detail',
   templateUrl: './plan-detail.component.html',

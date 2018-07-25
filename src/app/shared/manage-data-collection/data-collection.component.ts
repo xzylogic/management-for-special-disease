@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../libs/common/container/container.component';
+import { FormDropdown } from '../../libs/dform/_entity/form-dropdown';
 import { FormText } from '../../libs/dform/_entity/form-text';
 import { EditDialog } from '../../libs/dmodal/dialog-edit.component';
 import { HintDialog } from '../../libs/dmodal/dialog.component';
@@ -12,7 +13,6 @@ import { DataCollectionTableService } from './_service/data-collection-table.ser
 import { ERRMSG } from '../../pci/_store/static';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
-import { _switch } from 'rxjs/operator/switch';
 
 @Component({
   selector: 'app-data-collection',
@@ -20,9 +20,10 @@ import { _switch } from 'rxjs/operator/switch';
 })
 export class DataCollectionComponent implements OnInit {
   containerConfig: ContainerConfig;
-  @select(['dataCollection', 'tab']) tab: Observable < number > ;
-  @select(['dataCollection', 'page']) page: Observable < Array < number >> ;
+  @select(['dataCollection', 'tab']) tab: Observable<number>;
+  @select(['dataCollection', 'page']) page: Observable<Array<number>>;
 
+  pretrialTable: TableOption;
   waitingTable: TableOption;
   auditingTable: TableOption;
   auditedTable: TableOption;
@@ -31,8 +32,11 @@ export class DataCollectionComponent implements OnInit {
   pages: any;
 
   entering: string;
+  queryHospitalY: string;
+  queryTimeY: string;
   queryHospital: string;
   queryTime: string;
+  adoptList = [];
   hospitalList = [];
   MedicalHospitalsList = [];
 
@@ -46,10 +50,15 @@ export class DataCollectionComponent implements OnInit {
     private dataCollectionTableService: DataCollectionTableService,
     private dialog: MatDialog,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.containerConfig = this.dataCollectionService.dataCollectionConfig();
+    this.pretrialTable = new TableOption({
+      titles: this.dataCollectionTableService.setPretrialTitles(),
+      ifPage: true
+    });
     this.waitingTable = new TableOption({
       titles: this.dataCollectionTableService.setWaitingTitles(),
       ifPage: true
@@ -69,7 +78,7 @@ export class DataCollectionComponent implements OnInit {
     this.defeatedTable = new TableOption({
       titles: this.dataCollectionTableService.setDefeatedTitles(),
       ifPage: true
-    })
+    });
     this.reset();
     this.getHospitals();
     this.getMedicalHospitals();
@@ -82,13 +91,14 @@ export class DataCollectionComponent implements OnInit {
     this.reset2();
     this.reset3();
     this.reset4();
+    this.reset5();
   }
 
   reset0() {
     this.queryHospital = '';
     this.queryTime = '';
     this.waitingTable.queryKey = '';
-    this.page.subscribe((page: Array < number > ) => {
+    this.page.subscribe((page: Array<number>) => {
       this.pages = page;
       this.getDataCollections(this.waitingTable, 0, page[0]);
     });
@@ -96,7 +106,7 @@ export class DataCollectionComponent implements OnInit {
 
   reset1() {
     this.auditingTable.queryKey = '';
-    this.page.subscribe((page: Array < number > ) => {
+    this.page.subscribe((page: Array<number>) => {
       this.pages = page;
       this.getDataCollections(this.auditingTable, 1, page[1]);
     });
@@ -106,7 +116,7 @@ export class DataCollectionComponent implements OnInit {
     this.auditedTable.queryKey = '';
     this.queryMedicalHospital = '';
     this.queryTime = '';
-    this.page.subscribe((page: Array < number > ) => {
+    this.page.subscribe((page: Array<number>) => {
       this.pages = page;
       this.getDataCollections(this.auditedTable, 3, page[2]);
     });
@@ -114,7 +124,7 @@ export class DataCollectionComponent implements OnInit {
 
   reset3() {
     this.unhandledTable.queryKey = '';
-    this.page.subscribe((page: Array < number > ) => {
+    this.page.subscribe((page: Array<number>) => {
       this.pages = page;
       this.getDataCollections(this.unhandledTable, 2, page[2]);
     });
@@ -122,9 +132,19 @@ export class DataCollectionComponent implements OnInit {
 
   reset4() {
     this.unhandledTable.queryKey = '';
-    this.page.subscribe((page: Array < number > ) => {
+    this.page.subscribe((page: Array<number>) => {
       this.pages = page;
       this.getDataCollections(this.defeatedTable, 4, page[2]);
+    });
+  }
+
+  reset5() {
+    this.queryHospitalY = '';
+    this.queryTimeY = '';
+    this.pretrialTable.queryKey = '';
+    this.page.subscribe((page: Array<number>) => {
+      this.pages = page;
+      this.getDataCollections(this.pretrialTable, 5, page[0]);
     });
   }
 
@@ -142,7 +162,7 @@ export class DataCollectionComponent implements OnInit {
             list.lists = res.data.content;
             list.lists.forEach(obj => {
               this.format(obj);
-            })
+            });
             this.formatList(list.lists);
             // console.log(list.lists);
             list.totalPage = res.data.totalPages;
@@ -198,6 +218,55 @@ export class DataCollectionComponent implements OnInit {
     if (data.key === 'showData') {
       this.router.navigate(['/data-collection/detail', data.value.id]);
     }
+    if (data.key === 'adopt') {
+      // auditData(
+      //   data.value.id, '您确定审核通过？', 2,
+      //   this.dialog, this.dataCollectionService, () => {
+      //     // console.log('success');
+      //     this.reset();
+      //   });
+
+      const config: DialogEdit = new DialogEdit({
+        title: '您确定审核通过？',
+        button: '提交',
+        form: [
+          new FormDropdown({
+            key: 'idx',
+            label: '',
+            value: '',
+            options: [{
+              id: 1,
+              name: '检验报告'
+            }, {
+              id: 2,
+              name: '出院小结'
+            },{
+              id: 3,
+              name: '影像资料'
+            }, {
+              id: 4,
+              name: '用药清单'
+            },{
+              id: 5,
+              name: '就诊记录'
+            }, {
+              id: 6,
+              name: '其他'
+            }],
+            required: true
+          })
+        ]
+      });
+
+      EditDialog(config, this.dialog).afterClosed().subscribe(result => {
+        // console.log(result);
+        if (result && result.idx) {
+          this.passData(data.value.id, result.idx);
+          console.log(data.value.id, result.idx);
+        }
+      });
+    }
+
     if (data.key === 'keepData') {
       auditData(
         data.value.id, '您确定暂不处理该用户资料？', 2,
@@ -242,6 +311,15 @@ export class DataCollectionComponent implements OnInit {
 
   change(index) {
     this.action.tabChange('dataCollection', index);
+  }
+
+  passData(id, typeId) {
+    this.dataCollectionService.getAdopt(id, typeId).subscribe(res => {
+      if (res.code == 0 && res.data) {
+        this.adoptList = res.data;
+        this.reset();
+      }
+    })
   }
 }
 
@@ -306,6 +384,7 @@ export function auditData(id, title, status, dialog, service, callback) {
     form: form
   });
   EditDialog(config, dialog).afterClosed().subscribe(result => {
+    console.log(result);
     if (result && result.auditName) {
       result.status = status;
       service.statusChanged(id, result)
