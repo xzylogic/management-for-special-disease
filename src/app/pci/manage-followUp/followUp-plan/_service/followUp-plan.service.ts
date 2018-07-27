@@ -35,6 +35,9 @@ export class FollowPlanService {
     });
   }
 
+  getPlanDetail(id){
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.followList}/detail?followUpId=${id}`);
+  }
   /**
    * 获取随访计划列表
    * @param {number} page    [description]

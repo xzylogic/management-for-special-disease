@@ -4,6 +4,7 @@ import { ContainerConfig } from '../../../../libs/common/container/container.com
 const PATH = {
   // followList: 'api/doctorPatient/flupFeedback', // 随访反馈管理
   followList: 'api/follow-up/flupFeedback', // 随访反馈管理
+  followListPlan: 'api/follow-up/flup', // 随访计划管理
 };
 @Injectable()
 export class FollowFeedbackService {
@@ -33,6 +34,9 @@ export class FollowFeedbackService {
       homeRouter: '/followUp-feedback',
       currentRouter: '/followUp-feedback/detail'
     });
+  }
+  getfeedbackDetail(id){
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.followListPlan}/detail?followUpId=${id}`);
   }
 
   /**

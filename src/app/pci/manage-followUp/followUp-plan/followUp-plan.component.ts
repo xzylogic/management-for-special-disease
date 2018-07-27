@@ -89,7 +89,7 @@ export class FollowPlanComponent implements OnInit {
   gotoHandle(res) {
     const followPlan = <FollowPlan>res.value;
     this.action.dataChange('followPlan', followPlan);
-    this.router.navigate(['/followUp-plan/detail']);
+    this.router.navigate([`/followUp-plan/detail/${res.value.followUpId}`]);
   }
 
   formatTime(time) {

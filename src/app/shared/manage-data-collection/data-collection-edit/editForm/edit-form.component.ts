@@ -4,13 +4,26 @@ import {
   ChangeDetectorRef, AfterViewChecked, AfterViewInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { HintDialog } from '../../../../libs/dmodal/dialog.component';
+import {ActionDialog, HintDialog} from '../../../../libs/dmodal/dialog.component';
 import { Collection, Image, InspectionFormList, Medicine } from '../../_entity/data-collection.entity';
 import { DataCollectionService } from '../../_service/data-collection.service';
 import * as moment from 'moment';
+import {DialogOptions} from "../../../../libs/dmodal/dialog.entity";
 
 const typeList = ['检验报告', '出院小结', '影像资料', '用药清单', '就诊记录', '其他'];
-
+const config = new DialogOptions({
+  title: `您确定要删除吗？`,
+  message: '',
+  buttons: [{
+    key: 'topass',
+    value: '确定',
+    color: 'primary'
+  }, {
+    key: 'tocancel',
+    value: '取消',
+    color: ''
+  }]
+});
 @Component({
   selector: 'app-edit-form',
   templateUrl: 'edit-form.component.html',
@@ -123,13 +136,17 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   }
 
   delInspectionForm(i) {
-    if (this.inspectionFormList[i].list[0].id) {
-      this.inspectionFormList[i].deleted = true;
-    } else {
-      this.inspectionFormList.splice(i, 1);
-    }
-    this.info.InspectionFormList = this.inspectionFormList;
-    this.saveAsDraft();
+    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result && result.key === 'topass') {
+        if (this.inspectionFormList[i].list[0].id) {
+          this.inspectionFormList[i].deleted = true;
+        } else {
+          this.inspectionFormList.splice(i, 1);
+        }
+        this.info.InspectionFormList = this.inspectionFormList;
+        this.saveAsDraft();
+      }
+    });
   }
 
   reInspectionForm(i) {
@@ -145,13 +162,17 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   }
 
   delImageForm(i) {
-    if (this.imageFormList[i].id) {
-      this.imageFormList[i].deleted = true;
-    } else {
-      this.imageFormList.splice(i, 1);
-    }
-    this.info.recordImagingReportList = this.imageFormList;
-    this.saveAsDraft();
+    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result && result.key === 'topass') {
+        if (this.imageFormList[i].id) {
+          this.imageFormList[i].deleted = true;
+        } else {
+          this.imageFormList.splice(i, 1);
+        }
+        this.info.recordImagingReportList = this.imageFormList;
+        this.saveAsDraft();
+      }
+    });
   }
 
   reImageForm(i) {
@@ -167,13 +188,17 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   }
 
   delMedicineForm(i) {
-    if (this.medicineFormList[i].id) {
-      this.medicineFormList[i].deleted = true;
-    } else {
-      this.medicineFormList.splice(i, 1);
-    }
-    this.info.recordPrescriptionMedicineList = this.medicineFormList;
-    this.saveAsDraft();
+    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result && result.key === 'topass') {
+        if (this.medicineFormList[i].id) {
+          this.medicineFormList[i].deleted = true;
+        } else {
+          this.medicineFormList.splice(i, 1);
+        }
+        this.info.recordPrescriptionMedicineList = this.medicineFormList;
+        this.saveAsDraft();
+      }
+    });
   }
 
   reMedicineForm(i) {

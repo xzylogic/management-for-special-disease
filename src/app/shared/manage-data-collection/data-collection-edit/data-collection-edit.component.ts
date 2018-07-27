@@ -3,11 +3,12 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
-import { HintDialog } from '../../../libs/dmodal/dialog.component';
+import {ActionDialog, HintDialog} from '../../../libs/dmodal/dialog.component';
 import { Collection, InspectionFormList } from '../_entity/data-collection.entity';
 import { DataCollectionDetailService } from '../_service/data-collection-detail.service';
 import { DataCollectionService } from '../_service/data-collection.service';
 import { auditData } from '../data-collection.component';
+import {DialogOptions} from "../../../libs/dmodal/dialog.entity";
 
 declare let localStorage: any;
 declare let document: any;
@@ -224,8 +225,25 @@ export class DataCollectionEditComponent implements OnInit {
   }
 
   delForm(i) {
-    this.editFormList.splice(i, 1);
-    this.setLocalStorage(`inputData${this.userInfo.id}`, this.editFormList);
+    const config = new DialogOptions({
+      title: `您确定要删除吗？`,
+      message: '',
+      buttons: [{
+        key: 'topass',
+        value: '确定',
+        color: 'primary'
+      }, {
+        key: 'tocancel',
+        value: '取消',
+        color: ''
+      }]
+    });
+    ActionDialog(config, this.dialog).afterClosed().subscribe(result => {
+      if (result && result.key === 'topass') {
+        this.editFormList.splice(i, 1);
+        this.setLocalStorage(`inputData${this.userInfo.id}`, this.editFormList);
+      }
+    });
   }
 
   setLocalStorage(key, value) {

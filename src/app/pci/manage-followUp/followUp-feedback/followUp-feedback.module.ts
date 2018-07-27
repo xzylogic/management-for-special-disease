@@ -16,7 +16,7 @@ const routes: Routes = [{
   canActivate: [AuthGuardService],
   component: FollowFeedbackComponent
 }, {
-  path: 'detail',
+  path: 'detail/:id',
   component: FeedbackDetailComponent,
   canActivate: [AuthGuardService],
 }];
