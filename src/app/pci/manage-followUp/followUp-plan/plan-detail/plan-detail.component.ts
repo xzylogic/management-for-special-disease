@@ -65,8 +65,8 @@ export class PlanDetailComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.followPlanService.getPlanDetail(id).subscribe(
       data => {
-        console.log(typeof data);
-        console.log(data);
+        // console.log(typeof data);
+        // console.log(data);
         if (data && data.data.fbDataDtoList) {
           let feedbackList = data.data.fbDataDtoList;
           feedbackList.forEach(obj => {

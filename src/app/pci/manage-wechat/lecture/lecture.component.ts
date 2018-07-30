@@ -92,7 +92,7 @@ export class LectureComponent implements OnInit {
   }
 
   gotoHandle(res, list) {
-    console.log(res);
+    // console.log(res);
     const lecture = <Lecture>list;
     if (res === 'signCodeUrl') {
       ImageDialog(lecture.name, lecture.signCodeUrl, this.dialog);

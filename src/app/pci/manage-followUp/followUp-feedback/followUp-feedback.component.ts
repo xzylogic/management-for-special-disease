@@ -40,7 +40,7 @@ export class FollowFeedbackComponent implements OnInit {
   ngOnInit() {
     this.containerConfig = this.followFeedbackService.followFeedbackConfig();
     this.newDate = this.search.setDefaultDate();
-    console.log(this.newDate);
+    // console.log(this.newDate);
     this.followFeedbackTable = new TableOption({
       titles: this.followFeedbackTableService.setTitles(),
       ifPage: true
@@ -72,13 +72,13 @@ export class FollowFeedbackComponent implements OnInit {
     this.followFeedbackService.getData(page, this.followFeedbackTable.size, this.followFeedbackTable.queryKey, this.option.start, this.option.end)
       .subscribe(
         res => {
-          console.log(res);
+          // console.log(res);
           this.followFeedbackTable.loading = false;
           if (res.code === 0 && res.data && res.data.flupFeedbackDto && res.data.flupFeedbackDto.content && res.data.flupFeedbackDto.content.length === 0) {
             this.followFeedbackTable.errorMessage = ERRMSG.nullMsg;
             this.followRate = res.data.feedBackRate;
           } else if (res.code === 0 && res.data && res.data.feedbackListDto.content) {
-            console.log(res.data);
+            // console.log(res.data);
             this.followFeedbackTable.totalPage = res.data.feedbackListDto.totalPages;
             this.followRate = res.data.feedBackRate;
             res.data.feedbackListDto.content.forEach(obj => {

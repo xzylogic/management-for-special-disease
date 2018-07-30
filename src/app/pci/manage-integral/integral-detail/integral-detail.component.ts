@@ -134,7 +134,7 @@ export class IntegralDetailComponent implements OnInit {
       .subscribe(res => {
         if (res.code === 0) {
           this.IntegralExplain(res.data)
-          console.log(res);
+          // console.log(res);
         }
       }, err => {
         alert(err);
@@ -187,7 +187,7 @@ export class IntegralDetailComponent implements OnInit {
     EditDialog(config, this.dialog).afterClosed().subscribe(result => {
       if (result) {
         this.toIntegralExplain(result);
-        console.log(result);
+        // console.log(result);
       }
     });
   }

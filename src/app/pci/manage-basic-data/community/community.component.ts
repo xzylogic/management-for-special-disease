@@ -91,7 +91,7 @@ export class DialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogComponent>
   ) {
-    console.log(data);
+    // console.log(data);
     this.option = this.data
   }
 

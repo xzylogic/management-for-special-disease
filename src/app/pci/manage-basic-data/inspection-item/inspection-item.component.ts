@@ -81,7 +81,7 @@ export class InspectionItemComponent implements OnInit {
   gotoHandle(res) {
     const data = <InspectionItem>res.value;
     data.typeList = this.inspectionType;
-    console.log(res);
+    // console.log(res);
     if (res.key === 'edit') {
       this.action.dataChange('inspectionItem', data);
       this.router.navigate(['/inspection-item/edit']);

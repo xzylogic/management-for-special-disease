@@ -244,7 +244,7 @@ export class DoctorAccountComponent implements OnInit {
       if (res.value.status === 0) {
         HintDialog('请先输入快递单号', this.dialog);
       } else if (res.value.status === 1) {
-        console.log(data);
+        // console.log(data);
         HintDialog('确定已到货？', this.dialog).afterClosed()
           .subscribe(result => {
             if (result && result.key === 'confirm') {

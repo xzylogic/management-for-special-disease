@@ -39,7 +39,7 @@ export class DoctorGroupEditComponent implements OnInit {
   }
 
   getValues(data) {
-    console.log(data);
+    // console.log(data);
     this.doctorGroupService.doctorGroupUpdateDesc(data.id, data.description)
       .subscribe(res => {
         if (res.code === 0) {

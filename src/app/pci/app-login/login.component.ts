@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     if (value.name && value.password) {
       this.authService.login(value)
         .subscribe(res => {
-          console.log(res);
+          // console.log(res);
           if (res && res.code === 0 && res.data) {
             this.authService.setJwt(JSON.stringify(res.data));
             this.mainAction.setAdmin(new Admin({id: res.data.id, name: res.data.name}));

@@ -51,7 +51,7 @@ export class NewsClassifyComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    console.log(res);
+    // console.log(res);
     const newsClassify = res.value;
     if (res.key === 'edit') {
       this.newsClassifyUpdate(newsClassify);

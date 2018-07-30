@@ -51,7 +51,7 @@ export class OperationPushEditComponent implements OnInit {
         this.id = data.id;
         this.operator = data.operator;
       } else {
-        console.log(data);
+        // console.log(data);
         this.containerConfig = this.operationpushservice.operationPushEditConfig(true);
         this.createForm(data);
         this.http = true;

@@ -47,7 +47,7 @@ export class DiscomfortSymptomEditComponent implements OnInit {
 
   // 提交保存信息
   getValues(value) {
-    console.log(value);
+    // console.log(value);
     if (this.state) {
       this.discomfortSymptomService.discomfortSymptomEdit(value)
         .subscribe(res => {

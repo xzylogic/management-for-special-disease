@@ -58,7 +58,7 @@ export class UserEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
+    // console.log(value);
     if (this.state === null) {
       this.userService.userCreate(value)
         .subscribe(res => {

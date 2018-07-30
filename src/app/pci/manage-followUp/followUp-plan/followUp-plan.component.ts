@@ -72,7 +72,7 @@ export class FollowPlanComponent implements OnInit {
             this.followPlanTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
             this.followPlanTable.totalPage = res.data.totalPages;
-            console.log(res);
+            // console.log(res);
             res.data.content.forEach(obj => {
               obj.planDate = this.formatTime(obj.createdDate);
               obj.firstFlupTime = this.formatTime(obj.firstFlupTime);

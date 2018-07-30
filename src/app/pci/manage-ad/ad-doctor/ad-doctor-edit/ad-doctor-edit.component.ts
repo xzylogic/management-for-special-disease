@@ -56,7 +56,7 @@ export class AdDoctorEditComponent implements OnInit {
   }
 
   createForm(data?) {
-    console.log(data)
+    // console.log(data)
     this.form = this.fb.group({
       imageUrl: new FormControl('', Validators.required),
       title: new FormControl('', Validators.required),

@@ -54,7 +54,7 @@ export class FeedbackDetailComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.followFeedbackService.getfeedbackDetail(id).subscribe(
       data => {
-        console.log(typeof data);
+        // console.log(typeof data);
         if (data && data.data.fbDataDtoList) {
           let feedbackList = data.data.fbDataDtoList;
           feedbackList.forEach(obj => {

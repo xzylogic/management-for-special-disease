@@ -127,7 +127,7 @@ export class DoctorGroupComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    console.log(res);
+    // console.log(res);
     const doctorGroup = <DoctorGroup>res.value;
     if (res.key === 'edit') {
       this.action.dataChange('doctorGroup', doctorGroup);

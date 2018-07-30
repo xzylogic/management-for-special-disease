@@ -52,7 +52,7 @@ export class BasicServiceComponent implements OnInit {
 
   gotoHandle(res) {
     const basicService = <BasicService>res.value;
-    console.log(basicService);
+    // console.log(basicService);
     if (res.key === 'edit') {
       this.action.dataChange('basicService', basicService);
       this.router.navigate(['/basic-service/edit']);

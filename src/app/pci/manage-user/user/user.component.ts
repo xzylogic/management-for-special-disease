@@ -96,7 +96,7 @@ export class UserComponent implements OnInit {
       if (res.code == 0 && res.data) {
         this.hospitalList = res.data.hospitalList
       } else {
-        console.log(res)
+        // console.log(res)
       }
     }, err => {
       console.log(err)
@@ -105,7 +105,7 @@ export class UserComponent implements OnInit {
 
   getQrType() {
     this.userService.getQrType().subscribe(res => {
-      console.log(res)
+      // console.log(res)
       if (res.code == 0 && res.data) {
         this.sourceList = res.data
       }
@@ -157,7 +157,7 @@ export class UserComponent implements OnInit {
     const myForm = new FormData();
     const fileList = files.target.files[0];
     myForm.append('file', fileList);
-    console.log(fileList)
+    // console.log(fileList)
     this.userService.batchRegisterUser(myForm)
       .subscribe(res => {
         if (res.code === 0) {

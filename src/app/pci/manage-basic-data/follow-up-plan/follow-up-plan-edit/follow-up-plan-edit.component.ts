@@ -136,7 +136,7 @@ export class FollowUpPlanEditComponent implements OnInit {
     if (!value.custom) {
       this.customList.forEach(obj => {
         if (obj.id == this.custom) {
-          console.log(obj.name);
+          // console.log(obj.name);
           value.name = obj.name;
         }
       });

@@ -51,7 +51,7 @@ export class InspectionCategoryComponent implements OnInit {
   }
 
   gotoHandle(res) {
-    console.log(res);
+    // console.log(res);
     const inspectionCategory = res.value;
     if (res.key === 'edit') {
       this.inspectionCategoryUpdate(inspectionCategory);

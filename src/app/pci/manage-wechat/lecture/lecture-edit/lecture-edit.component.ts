@@ -258,7 +258,7 @@ export class LectureEditComponent implements OnInit {
     data.date = this.getlectureTime(data.date);
     data.joinLimitDate = this.getlectureTime(data.joinLimitDate);
     data.onlineDate = this.getlectureTime(data.onlineDate);
-    console.log(data);
+    // console.log(data);
     if (data.id) {
       this.lectureService.lectureEdit(data)
         .subscribe(

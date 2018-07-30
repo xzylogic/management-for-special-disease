@@ -117,7 +117,7 @@ export class DialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogComponent>
   ) {
     this.option = this.data;
-    console.log(this.option);
+    // console.log(this.option);
   }
 
   ngOnInit() {

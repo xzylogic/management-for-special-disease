@@ -33,7 +33,7 @@ export class DoctorEditComponent implements OnInit {
     this.doctorService.getOptions().subscribe(res => {
       if (res.code === 0 && res.data) {
         this.doctor.subscribe(data => {
-          console.log(data);
+          // console.log(data);
           if (data.id === 0) {
             this.state = null;
             this.containerConfig = this.doctorService.doctorEditConfig(true);

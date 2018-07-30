@@ -167,7 +167,7 @@ export class InspectionItemEditComponent implements OnInit {
   }
 
   getValues(value) {
-    console.log(value);
+    // console.log(value);
     if (this.id) {
       value.id = this.id;
       this.inspectionItemService.inspectionItemEdit(value)
