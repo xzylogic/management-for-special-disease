@@ -20,6 +20,7 @@ export class FollowFeedbackComponent implements OnInit {
   createdDate: any;
   followRate: any;
   newDate: any;
+  plan: any;
   option = {
     start: 0,
     end: 0
@@ -90,10 +91,12 @@ export class FollowFeedbackComponent implements OnInit {
             this.followFeedbackTable.lists = res.data.flupFeedbackDto.content;
           }*/
           else if (res.code === 0 && res.data && res.data.feedbackListDto.content) {
+            console.log(res.data);
             this.followFeedbackTable.totalPage = res.data.feedbackListDto.content.totalPages;
             this.followRate = res.data.feedBackRate;
             res.data.feedbackListDto.content.forEach(obj => {
-              obj.firstFlupTime = this.formatTime(obj.firstFlupTime);
+              obj.planDate = this.formatTime(obj.followUpDate);
+              // obj.firstFlupTime = this.formatTime(obj.firstFlupTime);
               if (obj.feedBackStatus == true) {
                 obj.feedBackStatus = '已反馈'
               } else {

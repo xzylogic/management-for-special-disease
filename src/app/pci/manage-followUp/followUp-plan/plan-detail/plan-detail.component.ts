@@ -22,8 +22,11 @@ export class PlanDetailComponent implements OnInit {
   planDetailTable: TableOption;
   planDetailList: any;
   data: any;
-  createTime: any;
-  planTime: any;
+  planDate: any;
+  // createTime: any;
+  firstFlupTime: any;
+  date: any;
+  // planTime: any;
   @select(['followPlan', 'data']) followPlan: Observable<FollowPlan>;
 
   constructor(
@@ -73,8 +76,8 @@ export class PlanDetailComponent implements OnInit {
               obj.isFlup = '未反馈';
             }
           });
-          this.createTime=new Date(data.data.fbDataDtoList[0].followUpDate).toLocaleDateString();
-          this.planTime=new Date(data.data.fbDataDtoList[1].followUpDate).toLocaleDateString();
+          this.planDate=new Date(data.data.fbDataDtoList[0].followUpDate).toLocaleDateString();
+          this.date=new Date(data.data.fbDataDtoList[1].followUpDate).toLocaleDateString();
           this.data = data.data;
           this.planDetailList = data.data.fbDataDtoList;
         }
