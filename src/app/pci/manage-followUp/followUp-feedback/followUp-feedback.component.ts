@@ -77,34 +77,16 @@ export class FollowFeedbackComponent implements OnInit {
           if (res.code === 0 && res.data && res.data.flupFeedbackDto && res.data.flupFeedbackDto.content && res.data.flupFeedbackDto.content.length === 0) {
             this.followFeedbackTable.errorMessage = ERRMSG.nullMsg;
             this.followRate = res.data.feedBackRate;
-          } /*else if (res.code === 0 && res.data && res.data.flupFeedbackDto && res.data.flupFeedbackDto.content) {
-            this.followFeedbackTable.totalPage = res.data.flupFeedbackDto.totalPages;
-            this.followRate = res.data.feedBackRate;
-            res.data.flupFeedbackDto.content.forEach(obj => {
-              obj.firstFlupTime = this.formatTime(obj.firstFlupTime);
-              if (obj.feedBackStatus == true) {
-                obj.feedBackStatus = '已反馈'
-              } else {
-                obj.feedBackStatus = '未反馈'
-              }
-            });
-            this.followFeedbackTable.lists = res.data.flupFeedbackDto.content;
-          }*/
-          else if (res.code === 0 && res.data && res.data.feedbackListDto.content) {
+          } else if (res.code === 0 && res.data && res.data.feedbackListDto.content) {
             console.log(res.data);
-            this.followFeedbackTable.totalPage = res.data.feedbackListDto.content.totalPages;
+            this.followFeedbackTable.totalPage = res.data.feedbackListDto.totalPages;
             this.followRate = res.data.feedBackRate;
             res.data.feedbackListDto.content.forEach(obj => {
               obj.planDate = this.formatTime(obj.followUpDate);
-              // obj.firstFlupTime = this.formatTime(obj.firstFlupTime);
-              if (obj.feedBackStatus == true) {
-                obj.feedBackStatus = '已反馈'
-              } else {
-                obj.feedBackStatus = '未反馈'
-              }
+              obj.item = obj.plan.join(' ')
             });
             this.followFeedbackTable.lists = res.data.feedbackListDto.content;
-          }else {
+          } else {
             this.followFeedbackTable.errorMessage = res.msg || ERRMSG.otherMsg;
           }
         }, err => {

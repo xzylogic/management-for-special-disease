@@ -38,7 +38,7 @@ export class FollowFeedbackTableService {
       }),
       new TableTitle({
         name: '反馈情况',
-        key: 'feedBackStatus'
+        key: 'isFlup'
       }),
       new TableTitle({
         name: '详情',
