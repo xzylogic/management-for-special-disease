@@ -19,7 +19,6 @@ export class DialogEditComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogEditComponent>
   ) {
-    console.log(data);
     this.option = this.data;
   }
 }
