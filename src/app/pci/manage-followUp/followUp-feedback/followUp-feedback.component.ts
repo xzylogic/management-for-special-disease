@@ -20,6 +20,7 @@ export class FollowFeedbackComponent implements OnInit {
   createdDate: any;
   followRate: any;
   newDate: any;
+  plan: any;
   option = {
     start: 0,
     end: 0
@@ -71,22 +72,20 @@ export class FollowFeedbackComponent implements OnInit {
     this.followFeedbackService.getData(page, this.followFeedbackTable.size, this.followFeedbackTable.queryKey, this.option.start, this.option.end)
       .subscribe(
         res => {
+          console.log(res);
           this.followFeedbackTable.loading = false;
           if (res.code === 0 && res.data && res.data.flupFeedbackDto && res.data.flupFeedbackDto.content && res.data.flupFeedbackDto.content.length === 0) {
             this.followFeedbackTable.errorMessage = ERRMSG.nullMsg;
             this.followRate = res.data.feedBackRate;
-          } else if (res.code === 0 && res.data && res.data.flupFeedbackDto && res.data.flupFeedbackDto.content) {
-            this.followFeedbackTable.totalPage = res.data.flupFeedbackDto.totalPages;
+          } else if (res.code === 0 && res.data && res.data.feedbackListDto.content) {
+            console.log(res.data);
+            this.followFeedbackTable.totalPage = res.data.feedbackListDto.totalPages;
             this.followRate = res.data.feedBackRate;
-            res.data.flupFeedbackDto.content.forEach(obj => {
-              obj.firstFlupTime = this.formatTime(obj.firstFlupTime);
-              if (obj.feedBackStatus == true) {
-                obj.feedBackStatus = '已反馈'
-              } else {
-                obj.feedBackStatus = '未反馈'
-              }
+            res.data.feedbackListDto.content.forEach(obj => {
+              obj.planDate = this.formatTime(obj.followUpDate);
+              obj.item = obj.plan.join(' ')
             });
-            this.followFeedbackTable.lists = res.data.flupFeedbackDto.content;
+            this.followFeedbackTable.lists = res.data.feedbackListDto.content;
           } else {
             this.followFeedbackTable.errorMessage = res.msg || ERRMSG.otherMsg;
           }
@@ -100,7 +99,8 @@ export class FollowFeedbackComponent implements OnInit {
   gotoHandle(res) {
     const followFeedback = <FollowFeedback>res.value;
     this.action.dataChange('followFeedback', followFeedback);
-    this.router.navigate(['/followUp-feedback/detail']);
+    // this.router.navigate(['/followUp-feedback/detail']);
+    this.router.navigate([`/followUp-plan/detail/${res.value.followUpId}`]);
   }
 
   formatTime(time) {

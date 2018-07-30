@@ -3,15 +3,20 @@ export class FollowFeedback {
   doctorTel: string;
   userName: string;
   userTel: string;
+  followUpDate: string;
+  plan: string;
+  item: string;
+  isFlup: string;
   planDate: string;
-  feedbacks: Array<any>;
+  fbDataDtoList: Array<any>;
 
   constructor(obj?: FollowFeedback) {
     this.doctorName = obj && obj.doctorName || '';
     this.doctorTel = obj && obj.doctorTel || '';
     this.userName = obj && obj.userName || '';
     this.userTel = obj && obj.userTel || '';
-    this.planDate = obj && obj.planDate || '';
-    this.feedbacks = obj && obj.feedbacks || [];
+    this.followUpDate = obj && obj.followUpDate || '';
+    // this.planDate = obj && obj.planDate || '';
+    this.fbDataDtoList = obj && obj.fbDataDtoList || [];
   }
 }

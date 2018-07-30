@@ -72,9 +72,11 @@ export class FollowPlanComponent implements OnInit {
             this.followPlanTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
             this.followPlanTable.totalPage = res.data.totalPages;
+            console.log(res);
             res.data.content.forEach(obj => {
-              obj.firstFlupTime = this.formatTime(obj.firstFlupTime)
-            })
+              obj.planDate = this.formatTime(obj.createdDate);
+              obj.firstFlupTime = this.formatTime(obj.firstFlupTime);
+            });
             this.followPlanTable.lists = res.data.content;
           } else {
             this.followPlanTable.errorMessage = res.msg || ERRMSG.otherMsg;
@@ -89,7 +91,7 @@ export class FollowPlanComponent implements OnInit {
   gotoHandle(res) {
     const followPlan = <FollowPlan>res.value;
     this.action.dataChange('followPlan', followPlan);
-    this.router.navigate(['/followUp-plan/detail']);
+    this.router.navigate([`/followUp-plan/detail/${res.value.followUpId}`]);
   }
 
   formatTime(time) {
