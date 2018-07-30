@@ -384,7 +384,7 @@ export function auditData(id, title, status, dialog, service, callback) {
     form: form
   });
   EditDialog(config, dialog).afterClosed().subscribe(result => {
-    console.log(result);
+    // console.log(result);
     if (result && result.auditName) {
       result.status = status;
       service.statusChanged(id, result)

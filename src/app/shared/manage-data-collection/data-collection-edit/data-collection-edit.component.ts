@@ -189,7 +189,7 @@ export class DataCollectionEditComponent implements OnInit {
   getDataCollection() {
     this.resetData();
     this.route.params.subscribe(params => {
-      console.log(params)
+      // console.log(params)
       this.id = +params['id'];
       this.editFormList = this.getLocalStorage(`inputData${+params['id']}`);
       this.dataCollectionService.getDataCollection(+params['id'])
