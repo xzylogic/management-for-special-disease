@@ -315,10 +315,17 @@ export class DataCollectionComponent implements OnInit {
 
   passData(id, typeId) {
     this.dataCollectionService.getAdopt(id, typeId).subscribe(res => {
-      if (res.code == 0 && res.data) {
-        this.adoptList = res.data;
-        this.reset();
+      if (res.code == 0) {
+        let subscribeDialog = HintDialog('提交成功', this.dialog).afterClosed().subscribe(() => {
+          this.reset();
+          subscribeDialog.unsubscribe();
+        });
+      } else {
+        HintDialog(res.msg || '提交失败', this.dialog);
       }
+    }, err => {
+      HintDialog('请求服务器出错', this.dialog);
+      throw new Error(err);
     })
   }
 }

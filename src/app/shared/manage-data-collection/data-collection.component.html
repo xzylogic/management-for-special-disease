@@ -15,10 +15,10 @@
             <input matInput type="text" placeholder="手机号/患者姓名搜索" name="queryKey" [(ngModel)]="pretrialTable.queryKey">
           </mat-form-field>
           <app-search [type]="'1'" [label]="'上传时间'" [(value)]="queryTimeY"></app-search>
-          <button mat-icon-button color="primary" type="button" (click)="getDataCollections(pretrialTable,0,0)">
+          <button mat-icon-button color="primary" type="button" (click)="getDataCollections(pretrialTable,5,0)">
             <mat-icon>search</mat-icon>
           </button>
-          <button mat-icon-button color="primary" type="button" (click)="reset0()">
+          <button mat-icon-button color="primary" type="button" (click)="reset5()">
             <mat-icon>autorenew</mat-icon>
           </button>
         </form>
@@ -31,7 +31,7 @@
             <app-lib-table
               [table]="pretrialTable"
               (handleEmmit)="gotoHandle($event)"
-              (pageEmitter)="getDataCollections(pretrialTable,0,$event)"
+              (pageEmitter)="getDataCollections(pretrialTable,5,$event)"
             ></app-lib-table>
           </div>
         </div>
