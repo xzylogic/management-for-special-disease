@@ -75,9 +75,10 @@ export class PlanDetailComponent implements OnInit {
             } else {
               obj.isFlup = '未反馈';
             }
+            obj.followUpDate=new Date(obj.followUpDate).toLocaleDateString();
           });
           this.planDate=new Date(data.data.fbDataDtoList[0].followUpDate).toLocaleDateString();
-          this.date=new Date(data.data.fbDataDtoList[1].followUpDate).toLocaleDateString();
+          // this.date=new Date(data.data.fbDataDtoList[1].followUpDate).toLocaleDateString();
           this.data = data.data;
           this.planDetailList = data.data.fbDataDtoList;
         }

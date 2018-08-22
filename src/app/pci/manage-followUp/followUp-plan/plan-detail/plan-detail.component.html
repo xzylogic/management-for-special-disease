@@ -47,9 +47,26 @@
           </table>
           <table class="table" *ngIf="planDetailList">
             <thead>
-              <!--<tr>-->
-                <!--<th *ngFor="let title of planDetailTable.titles">{{title.name}}</th>-->
-              <!--</tr>-->
+            <tr>
+              <th *ngFor="let title of planDetailTable.titles">{{title.name}}</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="planDetailList">
+            <tr *ngFor="let list of planDetailList; let i = index">
+              <td *ngFor="let title of planDetailTable.titles" data-title="{{title.name}}">
+                <div [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"
+                     class="table__content">
+                  <span>{{list[title.key] == 0 ? list[title.key] : list[title.key] || ''}}</span>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <!--<table class="table" *ngIf="planDetailList">
+            <thead>
+              &lt;!&ndash;<tr>&ndash;&gt;
+                &lt;!&ndash;<th *ngFor="let title of planDetailTable.titles">{{title.name}}</th>&ndash;&gt;
+              &lt;!&ndash;</tr>&ndash;&gt;
               <tr>
                 <th>设定随访时间</th>
                 <th>随访项目</th>
@@ -58,40 +75,40 @@
               </tr>
             </thead>
             <tbody *ngIf="planDetailList">
-            <tr>
-              <td>
-                <div class="table__content">
-                  <!--<span>{{planDetailList[1].followUpDate.getTime()}}</span>-->
-                  <span>{{date}}</span>
-                  <!--<span>{{data.planDate}}</span>-->
-                </div>
-              </td>
-              <td>
-                <div class="table__content">
-                  <span>{{planDetailList[0].plan}}</span>
-                </div>
-              </td>
-              <td>
-                <div class="table__content">
-                  <span>{{planDetailList[0].item}}</span>
-                </div>
-              </td>
-              <td>
-                <div class="table__content">
-                  <span>{{planDetailList[0].isFlup}}</span>
-                </div>
-              </td>
-            </tr>
-              <!--<tr *ngFor="let list of planDetailList; let i = index">-->
-                <!--<td *ngFor="let title of planDetailTable.titles" data-title="{{title.name}}">-->
-                  <!--<div [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"-->
-                       <!--class="table__content">-->
-                    <!--<span>{{list[title.key] == 0 ? list[title.key] : list[title.key] || ''}}</span>-->
-                  <!--</div>-->
-                <!--</td>-->
-              <!--</tr>-->
+            &lt;!&ndash;<tr>&ndash;&gt;
+              &lt;!&ndash;<td>&ndash;&gt;
+                &lt;!&ndash;<div class="table__content">&ndash;&gt;
+                  &lt;!&ndash;&lt;!&ndash;<span>{{planDetailList[1].followUpDate.getTime()}}</span>&ndash;&gt;&ndash;&gt;
+                  &lt;!&ndash;<span>{{date}}</span>&ndash;&gt;
+                  &lt;!&ndash;&lt;!&ndash;<span>{{data.planDate}}</span>&ndash;&gt;&ndash;&gt;
+                &lt;!&ndash;</div>&ndash;&gt;
+              &lt;!&ndash;</td>&ndash;&gt;
+              &lt;!&ndash;<td>&ndash;&gt;
+                &lt;!&ndash;<div class="table__content">&ndash;&gt;
+                  &lt;!&ndash;<span>{{planDetailList[0].plan}}</span>&ndash;&gt;
+                &lt;!&ndash;</div>&ndash;&gt;
+              &lt;!&ndash;</td>&ndash;&gt;
+              &lt;!&ndash;<td>&ndash;&gt;
+                &lt;!&ndash;<div class="table__content">&ndash;&gt;
+                  &lt;!&ndash;<span>{{planDetailList[0].item}}</span>&ndash;&gt;
+                &lt;!&ndash;</div>&ndash;&gt;
+              &lt;!&ndash;</td>&ndash;&gt;
+              &lt;!&ndash;<td>&ndash;&gt;
+                &lt;!&ndash;<div class="table__content">&ndash;&gt;
+                  &lt;!&ndash;<span>{{planDetailList[0].isFlup}}</span>&ndash;&gt;
+                &lt;!&ndash;</div>&ndash;&gt;
+              &lt;!&ndash;</td>&ndash;&gt;
+            &lt;!&ndash;</tr>&ndash;&gt;
+              <tr *ngFor="let list of planDetailList; let i = index">
+                <td *ngFor="let title of planDetailTable.titles" data-title="{{title.name}}">
+                  <div [style.minWidth.px]="title.minwidth" [style.maxWidth.px]="title.maxwidth"
+                       class="table__content">
+                    <span>{{list[title.key] == 0 ? list[title.key] : list[title.key] || ''}}</span>
+                  </div>
+                </td>
+              </tr>
             </tbody>
-          </table>
+          </table>-->
         </div>
       </div>
     </div>

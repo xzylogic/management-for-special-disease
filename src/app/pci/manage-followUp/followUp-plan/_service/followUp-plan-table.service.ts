@@ -54,7 +54,8 @@ export class FollowPlanTableService {
     const Titles: TableTitle[] = [
       new TableTitle({
         name: '设定随访时间',
-        key: 'date',
+        key: 'followUpDate',
+        // key: 'date',
       }),
       new TableTitle({
         name: '随访项目',
