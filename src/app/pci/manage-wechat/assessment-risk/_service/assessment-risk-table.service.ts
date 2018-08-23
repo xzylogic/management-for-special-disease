@@ -33,7 +33,8 @@ export class AssessmentRiskTableService {
       }),
       new TableTitle({
         name: '测评时间',
-        key: 'date'
+        key: 'date',
+        controlType: ControlType.date
       }),
       new TableTitle({
         name: '风险评估结果',
