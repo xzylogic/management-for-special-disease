@@ -30,7 +30,8 @@ export class FollowPlanTableService {
       }),
       new TableTitle({
         name: '随访创建时间',
-        key: 'planDate'
+        key: 'createdDate'
+        // key: 'planDate'
       }),
       new TableTitle({
         name: '初次随访时间',

@@ -22,7 +22,7 @@ export class PlanDetailComponent implements OnInit {
   planDetailTable: TableOption;
   planDetailList: any;
   data: any;
-  planDate: any;
+  // planDate: any;
   // createTime: any;
   firstFlupTime: any;
   date: any;
@@ -77,7 +77,7 @@ export class PlanDetailComponent implements OnInit {
             }
             obj.followUpDate=new Date(obj.followUpDate).toLocaleDateString();
           });
-          this.planDate=new Date(data.data.fbDataDtoList[0].followUpDate).toLocaleDateString();
+          data.data.createdDate=new Date(data.data.createdDate).toLocaleDateString();
           // this.date=new Date(data.data.fbDataDtoList[1].followUpDate).toLocaleDateString();
           this.data = data.data;
           this.planDetailList = data.data.fbDataDtoList;

@@ -74,7 +74,8 @@ export class FollowPlanComponent implements OnInit {
             this.followPlanTable.totalPage = res.data.totalPages;
             // console.log(res);
             res.data.content.forEach(obj => {
-              obj.planDate = this.formatTime(obj.createdDate);
+              obj.createdDate = this.formatTime(obj.createdDate);
+              // obj.planDate = this.formatTime(obj.createdDate);
               obj.firstFlupTime = this.formatTime(obj.firstFlupTime);
             });
             this.followPlanTable.lists = res.data.content;

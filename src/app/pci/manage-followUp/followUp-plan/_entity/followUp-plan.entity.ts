@@ -3,7 +3,7 @@ export class FollowPlan {
   doctorTel: string;
   userName: string;
   userTel: string;
-  planDate: string;
+  createdDate: string;
   fbDataDtoList: Array<any>;
 
   constructor(obj?: FollowPlan) {
@@ -11,7 +11,7 @@ export class FollowPlan {
     this.doctorTel = obj && obj.doctorTel || '';
     this.userName = obj && obj.userName || '';
     this.userTel = obj && obj.userTel || '';
-    this.planDate = obj && obj.planDate || '';
+    this.createdDate = obj && obj.createdDate || '';
     this.fbDataDtoList = obj && obj.fbDataDtoList || [];
   }
 }
