@@ -78,18 +78,15 @@ export class UserService {
   //  * @param {number} size    [description]
   //  */
   getUsers(key: string, bind: any, registrationTime: any, page: number, size: number, hospitalId?: number, type?: number) {
-    let query = `?keyword=${key}&binding=${bind}&registrationTime=${registrationTime}&page=${page}&size=${size}&type=${type}`
-    // if (type) {
-    //   query += `&type=${type}`
-    // }
+    let query = `?keyword=${key}&binding=${bind}&registrationTime=${registrationTime}&page=${page}&size=${size}`;
+    if (type || type === 0) {
+      query += `&type=${type}`
+    }
     if (type !== 0 && hospitalId) {
       query += `&hospitalId=${hospitalId}`;
     }
-    if (type == 0) {
+    if (type === 0) {
       query += `&sceneId=${hospitalId}`
-    }
-    if(size === 2000){
-      query = `?keyword=${key}&binding=${bind}&registrationTime=${registrationTime}&page=${page}&size=${size}`
     }
     return this.httpService.get(
       `${this.app.pci.BASE_URL}${PATH.userList}${query}`
