@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../libs/common/container/container.component';
@@ -16,12 +16,15 @@ import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-data-collection',
+  styleUrls: ['./data-collection.component.css'],
   templateUrl: './data-collection.component.html'
 })
-export class DataCollectionComponent implements OnInit {
+export class DataCollectionComponent implements OnInit, AfterViewInit {
   containerConfig: ContainerConfig;
   @select(['dataCollection', 'tab']) tab: Observable<number>;
   @select(['dataCollection', 'page']) page: Observable<Array<number>>;
+  @select(['dataCollection', 'data']) data: Observable<Object>;
+  @ViewChild('tab1') tab1: any;
 
   pretrialTable: TableOption;
   waitingTable: TableOption;
@@ -83,6 +86,18 @@ export class DataCollectionComponent implements OnInit {
     this.getHospitals();
     this.getMedicalHospitals();
     this.getAuthName();
+
+    this.data.subscribe((data: Object) => {
+      console.log(data)
+    });
+  }
+
+  ngAfterViewInit() {
+    console.log(this.tab1)
+    let dom1 = this.tab1.nativeElement
+    dom1.onscroll = () => {
+      console.log(dom1.scrollTop)
+    }
   }
 
   reset() {
@@ -118,7 +133,7 @@ export class DataCollectionComponent implements OnInit {
     this.queryTime = '';
     this.page.subscribe((page: Array<number>) => {
       this.pages = page;
-      this.getDataCollections(this.auditedTable, 3, page[2]);
+      this.getDataCollections(this.auditedTable, 3, page[3]);
     });
   }
 
@@ -134,7 +149,7 @@ export class DataCollectionComponent implements OnInit {
     this.unhandledTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.pages = page;
-      this.getDataCollections(this.defeatedTable, 4, page[2]);
+      this.getDataCollections(this.defeatedTable, 4, page[4]);
     });
   }
 
@@ -144,7 +159,7 @@ export class DataCollectionComponent implements OnInit {
     this.pretrialTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
       this.pages = page;
-      this.getDataCollections(this.pretrialTable, 5, page[0]);
+      this.getDataCollections(this.pretrialTable, 5, page[5]);
     });
   }
 

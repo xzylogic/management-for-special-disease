@@ -92,3 +92,8 @@ ul.data-list > li:first-child {
 .button-padding {
   padding: 15px 0;
 }
+
+.tab__content {
+  height: calc(100vh - 250px) !important;
+  overflow-y: scroll !important;
+}
