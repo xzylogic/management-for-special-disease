@@ -44,7 +44,7 @@ export class HealthServiceFormService {
         key: 'pictures',
         label: '详情图片',
         value: data && data.pictures || [],
-        url: this.app.pci.UPLOAD_URL,
+        url: `${this.app.pci.BASE_URL}api/upload/list`,
         multiple: true,
         required: false,
         order: 2
