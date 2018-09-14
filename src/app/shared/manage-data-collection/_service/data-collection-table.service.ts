@@ -57,7 +57,7 @@ export class DataCollectionTableService {
         key: 'deleted'
       }),
       new TableTitle({
-        name: '资料录入',
+        name: '资料照片',
         key: 'dataTypein',
         controlType: ControlType.button
       }),

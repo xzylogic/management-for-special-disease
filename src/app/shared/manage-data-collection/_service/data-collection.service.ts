@@ -132,4 +132,8 @@ export class DataCollectionService {
   getHospitalAll(key) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.searchHospital}?hospitalName=${key}`);
   }
+
+  getAllFiles(){
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.medicalHospitals}`);
+  }
 }

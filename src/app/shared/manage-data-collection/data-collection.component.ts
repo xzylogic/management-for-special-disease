@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ContainerConfig } from '../../libs/common/container/container.component';
 import { FormDropdown } from '../../libs/dform/_entity/form-dropdown';
 import { FormText } from '../../libs/dform/_entity/form-text';
@@ -14,6 +14,7 @@ import { ERRMSG } from '../../pci/_store/static';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import {MatDialogComponent} from '../manage-data-collection/matDialog/matDialog.component'
 
 @Component({
   selector: 'app-data-collection',
@@ -328,6 +329,24 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * 批量导出
+   */
+  openDialog() {
+    const dialogRef = this.dialog.open(MatDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  export(){
+    this.dataCollectionService.getAllFiles()
+      .subscribe(res => {
+        console.log(res)
+      })
+  }
+
+  /**
    * 判断是否兼职人员录入病史资料
    * @param auth 为 caozuoyuan 代表兼职人员
    */
@@ -438,6 +457,7 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
     if (typeof list === 'object') {
       list.forEach(obj => {
         obj.deleted = obj.deleted ? '已删除' : '否';
+        obj.dataTypein = '查看';
       });
     }
   }
@@ -462,6 +482,7 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
     })
   }
 }
+
 
 export function auditData(id, title, status, dialog, service, callback) {
   let form;

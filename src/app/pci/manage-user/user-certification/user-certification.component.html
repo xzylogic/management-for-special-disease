@@ -1,4 +1,7 @@
 <app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <div class="addition">
+    <button mat-raised-button (click)="openDialog()">批量实名</button>
+  </div>
   <div class="content">
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
       <mat-tab label="已认证">

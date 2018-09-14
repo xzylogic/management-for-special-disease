@@ -12,6 +12,7 @@ import { InspectionItemFormComponent } from './data-collection-edit/inspectionIt
 import { MedicineFormComponent } from './data-collection-edit/medicineForm/medicine-form.component';
 import { UpdateImageComponent } from './data-collection-edit/update-image/update-image.component';
 import { ImageShowComponent } from './imageShow/imageShow.component';
+import { MatDialogComponent } from './matDialog/matDialog.component';
 import { UserInfoComponent } from './userInfo/userInfo.component';
 import { DataCollectionEditComponent } from './data-collection-edit/data-collection-edit.component';
 import { DataCollectionComponent } from './data-collection.component';
@@ -27,6 +28,7 @@ import { MedicalDetailComponent } from './data-collection-detail/medicalDetail/m
 import { OtherDetailComponent } from './data-collection-detail/otherDetail/other-detail.component';
 import { RecordDetailComponent } from './data-collection-detail/recordDetail/record-detail.component';
 import { ReportDetailComponent } from './data-collection-detail/reportDetail/report-detail.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 // import { AuthGuardService } from '../../medical-record/_service/auth-guard.service';
 
 const routes: Routes = [{
@@ -56,6 +58,7 @@ const routes: Routes = [{
     LibDialogModule,
     LibDialogEditModule,
     MatTabsModule,
+    MatCheckboxModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
@@ -74,7 +77,8 @@ const routes: Routes = [{
     InspectionItemFormComponent,
     MedicineFormComponent,
     DataCollectionEditComponent,
-    ImageShowComponent
+    ImageShowComponent,
+    MatDialogComponent
   ],
   providers: [
     DataCollectionService,
@@ -82,7 +86,10 @@ const routes: Routes = [{
     DataCollectionDetailService,
     InspectionCategoryService,
     InspectionItemService
-  ]
+  ],
+  entryComponents: [
+    MatDialogComponent
+  ],
 })
 export class DataCollectionModule {
 }
