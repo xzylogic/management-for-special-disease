@@ -175,6 +175,7 @@ export class UserComponent implements OnInit {
     let exportList;
     this.userService.getUsers(this.userTable.queryKey, this.queryBind, this.RegisterDate, 0, 2000)
       .subscribe(res => {
+        console.log(res)
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           if (res.data.totalPages == 1) {
             exportList = this.common.toArray(res.data.content);

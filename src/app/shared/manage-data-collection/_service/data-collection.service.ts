@@ -133,7 +133,6 @@ export class DataCollectionService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.searchHospital}?hospitalName=${key}`);
   }
 
-  getAllFiles(){
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.medicalHospitals}`);
-  }
+  exportFiles(status){
+    return this.httpService.get(`${'http://106.15.176.242:8080/pro-health/api/exportExcel?status='+status}`);
 }
