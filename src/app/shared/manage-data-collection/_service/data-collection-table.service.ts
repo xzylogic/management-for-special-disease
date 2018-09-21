@@ -58,7 +58,9 @@ export class DataCollectionTableService {
       }),
       new TableTitle({
         name: '资料照片',
-        key: 'dataTypein',
+        key: 'viewPhoto',
+        option: '查看',
+        // key: 'dataTypein',
         controlType: ControlType.button
       }),
       new TableTitle({

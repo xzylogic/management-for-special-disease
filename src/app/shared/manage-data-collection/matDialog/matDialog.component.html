@@ -1,4 +1,4 @@
-<div class="exportAll">
+<div class="exportAll" *ngIf="showMat">
   <h3 mat-dialog-title>请选择要导出的类别</h3>
   <ul #all>
     <li><mat-checkbox #checked0 class="_checkbox" [(ngModel)]="checked0.checked" (change)="_Check()">预审</mat-checkbox></li>
@@ -8,14 +8,16 @@
     <li><mat-checkbox #checked4 class="_checkbox" [(ngModel)]="checked4.checked" (change)="_Check()">未处理</mat-checkbox></li>
     <li><mat-checkbox #checked5 class="_checkbox" [(ngModel)]="checked5.checked" (change)="_Check()">审核失败</mat-checkbox></li>
     <li><mat-checkbox #checked6 class="_checkbox" [(ngModel)]="checked6.checked" (change)="_allCheck()">所有</mat-checkbox></li>
-    <!--<li *ngFor="let export of exportArr">-->
-      <!--<mat-checkbox [(checked)]="checked" (change)="_Check()" #check>{{export}}</mat-checkbox>-->
-    <!--</li>-->
-    <!--<li>-->
-      <!--<mat-checkbox [(ngModel)]="allChecked" (change)="_allCheck()" #allCheck>所有</mat-checkbox>-->
-    <!--</li>-->
   </ul>
   <mat-dialog-actions>
     <button mat-button [mat-dialog-close]="true" (click)="getExportFile()" >确定</button>
   </mat-dialog-actions>
+</div>
+
+<div class="col-3" *ngIf="userInfo&&userInfo.medicalRecordPhotoList">
+  <div *ngFor="let obj of userInfo.medicalRecordPhotoList">
+    <mat-dialog-content>
+      <img src="{{obj.imgUrl}}" alt="{{userInfo.title}}">
+    </mat-dialog-content>
+  </div>
 </div>

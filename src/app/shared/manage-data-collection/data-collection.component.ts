@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ContainerConfig } from '../../libs/common/container/container.component';
 import { FormDropdown } from '../../libs/dform/_entity/form-dropdown';
@@ -14,13 +14,18 @@ import { ERRMSG } from '../../pci/_store/static';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import {MatDialogComponent} from '../manage-data-collection/matDialog/matDialog.component'
+import {MatDialogComponent} from './matDialog/matDialog.component';
+
+export interface DialogData {
+  id: any;
+}
 
 @Component({
   selector: 'app-data-collection',
   styleUrls: ['./data-collection.component.css'],
   templateUrl: './data-collection.component.html'
 })
+
 export class DataCollectionComponent implements OnInit, AfterViewInit {
   containerConfig: ContainerConfig;
   @select(['dataCollection', 'tab']) tab: Observable<number>;
@@ -48,6 +53,9 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
   defeatedTable: TableOption;
   pages: any;
 
+  id: any;
+  // userInfo: any;
+
   entering: string;
   queryHospitalY: string;
   queryTimeY: string;
@@ -63,6 +71,7 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
 
   constructor(
     @Inject('action') private action,
+    private route: ActivatedRoute,
     private dataCollectionService: DataCollectionService,
     private dataCollectionTableService: DataCollectionTableService,
     private dialog: MatDialog,
@@ -355,9 +364,18 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
   }
 
   gotoHandle(data) {
-    if (data.key === 'dataTypein') {
-      this.router.navigate(['/data-collection/edit', data.value.id]);
+    // if (data.key === 'dataTypein') {
+    //   this.router.navigate(['/data-collection/edit', data.value.id]);
+    // }
+    if(data.key === 'viewPhoto'){
+      const dialogRef = this.dialog.open(MatDialogComponent,{data:{id:this.id = data.value.id}});
+
+      // 弹框关闭时触发
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Download: ${result}`);
+      });
     }
+
     if (data.key === 'editData') {
       this.router.navigate(['/data-collection/edit', data.value.id]);
     }
@@ -451,7 +469,6 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
     if (typeof list === 'object') {
       list.forEach(obj => {
         obj.deleted = obj.deleted ? '已删除' : '否';
-        obj.dataTypein = '查看';
       });
     }
   }

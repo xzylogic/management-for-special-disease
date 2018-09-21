@@ -1,5 +1,7 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, ViewChild, Inject} from "@angular/core";
 import { DataCollectionService } from '../_service/data-collection.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogData } from '../data-collection.component'
 
 @Component({
   selector: 'matDialog',
@@ -16,11 +18,31 @@ export class MatDialogComponent {
   @ViewChild('checked5') checked5: any;
   @ViewChild('checked6') checked6: any;
 
+  showMat:boolean = true;
+  userInfo: any;
+
   constructor(
+    public dialogRef: MatDialogRef<MatDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dataCollectionService: DataCollectionService,
   ){
 
   }
+
+  ngOnInit(){
+    if(this.data.id){
+      this.showMat = false;
+      this.viewPhotos(this.data.id);
+    }
+  }
+
+  viewPhotos(id){
+    this.dataCollectionService.getDataCollection(id)
+      .subscribe(res => {
+        this.userInfo = res.data;
+      })
+  }
+
   _allCheck(){
     if(this.checked6.checked){
       this.checked0.checked = true;
@@ -44,6 +66,7 @@ export class MatDialogComponent {
   _Check(){
     this.checked6.checked = false;
   }
+
   getExportFile(){
     let Export = (checked:boolean,status:any) => {
       if(checked){
@@ -65,7 +88,11 @@ export class MatDialogComponent {
       Export(this.checked3.checked,3);
       Export(this.checked4.checked,2);
       Export(this.checked5.checked,4);
+    }else{
+      Export(this.checked6.checked,null);
     }
-    Export(this.checked6.checked,null);
   }
+
+
+
 }
