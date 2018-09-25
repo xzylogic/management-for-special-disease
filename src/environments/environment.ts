@@ -9,14 +9,14 @@ export const environment = {
 
 export const app = {
   pci: {
-    BASE_URL: 'http://10.2.10.10/pci-operation/',
-    COMMON_URL: 'http://10.2.10.10/pro-health/',
-    UPLOAD_URL: 'http://10.2.10.10/pci-operation/api/upload'
+    BASE_URL: 'https://pci.violetqqy.com/pci-operation/',
+    COMMON_URL: 'https://pci.violetqqy.com/pro-health/',
+    UPLOAD_URL: 'https://pci.violetqqy.com/pci-operation/api/upload'
   },
   kidney: {
-    BASE_URL: 'http://10.2.10.10:80/kidney-backend-test/',
-    CAN_URL: 'http://10.2.10.10:80/kidney-scheduler-test/',
-    COMMON_URL: 'http://10.2.10.10/pro-health/',
-    UPLOAD_URL: 'http://10.2.10.10/pci-operation/api/upload'
+    BASE_URL: 'https://pci.violetqqy.com:80/kidney-backend-test/',
+    CAN_URL: 'https://pci.violetqqy.com:80/kidney-scheduler-test/',
+    COMMON_URL: 'https://pci.violetqqy.com/pro-health/',
+    UPLOAD_URL: 'https://pci.violetqqy.com/pci-operation/api/upload'
   }
 };
