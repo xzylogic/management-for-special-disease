@@ -20,6 +20,13 @@ export class MatDialogComponent {
 
   showMat:boolean = true;
   userInfo: any;
+  // _checked0:boolean = this.checked0.checked;
+  // _checked1:boolean = this.checked1.checked;
+  // _checked2:boolean = this.checked2.checked;
+  // _checked3:boolean = this.checked3.checked;
+  // _checked4:boolean = this.checked4.checked;
+  // _checked5:boolean = this.checked5.checked;
+  // _checked6:boolean = this.checked6.checked;
 
   constructor(
     public dialogRef: MatDialogRef<MatDialogComponent>,
@@ -30,7 +37,7 @@ export class MatDialogComponent {
   }
 
   ngOnInit(){
-    if(this.data.id){
+    if(this.data && this.data.id){
       this.showMat = false;
       this.viewPhotos(this.data.id);
     }
@@ -64,7 +71,11 @@ export class MatDialogComponent {
   }
 
   _Check(){
-    this.checked6.checked = false;
+    if(this.checked0.checked == true && this.checked1.checked == true && this.checked2.checked == true && this.checked3.checked == true &&
+      this.checked4.checked == true && this.checked5.checked == true){
+      return this.checked6.checked = true;
+    }
+    return this.checked6.checked = false;
   }
 
   getExportFile(){
@@ -92,7 +103,5 @@ export class MatDialogComponent {
       Export(this.checked6.checked,null);
     }
   }
-
-
 
 }

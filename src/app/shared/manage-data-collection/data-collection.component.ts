@@ -369,11 +369,6 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
     // }
     if(data.key === 'viewPhoto'){
       const dialogRef = this.dialog.open(MatDialogComponent,{data:{id:this.id = data.value.id}});
-
-      // 弹框关闭时触发
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Download: ${result}`);
-      });
     }
 
     if (data.key === 'editData') {

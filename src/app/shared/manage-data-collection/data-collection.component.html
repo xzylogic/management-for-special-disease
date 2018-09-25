@@ -1,19 +1,6 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="addition">
     <button mat-raised-button (click)="openDialog()">批量导出</button>
-    <!--<div class="exportAll" hidden>-->
-      <!--<p>请选择要导出的类别</p>-->
-      <!--<ul>-->
-        <!--<li><mat-checkbox>预审</mat-checkbox></li>-->
-        <!--<li><mat-checkbox>待录入</mat-checkbox></li>-->
-        <!--<li><mat-checkbox>待审核</mat-checkbox></li>-->
-        <!--<li><mat-checkbox>审核通过</mat-checkbox></li>-->
-        <!--<li><mat-checkbox>未处理</mat-checkbox></li>-->
-        <!--<li><mat-checkbox>审核失败</mat-checkbox></li>-->
-        <!--<li><mat-checkbox>所有</mat-checkbox></li>-->
-      <!--</ul>-->
-      <!--<button mat-raised-button>确定</button>-->
-    <!--</div>-->
   </div>
   <div class="content">
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">

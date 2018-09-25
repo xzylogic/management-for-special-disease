@@ -20,14 +20,14 @@ export const app = {
   //   UPLOAD_URL: 'http://10.2.10.10/pci-operation/api/upload'
   // }
   pci: {
-    BASE_URL: 'http://106.15.176.242:8080/pci-operation/',
-    COMMON_URL: 'http://106.15.176.242:8080/pro-health/',
-    UPLOAD_URL: 'http://106.15.176.242:8080/pci-operation/api/upload'
+    BASE_URL: 'https://pci.violetqqy.com/pci-operation/',
+    COMMON_URL: 'https://pci.violetqqy.com/pro-health/',
+    UPLOAD_URL: 'https://pci.violetqqy.com/pci-operation/api/upload'
   },
   kidney: {
-    BASE_URL: 'http://106.15.176.242:8080/kidney-backend-test/',
-    CAN_URL: 'http://106.15.176.242:8080/kidney-scheduler-test/',
-    COMMON_URL: 'http://106.15.176.242:8080/pro-health/',
-    UPLOAD_URL: 'http://106.15.176.242:8080/pci-operation/api/upload'
+    BASE_URL: 'https://pci.violetqqy.com/kidney-backend-test/',
+    CAN_URL: 'https://pci.violetqqy.com/kidney-scheduler-test/',
+    COMMON_URL: 'https://pci.violetqqy.com/pro-health/',
+    UPLOAD_URL: 'https://pci.violetqqy.com/pci-operation/api/upload'
   }
 };

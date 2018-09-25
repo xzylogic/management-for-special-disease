@@ -135,9 +135,9 @@ export class DataCollectionService {
 
   exportFiles(status) {
     if(status === null){
-      return this.httpService.get('http://106.15.176.242:8080/pro-health/api/exportExcel')
+      return this.httpService.get(`${this.app.pci.COMMON_URL}api/exportExcel`);
     }else{
-      return this.httpService.get(`${'http://106.15.176.242:8080/pro-health/api/exportExcel?status=' + status}`)
+      return this.httpService.get(`${this.app.pci.COMMON_URL}api/exportExcel?status=${status}`);
     }
   };
 }
