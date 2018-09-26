@@ -20,6 +20,7 @@ export class MatDialogComponent {
 
   showMat:boolean = true;
   userInfo: any;
+  angle = 0;
   // _checked0:boolean = this.checked0.checked;
   // _checked1:boolean = this.checked1.checked;
   // _checked2:boolean = this.checked2.checked;
@@ -41,6 +42,14 @@ export class MatDialogComponent {
       this.showMat = false;
       this.viewPhotos(this.data.id);
     }
+  }
+
+  rotate() {
+    this.angle += 90;
+  }
+
+  getImageSize() {
+    return `rotate(${this.angle}deg)`;
   }
 
   viewPhotos(id){

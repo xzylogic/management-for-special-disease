@@ -10,7 +10,8 @@ const PATH = {
   sendMessage: 'api/user/sendMsg', // 短信提醒患者
   IntegralDetail: 'opt/integral/records/list/', // 个人积分明细
   photoUpload: '/record/photo/upload', // 上传病历
-  importExcel: 'api/user/importExcel' // 批量注册患者
+  importExcel: 'api/user/importExcel', // 批量注册患者
+  importRealNameExcel: 'api/user/importValidExcel' // 批量实名
 };
 
 @Injectable()
@@ -154,5 +155,12 @@ export class UserService {
    */
   batchRegisterUser(data: any) {
     return this.httpService.upload(`${this.app.pci.BASE_URL}${PATH.importExcel}`, data);
+  }
+
+  /**
+   * 批量实名
+   */
+  batchRealName(data: any) {
+    return this.httpService.upload(`${this.app.pci.BASE_URL}${PATH.importRealNameExcel}`, data);
   }
 }

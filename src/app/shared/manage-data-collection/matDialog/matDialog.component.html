@@ -10,13 +10,17 @@
     <li><mat-checkbox #checked6 [(ngModel)]="checked6.checked" (change)="_allCheck()"><span>所有</span></mat-checkbox></li>
   </ul>
   <mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="true" (click)="getExportFile()" >确定</button>
+    <button mat-button [mat-dialog-close]="true" (click)="getExportFile()" class="exportTrue">确定</button>
   </mat-dialog-actions>
 </div>
 
 <div class="viewPhotos" *ngIf="userInfo&&userInfo.medicalRecordPhotoList">
   <h2>患者名称： {{userInfo.name}}</h2>
+  <button mat-icon-button (click)="rotate()" class="rotate">
+    <mat-icon aria-label="旋转">rotate_right</mat-icon>
+  </button>
+  <br>
   <div *ngFor="let obj of userInfo.medicalRecordPhotoList">
-    <img src="{{obj.imgUrl}}" alt="{{userInfo.name}}">
+    <img src="{{obj.imgUrl}}" alt="{{userInfo.name}}" width="100%" [ngStyle]="{'transform': getImageSize()}">
   </div>
 </div>

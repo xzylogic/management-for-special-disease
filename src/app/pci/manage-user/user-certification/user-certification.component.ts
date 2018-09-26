@@ -5,9 +5,11 @@ import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { ImageDialog } from '../../../libs/dmodal/dialog-img.component';
 import { TableOption } from '../../../libs/dtable/dtable.entity';
+import { UserService } from '../user/_service/user.service';
 import { UserCertificationService } from './_service/user-certification.service';
 import { UserCertificationTableService } from './_service/user-certification-table.service';
 import { ERRMSG } from '../../_store/static';
+import {HintDialog} from "../../../libs/dmodal/dialog.component";
 
 @Component({
   selector: 'app-user-certification',
@@ -21,6 +23,22 @@ import { ERRMSG } from '../../_store/static';
       position: absolute;
       top: 10px;
       left: 620px;
+    }
+
+    .realName-btn{
+      position: relative;
+    }
+    
+    .batchRealName{
+      cursor: pointer;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
 
     @media (max-width: 600px) {
@@ -46,6 +64,7 @@ export class UserCertificationComponent implements OnInit {
   constructor(
     @Inject('action') private action,
     @Inject('nav') private navService,
+    private userService: UserService,
     private dialog: MatDialog,
     private userCertificationService: UserCertificationService,
     private userCertificationTableService: UserCertificationTableService
@@ -200,6 +219,24 @@ export class UserCertificationComponent implements OnInit {
           console.log(err);
           this.userCertificationFailureTable.errorMessage = ERRMSG.netErrMsg;
         });
+  }
+
+  batchRealName(files) {
+    const myForm = new FormData();
+    const fileList = files.target.files[0];
+    myForm.append('file', fileList);
+    // console.log(fileList)
+    this.userService.batchRealName(myForm)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(res.msg || '实名成功！', this.dialog);
+        } else {
+          HintDialog(res.msg || '实名失败！', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('实名失败！', this.dialog);
+      });
   }
 
   gotoHandle(res) {
