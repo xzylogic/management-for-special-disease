@@ -11,6 +11,7 @@ const PATH = {
   IntegralDetail: 'opt/integral/records/list/', // 个人积分明细
   photoUpload: '/record/photo/upload', // 上传病历
   importExcel: 'api/user/importExcel', // 批量注册患者
+  importRenewMesExcel: 'api/user/importSupplyExcel', // 批量更新信息
   importRealNameExcel: 'api/user/importValidExcel' // 批量实名
 };
 
@@ -155,6 +156,13 @@ export class UserService {
    */
   batchRegisterUser(data: any) {
     return this.httpService.upload(`${this.app.pci.BASE_URL}${PATH.importExcel}`, data);
+  }
+
+  /**
+   * 批量更新信息
+   */
+  batchRenewMes(data: any) {
+    return this.httpService.upload(`${this.app.pci.BASE_URL}${PATH.importRenewMesExcel}`, data);
   }
 
   /**
