@@ -132,4 +132,12 @@ export class DataCollectionService {
   getHospitalAll(key) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.searchHospital}?hospitalName=${key}`);
   }
+
+  exportFiles(status) {
+    if(status === null){
+      return this.httpService.get(`${this.app.pci.COMMON_URL}api/exportExcel`);
+    }else{
+      return this.httpService.get(`${this.app.pci.COMMON_URL}api/exportExcel?status=${status}`);
+    }
+  };
 }

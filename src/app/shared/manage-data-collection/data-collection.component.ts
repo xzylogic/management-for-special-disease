@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ContainerConfig } from '../../libs/common/container/container.component';
 import { FormDropdown } from '../../libs/dform/_entity/form-dropdown';
 import { FormText } from '../../libs/dform/_entity/form-text';
@@ -13,15 +13,37 @@ import { DataCollectionTableService } from './_service/data-collection-table.ser
 import { ERRMSG } from '../../pci/_store/static';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import {MatDialogComponent} from './matDialog/matDialog.component';
+
+export interface DialogData {
+  id: any;
+}
 
 @Component({
   selector: 'app-data-collection',
+  styleUrls: ['./data-collection.component.css'],
   templateUrl: './data-collection.component.html'
 })
-export class DataCollectionComponent implements OnInit {
+
+export class DataCollectionComponent implements OnInit, AfterViewInit {
   containerConfig: ContainerConfig;
   @select(['dataCollection', 'tab']) tab: Observable<number>;
   @select(['dataCollection', 'page']) page: Observable<Array<number>>;
+  @select(['dataCollection', 'data']) data: Observable<Object>;
+  @ViewChild('tab1') tab1: any;
+  @ViewChild('tab2') tab2: any;
+  @ViewChild('tab3') tab3: any;
+  @ViewChild('tab4') tab4: any;
+  @ViewChild('tab5') tab5: any;
+  @ViewChild('tab6') tab6: any;
+
+  tab1Scroll: Subject<string> = new Subject<string>();
+  tab2Scroll: Subject<string> = new Subject<string>();
+  tab3Scroll: Subject<string> = new Subject<string>();
+  tab4Scroll: Subject<string> = new Subject<string>();
+  tab5Scroll: Subject<string> = new Subject<string>();
+  tab6Scroll: Subject<string> = new Subject<string>();
 
   pretrialTable: TableOption;
   waitingTable: TableOption;
@@ -30,6 +52,9 @@ export class DataCollectionComponent implements OnInit {
   unhandledTable: TableOption;
   defeatedTable: TableOption;
   pages: any;
+
+  id: any;
+  // userInfo: any;
 
   entering: string;
   queryHospitalY: string;
@@ -46,6 +71,7 @@ export class DataCollectionComponent implements OnInit {
 
   constructor(
     @Inject('action') private action,
+    private route: ActivatedRoute,
     private dataCollectionService: DataCollectionService,
     private dataCollectionTableService: DataCollectionTableService,
     private dialog: MatDialog,
@@ -79,10 +105,122 @@ export class DataCollectionComponent implements OnInit {
       titles: this.dataCollectionTableService.setDefeatedTitles(),
       ifPage: true
     });
-    this.reset();
     this.getHospitals();
     this.getMedicalHospitals();
     this.getAuthName();
+
+    this.page.subscribe((page: Array<number>) => {
+      this.pages = page;
+      this.waitingTable.currentPage = page[0];
+      this.auditingTable.currentPage = page[1];
+      this.unhandledTable.currentPage = page[2];
+      this.auditedTable.currentPage = page[3];
+      this.defeatedTable.currentPage = page[4];
+      this.pretrialTable.currentPage = page[5];
+    });
+
+    this.data.subscribe((data: any) => {
+      let datas = data.datas;
+      let pages = data.pages;
+      if (datas[0] === null) {
+        this.reset();
+      } else {
+        this.pretrialTable.lists = datas[5];
+        this.pretrialTable.totalPage = pages[5];
+        this.auditingTable.lists = datas[1];
+        this.auditingTable.totalPage = pages[1];
+        this.waitingTable.lists = datas[0];
+        this.waitingTable.totalPage = pages[0];
+        this.auditedTable.lists = datas[3];
+        this.auditedTable.totalPage = pages[3];
+        this.unhandledTable.lists = datas[2];
+        this.unhandledTable.totalPage = pages[2];
+        this.defeatedTable.lists = datas[4];
+        this.defeatedTable.totalPage = pages[4];
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.initData();
+    let dom1 = this.tab1.nativeElement;
+    let dom2 = this.tab2.nativeElement;
+    let dom3 = this.tab3.nativeElement;
+    let dom4 = this.tab4.nativeElement;
+    let dom5 = this.tab5.nativeElement;
+    let dom6 = this.tab6.nativeElement;
+
+    this.tab1Scroll.debounceTime(500).distinctUntilChanged().subscribe(scrollTop => {
+      this.updateTab(0, scrollTop);
+    });
+    dom1.onscroll = () => {
+      this.tab1Scroll.next(dom1.scrollTop);
+    }
+
+    this.tab2Scroll.debounceTime(500).distinctUntilChanged().subscribe(scrollTop => {
+      this.updateTab(1, scrollTop);
+    });
+    dom2.onscroll = () => {
+      this.tab2Scroll.next(dom2.scrollTop);
+    }
+
+    this.tab3Scroll.debounceTime(500).distinctUntilChanged().subscribe(scrollTop => {
+      this.updateTab(2, scrollTop);
+    });
+    dom3.onscroll = () => {
+      this.tab3Scroll.next(dom3.scrollTop);
+    }
+
+    this.tab4Scroll.debounceTime(500).distinctUntilChanged().subscribe(scrollTop => {
+      this.updateTab(3, scrollTop);
+    });
+    dom4.onscroll = () => {
+      this.tab4Scroll.next(dom4.scrollTop);
+    }
+
+    this.tab5Scroll.debounceTime(500).distinctUntilChanged().subscribe(scrollTop => {
+      this.updateTab(4, scrollTop);
+    });
+    dom5.onscroll = () => {
+      this.tab5Scroll.next(dom5.scrollTop);
+    }
+
+    this.tab6Scroll.debounceTime(500).distinctUntilChanged().subscribe(scrollTop => {
+      this.updateTab(5, scrollTop);
+    });
+    dom6.onscroll = () => {
+      this.tab6Scroll.next(dom6.scrollTop);
+    }
+  }
+
+  initData() {
+    let dom1 = this.tab1.nativeElement;
+    let dom2 = this.tab2.nativeElement;
+    let dom3 = this.tab3.nativeElement;
+    let dom4 = this.tab4.nativeElement;
+    let dom5 = this.tab5.nativeElement;
+    let dom6 = this.tab6.nativeElement;
+    dom1.scrollTop = 300;
+    this.data.subscribe((data: any) => {
+      let datas = data.datas;
+      let scrolls = data.scrollTops;
+      if (datas[0] !== null) {
+        dom1.scrollTop = scrolls[0];
+        dom2.scrollTop = scrolls[1];
+        dom3.scrollTop = scrolls[2];
+        dom4.scrollTop = scrolls[3];
+        dom5.scrollTop = scrolls[4];
+        dom6.scrollTop = scrolls[5];
+      }
+    });
+  }
+
+  updateTab(index, scrollTop) {
+    this.data.subscribe((data: any) => {
+      let datas = data.scrollTops;
+      datas[index] = scrollTop;
+      this.action.dataChange('dataCollection', {...data, ...{scrollTops: datas}});
+    });
   }
 
   reset() {
@@ -99,7 +237,6 @@ export class DataCollectionComponent implements OnInit {
     this.queryTime = '';
     this.waitingTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
-      this.pages = page;
       this.getDataCollections(this.waitingTable, 0, page[0]);
     });
   }
@@ -107,7 +244,6 @@ export class DataCollectionComponent implements OnInit {
   reset1() {
     this.auditingTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
-      this.pages = page;
       this.getDataCollections(this.auditingTable, 1, page[1]);
     });
   }
@@ -117,15 +253,13 @@ export class DataCollectionComponent implements OnInit {
     this.queryMedicalHospital = '';
     this.queryTime = '';
     this.page.subscribe((page: Array<number>) => {
-      this.pages = page;
-      this.getDataCollections(this.auditedTable, 3, page[2]);
+      this.getDataCollections(this.auditedTable, 3, page[3]);
     });
   }
 
   reset3() {
     this.unhandledTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
-      this.pages = page;
       this.getDataCollections(this.unhandledTable, 2, page[2]);
     });
   }
@@ -133,8 +267,7 @@ export class DataCollectionComponent implements OnInit {
   reset4() {
     this.unhandledTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
-      this.pages = page;
-      this.getDataCollections(this.defeatedTable, 4, page[2]);
+      this.getDataCollections(this.defeatedTable, 4, page[4]);
     });
   }
 
@@ -143,8 +276,7 @@ export class DataCollectionComponent implements OnInit {
     this.queryTimeY = '';
     this.pretrialTable.queryKey = '';
     this.page.subscribe((page: Array<number>) => {
-      this.pages = page;
-      this.getDataCollections(this.pretrialTable, 5, page[0]);
+      this.getDataCollections(this.pretrialTable, 5, page[5]);
     });
   }
 
@@ -164,8 +296,19 @@ export class DataCollectionComponent implements OnInit {
               this.format(obj);
             });
             this.formatList(list.lists);
-            // console.log(list.lists);
             list.totalPage = res.data.totalPages;
+
+            this.data.subscribe((data: any) => {
+              let datas = data.datas;
+              let pages = data.pages;
+              datas[type] = list.lists;
+              pages[type] = res.data.totalPages;
+              this.action.dataChange(
+                'dataCollection',
+                {...data, ...{datas: datas, pages: pages}}
+              );
+            });
+
           } else {
             list.errorMessage = res.msg || ERRMSG.otherMsg;
           }
@@ -195,6 +338,18 @@ export class DataCollectionComponent implements OnInit {
   }
 
   /**
+   * 批量导出
+   */
+  openDialog() {
+    const dialogRef = this.dialog.open(MatDialogComponent);
+
+    // 弹框关闭时触发
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Download: ${result}`);
+    });
+  }
+
+  /**
    * 判断是否兼职人员录入病史资料
    * @param auth 为 caozuoyuan 代表兼职人员
    */
@@ -209,9 +364,13 @@ export class DataCollectionComponent implements OnInit {
   }
 
   gotoHandle(data) {
-    if (data.key === 'dataTypein') {
-      this.router.navigate(['/data-collection/edit', data.value.id]);
+    // if (data.key === 'dataTypein') {
+    //   this.router.navigate(['/data-collection/edit', data.value.id]);
+    // }
+    if(data.key === 'viewPhoto'){
+      const dialogRef = this.dialog.open(MatDialogComponent,{data:{id:this.id = data.value.id}});
     }
+
     if (data.key === 'editData') {
       this.router.navigate(['/data-collection/edit', data.value.id]);
     }
@@ -329,6 +488,7 @@ export class DataCollectionComponent implements OnInit {
     })
   }
 }
+
 
 export function auditData(id, title, status, dialog, service, callback) {
   let form;

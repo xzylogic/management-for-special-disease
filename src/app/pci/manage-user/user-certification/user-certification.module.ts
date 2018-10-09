@@ -9,6 +9,7 @@ import { UserCertificationService } from './_service/user-certification.service'
 import { UserCertificationTableService } from './_service/user-certification-table.service';
 import { DFormModule } from '../../../libs/dform/dform.module';
 import { FormsModule } from '@angular/forms';
+import {UserService} from "../user/_service/user.service";
 
 const routes: Routes = [{
   path: '',
@@ -32,6 +33,7 @@ const routes: Routes = [{
     UserCertificationComponent
   ],
   providers: [
+    UserService,
     UserCertificationService,
     UserCertificationTableService
   ]

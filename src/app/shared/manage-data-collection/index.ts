@@ -10,6 +10,14 @@ export const routes: Routes = [
 ];
 
 export const stores = {
-  dataCollection: createReducer('dataCollection', [0, 0, 0, 0], {}),
+  dataCollection: createReducer(
+    'dataCollection',
+    [0, 0, 0, 0, 0, 0],
+    {
+      scrollTops: [0, 0, 0, 0, 0, 0],
+      datas: [null, null, null, null, null, null],
+      pages: [1, 1, 1, 1, 1, 1]
+    }
+  ),
 };
 

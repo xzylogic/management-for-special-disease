@@ -14,8 +14,8 @@ export const app = {
     UPLOAD_URL: 'https://pci.violetqqy.com/pci-operation/api/upload'
   },
   kidney: {
-    BASE_URL: 'https://pci.violetqqy.com:80/kidney-backend-test/',
-    CAN_URL: 'https://pci.violetqqy.com:80/kidney-scheduler-test/',
+    BASE_URL: 'https://pci.violetqqy.com/kidney-backend-test/',
+    CAN_URL: 'https://pci.violetqqy.com/kidney-scheduler-test/',
     COMMON_URL: 'https://pci.violetqqy.com/pro-health/',
     UPLOAD_URL: 'https://pci.violetqqy.com/pci-operation/api/upload'
   }

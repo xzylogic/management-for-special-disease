@@ -171,10 +171,29 @@ export class UserComponent implements OnInit {
       });
   }
 
+  batchRenewMes(files) {
+    const myForm = new FormData();
+    const fileList = files.target.files[0];
+    myForm.append('file', fileList);
+    // console.log(fileList)
+    this.userService.batchRenewMes(myForm)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(res.msg || '更新成功！', this.dialog);
+        } else {
+          HintDialog(res.msg || '更新失败！', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog('更新失败！', this.dialog);
+      });
+  }
+
   export() {
     let exportList;
     this.userService.getUsers(this.userTable.queryKey, this.queryBind, this.RegisterDate, 0, 2000)
       .subscribe(res => {
+        console.log(res)
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           if (res.data.totalPages == 1) {
             exportList = this.common.toArray(res.data.content);

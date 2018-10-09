@@ -57,8 +57,10 @@ export class DataCollectionTableService {
         key: 'deleted'
       }),
       new TableTitle({
-        name: '资料录入',
-        key: 'dataTypein',
+        name: '资料照片',
+        key: 'viewPhoto',
+        option: '查看',
+        // key: 'dataTypein',
         controlType: ControlType.button
       }),
       new TableTitle({

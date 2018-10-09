@@ -1,0 +1,35 @@
+.exportAll{
+  width: 300px;
+  height: 335px;
+}
+.exportAll h3{
+  background-color: rgb(221,221,221);
+  width: 100%;
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.exportAll li{
+  height: 32px;
+  line-height: 32px;
+}
+.exportAll li span{
+  position: absolute;
+  width: 240px;
+  text-align: center;
+}
+.exportAll .exportTrue{
+  background-color: rgb(189,189,189);
+  width: 100%;
+}
+.viewPhotos{
+  height: 700px;
+  overflow: scroll;
+  position: relative;
+}
+.rotate{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
