@@ -24,7 +24,7 @@
   width: 100%;
 }
 .viewPhotos{
-  height: 700px;
+  height: 80vh;
   overflow: scroll;
   position: relative;
 }

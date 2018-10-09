@@ -364,9 +364,9 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
   }
 
   gotoHandle(data) {
-    // if (data.key === 'dataTypein') {
-    //   this.router.navigate(['/data-collection/edit', data.value.id]);
-    // }
+    if (data.key === 'dataTypein') {
+      this.router.navigate(['/data-collection/edit', data.value.id]);
+    }
     if(data.key === 'viewPhoto'){
       const dialogRef = this.dialog.open(MatDialogComponent,{data:{id:this.id = data.value.id}});
     }
