@@ -22,6 +22,10 @@ export class UserOrderTableService {
         minwidth: 85
       }),
       new TableTitle({
+        name: '免费/付费',
+        key: 'ifPay',
+      }),
+      new TableTitle({
         name: '购买服务类型',
         key: 'serviceType'
       }),

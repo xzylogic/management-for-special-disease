@@ -2,6 +2,7 @@ import {Component, ViewChild, Inject} from "@angular/core";
 import { DataCollectionService } from '../_service/data-collection.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from '../data-collection.component'
+import {HintDialog} from "../../../libs/dmodal/dialog.component";
 
 @Component({
   selector: 'matDialog',
@@ -33,6 +34,7 @@ export class MatDialogComponent {
     public dialogRef: MatDialogRef<MatDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dataCollectionService: DataCollectionService,
+    private dialog: MatDialog,
   ){
 
   }
@@ -92,11 +94,18 @@ export class MatDialogComponent {
       if(checked){
         this.dataCollectionService.exportFiles(status)
           .subscribe(res => {
-            const a = document.createElement('a');
-            document.body.appendChild(a);
-            a.setAttribute('style', 'display:none');
-            a.setAttribute('href', res.data);
-            a.click();
+            if (res && res.code === 0) {
+              const a = document.createElement('a');
+              document.body.appendChild(a);
+              a.setAttribute('style', 'display:none');
+              a.setAttribute('href', res.data);
+              a.click();
+            } else {
+              HintDialog(res.msg || '啊哦～访问接口出错啦～！', this.dialog);
+            }
+          }, err => {
+            HintDialog('啊哦～访问接口出错啦～', this.dialog);
+            throw new Error(err);
           })
       }
       return null;

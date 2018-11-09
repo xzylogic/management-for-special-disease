@@ -344,9 +344,9 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(MatDialogComponent);
 
     // 弹框关闭时触发
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Download: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Download: ${result}`);
+    // });
   }
 
   /**

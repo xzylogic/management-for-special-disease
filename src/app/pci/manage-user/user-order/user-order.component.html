@@ -14,7 +14,7 @@
       <mat-tab label="全部订单">
         <form style="padding: 16px">
           <mat-form-field floatPlaceholder="always">
-            <input matInput placeholder="手机号／姓名搜索" name="queryKey" [(ngModel)]="userOrderAllTable.queryKey">
+            <input matInput placeholder="手机号／姓名／免费／付费搜索" name="queryKey" [(ngModel)]="userOrderAllTable.queryKey">
           </mat-form-field>
           <button mat-icon-button color="primary" type="button" (click)="getUserOrdersAll(0)">
             <mat-icon>search</mat-icon>
