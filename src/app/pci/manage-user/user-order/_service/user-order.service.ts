@@ -55,38 +55,39 @@ export class UserOrderService {
    * @param {number} page
    * @param {number} size
    * @param {string} key
+   * @param {string} pay
    * @param {string} path
    */
-  getUserOrders(page: number, size: number, key: string, path: string) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${path}?page=${page}&size=${size}&queryInfo=${key}`);
+  getUserOrders(page: number, size: number, key: string, path: string, pay?: number) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${path}?page=${page}&size=${size}&queryInfo=${key}${pay ? `&freeStatus=${pay}`: ''}`);
   }
 
-  getUserOrdersAll(page: number, size: number, key: string) {
-    return this.getUserOrders(page, size, key, PATH.userOrderAllList);
+  getUserOrdersAll(page: number, size: number, key: string, pay: number) {
+    return this.getUserOrders(page, size, key, PATH.userOrderAllList, pay);
   }
 
-  getUserOrdersUnpay(page: number, size: number, key: string) {
-    return this.getUserOrders(page, size, key, PATH.userOrderUnpayList);
+  getUserOrdersUnpay(page: number, size: number, key: string, pay: number) {
+    return this.getUserOrders(page, size, key, PATH.userOrderUnpayList, pay);
   }
 
-  getUserOrdersApply(page: number, size: number, key: string) {
-    return this.getUserOrders(page, size, key, PATH.userOrderApplyList);
+  getUserOrdersApply(page: number, size: number, key: string, pay: number) {
+    return this.getUserOrders(page, size, key, PATH.userOrderApplyList, pay);
   }
 
-  getUserOrdersRefunding(page: number, size: number, key: string) {
-    return this.getUserOrders(page, size, key, PATH.userOrderRefundingList);
+  getUserOrdersRefunding(page: number, size: number, key: string, pay: number) {
+    return this.getUserOrders(page, size, key, PATH.userOrderRefundingList, pay);
   }
 
-  getUserOrdersRefund(page: number, size: number, key: string) {
-    return this.getUserOrders(page, size, key, PATH.userOrderRefundList);
+  getUserOrdersRefund(page: number, size: number, key: string, pay: number) {
+    return this.getUserOrders(page, size, key, PATH.userOrderRefundList, pay);
   }
 
-  getUserOrdersSuccess(page: number, size: number, key: string) {
-    return this.getUserOrders(page, size, key, PATH.userOrderSuccessList);
+  getUserOrdersSuccess(page: number, size: number, key: string, pay: number) {
+    return this.getUserOrders(page, size, key, PATH.userOrderSuccessList, pay);
   }
 
-  getUserOrdersCancel(page: number, size: number, key: string) {
-    return this.getUserOrders(page, size, key, PATH.userOrderCancelList);
+  getUserOrdersCancel(page: number, size: number, key: string, pay: number) {
+    return this.getUserOrders(page, size, key, PATH.userOrderCancelList, pay);
   }
 
   getUserOrdersThird(page: number, size: number, key: string) {
