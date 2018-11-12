@@ -99,37 +99,44 @@ export class UserOrderComponent implements OnInit {
 
   reset0() {
     this.userOrderAllTable.queryKey = '';
+    this.allQueryPay = 0;
     this.getUserOrdersAll(0);
   }
 
   reset1() {
     this.userOrderUnpayTable.queryKey = '';
+    this.unPayQueryPay = 0;
     this.getUserOrdersUnpay(0);
   }
 
   reset2() {
     this.userOrderApplyTable.queryKey = '';
+    this.applyQueryPay = 0;
     this.getUserOrdersApply(0);
   }
 
   reset3() {
     this.userOrderRefundingTable.queryKey = '';
+    this.refundingQueryPay = 0;
     this.getUserOrdersRefunding(0);
     this.getCount();
   }
 
   reset4() {
     this.userOrderRefundTable.queryKey = '';
+    this.refundQueryPay = 0;
     this.getUserOrdersRefund(0);
   }
 
   reset5() {
     this.userOrderSuccessTable.queryKey = '';
+    this.successQueryPay = 0;
     this.getUserOrdersSuccess(0);
   }
 
   reset6() {
     this.userOrderCancelTable.queryKey = '';
+    this.cancelQueryPay = 0;
     this.getUserOrdersCancel(0);
   }
 
