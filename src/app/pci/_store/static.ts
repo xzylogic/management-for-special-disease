@@ -325,10 +325,27 @@ export let NAVBARS = [
       }),
     ]
   }),
+  // new Navbar({
+  //   key: 'datacollection',
+  //   title: '病史资料录入',
+  //   link: '/data-collection',
+  // }),
   new Navbar({
-    key: 'datacollection',
-    title: '病史资料录入',
-    link: '/data-collection'
+    key: 'datacase',
+    title: '病史资料',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'datacollection',
+        title: '病史资料录入',
+        link: '/data-collection'
+      }),
+      new Navbar({
+        key: 'casecount',
+        title: '病例统计',
+        link: '/case-count'
+      })
+    ]
   }),
   new Navbar({
     key: 'versioncontrol',
