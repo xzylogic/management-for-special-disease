@@ -44,8 +44,8 @@ export class CaseCountComponent implements OnInit {
   }
 
   getmedicationRemind(page: number) {
-    // this.caseCountTable.reset(page);
-    console.log(page, this.caseCountTable.size, this.caseCountTable.queryKey)
+    this.caseCountTable.reset(page);
+    // console.log(page, this.caseCountTable.size, this.caseCountTable.queryKey)
     this.CaseCountService.getData(page, this.caseCountTable.size, this.caseCountTable.queryKey)
       .subscribe(
         res => {
@@ -63,7 +63,6 @@ export class CaseCountComponent implements OnInit {
           console.log(err);
           this.caseCountTable.errorMessage = ERRMSG.netErrMsg;
         });
-    this.caseCountTable.reset(page);
   }
   export() {
     let exportList;

@@ -32,7 +32,7 @@ export class CaseCountService {
    * @param {string} standard   [闹钟，0正常，1异常]
    */
   getData(page: number, size: number, keyword: string) {
-    return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.caseCount}?page=${page}&size=${size}&&param=${keyword}`);
+    return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.caseCount}?flag=${page}&size=${size}&&param=${keyword}`);
     // return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.caseCount}?page=${page}&size=${size}&&keyword=${keyword}&&deleted=${deleted}&&remind=${remind}`);
   }
 }

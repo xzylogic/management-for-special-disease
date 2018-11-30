@@ -24,6 +24,10 @@ export class CaseCountTableService {
         key: 'hospitalName',
       }),
       new TableTitle({
+        name: '来源渠道',
+        key: 'sourceChannel',
+      }),
+      new TableTitle({
         name: '上传病例',
         key: 'caseCount',
       }),
