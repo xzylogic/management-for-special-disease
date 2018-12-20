@@ -18,6 +18,7 @@ import { routes as statisticsRoutes } from './manage-statistics';
 import { routes as userRoutes } from './manage-user';
 import { routes as versionControlRoutes } from './manage-version-control';
 import { routes as wechatRoutes } from './manage-wechat';
+import { routes as systemRoutes } from './manage-system';
 
 @NgModule({
   imports: [RouterModule.forChild([{
@@ -47,6 +48,7 @@ import { routes as wechatRoutes } from './manage-wechat';
         ...userRoutes,
         ...versionControlRoutes,
         ...wechatRoutes,
+        ...systemRoutes,
         ...followUpRoutes
       ]
     }]

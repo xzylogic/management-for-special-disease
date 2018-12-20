@@ -422,6 +422,18 @@ export let NAVBARS = [
     key: 'operationpush',
     title: '运营推送',
     link: '/operation-push'
+  }),
+  new Navbar({
+    key: 'system',
+    title: '系统管理',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'account',
+        title: '账号管理',
+        link: '/account'
+      })
+    ]
   })
 ];
 
