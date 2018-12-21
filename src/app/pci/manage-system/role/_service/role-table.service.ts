@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ControlType, TableTitle } from '../../../../libs/dtable/dtable.entity';
 
 @Injectable()
-export class AccountTableService {
+export class RoleTableService {
 
   setTitles() {
     const Titles: TableTitle[] = [
@@ -11,33 +11,30 @@ export class AccountTableService {
         key: 'id'
       }),
       new TableTitle({
-        name: '后台账号',
+        name: '角色名称',
         key: 'name'
       }),
       new TableTitle({
-        name: '创建日期',
-        key: 'createDate',
-      }),
-      new TableTitle({
-        name: '创建人',
-        key: 'createBy',
-      }),
-      new TableTitle({
-        name: '状态',
+        name: '是否启用',
         key: 'enable',
-        // option: {
-        //   key: [1, 0],
-        //   value: ['禁用', '启用']
-        // }
       }),
       new TableTitle({
-        name: '角色名',
-        key: 'sysRoleName',
+        name: '更新时间',
+        key: 'updateTime',
       }),
       new TableTitle({
         name: '操作',
-        key: 'operation',
-        controlType: ControlType.button,
+        key: '',
+        controlType: ControlType.buttons,
+        // option: '禁用',
+        option: [{
+          key: '0',
+          name: '启用'
+        }, {
+          key: '1',
+          name: '禁用'
+        }],
+        minwidth: 105
       }),
       // new TableTitle({
       //   name: '序号',

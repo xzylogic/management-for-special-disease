@@ -6,6 +6,9 @@ export const routes: Routes = [
   {
     path: 'account',
     loadChildren: 'app/pci/manage-system/account/account.module#AccountModule'
+  },{
+    path: 'role',
+    loadChildren: 'app/pci/manage-system/role/role.module#RoleModule'
   }
 ];
 

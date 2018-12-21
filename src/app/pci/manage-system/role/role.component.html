@@ -1,11 +1,11 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
-  <!--<div class="addition">-->
-    <!--<button mat-raised-button (click)="export()">导出</button>-->
-  <!--</div>-->
+  <div class="addition">
+    <button mat-raised-button (click)="addRole()">添加角色</button>
+  </div>
   <div class="content">
     <form style="padding: 16px">
       <mat-form-field floatPlaceholder="always">
-        <input matInput type="text" placeholder="账号搜索" name="queryKey" [(ngModel)]="accountTable.queryKey">
+        <input matInput type="text" placeholder="角色搜索" name="queryKey" [(ngModel)]="roleTable.queryKey">
       </mat-form-field>
       <!--<mat-form-field floatPlaceholder="always">-->
         <!--<mat-select placeholder="状态" name="queryBind" [(ngModel)]="deleted">-->
@@ -20,23 +20,22 @@
           <!--<mat-option [value]="false">关闭</mat-option>-->
         <!--</mat-select>-->
       <!--</mat-form-field>-->
-      <button mat-icon-button color="primary" type="button" (click)="getsystemAccount(0)">
+      <button mat-icon-button color="primary" type="button" (click)="getsystemRole(0)">
         <mat-icon>search</mat-icon>
       </button>
       <button mat-icon-button color="primary" type="button" (click)="reset()">
         <mat-icon>autorenew</mat-icon>
       </button>
     </form>
-    <div *ngIf="!accountTable.lists&&accountTable.loading">Loading...</div>
-    <div *ngIf="!accountTable.lists&&!accountTable.loading&&!!accountTable.errorMessage" class="center">
-      {{accountTable.errorMessage}}
+    <div *ngIf="!roleTable.lists&&roleTable.loading">Loading...</div>
+    <div *ngIf="!roleTable.lists&&!roleTable.loading&&!!roleTable.errorMessage" class="center">
+      {{roleTable.errorMessage}}
     </div>
-    <div *ngIf="accountTable.lists">
+    <div *ngIf="roleTable.lists">
       <div class="content__table">
         <app-lib-table
-          [table]="accountTable"
-          (handleEmmit)="gotoHandle($event)"
-          (pageEmitter)="getsystemAccount($event)"
+          [table]="roleTable"
+          (pageEmitter)="getsystemRole($event)"
         ></app-lib-table>
       </div>
     </div>

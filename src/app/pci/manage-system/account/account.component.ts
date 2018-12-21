@@ -7,10 +7,7 @@ import { AccountTableService } from './_service/account-table.service';
 import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../_store/static';
 
-import * as moment from 'moment';
-import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import {User} from "../../manage-user/user/_entity/user.entity";
 
 @Component({
   selector: 'app-account',
@@ -21,7 +18,7 @@ export class AccountComponent implements OnInit {
   containerConfig: ContainerConfig;
   accountTable: TableOption;
 
-  count: number;
+  subscribeHDialog: any;
   constructor(
     @Inject('common') private common,
     private dialog: MatDialog,
@@ -44,23 +41,45 @@ export class AccountComponent implements OnInit {
     this.getsystemAccount(0);
   }
 
-  formatList(list) {
-    if (typeof list === 'object') {
-      list.forEach(obj => {
-        console.log(obj.operation);
-        // obj.operation = obj.enable ? '禁用' : '启用';
-        obj.enable = obj.enable ? '可用' : '禁用';
-      });
-    }
+  getStatus(list) {
+    // if (typeof list === 'object') {
+    list.forEach(obj => {
+      // obj.operation = obj.enable ? '禁用' : '可用';
+      // obj.enable = obj.enable ? '可用' : '禁用';
+      console.log(obj.enable);
+      if (obj.enable === true) {
+        obj.operation = '禁用';
+        obj.enable = '可用';
+      }
+      if (obj.enable === false) {
+        obj.operation = '启用';
+        obj.enable = '禁用';
+      }
+    });
+    // }
   }
 
   gotoHandle(res) {
-    const user = <User>res.value;
-    if (res.key === 'operation') {
-      console.log(res.key);
-      // this.action.dataChange('user', user);
-      // this.router.navigate(['/user/integral']);
-    }
+    const id = res.value.id;
+    console.log(res);
+    this.subscribeHDialog = HintDialog(
+      `你确定要 ${res.value.enable === '可用' ? '禁用' : '启用'} 吗？`,
+      this.dialog
+    ).afterClosed().subscribe(result => {
+      if (result && result.key === 'confirm') {
+        this.accountService.enableAccount(id).subscribe(res => {
+          if (res.code === 0) {
+            this.getsystemAccount(0);
+            HintDialog(res.msg || '操作成功！', this.dialog);
+          } else {
+            HintDialog(res.msg || '操作失败～', this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.netErrMsg, this.dialog);
+        });
+      }
+    });
   }
 
   getsystemAccount(page: number) {
@@ -73,9 +92,9 @@ export class AccountComponent implements OnInit {
           if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
             this.accountTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
-            this.formatList(res.data.content);
-            console.log(res);
             this.accountTable.totalPage = res.data.totalPages;
+            this.getStatus(res.data.content);
+            console.log(res);
             this.accountTable.lists = res.data.content;
           } else {
             this.accountTable.errorMessage = res.msg || ERRMSG.otherMsg;
@@ -86,6 +105,7 @@ export class AccountComponent implements OnInit {
           this.accountTable.errorMessage = ERRMSG.netErrMsg;
         });
   }
+
   // export() {
   //   let exportList;
   //   this.accountService.getData(0, 99999, this.accountTable.queryKey)

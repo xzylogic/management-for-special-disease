@@ -1,12 +1,20 @@
-export enum ControlType { text, image, button, date, index, textButton }
+export enum ControlType { text, image, button, buttons, date, pipe, index, textButton }
 
 export class TableTitle {
+  // name: string; // 表头标题
+  // key: string; // 取值key
+  // minwidth: number; // 最小宽度
+  // maxwidth: number; // 最大宽度
+  // controlType: ControlType; // 类型
+  // option: any; // 附加选项
   name: string; // 表头标题
   key: string; // 取值key
-  minwidth: number; // 最小宽度
-  maxwidth: number; // 最大宽度
-  controlType: ControlType; // 类型
-  option: any; // 附加选项
+  minwidth?: number; // 最小宽度
+  maxwidth?: number; // 最大宽度
+  controlType?: ControlType; // 类型
+  option?: any; // 附加选项
+  pipe?: any; // 附加选项
+  align?: string;
 
   constructor(obj: {
     name: string,
@@ -14,7 +22,9 @@ export class TableTitle {
     minwidth?: number,
     maxwidth?: number,
     controlType?: ControlType,
-    option?: any
+    option?: any,
+    pipe?: any,
+    align?: any,
   }) {
     this.name = obj && obj.name;
     this.key = obj && obj.key;
@@ -22,6 +32,8 @@ export class TableTitle {
     this.maxwidth = obj && obj.maxwidth || null;
     this.controlType = obj && obj.controlType || ControlType.text;
     this.option = obj && obj.option || null;
+    this.pipe = obj && obj.pipe || {};
+    this.align = obj && obj.align || 'center';
   }
 }
 

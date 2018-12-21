@@ -3,6 +3,7 @@ import { ContainerConfig } from '../../../../libs/common/container/container.com
 
 const PATH = {
   account: 'opt/auth/getAdmin', // 账号获取
+  enable: 'opt/auth/enable',    // 启用、禁用
 };
 @Injectable()
 export class AccountService {
@@ -31,8 +32,12 @@ export class AccountService {
    * @param {string} standard   [状态，0正常，1异常]
    * @param {string} standard   [闹钟，0正常，1异常]
    */
-  getData(page: number, size: number, keyword: string) {
+  getData(page: number, size: number, keyword?: string) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.account}?page=${page}&size=${size}&name=${keyword}`);
     // return this.httpService.get(`${this.app.pci.COMMON_URL}${PATH.account}?page=${page}&size=${size}&&keyword=${keyword}&&deleted=${deleted}&&remind=${remind}`);
+  }
+
+  enableAccount(id: number) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.enable}?adminId=${id}`);
   }
 }
