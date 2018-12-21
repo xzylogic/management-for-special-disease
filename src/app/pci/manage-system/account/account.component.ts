@@ -44,17 +44,9 @@ export class AccountComponent implements OnInit {
   getStatus(list) {
     // if (typeof list === 'object') {
     list.forEach(obj => {
-      // obj.operation = obj.enable ? '禁用' : '可用';
-      // obj.enable = obj.enable ? '可用' : '禁用';
-      console.log(obj.enable);
-      if (obj.enable === true) {
-        obj.operation = '禁用';
-        obj.enable = '可用';
-      }
-      if (obj.enable === false) {
-        obj.operation = '启用';
-        obj.enable = '禁用';
-      }
+      obj.operation = obj.enable ? '禁用' : '启用';
+      obj.enable = obj.enable ? '可用' : '禁用';
+      obj.enableRole = obj.enableRole ? '可用' : '禁用';
     });
     // }
   }
@@ -94,7 +86,6 @@ export class AccountComponent implements OnInit {
           } else if (res.code === 0 && res.data && res.data.content) {
             this.accountTable.totalPage = res.data.totalPages;
             this.getStatus(res.data.content);
-            console.log(res);
             this.accountTable.lists = res.data.content;
           } else {
             this.accountTable.errorMessage = res.msg || ERRMSG.otherMsg;

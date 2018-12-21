@@ -35,6 +35,10 @@ export class AccountTableService {
         key: 'sysRoleName',
       }),
       new TableTitle({
+        name: '角色状态',
+        key: 'enableRole',
+      }),
+      new TableTitle({
         name: '操作',
         key: 'operation',
         controlType: ControlType.button,

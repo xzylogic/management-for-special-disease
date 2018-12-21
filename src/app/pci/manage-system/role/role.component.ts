@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { TableOption } from '../../../libs/dtable/dtable.entity';
@@ -17,12 +18,15 @@ export class RoleComponent implements OnInit {
   roleTable: TableOption;
 
   subscribeHDialog: any;
+  // paramsMenu: string; // menuId
 
   constructor(
     @Inject('common') private common,
     private dialog: MatDialog,
     private roleService: RoleService,
-    private roleTableService: RoleTableService
+    private roleTableService: RoleTableService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -45,13 +49,14 @@ export class RoleComponent implements OnInit {
       list.forEach(obj => {
         // console.log(obj.operation);
         // obj.operation = obj.enable ? '禁用' : '启用';
-        obj.enable = obj.enable ? '可用' : '禁用';
+        obj.enableRole = obj.enableRole ? '可用' : '禁用';
       });
     }
   }
 
   gotoHandle(res) {
     const id = res.value.id;
+    console.log(res);
     this.subscribeHDialog = HintDialog(
       `你确定要 ${+res.key ? '禁用' : '启用'} 吗？`,
       this.dialog
@@ -83,9 +88,9 @@ export class RoleComponent implements OnInit {
             this.roleTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
             this.formatList(res.data.content);
-            console.log(res);
             this.roleTable.totalPage = res.data.totalPages;
             this.roleTable.lists = res.data.content;
+            console.log(this.roleTable.lists);
           } else {
             this.roleTable.errorMessage = res.msg || ERRMSG.otherMsg;
           }
@@ -96,7 +101,7 @@ export class RoleComponent implements OnInit {
         });
   }
 
-  addRole() {
-    console.log(111);
+  newData() {
+    this.router.navigate(['/role', 'edit']);
   }
 }

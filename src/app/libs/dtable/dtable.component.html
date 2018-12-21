@@ -26,7 +26,7 @@
           <img src="{{list[title.key]}}">
         </div>
         <div *ngSwitchCase="controlType.button" [style.minWidth.px]="title.minwidth" class="table__content">
-          <span (click)="gotoHandle(title.key,list)" class="table__option">{{title.option || title.name}}</span>
+          <span (click)="gotoHandle(title.key,list)" class="table__option">{{title.option || list[title.key] || title.name}}</span>
         </div>
         <div *ngSwitchCase="controlType.buttons" [style.minWidth.px]="title.minwidth" class="table__content"
              [ngStyle]="{'text-align': title.align}">

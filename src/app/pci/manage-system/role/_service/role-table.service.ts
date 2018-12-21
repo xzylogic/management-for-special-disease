@@ -22,20 +22,39 @@ export class RoleTableService {
         name: '更新时间',
         key: 'updateTime',
       }),
+      // new TableTitle({
+      //   name: '操作',
+      //   key: '',
+      //   controlType: ControlType.buttons,
+      //   // option: '禁用',
+      //   option: [{
+      //     key: '0',
+      //     name: '启用'
+      //   }, {
+      //     key: '1',
+      //     name: '禁用'
+      //   }],
+      //   minwidth: 105
+      // }),
       new TableTitle({
         name: '操作',
         key: '',
         controlType: ControlType.buttons,
-        // option: '禁用',
+        pipe: {
+          key: [1, 0],
+          value: ['启用', '禁用']
+        },
         option: [{
-          key: '0',
-          name: '启用'
+          key: 'edit',
+          name: '编辑'
         }, {
-          key: '1',
-          name: '禁用'
-        }],
-        minwidth: 105
-      }),
+          key: 'delFlag',
+          name: ''
+        }, {
+          key: 'del',
+          name: '删除'
+        }]
+      })
       // new TableTitle({
       //   name: '序号',
       //   key: '',

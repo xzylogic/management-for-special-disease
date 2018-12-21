@@ -1,11 +1,11 @@
 <app-container [config]="containerConfig" *ngIf="containerConfig">
   <div class="addition">
-    <button mat-raised-button (click)="addRole()">添加角色</button>
+    <button mat-raised-button (click)="newData()">添加角色</button>
   </div>
   <div class="content">
     <form style="padding: 16px">
       <mat-form-field floatPlaceholder="always">
-        <input matInput type="text" placeholder="角色搜索" name="queryKey" [(ngModel)]="roleTable.queryKey">
+        <input matInput type="text" placeholder="角色名称搜索" name="queryKey" [(ngModel)]="roleTable.queryKey">
       </mat-form-field>
       <!--<mat-form-field floatPlaceholder="always">-->
         <!--<mat-select placeholder="状态" name="queryBind" [(ngModel)]="deleted">-->
@@ -35,6 +35,7 @@
       <div class="content__table">
         <app-lib-table
           [table]="roleTable"
+          (handleEmmit)="gotoHandle($event)"
           (pageEmitter)="getsystemRole($event)"
         ></app-lib-table>
       </div>
