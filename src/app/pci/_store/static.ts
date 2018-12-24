@@ -437,6 +437,11 @@ export let NAVBARS = [
         key: 'role',
         title: '角色管理',
         link: '/role'
+      }),
+      new Navbar({
+        key: 'menu',
+        title: '菜单管理',
+        link: '/menu'
       })
     ]
   })

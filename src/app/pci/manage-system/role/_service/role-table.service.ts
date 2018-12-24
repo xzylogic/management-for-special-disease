@@ -11,31 +11,26 @@ export class RoleTableService {
         key: 'id'
       }),
       new TableTitle({
+        name: '创建人',
+        key: 'createBy'
+      }),
+      new TableTitle({
         name: '角色名称',
         key: 'name'
       }),
       new TableTitle({
         name: '是否启用',
         key: 'enable',
+        controlType: ControlType.pipe,
+        option: {
+          key: [0, 1],
+          value: ['启用', '禁用']
+        }
       }),
       new TableTitle({
         name: '更新时间',
-        key: 'updateTime',
+        key: 'createDate',
       }),
-      // new TableTitle({
-      //   name: '操作',
-      //   key: '',
-      //   controlType: ControlType.buttons,
-      //   // option: '禁用',
-      //   option: [{
-      //     key: '0',
-      //     name: '启用'
-      //   }, {
-      //     key: '1',
-      //     name: '禁用'
-      //   }],
-      //   minwidth: 105
-      // }),
       new TableTitle({
         name: '操作',
         key: '',
@@ -48,12 +43,11 @@ export class RoleTableService {
           key: 'edit',
           name: '编辑'
         }, {
-          key: 'delFlag',
+          key: 'enable',
           name: ''
-        }, {
-          key: 'del',
-          name: '删除'
-        }]
+        }
+        // , {key: 'del', name: '删除'}
+        ]
       })
       // new TableTitle({
       //   name: '序号',

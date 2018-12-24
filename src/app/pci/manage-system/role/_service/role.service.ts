@@ -1,10 +1,14 @@
 import { Injectable, Inject} from '@angular/core';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
+import {FormBase} from "../../../../libs/dform/_entity/form-base";
+import {FormText} from "../../../../libs/dform/_entity/form-text";
+import {FormTree} from "../../../../libs/dform/_entity/form-tree";
 
 const PATH = {
   role: 'opt/auth/getRole', // 获取角色
   enableRole: 'opt/auth/enableRole', // 禁用、启用
   addRole: 'opt/auth/addRole', // 添加系统角色
+  getMenu: 'opt/auth/getMenu', // 获取菜单
 };
 @Injectable()
 export class RoleService {
@@ -26,6 +30,58 @@ export class RoleService {
     });
   }
 
+  setRoleEditConfig(flag) {
+    return new ContainerConfig({
+      title: '系统管理',
+      subTitle: flag ? '编辑角色' : '新增角色',
+      ifHome: false,
+      homeRouter: '/role',
+      currentRouter: '/role/edit',
+    });
+  }
+
+  setRoleForm(tree, data?, id?) {
+    console.log(tree)
+    console.log(data)
+    const ReData = data.reverse();
+    let name, des;
+    if(id){
+      name = ReData[id-1].name;
+      des = ReData[id-1].description;
+    }
+
+    const forms: FormBase<any>[] = [];
+    forms.push(
+      new FormText({
+        key: 'name',
+        label: '角色名称',
+        value: name || '',
+        required: true,
+        errMsg: '请填写角色名称'
+      })
+    );
+    forms.push(
+      new FormText({
+        key: 'description',
+        label: '描述',
+        value: des || '',
+        required: true,
+        errMsg: '请填写描述'
+      })
+    );
+    // forms.push(
+    //   new FormTree({
+    //     key: 'menuIds',
+    //     label: '菜单权限',
+    //     value: [],
+    //     required: true,
+    //     options: tree || [],
+    //     errMsg: '请选择菜单权限'
+    //   })
+    // );
+    return forms;
+  }
+
   /**
    * 获取患者用药提醒列表
    * @param {number} page    [description]
@@ -41,7 +97,21 @@ export class RoleService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.enableRole}?roleId=${id}`);
   }
 
-  addRole() {
-    console.log('添加系统角色');
+  getMenus() {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.getMenu}`);
+  }
+
+  getRole(id: any) {
+    // console.log(id, typeof id);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.role}?sysRoleId=${id}`);
+  }
+
+  updateRole(data, id?: any) {
+    // console.log('添加、更新系统角色', data, id);
+    let params = '';
+    if(id){
+      params = `sysRoleId=${id}`;
+    }
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.addRole}?${params}`, data);
   }
 }

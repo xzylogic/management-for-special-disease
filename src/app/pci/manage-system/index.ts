@@ -9,6 +9,9 @@ export const routes: Routes = [
   },{
     path: 'role',
     loadChildren: 'app/pci/manage-system/role/role.module#RoleModule'
+  },{
+    path: 'menu',
+    loadChildren: 'app/pci/manage-system/menu/menu.module#MenuModule'
   }
 ];
 

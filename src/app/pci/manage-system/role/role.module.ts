@@ -10,11 +10,15 @@ import { RoleService } from './_service/role.service';
 import { RoleTableService } from './_service/role-table.service';
 import { DFormModule } from '../../../libs/dform/dform.module';
 import { FormsModule } from '@angular/forms';
+import { RoleEditComponent } from './role-edit/role-edit.component';
 
 const routes: Routes = [{
   path: '',
   // canActivate: [AuthGuardService],
   component: RoleComponent
+}, {
+  path: 'edit',
+  component: RoleEditComponent
 }];
 
 @NgModule({
@@ -30,11 +34,13 @@ const routes: Routes = [{
     RouterModule.forChild(routes)
   ],
   declarations: [
-    RoleComponent
+    RoleComponent,
+    RoleEditComponent
   ],
   providers: [
     RoleService,
-    RoleTableService
+    RoleTableService,
+    {provide: 'role', useClass: RoleService}
   ]
 })
 export class RoleModule {

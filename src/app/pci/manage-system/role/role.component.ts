@@ -18,6 +18,7 @@ export class RoleComponent implements OnInit {
   roleTable: TableOption;
 
   subscribeHDialog: any;
+  subscribeDel: any;
   // paramsMenu: string; // menuId
 
   constructor(
@@ -44,37 +45,43 @@ export class RoleComponent implements OnInit {
     this.getsystemRole(0);
   }
 
-  formatList(list) {
-    if (typeof list === 'object') {
-      list.forEach(obj => {
+  // formatList(list) {
+  //   if (typeof list === 'object') {
+  //     list.forEach(obj => {
         // console.log(obj.operation);
         // obj.operation = obj.enable ? '禁用' : '启用';
-        obj.enableRole = obj.enableRole ? '可用' : '禁用';
-      });
-    }
-  }
+        // obj.enable = obj.enable ? '可用' : '禁用';
+  //     });
+  //   }
+  // }
 
   gotoHandle(res) {
-    const id = res.value.id;
-    console.log(res);
-    this.subscribeHDialog = HintDialog(
-      `你确定要 ${+res.key ? '禁用' : '启用'} 吗？`,
-      this.dialog
-    ).afterClosed().subscribe(result => {
-      if (result && result.key === 'confirm') {
-        this.roleService.enableRole(id).subscribe(res => {
-          if (res.code === 0) {
-            this.getsystemRole(0);
-            HintDialog(res.msg || '操作成功！', this.dialog);
-          } else {
-            HintDialog(res.msg || '操作失败～', this.dialog);
-          }
-        }, err => {
-          console.log(err);
-          HintDialog(ERRMSG.netErrMsg, this.dialog);
-        });
-      }
-    });
+    // console.log(res);
+    if (res.key === 'edit' && res.value) {
+      this.router.navigate(['/role', 'edit'], {queryParams: {id: res.value.id}});
+    }
+    if (res.key === 'enable' && res.value) {
+      this.subscribeHDialog = HintDialog(
+        `你确定要${res.value.enable === false ? '禁用' : '启用'}角色：${res.value.name}？`,
+        this.dialog
+      ).afterClosed().subscribe(result => {
+        if (result && result.key === 'confirm') {
+          const enable = res.value.enable === true ? 1 : 0;
+          this.enableMenu(res.value.id, enable);
+        }
+      });
+    }
+    if (res.key === 'del' && res.value) {
+      // console.log(res);
+      this.subscribeHDialog = HintDialog(
+        `你确定要删除角色：${res.value.name}？`,
+        this.dialog
+      ).afterClosed().subscribe(result => {
+        if (result && result.key === 'confirm') {
+          this.enableMenu(res.value.id, -1);
+        }
+      });
+    }
   }
 
   getsystemRole(page: number) {
@@ -87,10 +94,9 @@ export class RoleComponent implements OnInit {
           if (res.code === 0 && res.data && res.data.content && res.data.content.length === 0) {
             this.roleTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
-            this.formatList(res.data.content);
+            // this.formatList(res.data.content);
             this.roleTable.totalPage = res.data.totalPages;
             this.roleTable.lists = res.data.content;
-            console.log(this.roleTable.lists);
           } else {
             this.roleTable.errorMessage = res.msg || ERRMSG.otherMsg;
           }
@@ -103,5 +109,20 @@ export class RoleComponent implements OnInit {
 
   newData() {
     this.router.navigate(['/role', 'edit']);
+  }
+
+  enableMenu(id, flag) {
+    this.subscribeDel = this.roleService.enableRole(id)
+      .subscribe(res => {
+        if (res.code === 0) {
+          HintDialog(res.msg || '操作成功！', this.dialog);
+          this.reset();
+        } else {
+          HintDialog(res.msg || '操作失败～', this.dialog);
+        }
+      }, err => {
+        console.log(err);
+        HintDialog(ERRMSG.netErrMsg, this.dialog);
+      });
   }
 }
