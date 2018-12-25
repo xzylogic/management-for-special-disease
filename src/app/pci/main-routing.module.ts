@@ -19,6 +19,7 @@ import { routes as userRoutes } from './manage-user';
 import { routes as versionControlRoutes } from './manage-version-control';
 import { routes as wechatRoutes } from './manage-wechat';
 import { routes as systemRoutes } from './manage-system';
+import { AuthGuardService } from './_service/auth-guard.service';
 
 @NgModule({
   imports: [RouterModule.forChild([{
@@ -27,6 +28,7 @@ import { routes as systemRoutes } from './manage-system';
     }, {
       path: '',
       component: PciMainComponent,
+      canActivate: [AuthGuardService],
       children: [
         {
           path: '',

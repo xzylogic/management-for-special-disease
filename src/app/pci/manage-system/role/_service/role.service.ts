@@ -43,8 +43,10 @@ export class RoleService {
   setRoleForm(tree, data?, id?) {
     console.log(tree)
     console.log(data)
-    const ReData = data.reverse();
-    let name, des;
+    let name, des, ReData;
+    if(data){
+      ReData = data.reverse();
+    }
     if(id){
       name = ReData[id-1].name;
       des = ReData[id-1].description;

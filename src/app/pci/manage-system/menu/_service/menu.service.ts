@@ -22,8 +22,8 @@ export class MenuService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.getMenus}`);
   }
 
-  updateMenu(data, menu) {
-    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.updateMenu}?menuId=${menu}`, data);
+  updateMenu(data, id?: number) {
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.updateMenu}?sysMenuId=${id}`, data);
   }
 
   deleteMenu(id, menu) {
@@ -42,6 +42,7 @@ export class MenuService {
 
   setMenuFrom(req: { parent?: { parentId: string, parentName: string }, data?: any }): FormBase<any>[] {
     const forms: FormBase<any>[] = [];
+    console.log(req);
     if (req && req.parent && req.parent.parentName && req.parent.parentId) {
       forms.push(
         new FormText({
@@ -86,7 +87,7 @@ export class MenuService {
       new FormText({
         key: 'name',
         label: '菜单类型',
-        value: req && req.data && req.data.type || '',
+        value: req && req.data && req.data.level || '',
         required: true,
         errMsg: '请填写菜单名称',
         order: 1
@@ -97,7 +98,7 @@ export class MenuService {
       new FormText({
         key: 'name',
         label: '菜单名称',
-        value: req && req.data && req.data.menuName || '',
+        value: req && req.data && req.data.name || '',
         required: true,
         errMsg: '请填写菜单名称',
         order: 1
@@ -107,9 +108,9 @@ export class MenuService {
     if (req && (!req.data || (req.data && req.data.parentId))) {
       forms.push(
         new FormText({
-          key: 'href',
+          key: 'url',
           label: '路由',
-          value: req && req.data && req.data.href || '',
+          value: req && req.data && req.data.url || '',
           required: true,
           errMsg: '请填写路由地址',
           order: 2

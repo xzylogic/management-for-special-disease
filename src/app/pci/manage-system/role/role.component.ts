@@ -7,6 +7,7 @@ import { RoleService } from './_service/role.service';
 import { RoleTableService } from './_service/role-table.service';
 import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../_store/static';
+import {MatDialogComponent} from "../matDialog/matDialog.component";
 
 @Component({
   selector: 'app-role',
@@ -60,9 +61,13 @@ export class RoleComponent implements OnInit {
     if (res.key === 'edit' && res.value) {
       this.router.navigate(['/role', 'edit'], {queryParams: {id: res.value.id}});
     }
+    if (res.key === 'config' && res.value) {
+      console.log(res)
+      this.dialog.open(MatDialogComponent,{});
+    }
     if (res.key === 'enable' && res.value) {
       this.subscribeHDialog = HintDialog(
-        `你确定要${res.value.enable === false ? '禁用' : '启用'}角色：${res.value.name}？`,
+        `你确定要${res.value.enable === true ? '禁用' : '启用'}角色：${res.value.name}？`,
         this.dialog
       ).afterClosed().subscribe(result => {
         if (result && result.key === 'confirm') {

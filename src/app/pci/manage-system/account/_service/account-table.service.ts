@@ -25,6 +25,12 @@ export class AccountTableService {
       new TableTitle({
         name: '状态',
         key: 'enable',
+        controlType: ControlType.pipe,
+        option: {
+          key: [1, 0],
+          value: ['启用', '禁用']
+        }
+        // key: 'enable',
         // option: {
         //   key: [1, 0],
         //   value: ['禁用', '启用']
@@ -40,8 +46,24 @@ export class AccountTableService {
       }),
       new TableTitle({
         name: '操作',
-        key: 'operation',
-        controlType: ControlType.button,
+        key: '',
+        controlType: ControlType.buttons,
+        pipe: {
+          key: [0, 1],
+          value: ['启用', '禁用']
+        },
+        option: [{
+          key: 'config',
+          name: '配置'
+        }, {
+          key: 'enable',
+          name: ''
+        }
+          // , {key: 'del', name: '删除'}
+        ]
+        // name: '操作',
+        // key: 'operation',
+        // controlType: ControlType.button,
       }),
       // new TableTitle({
       //   name: '序号',

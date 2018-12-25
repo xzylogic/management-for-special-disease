@@ -8,6 +8,7 @@ import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../_store/static';
 
 import { saveAs } from 'file-saver';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-account',
@@ -23,7 +24,9 @@ export class AccountComponent implements OnInit {
     @Inject('common') private common,
     private dialog: MatDialog,
     private accountService: AccountService,
-    private accountTableService: AccountTableService
+    private accountTableService: AccountTableService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -54,24 +57,38 @@ export class AccountComponent implements OnInit {
   gotoHandle(res) {
     const id = res.value.id;
     console.log(res);
-    this.subscribeHDialog = HintDialog(
-      `你确定要 ${res.value.enable === '可用' ? '禁用' : '启用'} 吗？`,
-      this.dialog
-    ).afterClosed().subscribe(result => {
-      if (result && result.key === 'confirm') {
-        this.accountService.enableAccount(id).subscribe(res => {
-          if (res.code === 0) {
-            this.getsystemAccount(0);
-            HintDialog(res.msg || '操作成功！', this.dialog);
-          } else {
-            HintDialog(res.msg || '操作失败～', this.dialog);
-          }
-        }, err => {
-          console.log(err);
-          HintDialog(ERRMSG.netErrMsg, this.dialog);
-        });
-      }
-    });
+    // this.subscribeHDialog = HintDialog(
+    //   `你确定要 ${res.value.enable === '可用' ? '禁用' : '启用'} 吗？`,
+    //   this.dialog
+    // ).afterClosed().subscribe(result => {
+    //   if (result && result.key === 'confirm') {
+    //     this.accountService.enableAccount(id).subscribe(res => {
+    //       if (res.code === 0) {
+    //         this.getsystemAccount(0);
+    //         HintDialog(res.msg || '操作成功！', this.dialog);
+    //       } else {
+    //         HintDialog(res.msg || '操作失败～', this.dialog);
+    //       }
+    //     }, err => {
+    //       console.log(err);
+    //       HintDialog(ERRMSG.netErrMsg, this.dialog);
+    //     });
+    //   }
+    // });
+    if (res.key === 'config' && res.value) {
+      this.router.navigate(['/account', 'config'], {queryParams: {id: res.value.id}});
+    }
+    if (res.key === 'enable' && res.value) {
+      this.subscribeHDialog = HintDialog(
+        `你确定要${res.value.enable === true ? '禁用' : '启用'}角色：${res.value.name}？`,
+        this.dialog
+      ).afterClosed().subscribe(result => {
+        if (result && result.key === 'confirm') {
+          const enable = res.value.enable === true ? 1 : 0;
+          this.enableMenu(res.value.id, enable);
+        }
+      });
+    }
   }
 
   getsystemAccount(page: number) {
@@ -85,7 +102,7 @@ export class AccountComponent implements OnInit {
             this.accountTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
             this.accountTable.totalPage = res.data.totalPages;
-            this.getStatus(res.data.content);
+            // this.getStatus(res.data.content);
             this.accountTable.lists = res.data.content;
           } else {
             this.accountTable.errorMessage = res.msg || ERRMSG.otherMsg;
@@ -97,6 +114,19 @@ export class AccountComponent implements OnInit {
         });
   }
 
+  enableMenu(id, flag) {
+    this.accountService.enableAccount(id).subscribe(res => {
+      if (res.code === 0) {
+        this.getsystemAccount(0);
+        HintDialog(res.msg || '操作成功！', this.dialog);
+      } else {
+        HintDialog(res.msg || '操作失败～', this.dialog);
+      }
+    }, err => {
+      console.log(err);
+      HintDialog(ERRMSG.netErrMsg, this.dialog);
+    });
+  }
   // export() {
   //   let exportList;
   //   this.accountService.getData(0, 99999, this.accountTable.queryKey)

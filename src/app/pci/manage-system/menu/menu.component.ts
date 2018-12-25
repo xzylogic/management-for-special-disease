@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../_store/static';
+import {select} from "@angular-redux/store";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-menu',
@@ -11,6 +13,8 @@ import { ERRMSG } from '../../_store/static';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit, OnDestroy {
+  @select(['main', 'adminName']) readonly adminName: Observable<string>;
+  username: string;
   paramsMenu: string; // menuId
   permission: boolean; // 权限 | true 编辑 false 查看
 
@@ -40,11 +44,15 @@ export class MenuComponent implements OnInit, OnDestroy {
         if (this.auth.getMenuPermission().indexOf(route.menu) > -1) {
           this.permission = true;
         }
+        console.log(route.menu);
         this.paramsMenu = route.menu;
       }
     });
     this.containerConfig = this.menuService.setMenuConfig();
     this.getMenus();
+    this.adminName.subscribe(name => {
+      this.username = name;
+    });
   }
 
   ngOnDestroy() {
@@ -68,6 +76,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   getMenus() {
     this.subscribeData = this.menuService.getMenus()
       .subscribe(res => {
+        console.log(res);
         if (res.code === 0 && res.data) {
           this.menuList = res.data;
           this.offData(this.menuList);
@@ -82,8 +91,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   offData(data) {
     if (data) {
       data.open = false;
-      if (data.children && data.children.length !== 0) {
-        data.children.forEach(obj => {
+      if (data.sysSubMenus && data.sysSubMenus.length !== 0) {
+        data.sysSubMenus.forEach(obj => {
           this.offData(obj);
         });
       }
@@ -93,8 +102,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   openData(data) {
     if (data) {
       data.open = true;
-      if (data.children && data.children.length !== 0) {
-        data.children.forEach(obj => {
+      if (data.sysSubMenus && data.sysSubMenus.length !== 0) {
+        data.sysSubMenus.forEach(obj => {
           this.openData(obj);
         });
       }
@@ -103,9 +112,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   unActive(data, id) {
     if (data) {
-      data.active = data.menuId === id;
-      if (data.children && data.children.length !== 0) {
-        data.children.forEach(obj => {
+      data.active = data.id === id;
+      if (data.sysSubMenus && data.sysSubMenus.length !== 0) {
+        data.sysSubMenus.forEach(obj => {
           this.unActive(obj, id);
         });
       }
@@ -116,12 +125,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     data.open = !data.open;
   }
 
-  newMenu(parentId, parentName) {
+  newMenu(parentId, parentName, level) {
     // if (this.permission) {
     this.unActive(this.menuList, parentId);
     this.form = null;
     this.title = '新增菜单';
-    this.form = {parentId: parentId, parentName: parentName};
+    this.form = {parentId: parentId, parentName: parentName, level: level};
     this.cdr.detectChanges();
     // }
   }
@@ -133,26 +142,27 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.title = '编辑菜单';
     // console.log(menu);
     // this.form = this.menuService.setMenuFrom({data: menu});
+    console.log(menu);
     this.form = menu;
     this.cdr.detectChanges();
     // }
   }
 
-  deleteMenu(menuId, menuName) {
+  deleteMenu(id, menuName) {
     // if (this.permission) {
     this.subscribeDialog = HintDialog(
       `您确定要删除菜单：${menuName}?`,
       this.dialog
     ).afterClosed().subscribe(res => {
       if (res && res.key === 'confirm') {
-        this.deleteAction(menuId);
+        this.deleteAction(id);
       }
     });
     // }
   }
 
-  deleteAction(menuId) {
-    this.subscribeDel = this.menuService.deleteMenu(menuId, this.paramsMenu)
+  deleteAction(id) {
+    this.subscribeDel = this.menuService.deleteMenu(id, this.paramsMenu)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('菜单删除成功！重新登录后可查看菜单变化～', this.dialog);
@@ -167,13 +177,18 @@ export class MenuComponent implements OnInit, OnDestroy {
       });
   }
 
-  getValues(value, parentId, menuId) {
-    value.parentId = parentId;
-    value.delFlag = 0;
-    if (menuId) {
-      value.menuId = menuId;
+  getValues(value, parentId, id) {
+    // value.parentId = parentId;
+    // value.delFlag = 0;
+    if (id) {
+      value.sysMenuId = id;
     }
-    this.subscribeSave = this.menuService.updateMenu(value, this.paramsMenu)
+    console.log(typeof parentId, parentId)
+    if(parentId !== '0'){
+      value.parentId = parentId;
+    }
+    console.log(value, parentId, id);
+    this.subscribeSave = this.menuService.updateMenu(value, id)
       .subscribe(res => {
         if (res.code === 0) {
           HintDialog('菜单保存成功！重新登录后可查看菜单变化～', this.dialog);

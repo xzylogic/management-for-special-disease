@@ -23,7 +23,7 @@ export class RoleTableService {
         key: 'enable',
         controlType: ControlType.pipe,
         option: {
-          key: [0, 1],
+          key: [1, 0],
           value: ['启用', '禁用']
         }
       }),
@@ -36,12 +36,15 @@ export class RoleTableService {
         key: '',
         controlType: ControlType.buttons,
         pipe: {
-          key: [1, 0],
+          key: [0, 1],
           value: ['启用', '禁用']
         },
         option: [{
           key: 'edit',
           name: '编辑'
+        }, {
+          key: 'config',
+          name: '角色配置'
         }, {
           key: 'enable',
           name: ''
