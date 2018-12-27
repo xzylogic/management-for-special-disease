@@ -9,6 +9,11 @@ import { ERRMSG } from '../../_store/static';
 
 import { saveAs } from 'file-saver';
 import {ActivatedRoute, Router} from "@angular/router";
+// import {MatDialogComponent} from "../matDialog/matDialog.component";
+
+// export interface Account_DialogData {
+//   accountId: any;
+// }
 
 @Component({
   selector: 'app-account',
@@ -16,9 +21,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class AccountComponent implements OnInit {
 
-  containerConfig: ContainerConfig;
+  account_Config: ContainerConfig;
   accountTable: TableOption;
 
+  accountId: any;
   subscribeHDialog: any;
   constructor(
     @Inject('common') private common,
@@ -31,7 +37,7 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.containerConfig = this.accountService.accountConfig();
+    this.account_Config = this.accountService.accountConfig();
     this.accountTable = new TableOption({
       titles: this.accountTableService.setTitles(),
       ifPage: true
@@ -47,8 +53,6 @@ export class AccountComponent implements OnInit {
   getStatus(list) {
     // if (typeof list === 'object') {
     list.forEach(obj => {
-      obj.operation = obj.enable ? '禁用' : '启用';
-      obj.enable = obj.enable ? '可用' : '禁用';
       obj.enableRole = obj.enableRole ? '可用' : '禁用';
     });
     // }
@@ -76,7 +80,7 @@ export class AccountComponent implements OnInit {
     //   }
     // });
     if (res.key === 'config' && res.value) {
-      this.router.navigate(['/account', 'config'], {queryParams: {id: res.value.id}});
+      this.router.navigate(['/account', 'config'], {queryParams: {id: id}});
     }
     if (res.key === 'enable' && res.value) {
       this.subscribeHDialog = HintDialog(
@@ -102,7 +106,7 @@ export class AccountComponent implements OnInit {
             this.accountTable.errorMessage = ERRMSG.nullMsg;
           } else if (res.code === 0 && res.data && res.data.content) {
             this.accountTable.totalPage = res.data.totalPages;
-            // this.getStatus(res.data.content);
+            this.getStatus(res.data.content);
             this.accountTable.lists = res.data.content;
           } else {
             this.accountTable.errorMessage = res.msg || ERRMSG.otherMsg;

@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { FormTree } from '../../_entity/form-tree';
 
-@Component({
+/*@Component({
   selector: 'app-input-tree',
   template: `
     <div [formGroup]="form">
@@ -56,6 +56,60 @@ import { FormTree } from '../../_entity/form-tree';
     </div>
   `,
   styleUrls: ['./lib-input.scss']
+})*/
+@Component({
+  selector: 'app-input-tree',
+  template: `
+    <div [formGroup]="form">
+      <div class="input_container">
+        <section calss="input_content">
+          <div class="clear" style="padding: 3px 0">
+            <mat-icon style="float:left" *ngIf="!data.options.open" (click)="toggle(data.options)">add</mat-icon>
+            <mat-icon style="float:left" *ngIf="data.options.open" (click)="toggle(data.options)">remove</mat-icon>
+            <div style="float:left">
+              <mat-checkbox [(checked)]="data.options.checked" (change)="getChecked($event, data.options)">
+                {{data.options.name}}
+              </mat-checkbox>
+              <div *ngIf="data.options.open&&data.options.sysSubMenus" style="padding-top: 3px">
+                <div *ngFor="let opt of data.options.sysSubMenus" class="clear" style="padding: 3px 0">
+                  <mat-icon style="float:left" *ngIf="!opt.open" (click)="toggle(opt)">add</mat-icon>
+                  <mat-icon style="float:left" *ngIf="opt.open" (click)="toggle(opt)">remove</mat-icon>
+                  <div style="float:left">
+                    <mat-checkbox [(checked)]="opt.checked" (change)="getChecked($event, opt)">
+                      {{opt.name}}
+                    </mat-checkbox>
+                    <div *ngIf="opt.open&&opt.sysSubMenus" style="padding-top: 3px">
+                      <div *ngFor="let subopt of opt.sysSubMenus" class="clear" style="padding: 3px 0">
+                        <mat-icon style="float:left">remove</mat-icon>
+                        <div style="float:left">
+                          <mat-checkbox [(checked)]="subopt.checked" (change)="getChecked($event, subopt)">
+                            {{subopt.name}}
+                          </mat-checkbox>
+                          <div *ngIf="subopt.open&&subopt.sysSubMenus" style="padding-top: 3px">
+                            <div *ngFor="let ssubopt of subopt.sysSubMenus" class="clear" style="padding: 3px 0">
+                              <mat-icon style="float:left">remove</mat-icon>
+                              <div style="float:left">
+                                <mat-checkbox [(checked)]="ssubopt.checked" (change)="getChecked($event, ssubopt)">
+                                  {{ssubopt.name}}
+                                </mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <span class="input_span">{{data.label}}</span>
+        <input type="hidden" [formControlName]="data.key" [(ngModel)]="value">
+      </div>
+    </div>
+  `,
+  styleUrls: ['./lib-input.scss']
 })
 export class LibInputTreeComponent implements OnInit {
   @Input() form: FormGroup;
@@ -86,8 +140,8 @@ export class LibInputTreeComponent implements OnInit {
 
   setInit(data) {
     data.open = true;
-    if (data.children && data.children.length !== 0) {
-      data.children.forEach(obj => {
+    if (data.sysSubMenus && data.sysSubMenus.length !== 0) {
+      data.sysSubMenus.forEach(obj => {
         this.setInit(obj);
       });
     }
@@ -96,22 +150,22 @@ export class LibInputTreeComponent implements OnInit {
   getValue() {
     const value = [];
     if (this.data.options.checked) {
-      value.push(this.data.options.menuId);
+      value.push(this.data.options.id);
     }
-    if (this.data.options.children) {
-      this.data.options.children.forEach(obj => {
+    if (this.data.options.sysSubMenus) {
+      this.data.options.sysSubMenus.forEach(obj => {
         if (obj.checked) {
-          value.push(obj.menuId);
+          value.push(obj.id);
         }
-        if (obj.children) {
-          obj.children.forEach(subObj => {
+        if (obj.sysSubMenus) {
+          obj.sysSubMenus.forEach(subObj => {
             if (subObj.checked) {
-              value.push(subObj.menuId);
+              value.push(subObj.id);
             }
-            if (subObj.children) {
-              subObj.children.forEach(ssubObj => {
+            if (subObj.sysSubMenus) {
+              subObj.sysSubMenus.forEach(ssubObj => {
                 if (ssubObj.checked) {
-                  value.push(ssubObj.menuId);
+                  value.push(ssubObj.id);
                 }
               });
             }
@@ -126,32 +180,32 @@ export class LibInputTreeComponent implements OnInit {
 
   setChecked(data) {
     data.checked = true;
-    if (data.children && data.children.length !== 0) {
-      data.children.forEach(obj => {
+    if (data.sysSubMenus && data.sysSubMenus.length !== 0) {
+      data.sysSubMenus.forEach(obj => {
         this.setChecked(obj);
       });
     }
   }
 
   setParentChecked(pid) {
-    if (this.data.options.menuId === pid) {
+    if (this.data.options.id === '0' && pid === null) {
       this.data.options.checked = true;
     }
-    if (this.data.options.children) {
-      this.data.options.children.forEach(obj => {
-        if (obj.menuId === pid) {
+    if (this.data.options.sysSubMenus) {
+      this.data.options.sysSubMenus.forEach(obj => {
+        if (obj.id === pid) {
           obj.checked = true;
           this.setParentChecked(obj.parentId);
         }
-        if (obj.children && obj.children.length !== 0) {
-          obj.children.forEach(subObj => {
-            if (subObj.menuId === pid) {
+        if (obj.sysSubMenus && obj.sysSubMenus.length !== 0) {
+          obj.sysSubMenus.forEach(subObj => {
+            if (subObj.id === pid) {
               subObj.checked = true;
               this.setParentChecked(subObj.parentId);
             }
-            if (subObj.children && subObj.children.length !== 0) {
-              subObj.children.forEach(ssubObj => {
-                if (ssubObj.menuId === pid) {
+            if (subObj.sysSubMenus && subObj.sysSubMenus.length !== 0) {
+              subObj.sysSubMenus.forEach(ssubObj => {
+                if (ssubObj.id === pid) {
                   ssubObj.checked = true;
                   this.setParentChecked(ssubObj.parentId);
                 }
@@ -165,23 +219,23 @@ export class LibInputTreeComponent implements OnInit {
 
   setUnChecked(data) {
     data.checked = false;
-    if (data.children && data.children.length !== 0) {
-      data.children.forEach(obj => {
+    if (data.sysSubMenus && data.sysSubMenus.length !== 0) {
+      data.sysSubMenus.forEach(obj => {
         this.setUnChecked(obj);
       });
     }
   }
 
   setParentUnChecked(opt) {
-    if (this.data.options.children) {
-      this.data.options.children.forEach(obj => {
-        if (obj.children && obj.children.length !== 0) {
-          obj.children.forEach(subObj => {
+    if (this.data.options.sysSubMenus) {
+      this.data.options.sysSubMenus.forEach(obj => {
+        if (obj.sysSubMenus && obj.sysSubMenus.length !== 0) {
+          obj.sysSubMenus.forEach(subObj => {
             if (subObj.parentId === opt.parentId) {
               let flag = 0;
-              if (obj.children && obj.children.length !== 0) {
-                obj.children.forEach(pobj => {
-                  if (pobj.checked && pobj.menuId !== opt.parentId) {
+              if (obj.sysSubMenus && obj.sysSubMenus.length !== 0) {
+                obj.sysSubMenus.forEach(pobj => {
+                  if (pobj.checked && pobj.id !== opt.parentId) {
                     flag++;
                   }
                 });
@@ -192,8 +246,8 @@ export class LibInputTreeComponent implements OnInit {
           });
           if (obj.parentId === opt.parentId) {
             let flag = 0;
-            this.data.options.children.forEach(pobj => {
-              if (pobj.checked && pobj.menuId !== opt.parentId) {
+            this.data.options.sysSubMenus.forEach(pobj => {
+              if (pobj.checked && pobj.id !== opt.parentId) {
                 flag++;
               }
             });

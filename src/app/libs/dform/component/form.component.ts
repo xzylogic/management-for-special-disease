@@ -12,6 +12,7 @@ export class DynamicFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() button: string;
   @Input() reset: boolean;
   @Input() optionButton: string;
+  @Input() id: any;
   @Input() formDatas: FormBase<any>[] = [];
   @Output() formValues = new EventEmitter();
   @Output() optionChange = new EventEmitter();
@@ -39,6 +40,9 @@ export class DynamicFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSubmit() {
+    if(this.id){
+      this.form.value.roleId = this.id;
+    }
     this.formValues.emit(this.form.value);
   }
 

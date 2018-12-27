@@ -10,11 +10,15 @@ import { AccountService } from './_service/account.service';
 import { AccountTableService } from './_service/account-table.service';
 import { DFormModule } from '../../../libs/dform/dform.module';
 import { FormsModule } from '@angular/forms';
+import {AccountConfigComponent} from "./account-config/account-config.component";
 
 const routes: Routes = [{
   path: '',
   // canActivate: [AuthGuardService],
   component: AccountComponent
+}, {
+  path: 'config',
+  component: AccountConfigComponent
 }];
 
 @NgModule({
@@ -30,11 +34,13 @@ const routes: Routes = [{
     RouterModule.forChild(routes)
   ],
   declarations: [
-    AccountComponent
+    AccountComponent,
+    AccountConfigComponent
   ],
   providers: [
     AccountService,
-    AccountTableService
+    AccountTableService,
+    {provide: 'account', useClass: AccountService}
   ]
 })
 export class AccountModule {

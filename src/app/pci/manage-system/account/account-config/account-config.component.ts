@@ -8,10 +8,10 @@ import { Observable } from 'rxjs/Observable';
 import {select} from "@angular-redux/store";
 
 @Component({
-  selector: 'app-role-edit',
-  templateUrl: './role-edit.component.html'
+  selector: 'app-account-config',
+  templateUrl: './account-config.component.html'
 })
-export class RoleEditComponent implements OnInit, OnDestroy {
+export class AccountConfigComponent implements OnInit, OnDestroy {
   @select(['main', 'adminName']) readonly adminName: Observable<string>;
 
   username: string;
@@ -29,7 +29,7 @@ export class RoleEditComponent implements OnInit, OnDestroy {
   errMsg = '';
 
   constructor(
-    @Inject('role') private roleService,
+    @Inject('account') private accountService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router
@@ -39,20 +39,20 @@ export class RoleEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscribeRoute = Observable.zip(
       this.route.params, this.route.queryParams,
-      this.roleService.getMenus(),
+      this.accountService.getAllRole(),
       (route, query, menu): any => ({route, query, menu})
     ).subscribe(res => {
-      // console.log('-------',res)
+      console.log('-------',res)
       if (res.route.menu) {
         this.paramsMenu = res.route.menu;
       }
       if (res.menu && res.query && res.query.id) {
         this.id = res.query.id;
-        this.containerConfig = this.roleService.setRoleEditConfig(true);
-        this.getInit(res.query.id);
+        this.containerConfig = this.accountService.setAccountConfig(true);
+        this.getInit(res.query.id, res);
       } else if (res.menu) {
-        this.containerConfig = this.roleService.setRoleEditConfig(false);
-        this.form = this.roleService.setRoleForm(res.menu.data);
+        this.containerConfig = this.accountService.setAccountConfig(false);
+        this.form = this.accountService.setAccountForm(res.menu.data);
       }
     });
     this.adminName.subscribe(name => {
@@ -75,41 +75,23 @@ export class RoleEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  getInit(id) {
-    this.subscribeDetail = this.roleService.getRole(id)
-      .subscribe(res => {
-        // console.log(res);
-        if (res.code === 0 && res.data) {
-          this.form = this.roleService.setRoleForm(res.data.content, res.data.content, id);
-        } else {
-          HintDialog('初始化数据失败，请刷新重试！', this.dialog);
-        }
-      }, err => {
-        console.log(err);
-        HintDialog('初始化数据失败，请刷新重试！', this.dialog);
-      });
+  getInit(id, res) {
+    this.form = this.accountService.setAccountForm(res.menu.data, id);
   }
 
   getValue(data) {
-    // console.log('==================',data);
     const formData: any = {};
     if (this.id) {
-      formData.sysRoleId = this.id;
+      formData.adminId = this.id;
     }
-    // formData.delFlag = 0;
-    if (Array.isArray(data.menuIds)) {
-      formData.menuIds = data.menuIds.join(',');
-    }
-    formData.createBy = this.username;
-    formData.name = data.name;
-    formData.description = data.description;
-    this.subscribeSave = this.roleService.updateRole(formData, this.paramsMenu)
+    formData.roleId = data.roleId;
+    this.subscribeSave = this.accountService.addAdminRole(formData, this.id)
       .subscribe(res => {
+        console.log(res)
         if (res.code === 0) {
           this.subscribeDialog = HintDialog(ERRMSG.saveSuccess, this.dialog)
             .afterClosed().subscribe(() => {
-              this.router.navigate(['/role']);
-              // this.router.navigate(['/role', this.paramsMenu]);
+              this.router.navigate(['/account']);
             });
         } else {
           HintDialog(res.msg || ERRMSG.saveError, this.dialog);

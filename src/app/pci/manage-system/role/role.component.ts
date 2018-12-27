@@ -9,6 +9,10 @@ import { HintDialog } from '../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../_store/static';
 import {MatDialogComponent} from "../matDialog/matDialog.component";
 
+export interface DialogData {
+  id: any;
+}
+
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
@@ -20,6 +24,7 @@ export class RoleComponent implements OnInit {
 
   subscribeHDialog: any;
   subscribeDel: any;
+  id: any;
   // paramsMenu: string; // menuId
 
   constructor(
@@ -63,7 +68,7 @@ export class RoleComponent implements OnInit {
     }
     if (res.key === 'config' && res.value) {
       console.log(res)
-      this.dialog.open(MatDialogComponent,{});
+      this.dialog.open(MatDialogComponent,{data:{id:this.id = res.value.id}});
     }
     if (res.key === 'enable' && res.value) {
       this.subscribeHDialog = HintDialog(

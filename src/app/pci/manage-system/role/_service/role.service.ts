@@ -9,6 +9,8 @@ const PATH = {
   enableRole: 'opt/auth/enableRole', // 禁用、启用
   addRole: 'opt/auth/addRole', // 添加系统角色
   getMenu: 'opt/auth/getMenu', // 获取菜单
+  getRoleMenu: 'opt/auth/getRoleMenu', // 获取该角色菜单
+  addRoleMenu: 'opt/auth/addRoleMenu', // 配置该角色菜单
 };
 @Injectable()
 export class RoleService {
@@ -71,16 +73,23 @@ export class RoleService {
         errMsg: '请填写描述'
       })
     );
-    // forms.push(
-    //   new FormTree({
-    //     key: 'menuIds',
-    //     label: '菜单权限',
-    //     value: [],
-    //     required: true,
-    //     options: tree || [],
-    //     errMsg: '请选择菜单权限'
-    //   })
-    // );
+    return forms;
+  }
+
+  setRoleTreeForm(tree) {
+    console.log(tree)
+
+    const forms: FormBase<any>[] = [];
+    forms.push(
+      new FormTree({
+        key: 'menuIds',
+        label: '菜单权限',
+        value: [],
+        required: true,
+        options: tree || [],
+        errMsg: '请选择菜单权限'
+      })
+    );
     return forms;
   }
 
@@ -94,6 +103,10 @@ export class RoleService {
   getData(page: number, size: number, keyword: string) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.role}?page=${page}&size=${size}&&name=${keyword}`);
   }
+  getRole(id: any) {
+    console.log(id, typeof id);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.role}?sysRoleId=${id}`);
+  }
 
   enableRole(id: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.enableRole}?roleId=${id}`);
@@ -103,9 +116,12 @@ export class RoleService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.getMenu}`);
   }
 
-  getRole(id: any) {
-    // console.log(id, typeof id);
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.role}?sysRoleId=${id}`);
+  getRoleMenu(id) {
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.getRoleMenu}?sysRoleId=${id}`);
+  }
+
+  addRoleMenu(data) {
+    return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.addRoleMenu}`, data);
   }
 
   updateRole(data, id?: any) {
