@@ -14,7 +14,7 @@
                 <mat-icon class="tree__icon" (click)="toggle(menuList)" *ngIf="!menuList.open">add</mat-icon>
                 <mat-icon class="tree__icon" (click)="toggle(menuList)" *ngIf="menuList.open">remove</mat-icon>
                 <p class="tree__span" [class.active]="menuList.active"
-                   (click)="newMenu(menuList.id,menuList.name, menuList.level)">
+                   (click)="newMenu(menuList.id,menuList.name, 1)">
                   {{menuList.name}}</p>
               </div>
               <ul *ngIf="menuList.sysSubMenus&&menuList.open" class="tree__list">
@@ -22,7 +22,7 @@
                   <div class="clear tree__p">
                     <mat-icon class="tree__icon" (click)="toggle(menu)" *ngIf="!menu.open">add</mat-icon>
                     <mat-icon class="tree__icon" (click)="toggle(menu)" *ngIf="menu.open">remove</mat-icon>
-                    <p class="tree__span" [class.active]="menu.active" (click)="newMenu(menu.id, menu.name, menu.level)">
+                    <p class="tree__span" [class.active]="menu.active" (click)="newMenu(menu.id, menu.name, 2)">
                       {{menu.name}}</p>
                     <button mat-icon-button color="primary" (click)="updateMenu(menu)">
                       <mat-icon aria-label="edit">mode_edit</mat-icon>
@@ -34,10 +34,11 @@
                   <ul *ngIf="menu.sysSubMenus&&menu.open" class="tree__list">
                     <li *ngFor="let subMenu of menu.sysSubMenus">
                       <div class="clear tree__p">
-                        <mat-icon class="tree__icon" (click)="toggle(subMenu)" *ngIf="!subMenu.open">add</mat-icon>
-                        <mat-icon class="tree__icon" (click)="toggle(subMenu)" *ngIf="subMenu.open">remove</mat-icon>
+                        <!--<mat-icon class="tree__icon" (click)="toggle(subMenu)" *ngIf="!subMenu.open">add</mat-icon>-->
+                        <!--<mat-icon class="tree__icon" (click)="toggle(subMenu)" *ngIf="subMenu.open">remove</mat-icon>-->
+                        <mat-icon class="tree__icon last">remove</mat-icon>
                         <p class="tree__span" [class.active]="subMenu.active"
-                           (click)="newMenu(subMenu.id, subMenu.name, subMenu.level)">
+                           (click)="newMenu(subMenu.id, subMenu.name, 3)">
                           {{subMenu.name}}
                         </p>
                         <button mat-icon-button color="primary" (click)="updateMenu(subMenu)">
