@@ -37,8 +37,8 @@
                         <!--<mat-icon class="tree__icon" (click)="toggle(subMenu)" *ngIf="!subMenu.open">add</mat-icon>-->
                         <!--<mat-icon class="tree__icon" (click)="toggle(subMenu)" *ngIf="subMenu.open">remove</mat-icon>-->
                         <mat-icon class="tree__icon last">remove</mat-icon>
-                        <p class="tree__span" [class.active]="subMenu.active"
-                           (click)="newMenu(subMenu.id, subMenu.name, 3)">
+                        <p class="tree__span last" [class.active]="subMenu.active">
+                           <!--(click)="newMenu(subMenu.id, subMenu.name, 3)">-->
                           {{subMenu.name}}
                         </p>
                         <button mat-icon-button color="primary" (click)="updateMenu(subMenu)">

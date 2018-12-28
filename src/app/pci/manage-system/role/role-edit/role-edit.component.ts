@@ -103,6 +103,7 @@ export class RoleEditComponent implements OnInit, OnDestroy {
     formData.createBy = this.username;
     formData.name = data.name;
     formData.description = data.description;
+    // console.log('-----+++++',formData);
     this.subscribeSave = this.roleService.updateRole(formData, this.paramsMenu)
       .subscribe(res => {
         if (res.code === 0) {
