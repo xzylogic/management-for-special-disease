@@ -23,6 +23,7 @@ import { stores as userStores } from './manage-user';
 import { stores as followStores } from './manage-followUp';
 import { stores as versionControlStores } from './manage-version-control';
 import { stores as wechatStores } from './manage-wechat';
+import { stores as msStores } from './manage-system';
 
 export const rootReducer = combineReducers({
   main: MainReducer,
@@ -41,7 +42,8 @@ export const rootReducer = combineReducers({
   ...userStores,
   ...versionControlStores,
   ...wechatStores,
-  ...followStores
+  ...followStores,
+  ...msStores,
 });
 
 @NgModule({

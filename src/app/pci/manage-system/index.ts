@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-// import { createReducer } from '../../pci/_store/api/api.reducer';
+import { createReducer } from '../_store/api/api.reducer';
 
 export const routes: Routes = [
   {
@@ -15,7 +15,7 @@ export const routes: Routes = [
   }
 ];
 
-// export const stores = {
+export const stores = {
 //   dataCollection: createReducer(
 //     'dataCollection',
 //     [0, 0, 0, 0, 0, 0],
@@ -25,5 +25,5 @@ export const routes: Routes = [
 //       pages: [1, 1, 1, 1, 1, 1]
 //     }
 //   ),
-// };
+};
 

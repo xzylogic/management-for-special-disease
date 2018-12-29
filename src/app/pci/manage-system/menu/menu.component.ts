@@ -44,7 +44,6 @@ export class MenuComponent implements OnInit, OnDestroy {
         if (this.auth.getMenuPermission().indexOf(route.menu) > -1) {
           this.permission = true;
         }
-        console.log(route.menu);
         this.paramsMenu = route.menu;
       }
     });
@@ -76,7 +75,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   getMenus() {
     this.subscribeData = this.menuService.getMenus()
       .subscribe(res => {
-        console.log(res);
+        // console.log(res);
         if (res.code === 0 && res.data) {
           this.menuList = res.data;
           this.offData(this.menuList);
@@ -142,7 +141,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.title = '编辑菜单';
     // console.log(menu);
     // this.form = this.menuService.setMenuFrom({data: menu});
-    console.log(menu);
     this.form = menu;
     this.cdr.detectChanges();
     // }
@@ -183,15 +181,15 @@ export class MenuComponent implements OnInit, OnDestroy {
     if (id) {
       value.sysMenuId = id;
     }
-    console.log(typeof parentId, parentId)
+    // console.log(typeof parentId, parentId)
     if(parentId !== '0'){
       value.parentId = parentId;
     }
-    console.log(value, parentId, id);
+    // console.log(value, parentId, id);
     this.subscribeSave = this.menuService.updateMenu(value, id)
       .subscribe(res => {
         if (res.code === 0) {
-          HintDialog('菜单保存成功！重新登录后可查看菜单变化～', this.dialog);
+          // HintDialog('菜单保存成功！', this.dialog);
           this.form = null;
           this.getMenus();
         } else {

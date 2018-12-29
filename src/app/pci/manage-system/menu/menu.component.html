@@ -103,7 +103,7 @@
                 <input matInput placeholder="菜单名称" name="name" [(ngModel)]="form.name" required>
               </mat-form-field>
             </div>
-            <div class="input-container" *ngIf="form.level==2">
+            <div class="input-container" *ngIf="form.level==1 || form.level==2">
               <mat-form-field floatPlaceholder="always" style="width: 100%">
                 <input matInput placeholder="菜单链接" name="url" [(ngModel)]="form.url" required>
               </mat-form-field>

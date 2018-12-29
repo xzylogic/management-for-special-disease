@@ -40,8 +40,12 @@ export class AuthService {
 
   isAuthorized(): boolean {
     const admin = window.sessionStorage.getItem(this.JWT_KEY);
+    let res = JSON.parse(admin);
+    // console.log(res);
     if (admin) {
       this.mainAction.setAdmin({id: JSON.parse(admin).id, name: JSON.parse(admin).name});
+      this.mainAction.setTree(res || {});
+      this.mainAction.setNav(res.sysMenuDtos || []);
     }
     return Boolean(admin);
   }
