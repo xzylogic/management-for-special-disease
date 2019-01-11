@@ -2,6 +2,7 @@ import { Injectable, Inject} from '@angular/core';
 import { ContainerConfig } from '../../../../libs/common/container/container.component';
 import {FormBase} from "../../../../libs/dform/_entity/form-base";
 import {FormText} from "../../../../libs/dform/_entity/form-text";
+import {FormTextarea} from "../../../../libs/dform/_entity/form-textarea";
 import {FormTree} from "../../../../libs/dform/_entity/form-tree";
 import {FormRadio} from "../../../../libs/dform/_entity/form-radio";
 
@@ -13,7 +14,7 @@ const PATH = {
 @Injectable()
 export class SmsModelService {
 
-  // smsData: any;
+  smsData: any;
   constructor(
     @Inject('app') private app,
     @Inject('http') private httpService
@@ -41,11 +42,14 @@ export class SmsModelService {
     });
   }
 
-  setSmsModelForm(data, id?) {
-    console.log(data)
-
-    let {templateId, description, content} = data.content;
-    console.log(templateId)
+  setSmsModelForm(data?, id?) {
+    // console.log(data)
+    let templateId, description, content;
+    if(data){
+      templateId = data.templateId || '';
+      description = data.description || '';
+      content = data.content || '';
+    }
     const forms: FormBase<any>[] = [];
     forms.push(
       new FormText({
@@ -53,7 +57,7 @@ export class SmsModelService {
         label: '模板ID',
         value: templateId || '',
         required: true,
-        errMsg: '请填写模板ID'
+        errMsg: '请填写模板ID(6位数)'
       })
     );
     forms.push(
@@ -66,7 +70,7 @@ export class SmsModelService {
       })
     );
     forms.push(
-      new FormText({
+      new FormTextarea({
         key: 'content',
         label: '内容',
         value: content || '',
@@ -87,16 +91,12 @@ export class SmsModelService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.getTemplate}?page=${page}&size=${size}&param=${keyword}`);
   }
 
-  getSMS() {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.getTemplate}`);
-  }
-
   enableSmsModel(id: number) {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.enable}?templateId=${id}`);
   }
 
-  addTemplate(data, id?: any) {
-    console.log(data, id);
+  addTemplate(data) {
+    // console.log(data);
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.addTemplate}`, data);
   }
 }

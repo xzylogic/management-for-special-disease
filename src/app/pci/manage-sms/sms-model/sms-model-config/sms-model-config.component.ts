@@ -31,7 +31,7 @@ export class SmsModelConfigComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject('sms-model') private SmsModelService,
-    // private smsModelService: SmsModelService,
+    private smsModelService: SmsModelService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router
@@ -40,28 +40,21 @@ export class SmsModelConfigComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // console.log(this.smsModelService.smsData)
-    console.log(this.form);
     this.subscribeRoute = Observable.zip(
       this.route.params, this.route.queryParams,
-      this.SmsModelService.getSMS(),
-      (route, query, menu): any => ({route, query, menu})
+      (route, query, menu={}): any => ({route, query, menu})
     ).subscribe(res => {
-      console.log('-------',res)
-      // if (res.route.menu) {
-      //   this.paramsMenu = res.route.menu;
-      // }
-      if (res.menu && res.query && res.query.id) {
+      // console.log('-------',res)
+      if (res.query && res.query.id) {
+        res.menu = this.smsModelService.smsData;
         this.id = res.query.id;
-        this.containerConfig = this.SmsModelService.setSmsModelConfig(true);
-        this.getInit(res.query.id, res);
-      } else if (res.menu) {
-        this.containerConfig = this.SmsModelService.setSmsModelConfig(false);
-        this.form = this.SmsModelService.setSmsModelForm(res.menu.data);
+        this.containerConfig = this.smsModelService.setSmsModelConfig(true);
+        this.form = this.smsModelService.setSmsModelForm(res.menu, res.query.id);
+      } else {
+        this.containerConfig = this.smsModelService.setSmsModelConfig(false);
+        this.form = this.smsModelService.setSmsModelForm();
       }
     });
-    this.adminName.subscribe(name => {
-      this.username = name;
-    })
   }
 
   ngOnDestroy() {
@@ -79,33 +72,31 @@ export class SmsModelConfigComponent implements OnInit, OnDestroy {
     }
   }
 
-  getInit(id, res) {
-    this.form = this.SmsModelService.setSmsModelForm(res.menu.data, id);
-  }
-
   getValue(data) {
-    console.log(data)
-    const formData: any = {};
-    if (this.id) {
-      formData.templateId = this.id;
+    if(this.id){
+      data.id = Number(this.id);
+      data.templateId = data.templateId.replace('template_', '');
+      // console.log(data.templateId)
     }
-    formData.description = data.description;
-    formData.content = data.content;
-    console.log(formData)
-    this.subscribeSave = this.SmsModelService.addTemplate(formData, this.id)
-      .subscribe(res => {
-        console.log(res)
-        if (res.code === 0) {
-          this.subscribeDialog = HintDialog(ERRMSG.saveSuccess, this.dialog)
-            .afterClosed().subscribe(() => {
-              this.router.navigate(['/sms-model']);
-            });
-        } else {
-          HintDialog(res.msg || ERRMSG.saveError, this.dialog);
-        }
-      }, err => {
-        console.log(err);
-        HintDialog(ERRMSG.saveError, this.dialog);
-      });
+    // console.log(data)
+    if(data.templateId.length === 6){
+      this.subscribeSave = this.SmsModelService.addTemplate(data)
+        .subscribe(res => {
+          if (res.code === 0) {
+            this.subscribeDialog = HintDialog(ERRMSG.saveSuccess, this.dialog)
+              .afterClosed().subscribe(() => {
+                this.router.navigate(['/sms-model']);
+              });
+          } else {
+            HintDialog(res.msg || ERRMSG.saveError, this.dialog);
+          }
+        }, err => {
+          console.log(err);
+          HintDialog(ERRMSG.saveError, this.dialog);
+        });
+    }else{
+      HintDialog('模板ID只能输入6位数', this.dialog);
+    }
+
   }
 }

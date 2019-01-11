@@ -56,9 +56,12 @@ export class SmsModelComponent implements OnInit {
     // }
   }
 
+  addTemplate() {
+    this.router.navigate(['/sms-model', 'config']);
+  }
+
   gotoHandle(res) {
     const id = res.value.id;
-    console.log(res);
     // this.subscribeHDialog = HintDialog(
     //   `你确定要 ${res.value.enable === '可用' ? '禁用' : '启用'} 吗？`,
     //   this.dialog
@@ -78,15 +81,11 @@ export class SmsModelComponent implements OnInit {
     //   }
     // });
     if (res.key === 'config' && res.value) {
-      // this.smsModelService.smsData = {
-      //   templateId: res.value.templateId,
-      //   description: res.value.description,
-      //   content: res.value.content,
-      // }
-      // console.log(this.smsModelService.smsData)
-      // this.templateId = res.value.templateId;
-      // this.description = res.value.description;
-      // this.content = res.value.content;
+      this.smsModelService.smsData = {
+        templateId: res.value.templateId,
+        description: res.value.description,
+        content: res.value.content,
+      }
       this.router.navigate(['/sms-model', 'config'], {queryParams: {id: id}});
     }
     if (res.key === 'enable' && res.value) {
