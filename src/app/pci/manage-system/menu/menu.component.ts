@@ -189,7 +189,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.subscribeSave = this.menuService.updateMenu(value, id)
       .subscribe(res => {
         if (res.code === 0) {
-          // HintDialog('菜单保存成功！', this.dialog);
+          HintDialog('菜单保存成功！', this.dialog);
           this.form = null;
           this.getMenus();
         } else {

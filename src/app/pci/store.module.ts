@@ -17,7 +17,8 @@ import { stores as doctorStores } from './manage-doctor';
 import { stores as doctorPersonalStores } from './manage-doctor-personal';
 import { stores as healthNewsStores } from './manage-health-news';
 import { stores as integralStores } from './manage-integral';
-import { stores as operationPushStores } from './manage-operation-push';
+import { stores as operationStores } from './manage-operation';
+// import { stores as operationPushStores } from './manage-operation-push';
 import { stores as serviceStores } from './manage-service';
 import { stores as userStores } from './manage-user';
 import { stores as followStores } from './manage-followUp';
@@ -37,7 +38,7 @@ export const rootReducer = combineReducers({
   ...doctorPersonalStores,
   ...healthNewsStores,
   ...integralStores,
-  ...operationPushStores,
+  ...operationStores,
   ...serviceStores,
   ...userStores,
   ...versionControlStores,

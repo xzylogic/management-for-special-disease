@@ -12,13 +12,15 @@ import { routes as followUpRoutes } from './manage-followUp';
 import { routes as doctorPersonalRoutes } from './manage-doctor-personal';
 import { routes as healthNewsRoutes } from './manage-health-news';
 import { routes as integralRoutes } from './manage-integral';
-import { routes as operationPushRoutes } from './manage-operation-push';
+// import { routes as operationPushRoutes } from './manage-operation-push';
+import { routes as operationRoutes } from './manage-operation';
 import { routes as serviceRoutes } from './manage-service';
 import { routes as statisticsRoutes } from './manage-statistics';
 import { routes as userRoutes } from './manage-user';
 import { routes as versionControlRoutes } from './manage-version-control';
 import { routes as wechatRoutes } from './manage-wechat';
 import { routes as systemRoutes } from './manage-system';
+import { routes as smsRoutes } from './manage-sms';
 import { AuthGuardService } from './_service/auth-guard.service';
 
 @NgModule({
@@ -44,13 +46,14 @@ import { AuthGuardService } from './_service/auth-guard.service';
         ...doctorPersonalRoutes,
         ...healthNewsRoutes,
         ...integralRoutes,
-        ...operationPushRoutes,
+        ...operationRoutes,
         ...serviceRoutes,
         ...statisticsRoutes,
         ...userRoutes,
         ...versionControlRoutes,
         ...wechatRoutes,
         ...systemRoutes,
+        ...smsRoutes,
         ...followUpRoutes
       ]
     }]

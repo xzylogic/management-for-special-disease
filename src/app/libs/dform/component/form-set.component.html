@@ -5,6 +5,11 @@
         <app-input-text [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-text>
       </div>
     </div>
+    <div *ngSwitchCase="formControl.keyValue" class="lib-form__content">
+      <div class="lib-input">
+        <app-input-keyValue [form]="form" [data]="formdata" [(value)]="formdata.value"></app-input-keyValue>
+      </div>
+    </div>
     <div *ngSwitchCase="formControl.hidden">
       <div class="lib-input">
         <app-input-hidden [form]="form" [data]="formdata" [value]="formdata.value"></app-input-hidden>

@@ -1,6 +1,7 @@
 /**
  * Form 表单类型
  * text - input 文本
+ * keyValue - keyValue 键值对文本
  * date - input 日期
  * time - input 时间
  * datetime - input 日期和时间
@@ -12,7 +13,7 @@
  * file - 文件上传
  */
 
-export enum FormType { text, date, time, datetime, textarea, editor, radio, checkbox, dropdown, file, hidden, tree }
+export enum FormType { text, keyValue, date, time, datetime, textarea, editor, radio, checkbox, dropdown, file, hidden, tree }
 
 export class FormBase<T> {
   value: T; // 默认值

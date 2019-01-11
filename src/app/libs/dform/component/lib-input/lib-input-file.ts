@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { HttpService } from '../../../_service/http.service';
@@ -63,7 +63,11 @@ function canvasDataURL(imagePath, width, callback) {
   selector: 'app-input-file',
   template: `
     <div [formGroup]="form">
-      <div class="input_container">
+      <div class="input_container" *ngIf="!data.uploadFiles">
+        <input class="input_content" #file type="file" multiple="multiple" (change)="uploadFiles($event)">
+        <input type="hidden" [formControlName]="data.key" [(ngModel)]="value" (change)="change()">
+      </div>
+      <div class="input_container" *ngIf="data.uploadFiles">
         <input class="input_content" #file type="file" multiple="multiple" (change)="uploadChange($event)">
         <span class="input_span">{{data.label}}</span>
         <input type="hidden" [formControlName]="data.key" [(ngModel)]="value" (change)="change()">
@@ -93,6 +97,7 @@ export class LibInputFileComponent implements OnInit {
   @ViewChild('file') file: any;
 
   constructor(
+    @Inject('app') private app,
     private uploadService: HttpService,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef
@@ -105,39 +110,71 @@ export class LibInputFileComponent implements OnInit {
     }
   }
 
+  //上传文件
+  uploadFiles(files) {
+    // const myForm = new FormData();
+    // myForm.append('file', files.target.files[0]);
+    this.value = files;
+    this.cdr.detectChanges();
+    // this.uploadService.upload(`${this.app.pci.BASE_URL}opt/spread/sendMessage`, myForm)
+    //   .subscribe(res => {
+    //     console.log(res)
+    //     if (res.code === 0) {
+    //       this.value = res.data;
+    //       HintDialog('上传表格成功！', this.dialog);
+    //     } else {
+    //       HintDialog(res.msg || '上传表格失败！', this.dialog);
+    //     }
+    //   }, err => {
+    //     console.log(err);
+    //     HintDialog('上传表格失败！', this.dialog);
+    //   });
+  }
+
   // 上传图片操作
   uploadChange(files) {
     const myForm = new FormData();
     const fileList = files.target.files;
-    if (this.data.multiple === true) {
-      let filePromise = [];
-      for (let i = 0; i < fileList.length; i++) {
-        filePromise.push(photoCompress(fileList[i], 1360))
-      }
-      Promise.all(filePromise).then(filesout => {
-        console.log(filesout);
-        filesout.map(singleFile => {
-          myForm.append('file', singleFile);
-        });
-        this.fileUpload(myForm);
-      });
-    } else {
-      if (fileList[0] && fileList[0].size > 3 * 1024 * 1024 && this.data.ifCompress) {
-        console.log(fileList[0].size / (1024 * 1024));
-        this.photoCompress(fileList[0], 1360, (value) => {
-          console.log(value.size / (1024 * 1024));
-          myForm.append('file', value);
-          this.fileUpload(myForm)
-        })
-      } else {
-        myForm.append('file', fileList[0]);
-        this.fileUpload(myForm);
-      }
+    const reg=/\.(jpg|jpeg|png)$/i;
+    // const reg=/([^\s]+(?=\.(jpg|JPG|jpeg|JPEG|png|PNG))\.\2)/gi;
+    const Pic = [];
+    for(let f = 0; f < fileList.length; f++) {
+      Pic.push(reg.test(fileList[f].name));
     }
+    if(!Pic.includes(false)){
+      if (this.data.multiple === true) {
+        let filePromise = [];
+        for (let i = 0; i < fileList.length; i++) {
+          filePromise.push(photoCompress(fileList[i], 1360))
+        }
+        Promise.all(filePromise).then(filesout => {
+          // console.log(filesout);
+          filesout.map(singleFile => {
+            myForm.append('file', singleFile);
+          });
+          this.fileUpload(myForm);
+        });
+      } else {
+        if (fileList[0] && fileList[0].size > 3 * 1024 * 1024 && this.data.ifCompress) {
+          console.log(fileList[0].size / (1024 * 1024));
+          this.photoCompress(fileList[0], 1360, (value) => {
+            console.log(value.size / (1024 * 1024));
+            myForm.append('file', value);
+            this.fileUpload(myForm)
+          })
+        } else {
+          myForm.append('file', fileList[0]);
+          this.fileUpload(myForm);
+        }
+      }
+    }else{
+      HintDialog('上传失败，图片格式需要是jpg/jpeg/png', this.dialog);
+    }
+
   }
 
   fileUpload(form) {
-    console.log(form);
+    // console.log(form);
     this.uploadService.upload(this.data.url, form)
       .subscribe(res => {
         if (res.code === 0) {

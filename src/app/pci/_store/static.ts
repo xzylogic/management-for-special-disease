@@ -444,6 +444,18 @@ export let NAVBARS = [
         link: '/menu'
       })
     ]
+  }),
+  new Navbar({
+    key: 'sms',
+    title: '短信管理',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'smsmodel',
+        title: '短信模板管理',
+        link: '/sms-model'
+      })
+    ]
   })
 ];
 
