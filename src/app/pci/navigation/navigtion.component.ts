@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
 import { Navbar } from '../_store/main.state';
-import {Menu} from "../../../../../healthcloudCP-admin-h5/src/app/container/_store/main.state";
+import {Menu} from "../_store/main.state";
 
 @Component({
   selector: 'app-nav',
