@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ContainerConfig } from '../../../../libs/common/container/container.component';
 
 const PATH = {
   operationPushSave: 'opt/operational/pushs/update', // 新增修改推送

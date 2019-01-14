@@ -1,0 +1,44 @@
+<app-container [config]="containerConfig" *ngIf="containerConfig">
+  <div class="addition">
+    <button mat-raised-button (click)="newData()">添加角色</button>
+  </div>
+  <div class="content">
+    <form style="padding: 16px">
+      <mat-form-field floatPlaceholder="always">
+        <input matInput type="text" placeholder="角色名称搜索" name="queryKey" [(ngModel)]="roleTable.queryKey">
+      </mat-form-field>
+      <!--<mat-form-field floatPlaceholder="always">-->
+        <!--<mat-select placeholder="状态" name="queryBind" [(ngModel)]="deleted">-->
+          <!--<mat-option [value]="''">全部</mat-option>-->
+          <!--<mat-option [value]="false">未删除</mat-option>-->
+          <!--<mat-option [value]="true">已删除</mat-option>-->
+        <!--</mat-select>-->
+      <!--</mat-form-field>-->
+      <!--<mat-form-field floatPlaceholder="always">-->
+        <!--<mat-select placeholder="闹钟开关" name="queryBind" [(ngModel)]="remind">-->
+          <!--<mat-option [value]="true">打开</mat-option>-->
+          <!--<mat-option [value]="false">关闭</mat-option>-->
+        <!--</mat-select>-->
+      <!--</mat-form-field>-->
+      <button mat-icon-button color="primary" type="button" (click)="getsystemRole(0)">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" type="button" (click)="reset()">
+        <mat-icon>autorenew</mat-icon>
+      </button>
+    </form>
+    <div *ngIf="!roleTable.lists&&roleTable.loading">Loading...</div>
+    <div *ngIf="!roleTable.lists&&!roleTable.loading&&!!roleTable.errorMessage" class="center">
+      {{roleTable.errorMessage}}
+    </div>
+    <div *ngIf="roleTable.lists">
+      <div class="content__table">
+        <app-lib-table
+          [table]="roleTable"
+          (handleEmmit)="gotoHandle($event)"
+          (pageEmitter)="getsystemRole($event)"
+        ></app-lib-table>
+      </div>
+    </div>
+  </div>
+</app-container>

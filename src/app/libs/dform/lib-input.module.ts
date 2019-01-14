@@ -22,6 +22,7 @@ import { LibInputTimeComponent } from './component/lib-input/lib-input-time';
 import { LibInputTextareaComponent } from './component/lib-input/lib-input-textarea';
 import { LibInputHiddenComponent } from './component/lib-input/lib-input-hidden';
 import { LibInputTreeComponent } from './component/lib-input/lib-input-tree';
+import { LibInputKeyValueComponent } from './component/lib-input/lib-input-keyValue';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @NgModule({
@@ -50,7 +51,8 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
     LibInputTimeComponent,
     LibInputTextareaComponent,
     LibInputHiddenComponent,
-    LibInputTreeComponent
+    LibInputTreeComponent,
+    LibInputKeyValueComponent
   ],
   providers: [
     DFormControlService,
@@ -87,7 +89,8 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
     LibInputTimeComponent,
     LibInputTextareaComponent,
     LibInputHiddenComponent,
-    LibInputTreeComponent
+    LibInputTreeComponent,
+    LibInputKeyValueComponent
   ]
 })
 export class LibInputModule {

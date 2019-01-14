@@ -94,11 +94,13 @@ export class MatDialogComponent {
       if(checked){
         this.dataCollectionService.exportFiles(status)
           .subscribe(res => {
-            if (res && res.code === 0) {
+            if (res && res.code === 0 && res.data) {
               const a = document.createElement('a');
               document.body.appendChild(a);
               a.setAttribute('style', 'display:none');
               a.setAttribute('href', res.data);
+              a.setAttribute('target', '_blank');
+              // a.setAttribute('href', res.data);
               a.click();
             } else {
               HintDialog(res.msg || '啊哦～访问接口出错啦～！', this.dialog);

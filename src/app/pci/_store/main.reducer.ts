@@ -1,7 +1,8 @@
 import { Action } from 'redux';
 import { IMainState } from './main.state';
-import { DelAdminAction, InitNavAction, MainAction, SetAdminAction, UpdateTagAction } from './main.action';
+import { DelAdminAction, InitNavAction, MainAction, SetAdminAction, UpdateTagAction, SetNavAction, SetTreeAction } from './main.action';
 import { NAVBARS } from './static';
+
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -14,13 +15,19 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 export function MainReducer(state: IMainState = {
   adminId: 0,
   adminName: '',
-  navigation: NAVBARS
+  // navigation: NAVBARS,
+  navigation: [],
+  navTree: {}
 }, action: Action): IMainState {
   switch (action.type) {
     case MainAction.SET_ADMIN:
       return handleSetAdminAction(state, <any>action);
     case MainAction.DEL_ADMIN:
       return handleDelAdminAction(state, <any>action);
+    case MainAction.SET_TREE:
+      return handleSetTreeAction(state, <any>action);
+    case MainAction.SET_NAV:
+      return handleSetNavAction(state, <any>action);
     case MainAction.INIT_NAV:
       return handleInitNavAction(state, <any>action);
     case MainAction.UPDATE_NAV:
@@ -44,24 +51,47 @@ function handleDelAdminAction(state: IMainState, action: DelAdminAction): IMainS
   return stateCopy;
 }
 
+function handleSetTreeAction(state: IMainState, action: SetTreeAction): IMainState {
+  const stateCopy = __assign(state);
+  stateCopy.navTree = action.payload;
+  return stateCopy;
+}
+
+function handleSetNavAction(state: IMainState, action: SetNavAction): IMainState {
+  const stateCopy = __assign(state);
+  stateCopy.navigation = action.payload;
+  return stateCopy;
+}
+
 function handleInitNavAction(state: IMainState, action: InitNavAction): IMainState {
   const stateCopy = __assign(state);
-  stateCopy.navigation.forEach(obj => {
-    obj.active = false;
-    obj.open = false;
-    if (obj.link.replace('/', '') === action.payload.path) {
-      obj.active = true;
-    }
-    if (obj.subBars) {
-      obj.subBars.forEach(subObj => {
-        subObj.active = false;
-        if (subObj.link.replace('/', '') === action.payload.path) {
-          subObj.active = true;
-          obj.open = true;
-        }
-      });
-    }
-  });
+  // stateCopy.navigation.forEach(obj => {
+  //   obj.active = false;
+  //   obj.open = false;
+  //   if (obj.link.replace('/', '') === action.payload.path) {
+  //     obj.active = true;
+  //   }
+  //   if (obj.subBars) {
+  //     obj.subBars.forEach(subObj => {
+  //       subObj.active = false;
+  //       if (subObj.link.replace('/', '') === action.payload.path) {
+  //         subObj.active = true;
+  //         obj.open = true;
+  //       }
+  //     });
+  //   }
+  // });
+  if (Array.isArray(stateCopy.navigation)) {
+    stateCopy.navigation.forEach(obj => {
+      if (obj.sysSubMenus && Array.isArray(obj.sysSubMenus)) {
+        obj.sysSubMenus.forEach(subObj => {
+          if (action.payload.path.indexOf(subObj.url) > -1) {
+            obj.open = true;
+          }
+        });
+      }
+    });
+  }
   return stateCopy;
 }
 

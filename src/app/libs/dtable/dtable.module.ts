@@ -4,6 +4,7 @@ import { MatButtonModule, MatIconModule } from '@angular/material';
 
 import { DTableComponent } from './dtable.component';
 import { DPageComponent } from './page.component';
+import { PipeModule } from '../_pipe/pipe.module';
 
 export * from './dtable.entity';
 
@@ -11,7 +12,8 @@ export * from './dtable.entity';
   imports: [
     CommonModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    PipeModule
   ],
   declarations: [
     DTableComponent,
@@ -22,7 +24,8 @@ export * from './dtable.entity';
     MatButtonModule,
     MatIconModule,
     DTableComponent,
-    DPageComponent
+    DPageComponent,
+    PipeModule
   ]
 })
 export class DTableModule {
