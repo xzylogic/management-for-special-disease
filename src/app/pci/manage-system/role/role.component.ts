@@ -67,7 +67,6 @@ export class RoleComponent implements OnInit {
       this.router.navigate(['/role', 'edit'], {queryParams: {id: res.value.id}});
     }
     if (res.key === 'config' && res.value) {
-      console.log(res)
       this.dialog.open(MatDialogComponent,{data:{id:this.id = res.value.id}});
     }
     if (res.key === 'enable' && res.value) {
@@ -82,7 +81,6 @@ export class RoleComponent implements OnInit {
       });
     }
     if (res.key === 'del' && res.value) {
-      // console.log(res);
       this.subscribeHDialog = HintDialog(
         `你确定要删除角色：${res.value.name}？`,
         this.dialog
@@ -96,7 +94,6 @@ export class RoleComponent implements OnInit {
 
   getsystemRole(page: number) {
     this.roleTable.reset(page);
-    // console.log(page, this.roleTable.size, this.roleTable.queryKey)
     this.roleService.getData(page, this.roleTable.size, this.roleTable.queryKey)
       .subscribe(
         res => {

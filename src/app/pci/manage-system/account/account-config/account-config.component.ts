@@ -42,7 +42,6 @@ export class AccountConfigComponent implements OnInit, OnDestroy {
       this.accountService.getAllRole(),
       (route, query, menu): any => ({route, query, menu})
     ).subscribe(res => {
-      console.log('-------',res)
       if (res.route.menu) {
         this.paramsMenu = res.route.menu;
       }
@@ -87,7 +86,6 @@ export class AccountConfigComponent implements OnInit, OnDestroy {
     formData.roleId = data.roleId;
     this.subscribeSave = this.accountService.addAdminRole(formData, this.id)
       .subscribe(res => {
-        console.log(res)
         if (res.code === 0) {
           this.subscribeDialog = HintDialog(ERRMSG.saveSuccess, this.dialog)
             .afterClosed().subscribe(() => {

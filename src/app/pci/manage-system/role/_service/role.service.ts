@@ -43,8 +43,6 @@ export class RoleService {
   }
 
   setRoleForm(tree, data?, id?) {
-    console.log(tree)
-    console.log(data)
     let name, des, ReData;
     if(data){
       ReData = data.reverse();
@@ -77,8 +75,6 @@ export class RoleService {
   }
 
   setRoleTreeForm(tree) {
-    console.log(tree)
-
     const forms: FormBase<any>[] = [];
     forms.push(
       new FormTree({
@@ -104,7 +100,6 @@ export class RoleService {
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.role}?page=${page}&size=${size}&&name=${keyword}`);
   }
   getRole(id: any) {
-    console.log(id, typeof id);
     return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.role}?sysRoleId=${id}`);
   }
 

@@ -121,7 +121,7 @@ export class OperationGeneralizeComponent implements OnInit, OnDestroy {
     formData.date = data.date;
     formData.address = data.address;
     formData.url = data.url;
-    console.log(formData);
+    // console.log(formData);
     const params = `title=${formData.title}&content=${formData.content}&date=${formData.date}&address=${formData.address}&url=${formData.url}`;
     this.uploadService.upload(`${this.operationGeneralizeService.microUrl}?${params}`, myForm)
       .subscribe(res => {

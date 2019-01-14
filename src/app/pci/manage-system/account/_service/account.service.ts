@@ -42,8 +42,6 @@ export class AccountService {
   }
 
   setAccountForm(data, id?) {
-    console.log(data)
-
     let name = data.name;
     const forms: FormBase<any>[] = [];
     forms.push(
@@ -79,10 +77,6 @@ export class AccountService {
 
   addAdminRole(data, id?: any) {
     // console.log('添加、更新系统角色', data, id);
-    let params = '';
-    if(id){
-      params = `sysRoleId=${id}`;
-    }
     return this.httpService.post(`${this.app.pci.BASE_URL}${PATH.addAdminRole}`, data);
   }
 }

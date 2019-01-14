@@ -118,7 +118,7 @@ export class OperationGeneralizeService {
     forms.push(
       new FormDate({
         key: 'date',
-        label: '发送日期',
+        label: '活动日期',
         value: '',
         required: true,
         errMsg: '请填写日期'
@@ -127,7 +127,7 @@ export class OperationGeneralizeService {
     forms.push(
       new FormText({
         key: 'content',
-        label: '内容',
+        label: '活动内容',
         value: '',
         required: true,
         errMsg: '请填写内容'
@@ -136,7 +136,7 @@ export class OperationGeneralizeService {
     forms.push(
       new FormText({
         key: 'address',
-        label: '地址',
+        label: '活动地址',
         value: '',
         required: true,
         errMsg: '请填写地址'
@@ -145,9 +145,8 @@ export class OperationGeneralizeService {
     forms.push(
       new FormText({
         key: 'url',
-        label: '网址',
+        label: '活动链接',
         value: '',
-        required: true,
         errMsg: '请填写网址'
       })
     );
