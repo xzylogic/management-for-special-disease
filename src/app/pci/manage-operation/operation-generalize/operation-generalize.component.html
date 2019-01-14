@@ -1,0 +1,27 @@
+<app-container [config]="containerConfig"  *ngIf="containerConfig">
+  <!--<div class="addition">-->
+    <!--<button mat-raised-button (click)="newData()">新增推广</button>-->
+  <!--</div>-->
+  <div class="content">
+    <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
+      <mat-tab label="发送短信消息">
+        <!--<app-container [config]="containerConfig" *ngIf="containerConfig">-->
+          <div class="content">
+            <app-form *ngIf="form" [formDatas]="form" (formValues)="getValue($event)"></app-form>
+            <div *ngIf="errMsg">{{errMsg}}</div>
+          </div>
+        <!--</app-container>-->
+      </mat-tab>
+
+      <mat-tab label="发送微信消息">
+        <!--<app-container [config]="containerConfig" *ngIf="containerConfig">-->
+          <div class="content">
+            <app-form *ngIf="form" [formDatas]="form" (formValues)="getMicroValue($event)"></app-form>
+            <div *ngIf="errMsg">{{errMsg}}</div>
+          </div>
+        <!--</app-container>-->
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</app-container>
+

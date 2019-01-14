@@ -4,7 +4,7 @@
   </div>
   <div class="content">
     <mat-tab-group dynamicHeight="true" [selectedIndex]="tab | async" (selectedIndexChange)="change($event)">
-      <mat-tab label="预审">
+      <mat-tab label="预审" *ngIf="auth">
         <div class="tab__content" #tab1>
         <form style="padding: 16px">
           <mat-form-field floatPlaceholder="always" style="width: 250px">

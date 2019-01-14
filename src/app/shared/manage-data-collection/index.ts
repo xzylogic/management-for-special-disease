@@ -6,6 +6,10 @@ export const routes: Routes = [
   {
     path: 'data-collection',
     loadChildren: 'app/shared/manage-data-collection/data-collection.module#DataCollectionModule'
+  },
+  {
+    path: 'case-count',
+    loadChildren: 'app/shared/manage-data-collection/case-count/case-count.module#CaseCountModule'
   }
 ];
 

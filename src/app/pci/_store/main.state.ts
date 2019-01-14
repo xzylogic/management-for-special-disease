@@ -1,7 +1,21 @@
 export interface IMainState {
   readonly adminId: number;
   readonly adminName: string;
-  readonly navigation: Navbar[];
+  // readonly navigation: Navbar[];
+  readonly navigation: Menu[];
+  readonly navTree: any;
+}
+
+export class Menu {
+  id: string;
+  name: string;
+  checked?: boolean;
+  parentId?: string;
+  description?: string;
+  url?: string;
+  sysSubMenus?: Menu[];
+  open?: boolean;
+  activate?: boolean;
 }
 
 export class Navbar {

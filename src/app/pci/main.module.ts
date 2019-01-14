@@ -23,6 +23,7 @@ import { StoreModule } from './store.module';
 import { MainAction } from './_store/main.action';
 import { ApiAction } from './_store/api/api.action';
 import { CommonService } from './_service/common.service';
+import { MatDialogComponent } from './manage-system/matDialog/matDialog.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { CommonService } from './_service/common.service';
   ],
   declarations: [
     PciMainComponent,
-    NavigationComponent
+    NavigationComponent,
+    MatDialogComponent
   ],
   providers: [
     HttpService,
@@ -58,7 +60,10 @@ import { CommonService } from './_service/common.service';
     {provide: 'main', useClass: MainAction},
     {provide: 'action', useClass: ApiAction},
     {provide: 'app', useValue: app},
-  ]
+  ],
+  entryComponents: [
+    MatDialogComponent
+  ],
 })
 export class PciMainModule {
 }

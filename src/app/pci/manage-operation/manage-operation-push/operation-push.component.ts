@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
-import { ContainerConfig } from '../../libs/common/container/container.component';
-import { ActionDialog, HintDialog } from '../../libs/dmodal/dialog.component';
-import { DialogOptions } from '../../libs/dmodal/dialog.entity';
-import { ControlType, TableOption } from '../../libs/dtable/dtable.entity';
+import { ContainerConfig } from '../../../libs/common/container/container.component';
+import { ActionDialog, HintDialog } from '../../../libs/dmodal/dialog.component';
+import { DialogOptions } from '../../../libs/dmodal/dialog.entity';
+import { ControlType, TableOption } from '../../../libs/dtable/dtable.entity';
 import { OperationPushService } from './_service/operation-push-service.service';
 import { OperationPushTableService } from './_service/operation-push-service-table.service';
 import { OperationPush } from './_entity/operationPush.entity';
-import { ERRMSG } from '../_store/static';
+import { ERRMSG } from '../../_store/static';
 
 @Component({
   selector: 'app-operation-push',

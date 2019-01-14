@@ -30,6 +30,13 @@ export class UserOrderComponent implements OnInit {
 
   count1: number;
   count2: number;
+  allQueryPay: any = 0;
+  unPayQueryPay: any = 0;
+  applyQueryPay: any = 0;
+  refundingQueryPay: any = 0;
+  refundQueryPay: any = 0;
+  successQueryPay: any = 0;
+  cancelQueryPay: any = 0;
 
   constructor(
     @Inject('action') private action,
@@ -79,6 +86,7 @@ export class UserOrderComponent implements OnInit {
   }
 
   reset() {
+
     this.reset0();
     this.reset1();
     this.reset2();
@@ -91,37 +99,44 @@ export class UserOrderComponent implements OnInit {
 
   reset0() {
     this.userOrderAllTable.queryKey = '';
+    this.allQueryPay = 0;
     this.getUserOrdersAll(0);
   }
 
   reset1() {
     this.userOrderUnpayTable.queryKey = '';
+    this.unPayQueryPay = 0;
     this.getUserOrdersUnpay(0);
   }
 
   reset2() {
     this.userOrderApplyTable.queryKey = '';
+    this.applyQueryPay = 0;
     this.getUserOrdersApply(0);
   }
 
   reset3() {
     this.userOrderRefundingTable.queryKey = '';
+    this.refundingQueryPay = 0;
     this.getUserOrdersRefunding(0);
     this.getCount();
   }
 
   reset4() {
     this.userOrderRefundTable.queryKey = '';
+    this.refundQueryPay = 0;
     this.getUserOrdersRefund(0);
   }
 
   reset5() {
     this.userOrderSuccessTable.queryKey = '';
+    this.successQueryPay = 0;
     this.getUserOrdersSuccess(0);
   }
 
   reset6() {
     this.userOrderCancelTable.queryKey = '';
+    this.cancelQueryPay = 0;
     this.getUserOrdersCancel(0);
   }
 
@@ -133,7 +148,7 @@ export class UserOrderComponent implements OnInit {
 
   getUserOrdersAll(page: number) {
     this.userOrderAllTable.reset(page);
-    this.userOrderService.getUserOrdersAll(page, this.userOrderAllTable.size, this.userOrderAllTable.queryKey)
+    this.userOrderService.getUserOrdersAll(page, this.userOrderAllTable.size, this.userOrderAllTable.queryKey, this.allQueryPay)
       .subscribe(
         data => {
           this.userOrderAllTable.loading = false;
@@ -154,7 +169,7 @@ export class UserOrderComponent implements OnInit {
 
   getUserOrdersUnpay(page: number) {
     this.userOrderUnpayTable.reset(page);
-    this.userOrderService.getUserOrdersUnpay(page, this.userOrderUnpayTable.size, this.userOrderUnpayTable.queryKey)
+    this.userOrderService.getUserOrdersUnpay(page, this.userOrderUnpayTable.size, this.userOrderUnpayTable.queryKey, this.unPayQueryPay)
       .subscribe(
         data => {
           this.userOrderUnpayTable.loading = false;
@@ -175,7 +190,7 @@ export class UserOrderComponent implements OnInit {
 
   getUserOrdersApply(page: number) {
     this.userOrderApplyTable.reset(page);
-    this.userOrderService.getUserOrdersApply(page, this.userOrderApplyTable.size, this.userOrderApplyTable.queryKey)
+    this.userOrderService.getUserOrdersApply(page, this.userOrderApplyTable.size, this.userOrderApplyTable.queryKey, this.applyQueryPay)
       .subscribe(
         data => {
           this.userOrderApplyTable.loading = false;
@@ -196,7 +211,7 @@ export class UserOrderComponent implements OnInit {
 
   getUserOrdersRefunding(page: number) {
     this.userOrderRefundingTable.reset(page);
-    this.userOrderService.getUserOrdersRefunding(page, this.userOrderRefundingTable.size, this.userOrderRefundingTable.queryKey)
+    this.userOrderService.getUserOrdersRefunding(page, this.userOrderRefundingTable.size, this.userOrderRefundingTable.queryKey, this.refundingQueryPay)
       .subscribe(
         data => {
           this.userOrderRefundingTable.loading = false;
@@ -217,7 +232,7 @@ export class UserOrderComponent implements OnInit {
 
   getUserOrdersRefund(page: number) {
     this.userOrderRefundTable.reset(page);
-    this.userOrderService.getUserOrdersRefund(page, this.userOrderRefundTable.size, this.userOrderRefundTable.queryKey)
+    this.userOrderService.getUserOrdersRefund(page, this.userOrderRefundTable.size, this.userOrderRefundTable.queryKey, this.refundQueryPay)
       .subscribe(
         data => {
           this.userOrderRefundTable.loading = false;
@@ -238,7 +253,7 @@ export class UserOrderComponent implements OnInit {
 
   getUserOrdersSuccess(page: number) {
     this.userOrderSuccessTable.reset(page);
-    this.userOrderService.getUserOrdersSuccess(page, this.userOrderSuccessTable.size, this.userOrderSuccessTable.queryKey)
+    this.userOrderService.getUserOrdersSuccess(page, this.userOrderSuccessTable.size, this.userOrderSuccessTable.queryKey, this.successQueryPay)
       .subscribe(
         data => {
           this.userOrderSuccessTable.loading = false;
@@ -259,7 +274,7 @@ export class UserOrderComponent implements OnInit {
 
   getUserOrdersCancel(page: number) {
     this.userOrderCancelTable.reset(page);
-    this.userOrderService.getUserOrdersCancel(page, this.userOrderCancelTable.size, this.userOrderCancelTable.queryKey)
+    this.userOrderService.getUserOrdersCancel(page, this.userOrderCancelTable.size, this.userOrderCancelTable.queryKey, this.cancelQueryPay)
       .subscribe(
         data => {
           this.userOrderCancelTable.loading = false;

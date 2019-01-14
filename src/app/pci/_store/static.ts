@@ -325,10 +325,27 @@ export let NAVBARS = [
       }),
     ]
   }),
+  // new Navbar({
+  //   key: 'datacollection',
+  //   title: '病史资料录入',
+  //   link: '/data-collection',
+  // }),
   new Navbar({
-    key: 'datacollection',
-    title: '病史资料录入',
-    link: '/data-collection'
+    key: 'datacase',
+    title: '病史资料',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'datacollection',
+        title: '病史资料录入',
+        link: '/data-collection'
+      }),
+      new Navbar({
+        key: 'casecount',
+        title: '病例统计',
+        link: '/case-count'
+      })
+    ]
   }),
   new Navbar({
     key: 'versioncontrol',
@@ -405,6 +422,40 @@ export let NAVBARS = [
     key: 'operationpush',
     title: '运营推送',
     link: '/operation-push'
+  }),
+  new Navbar({
+    key: 'system',
+    title: '系统管理',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'account',
+        title: '账号管理',
+        link: '/account'
+      }),
+      new Navbar({
+        key: 'role',
+        title: '角色管理',
+        link: '/role'
+      }),
+      new Navbar({
+        key: 'menu',
+        title: '菜单管理',
+        link: '/menu'
+      })
+    ]
+  }),
+  new Navbar({
+    key: 'sms',
+    title: '短信管理',
+    ifSub: true,
+    subBars: [
+      new Navbar({
+        key: 'smsmodel',
+        title: '短信模板管理',
+        link: '/sms-model'
+      })
+    ]
   })
 ];
 

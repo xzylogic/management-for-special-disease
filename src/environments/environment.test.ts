@@ -9,6 +9,7 @@ export const environment = {
 
 export const app = {
   pci: {
+<<<<<<< HEAD
     BASE_URL: '/pci-operation/',
     COMMON_URL: '/pro-health/',
     UPLOAD_URL: '/pci-operation/api/upload'
@@ -18,5 +19,16 @@ export const app = {
     CAN_URL: '/kidney-scheduler-test/',
     COMMON_URL: '/pro-health/',
     UPLOAD_URL: '/pci-operation/api/upload'
+=======
+    BASE_URL: 'https://test-cloud.medicine-tec.cn/pci-operation/',
+    COMMON_URL: 'https://test-cloud.medicine-tec.cn/pro-health/',
+    UPLOAD_URL: 'https://test-cloud.medicine-tec.cn/pci-operation/api/upload'
+  },
+  kidney: {
+    BASE_URL: 'https://test-cloud.medicine-tec.cn/kidney-backend-test/',
+    CAN_URL: 'https://test-cloud.medicine-tec.cn/kidney-scheduler-test/',
+    COMMON_URL: 'https://test-cloud.medicine-tec.cn/pro-health/',
+    UPLOAD_URL: 'https://test-cloud.medicine-tec.cn/pci-operation/api/upload'
+>>>>>>> origin/develop
   }
 };

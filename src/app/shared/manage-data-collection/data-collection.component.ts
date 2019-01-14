@@ -143,12 +143,12 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initData();
-    let dom1 = this.tab1.nativeElement;
-    let dom2 = this.tab2.nativeElement;
-    let dom3 = this.tab3.nativeElement;
-    let dom4 = this.tab4.nativeElement;
-    let dom5 = this.tab5.nativeElement;
-    let dom6 = this.tab6.nativeElement;
+    let dom1 = this.tab1 && this.tab1.nativeElement || {};
+    let dom2 = this.tab2 && this.tab2.nativeElement || {};
+    let dom3 = this.tab3 && this.tab3.nativeElement || {};
+    let dom4 = this.tab4 && this.tab4.nativeElement || {};
+    let dom5 = this.tab5 && this.tab5.nativeElement || {};
+    let dom6 = this.tab6 && this.tab6.nativeElement || {};
 
     this.tab1Scroll.debounceTime(500).distinctUntilChanged().subscribe(scrollTop => {
       this.updateTab(0, scrollTop);
@@ -194,12 +194,12 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
   }
 
   initData() {
-    let dom1 = this.tab1.nativeElement;
-    let dom2 = this.tab2.nativeElement;
-    let dom3 = this.tab3.nativeElement;
-    let dom4 = this.tab4.nativeElement;
-    let dom5 = this.tab5.nativeElement;
-    let dom6 = this.tab6.nativeElement;
+    let dom1 = this.tab1 && this.tab1.nativeElement || {};
+    let dom2 = this.tab2 && this.tab2.nativeElement || {};
+    let dom3 = this.tab3 && this.tab3.nativeElement || {};
+    let dom4 = this.tab4 && this.tab4.nativeElement || {};
+    let dom5 = this.tab5 && this.tab5.nativeElement || {};
+    let dom6 = this.tab6 && this.tab6.nativeElement || {};
     dom1.scrollTop = 300;
     this.data.subscribe((data: any) => {
       let datas = data.datas;
@@ -344,9 +344,9 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(MatDialogComponent);
 
     // 弹框关闭时触发
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Download: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Download: ${result}`);
+    // });
   }
 
   /**

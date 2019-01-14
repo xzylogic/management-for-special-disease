@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
 import { Navbar } from '../_store/main.state';
+import {Menu} from "../../../../../healthcloudCP-admin-h5/src/app/container/_store/main.state";
 
 @Component({
   selector: 'app-nav',
@@ -11,9 +12,11 @@ import { Navbar } from '../_store/main.state';
 })
 export class NavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   @select(['main', 'adminName']) readonly username: Observable<string>;
-  @select(['main', 'navigation']) readonly sidebars: Observable<Navbar[]>;
+  // @select(['main', 'navigation']) readonly sidebars: Observable<Navbar[]>;
+  @select(['main', 'navigation']) readonly navigation: Observable<Menu[]>;
 
   constructor(
+    @Inject('app') public app,
     @Inject('nav') private navService,
     @Inject('auth') private authService
   ) {
