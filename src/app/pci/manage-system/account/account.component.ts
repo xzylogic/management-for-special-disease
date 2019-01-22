@@ -81,6 +81,13 @@ export class AccountComponent implements OnInit {
     if (res.key === 'config' && res.value) {
       this.router.navigate(['/account', 'config'], {queryParams: {id: id}});
     }
+    if (res.key === 'edit' && res.value) {
+      this.accountService.accountData = {
+        name: res.value.name,
+        createBy: res.value.createBy,
+      }
+      this.router.navigate(['/account', 'edit'], {queryParams: {id: id}});
+    }
     if (res.key === 'enable' && res.value) {
       this.subscribeHDialog = HintDialog(
         `你确定要${res.value.enable === true ? '禁用' : '启用'}角色：${res.value.name}？`,
@@ -128,5 +135,9 @@ export class AccountComponent implements OnInit {
       console.log(err);
       HintDialog(ERRMSG.netErrMsg, this.dialog);
     });
+  }
+
+  addAccount() {
+    this.router.navigate(['/account', 'edit']);
   }
 }

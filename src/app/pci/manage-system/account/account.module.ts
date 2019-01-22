@@ -11,6 +11,7 @@ import { AccountTableService } from './_service/account-table.service';
 import { DFormModule } from '../../../libs/dform/dform.module';
 import { FormsModule } from '@angular/forms';
 import {AccountConfigComponent} from "./account-config/account-config.component";
+import {AccountEditComponent} from "./account-edit/account-edit.component";
 
 const routes: Routes = [{
   path: '',
@@ -19,6 +20,9 @@ const routes: Routes = [{
 }, {
   path: 'config',
   component: AccountConfigComponent
+}, {
+  path: 'edit',
+  component: AccountEditComponent
 }];
 
 @NgModule({
@@ -35,7 +39,8 @@ const routes: Routes = [{
   ],
   declarations: [
     AccountComponent,
-    AccountConfigComponent
+    AccountConfigComponent,
+    AccountEditComponent
   ],
   providers: [
     AccountService,
