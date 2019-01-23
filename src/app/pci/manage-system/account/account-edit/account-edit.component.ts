@@ -80,7 +80,7 @@ export class AccountEditComponent implements OnInit, OnDestroy {
   getValue(data) {
     const formData: any = {};
     if (this.id) {
-      formData.sysRoleId = Number(this.id);
+      formData.adminId = Number(this.id);
     }
     if(data.name && data.password){
       formData.name = data.name;

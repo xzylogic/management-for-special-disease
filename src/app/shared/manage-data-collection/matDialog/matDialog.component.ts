@@ -92,6 +92,7 @@ export class MatDialogComponent {
   getExportFile(){
     let Export = (checked:boolean,status:any) => {
       if(checked){
+        let newWin = window.open('loading');
         this.dataCollectionService.exportFiles(status)
           .subscribe(res => {
             if (res && res.code === 0 && res.data) {
@@ -101,10 +102,11 @@ export class MatDialogComponent {
               // a.href = res.data;
               // // a.target = '_blank';
               // a.click();
-              let newWin = window.open(res.data);
-              if(newWin === null){
-                HintDialog('您的浏览器启用弹出窗口过滤功能！请暂时先关闭此功能！', this.dialog);
-              }
+              // let newWin = window.open(res.data);
+              // if(newWin === null){
+              //   HintDialog('您的浏览器启用弹出窗口过滤功能！请暂时先关闭此功能！', this.dialog);
+              // }
+              newWin.location.href = res.data;
             } else {
               HintDialog(res.msg || '啊哦～访问接口出错啦～！', this.dialog);
             }

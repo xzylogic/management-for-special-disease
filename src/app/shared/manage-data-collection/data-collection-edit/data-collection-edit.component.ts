@@ -199,7 +199,6 @@ export class DataCollectionEditComponent implements OnInit {
               HintDialog('该用户资料已录入哦！', this.dialog);
             } else {
               this.userInfo = res.data;
-              console.log(this.userInfo,'====================');
             }
           } else {
             HintDialog(res && res.msg || '访问数据出错啦～', this.dialog);

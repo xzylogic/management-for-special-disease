@@ -274,9 +274,7 @@ export class EditFormComponent implements OnInit, AfterViewInit {
       }
     }else{
       HintDialog('点太快啦~', this.dialog);
-
     }
-
   }
 
   cancel() {
