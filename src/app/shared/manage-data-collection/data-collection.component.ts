@@ -119,6 +119,8 @@ export class DataCollectionComponent implements OnInit, AfterViewInit {
       this.pretrialTable.currentPage = page[5];
     });
 
+    this.reset();
+
     this.data.subscribe((data: any) => {
       let datas = data.datas;
       let pages = data.pages;

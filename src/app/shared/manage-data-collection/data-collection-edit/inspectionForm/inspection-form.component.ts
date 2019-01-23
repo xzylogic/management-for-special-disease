@@ -52,7 +52,8 @@ export class InspectionFormComponent implements OnInit {
   }
 
   getInspectionItems(type) {
-    this._inspectionItemService.getInspectionItems(0, 99999, type)
+    // this._inspectionItemService.getInspectionItems(0, 99999, type)
+    this._inspectionItemService.getInspectionItems(0, 2000, type)
       .subscribe(
         res => {
           if (res.code === 0 && res.data && res.data.content) {

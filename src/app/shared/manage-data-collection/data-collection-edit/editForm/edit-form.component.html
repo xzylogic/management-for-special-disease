@@ -20,9 +20,9 @@
     <div class="form-content">
       <mat-form-field floatPlaceholder="always" style="width: 100%">
         <input matInput [matDatepicker]="checkDate" placeholder="检查时间" name="checkDate" [(ngModel)]="info.checkDate"
-               (dateInput)="saveAsDraft('checkDate')" (dateChange)="saveAsDraft('checkDate')" required>
+               (dateInput)="saveAsDraft('checkDate')" (dateChange)="saveAsDraft('checkDate')" required disabled>
         <mat-datepicker-toggle matSuffix [for]="checkDate"></mat-datepicker-toggle>
-        <mat-datepicker #checkDate></mat-datepicker>
+        <mat-datepicker #checkDate disabled="false"></mat-datepicker>
       </mat-form-field>
     </div>
     <div class="form-content">

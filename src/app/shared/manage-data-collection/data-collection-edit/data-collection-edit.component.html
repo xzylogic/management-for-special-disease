@@ -30,6 +30,9 @@
                   <div *ngIf="obj.recordHistoryType==2">
                     <app-brief-detail [info]="obj.object"></app-brief-detail>
                   </div>
+                  <div *ngIf="obj.recordHistoryType==3">
+                    <strong>诊断：</strong>{{obj.reason}}
+                  </div>
                   <div *ngIf="obj.recordHistoryType==4">
                     <app-medical-detail [info]="obj.object"></app-medical-detail>
                   </div>

@@ -187,7 +187,7 @@ export class HealthDataComponent implements OnInit {
 
   exportBlutdruck() {
     let exportList;
-    this.healthDataService.getData(0, 9999, this.pressureTable.queryKey, this.queryBind)
+    this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.heartRate && res.code === 0) {
           exportList = this.common.toArray(res.data.heartRate.content);
@@ -211,7 +211,7 @@ export class HealthDataComponent implements OnInit {
 
   exportMmol() {
     let exportList;
-    this.healthDataService.getData(0, 9999, this.pressureTable.queryKey, this.queryBind)
+    this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.sugar && res.code === 0) {
           exportList = this.common.toArray(res.data.sugar.content);
@@ -235,7 +235,7 @@ export class HealthDataComponent implements OnInit {
 
   exportHrrest() {
     let exportList;
-    this.healthDataService.getData(0, 9999, this.pressureTable.queryKey, this.queryBind)
+    this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.sugar && res.code === 0) {
           exportList = this.common.toArray(res.data.sugar.content);
@@ -259,7 +259,7 @@ export class HealthDataComponent implements OnInit {
 
   exportWeight() {
     let exportList;
-    this.healthDataService.getData(0, 9999, this.pressureTable.queryKey, this.queryBind)
+    this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.weight && res.code === 0) {
           exportList = this.common.toArray(res.data.weight.content);

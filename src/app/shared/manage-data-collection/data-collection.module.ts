@@ -47,6 +47,10 @@ const routes: Routes = [{
   path: 'updateImg/:id',
   // canActivate: [AuthGuardService],
   component: UpdateImageComponent
+}, {
+  path: 'export',
+  // canActivate: [AuthGuardService],
+  // component: UpdateImageComponent
 }
 ];
 

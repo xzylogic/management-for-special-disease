@@ -106,7 +106,8 @@ export class DataCollectionService {
   }
 
   getDrugs(key) {
-    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.drug}?page=0&size=999999&keyword=${key}`);
+    return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.drug}?page=0&size=2000&keyword=${key}`);
+    // return this.httpService.get(`${this.app.pci.BASE_URL}${PATH.drug}?page=0&size=999999&keyword=${key}`);
   }
 
   getAdopt(id,data){
@@ -134,10 +135,6 @@ export class DataCollectionService {
   }
 
   exportFiles(status) {
-    if(status === null){
-      return this.httpService.get(`${this.app.pci.COMMON_URL}api/exportExcel`);
-    }else{
-      return this.httpService.get(`${this.app.pci.COMMON_URL}api/exportExcel?status=${status}`);
-    }
+    return this.httpService.get(`${this.app.pci.COMMON_URL}api/exportExcel?status=${status}`);
   };
 }

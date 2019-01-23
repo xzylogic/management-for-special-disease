@@ -199,6 +199,7 @@ export class DataCollectionEditComponent implements OnInit {
               HintDialog('该用户资料已录入哦！', this.dialog);
             } else {
               this.userInfo = res.data;
+              console.log(this.userInfo,'====================');
             }
           } else {
             HintDialog(res && res.msg || '访问数据出错啦～', this.dialog);
@@ -297,10 +298,10 @@ export class DataCollectionEditComponent implements OnInit {
 
   saveSuccess(flagInfo) {
     HintDialog('保存数据成功！', this.dialog);
-    let i = this.editFormList.indexOf(flagInfo);
-    if (i > -1) {
-      this.delForm(i);
-    }
+    // let i = this.editFormList.indexOf(flagInfo);
+    // if (i > -1) {
+    //   this.delForm(i);
+    // }
     this.getDataCollection();
   }
 

@@ -364,7 +364,7 @@ export class DoctorComponent implements OnInit {
 
   export() {
     let exportList;
-    this.doctorService.getAuditedDoctors('', '', 0, 99999)
+    this.doctorService.getAuditedDoctors('', '', 0, 2000)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           this.formatDoctor(res.data.content, true);
