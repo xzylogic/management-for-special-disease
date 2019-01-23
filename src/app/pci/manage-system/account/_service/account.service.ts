@@ -77,6 +77,7 @@ export class AccountService {
       new FormText({
         key: 'password',
         type: 'password',
+        maxlength: 16,
         label: '密码',
         value: '',
         required: true,
@@ -87,6 +88,7 @@ export class AccountService {
       new FormText({
         key: 'checkpwd',
         type: 'password',
+        maxlength: 16,
         label: '请重新输入密码',
         value: '',
         required: true,
