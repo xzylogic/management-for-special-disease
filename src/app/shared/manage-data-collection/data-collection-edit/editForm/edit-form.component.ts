@@ -49,6 +49,7 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   inspectionFormList: InspectionFormList[] = [];
   medicineFormList: Medicine[] = [];
   imageFormList: Image[] = [];
+  flag: number = 0;
 
   // enableShow = false;
   // message: string;
@@ -233,40 +234,46 @@ export class EditFormComponent implements OnInit, AfterViewInit {
   }
 
   save() {
-    // console.log(this.info);
-    if (this.info.InspectionFormList) {
-      this.info.recordExaminationItemList = [];
-      this.info.InspectionFormList.forEach(obj => {
-        obj.list.forEach(list => {
-          list.itemId = obj.itemId;
-          if (obj.deleted) {
-            list.deleted = obj.deleted;
-          }
+    if(this.flag === 0){
+      this.flag = 1;
+      console.log(this.info);
+      if (this.info.InspectionFormList) {
+        this.info.recordExaminationItemList = [];
+        this.info.InspectionFormList.forEach(obj => {
+          obj.list.forEach(list => {
+            list.itemId = obj.itemId;
+            if (obj.deleted) {
+              list.deleted = obj.deleted;
+            }
+          });
+          this.info.recordExaminationItemList.push(...obj.list);
         });
-        this.info.recordExaminationItemList.push(...obj.list);
-      });
-      delete this.info.InspectionFormList;
-    }
-    if (this.info.recordPrescriptionMedicineList) {
-      this.info.recordPrescriptionMedicineList.forEach(obj => {
-        obj.startTime = (new Date(obj.startTime)).valueOf();
-      });
-    }
-    if (!this.info.medicalRecordPhotoList || this.info.medicalRecordPhotoList.length == 0) {
-      HintDialog('请选择图片！', this.dialog);
-    } else {
-      this._dataCollectionService.dataCollectionCreate(this.id, this.info)
-        .subscribe(res => {
-          // console.log(res);
-          if (res.code === 0) {
-            this.saveSuccess.emit(this.info);
-          } else {
-            HintDialog(res.msg || '保存数据失败！', this.dialog);
-          }
-        }, err => {
-          HintDialog('链接服务器出错啦～请重新保存！', this.dialog);
-          throw new Error(err);
+        delete this.info.InspectionFormList;
+      }
+      if (this.info.recordPrescriptionMedicineList) {
+        this.info.recordPrescriptionMedicineList.forEach(obj => {
+          obj.startTime = (new Date(obj.startTime)).valueOf();
         });
+      }
+      if (!this.info.medicalRecordPhotoList || this.info.medicalRecordPhotoList.length == 0) {
+        HintDialog('请选择图片！', this.dialog);
+      } else {
+        this._dataCollectionService.dataCollectionCreate(this.id, this.info)
+          .subscribe(res => {
+            // console.log(res);
+            if (res.code === 0) {
+              this.saveSuccess.emit(this.info);
+              this.flag = 0;
+            } else {
+              HintDialog(res.msg || '保存数据失败！', this.dialog);
+            }
+          }, err => {
+            HintDialog('链接服务器出错啦～请重新保存！', this.dialog);
+            throw new Error(err);
+          });
+      }
+    }else{
+      HintDialog('点太快啦~', this.dialog);
     }
   }
 

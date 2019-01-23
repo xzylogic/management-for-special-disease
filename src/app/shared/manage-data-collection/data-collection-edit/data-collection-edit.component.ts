@@ -297,10 +297,10 @@ export class DataCollectionEditComponent implements OnInit {
 
   saveSuccess(flagInfo) {
     HintDialog('保存数据成功！', this.dialog);
-    let i = this.editFormList.indexOf(flagInfo);
-    if (i > -1) {
-      this.delForm(i);
-    }
+    // let i = this.editFormList.indexOf(flagInfo);
+    // if (i > -1) {
+    //   this.delForm(i);
+    // }
     this.getDataCollection();
   }
 

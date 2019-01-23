@@ -9,7 +9,7 @@
   <mat-form-field floatPlaceholder="always" style="width: 100%">
     <input matInput [matDatepicker]="time" placeholder="报告日期" name="time"
            (dateInput)="saveAsDraft('time')" (dateChange)="saveAsDraft('time')"
-           [(ngModel)]="info.time" required>
+           [(ngModel)]="info.time" required (click)="time.open()">
     <mat-datepicker-toggle matSuffix [for]="time"></mat-datepicker-toggle>
     <mat-datepicker #time></mat-datepicker>
   </mat-form-field>

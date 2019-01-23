@@ -92,16 +92,21 @@ export class MatDialogComponent {
   getExportFile(){
     let Export = (checked:boolean,status:any) => {
       if(checked){
+        let newWin = window.open('loading');
         this.dataCollectionService.exportFiles(status)
           .subscribe(res => {
             if (res && res.code === 0 && res.data) {
-              const a = document.createElement('a');
-              document.body.appendChild(a);
-              a.setAttribute('style', 'display:none');
-              a.setAttribute('href', res.data);
-              a.setAttribute('target', '_blank');
-              // a.setAttribute('href', res.data);
-              a.click();
+              // const a = document.createElement('a');
+              // document.body.appendChild(a);
+              // a.setAttribute('style', 'display:none');
+              // a.href = res.data;
+              // // a.target = '_blank';
+              // a.click();
+              // let newWin = window.open(res.data);
+              // if(newWin === null){
+              //   HintDialog('您的浏览器启用弹出窗口过滤功能！请暂时先关闭此功能！', this.dialog);
+              // }
+              newWin.location.href = res.data;
             } else {
               HintDialog(res.msg || '啊哦～访问接口出错啦～！', this.dialog);
             }
@@ -120,7 +125,7 @@ export class MatDialogComponent {
       Export(this.checked4.checked,2);
       Export(this.checked5.checked,4);
     }else{
-      Export(this.checked6.checked,null);
+      Export(this.checked6.checked,'');
     }
   }
 

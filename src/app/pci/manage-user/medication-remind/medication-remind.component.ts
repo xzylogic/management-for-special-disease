@@ -80,7 +80,8 @@ export class MedicationRemindComponent implements OnInit {
   }
   export() {
     let exportList;
-    this.medicationRemindService.getData(0, 99999, this.medicationRemindTable.queryKey, this.deleted, this.remind)
+    // this.medicationRemindService.getData(0, 99999, this.medicationRemindTable.queryKey, this.deleted, this.remind)
+    this.medicationRemindService.getData(0, 2000, this.medicationRemindTable.queryKey, this.deleted, this.remind)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           exportList = this.common.toArray(res.data.content);

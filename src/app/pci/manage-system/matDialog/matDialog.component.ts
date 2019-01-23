@@ -16,25 +16,6 @@ import {ActivatedRoute, Router} from "@angular/router";
   templateUrl: './matDialog.component.html',
 })
 export class MatDialogComponent implements OnInit, OnDestroy  {
-  // @ViewChild('all') all: any;
-  // @ViewChild('checked0') checked0: any;
-  // @ViewChild('checked1') checked1: any;
-  // @ViewChild('checked2') checked2: any;
-  // @ViewChild('checked3') checked3: any;
-  // @ViewChild('checked4') checked4: any;
-  // @ViewChild('checked5') checked5: any;
-  // @ViewChild('checked6') checked6: any;
-  //
-  // showMat:boolean = false;
-  // userInfo: any;
-  // angle = 0;
-  // _checked0:boolean = this.checked0.checked;
-  // _checked1:boolean = this.checked1.checked;
-  // _checked2:boolean = this.checked2.checked;
-  // _checked3:boolean = this.checked3.checked;
-  // _checked4:boolean = this.checked4.checked;
-  // _checked5:boolean = this.checked5.checked;
-  // _checked6:boolean = this.checked6.checked;
   @select(['main', 'adminName']) readonly adminName: Observable<string>;
 
   username: string;
@@ -92,11 +73,6 @@ export class MatDialogComponent implements OnInit, OnDestroy  {
         this.username = name;
       })
     }
-
-    // if(this.data && this.data.id){
-    //   this.showMat = false;
-    //   this.viewPhotos(this.data.id);
-    // }
   }
 
   ngOnDestroy() {
@@ -149,101 +125,4 @@ export class MatDialogComponent implements OnInit, OnDestroy  {
         HintDialog(ERRMSG.saveError, this.dialog);
       });
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // rotate() {
-  //   this.angle += 90;
-  // }
-  //
-  // getImageSize() {
-  //   return `rotate(${this.angle}deg)`;
-  // }
-
-  viewPhotos(id){
-    console.log(id)
-    // this.dataCollectionService.getDataCollection(id)
-    //   .subscribe(res => {
-    //     this.userInfo = res.data;
-    //   })
-  }
-
-  // _allCheck(){
-  //   if(this.checked6.checked){
-  //     this.checked0.checked = true;
-  //     this.checked1.checked = true;
-  //     this.checked2.checked = true;
-  //     this.checked3.checked = true;
-  //     this.checked4.checked = true;
-  //     this.checked5.checked = true;
-  //     this.checked6.checked = true;
-  //   }else{
-  //     this.checked0.checked = false;
-  //     this.checked1.checked = false;
-  //     this.checked2.checked = false;
-  //     this.checked3.checked = false;
-  //     this.checked4.checked = false;
-  //     this.checked5.checked = false;
-  //     this.checked6.checked = false;
-  //   }
-  // }
-  //
-  // _Check(){
-  //   if(this.checked0.checked == true && this.checked1.checked == true && this.checked2.checked == true && this.checked3.checked == true &&
-  //     this.checked4.checked == true && this.checked5.checked == true){
-  //     return this.checked6.checked = true;
-  //   }
-  //   return this.checked6.checked = false;
-  // }
-
-  // getExportFile(){
-  //   let Export = (checked:boolean,status:any) => {
-  //     if(checked){
-  //       this.dataCollectionService.exportFiles(status)
-  //         .subscribe(res => {
-  //           if (res && res.code === 0) {
-  //             const a = document.createElement('a');
-  //             document.body.appendChild(a);
-  //             a.setAttribute('style', 'display:none');
-  //             a.setAttribute('href', res.data);
-  //             a.click();
-  //           } else {
-  //             HintDialog(res.msg || '啊哦～访问接口出错啦～！', this.dialog);
-  //           }
-  //         }, err => {
-  //           HintDialog('啊哦～访问接口出错啦～', this.dialog);
-  //           throw new Error(err);
-  //         })
-  //     }
-  //     return null;
-  //   };
-  //   if(this.checked6.checked === false){
-  //     Export(this.checked0.checked,5);
-  //     Export(this.checked1.checked,0);
-  //     Export(this.checked2.checked,1);
-  //     Export(this.checked3.checked,3);
-  //     Export(this.checked4.checked,2);
-  //     Export(this.checked5.checked,4);
-  //   }else{
-  //     Export(this.checked6.checked,null);
-  //   }
-  // }
-
 }

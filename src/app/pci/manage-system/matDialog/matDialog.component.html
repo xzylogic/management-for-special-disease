@@ -1,32 +1,4 @@
-<!--<div class="exportAll" *ngIf="showMat">-->
-  <!--<h3 mat-dialog-title>请选择要导出的类别</h3>-->
-  <!--<ul #all>-->
-    <!--<li><mat-checkbox #checked0 [(ngModel)]="checked0.checked" (change)="_Check()"><span>预审</span></mat-checkbox></li>-->
-    <!--<li><mat-checkbox #checked1 [(ngModel)]="checked1.checked" (change)="_Check()"><span>待录入</span></mat-checkbox></li>-->
-    <!--<li><mat-checkbox #checked2 [(ngModel)]="checked2.checked" (change)="_Check()"><span>待审核</span></mat-checkbox></li>-->
-    <!--<li><mat-checkbox #checked3 [(ngModel)]="checked3.checked" (change)="_Check()"><span>审核通过</span></mat-checkbox></li>-->
-    <!--<li><mat-checkbox #checked4 [(ngModel)]="checked4.checked" (change)="_Check()"><span>未处理</span></mat-checkbox></li>-->
-    <!--<li><mat-checkbox #checked5 [(ngModel)]="checked5.checked" (change)="_Check()"><span>审核失败</span></mat-checkbox></li>-->
-    <!--<li><mat-checkbox #checked6 [(ngModel)]="checked6.checked" (change)="_allCheck()"><span>所有</span></mat-checkbox></li>-->
-  <!--</ul>-->
-  <!--<mat-dialog-actions>-->
-    <!--<button mat-button [mat-dialog-close]="true" (click)="getExportFile()" class="exportTrue">确定</button>-->
-  <!--</mat-dialog-actions>-->
-<!--</div>-->
-
-<!--<div class="viewPhotos" *ngIf="userInfo&&userInfo.medicalRecordPhotoList">-->
-  <!--<h2>患者名称： {{userInfo.name}}</h2>-->
-  <!--<button mat-icon-button (click)="rotate()" class="rotate">-->
-    <!--<mat-icon aria-label="旋转">rotate_right</mat-icon>-->
-  <!--</button>-->
-  <!--<br>-->
-  <!--<div *ngFor="let obj of userInfo.medicalRecordPhotoList">-->
-    <!--<img src="{{obj.imgUrl}}" alt="{{userInfo.name}}" width="100%" [ngStyle]="{'transform': getImageSize()}">-->
-  <!--</div>-->
-<!--</div>-->
-<!--<app-container [config]="containerConfig" *ngIf="containerConfig">-->
-  <div class="content" *ngIf="containerConfig">
-    <app-form *ngIf="form" [formDatas]="form" [id]="id" (formValues)="getValue($event)"></app-form>
-    <div *ngIf="errMsg">{{errMsg}}</div>
-  </div>
-<!--</app-container>-->
+<div class="content" *ngIf="containerConfig">
+  <app-form *ngIf="form" [formDatas]="form" [id]="id" (formValues)="getValue($event)"></app-form>
+  <div *ngIf="errMsg">{{errMsg}}</div>
+</div>

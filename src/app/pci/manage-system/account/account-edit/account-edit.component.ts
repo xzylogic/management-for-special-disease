@@ -6,12 +6,13 @@ import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../../_store/static';
 import { Observable } from 'rxjs/Observable';
 import {select} from "@angular-redux/store";
+import {AccountService} from "../_service/account.service";
 
 @Component({
-  selector: 'app-account-config',
-  templateUrl: './account-config.component.html'
+  selector: 'app-account-edit',
+  templateUrl: './account-edit.component.html'
 })
-export class AccountConfigComponent implements OnInit, OnDestroy {
+export class AccountEditComponent implements OnInit, OnDestroy {
   @select(['main', 'adminName']) readonly adminName: Observable<string>;
 
   username: string;
@@ -30,6 +31,7 @@ export class AccountConfigComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject('account') private accountService,
+    private AccountService: AccountService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router
@@ -37,26 +39,23 @@ export class AccountConfigComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscribeRoute = Observable.zip(
-      this.route.params, this.route.queryParams,
-      this.accountService.getAllRole(),
-      (route, query, menu): any => ({route, query, menu})
-    ).subscribe(res => {
-      if (res.route.menu) {
-        this.paramsMenu = res.route.menu;
-      }
-      if (res.menu && res.query && res.query.id) {
-        this.id = res.query.id;
-        this.containerConfig = this.accountService.setAccountConfig(true);
-        this.getInit(res.query.id, res);
-      } else if (res.menu) {
-        this.containerConfig = this.accountService.setAccountConfig(false);
-        this.form = this.accountService.setAccountForm();
-      }
-    });
     this.adminName.subscribe(name => {
       this.username = name;
     })
+    this.subscribeRoute = Observable.zip(
+      this.route.params, this.route.queryParams,
+      (route, query, menu={}): any => ({route, query, menu})
+    ).subscribe(res => {
+      if (res.query && res.query.id) {
+        res.menu = this.AccountService.accountData;
+        this.id = res.query.id;
+        this.containerConfig = this.AccountService.setAccountEdit(true);
+        this.getInit(res.query.id, res);
+      } else {
+        this.containerConfig = this.AccountService.setAccountEdit(false);
+        this.form = this.AccountService.setAddAccountForm();
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -75,18 +74,24 @@ export class AccountConfigComponent implements OnInit, OnDestroy {
   }
 
   getInit(id, res) {
-    this.form = this.accountService.setAccountForm(res.menu.data, id);
+    this.form = this.AccountService.setAddAccountForm(res.menu, id);
   }
 
   getValue(data) {
     const formData: any = {};
     if (this.id) {
-      formData.adminId = this.id;
+      formData.adminId = Number(this.id);
     }
-    if(data.roleId){
-      formData.roleId = data.roleId;
+    if(data.name && data.password){
+      formData.name = data.name;
+      formData.password = data.password;
+      formData.createBy = this.username;
+      if(data.password !== data.checkpwd){
+        HintDialog('两次密码输入不一致，请重新输入~', this.dialog);
+        return ;
+      }
     }
-    this.subscribeSave = this.accountService.addAdminRole(formData, this.id)
+    this.subscribeSave = this.accountService.addAccount(formData)
       .subscribe(res => {
         if (res.code === 0) {
           this.subscribeDialog = HintDialog(ERRMSG.saveSuccess, this.dialog)

@@ -57,7 +57,7 @@
 <div class="form-content">
   <mat-form-field floatPlaceholder="always" style="width: 100%">
     <input matInput [matDatepicker]="startTime" placeholder="开始时间" name="startTime" [(ngModel)]="info.startTime"
-           (dateInput)="saveAsDraft('startTime')" (dateChange)="saveAsDraft('startTime')" required>
+           (dateInput)="saveAsDraft('startTime')" (dateChange)="saveAsDraft('startTime')" required (click)="startTime.open()">
     <mat-datepicker-toggle matSuffix [for]="startTime"></mat-datepicker-toggle>
     <mat-datepicker #startTime></mat-datepicker>
   </mat-form-field>

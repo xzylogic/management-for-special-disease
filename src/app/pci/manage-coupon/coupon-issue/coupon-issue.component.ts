@@ -92,7 +92,7 @@ export class CouponIssueComponent implements OnInit {
 
   export() {
     let exportList;
-    this.couponIssueService.getCoupon(0, 99999, 0)
+    this.couponIssueService.getCoupon(0, 2000, 0)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           exportList = this.common.toArray(res.data.content);

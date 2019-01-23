@@ -68,7 +68,8 @@ export class SendMessageComponent implements OnInit {
   }
 
   selectAll() {
-    this.doctorService.getAllDoctors('', '', 0, 999999)
+    // this.doctorService.getAllDoctors('', '', 0, 999999)
+    this.doctorService.getAllDoctors('', '', 0, 2000)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content) {
           let auditedLists = res.data.content;

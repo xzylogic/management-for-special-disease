@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, Inject } from '@angular/co
 import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
-import { Navbar, Menu } from '../_store/main.state';
+import {Menu} from "../_store/main.state";
 
 @Component({
   selector: 'app-nav',

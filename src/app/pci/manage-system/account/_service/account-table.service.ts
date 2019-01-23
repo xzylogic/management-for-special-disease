@@ -53,6 +53,9 @@ export class AccountTableService {
           value: ['启用', '禁用']
         },
         option: [{
+          key: 'edit',
+          name: '编辑'
+        },{
           key: 'config',
           name: '配置'
         }, {

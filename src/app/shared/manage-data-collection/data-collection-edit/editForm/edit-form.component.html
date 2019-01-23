@@ -20,9 +20,10 @@
     <div class="form-content">
       <mat-form-field floatPlaceholder="always" style="width: 100%">
         <input matInput [matDatepicker]="checkDate" placeholder="检查时间" name="checkDate" [(ngModel)]="info.checkDate"
-               (dateInput)="saveAsDraft('checkDate')" (dateChange)="saveAsDraft('checkDate')" required>
+               (dateInput)="saveAsDraft('checkDate')" (dateChange)="saveAsDraft('checkDate')" required
+               (click)="checkDate.open()">
         <mat-datepicker-toggle matSuffix [for]="checkDate"></mat-datepicker-toggle>
-        <mat-datepicker #checkDate></mat-datepicker>
+        <mat-datepicker #checkDate ></mat-datepicker>
       </mat-form-field>
     </div>
     <div class="form-content">
@@ -95,7 +96,7 @@
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
           <input matInput [matDatepicker]="inTime" placeholder="入院时间" name="inTime" [(ngModel)]="info.inTime"
-                 (dateInput)="saveAsDraft('inTime')" (dateChange)="saveAsDraft('inTime')" required>
+                 (dateInput)="saveAsDraft('inTime')" (dateChange)="saveAsDraft('inTime')" required (click)="inTime.open()">
           <mat-datepicker-toggle matSuffix [for]="inTime"></mat-datepicker-toggle>
           <mat-datepicker #inTime></mat-datepicker>
         </mat-form-field>
@@ -103,7 +104,7 @@
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
           <input matInput [matDatepicker]="outTime" placeholder="出院时间" name="outTime" [(ngModel)]="info.outTime"
-                 (dateInput)="saveAsDraft('outTime')" (dateChange)="saveAsDraft('outTime')" required>
+                 (dateInput)="saveAsDraft('outTime')" (dateChange)="saveAsDraft('outTime')" required (click)="outTime.open()">
           <mat-datepicker-toggle matSuffix [for]="outTime"></mat-datepicker-toggle>
           <mat-datepicker #outTime></mat-datepicker>
         </mat-form-field>
@@ -311,7 +312,7 @@
       <div class="form-content">
         <mat-form-field floatPlaceholder="always" style="width: 100%">
           <input matInput [matDatepicker]="writeTime" placeholder="填写时间" name="writeTime" [(ngModel)]="info.writeTime"
-                 (dateInput)="saveAsDraft('writeTime')" (dateChange)="saveAsDraft('writeTime')" required>
+                 (dateInput)="saveAsDraft('writeTime')" (dateChange)="saveAsDraft('writeTime')" required (click)="writeTime.open()">
           <mat-datepicker-toggle matSuffix [for]="writeTime"></mat-datepicker-toggle>
           <mat-datepicker #writeTime></mat-datepicker>
         </mat-form-field>

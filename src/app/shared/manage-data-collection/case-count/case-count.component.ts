@@ -66,7 +66,8 @@ export class CaseCountComponent implements OnInit {
   }
   export() {
     let exportList;
-    this.CaseCountService.getData(0, 99999, this.caseCountTable.queryKey)
+    // this.CaseCountService.getData(0, 99999, this.caseCountTable.queryKey)
+    this.CaseCountService.getData(0, 2000, this.caseCountTable.queryKey)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
           exportList = this.common.toArray(res.data.content);
