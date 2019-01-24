@@ -64,6 +64,11 @@ export class RoleComponent implements OnInit {
   gotoHandle(res) {
     // console.log(res);
     if (res.key === 'edit' && res.value) {
+      this.roleService.roleData = {
+        createBy: res.value.createBy,
+        description: res.value.description,
+        name: res.value.name,
+      }
       this.router.navigate(['/role', 'edit'], {queryParams: {id: res.value.id}});
     }
     if (res.key === 'config' && res.value) {
