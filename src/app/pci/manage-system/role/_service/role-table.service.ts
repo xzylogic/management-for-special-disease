@@ -19,6 +19,11 @@ export class RoleTableService {
         key: 'name'
       }),
       new TableTitle({
+        name: '描述',
+        key: 'description',
+        maxwidth: 220,
+      }),
+      new TableTitle({
         name: '是否启用',
         key: 'enable',
         controlType: ControlType.pipe,
