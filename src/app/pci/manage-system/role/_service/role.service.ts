@@ -15,6 +15,7 @@ const PATH = {
 @Injectable()
 export class RoleService {
 
+  roleData: any;
   constructor(
     @Inject('app') private app,
     @Inject('http') private httpService
@@ -42,16 +43,12 @@ export class RoleService {
     });
   }
 
-  setRoleForm(tree, data?, id?) {
-    let name, des, ReData;
+  setRoleForm(data?, id?) {
+    let name, des;
     if(data){
-      ReData = data.reverse();
+      name = data.name || '';
+      des = data.description || '';
     }
-    if(id){
-      name = ReData[id-1].name;
-      des = ReData[id-1].description;
-    }
-
     const forms: FormBase<any>[] = [];
     forms.push(
       new FormText({

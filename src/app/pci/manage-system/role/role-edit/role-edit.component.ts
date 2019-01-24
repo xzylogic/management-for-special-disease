@@ -6,6 +6,7 @@ import { HintDialog } from '../../../../libs/dmodal/dialog.component';
 import { ERRMSG } from '../../../_store/static';
 import { Observable } from 'rxjs/Observable';
 import {select} from "@angular-redux/store";
+import {RoleService} from "../_service/role.service";
 
 @Component({
   selector: 'app-role-edit',
@@ -30,6 +31,7 @@ export class RoleEditComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject('role') private roleService,
+    private RoleService: RoleService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router
@@ -39,20 +41,18 @@ export class RoleEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscribeRoute = Observable.zip(
       this.route.params, this.route.queryParams,
-      this.roleService.getMenus(),
-      (route, query, menu): any => ({route, query, menu})
+      (route, query, menu={}): any => ({route, query, menu})
     ).subscribe(res => {
       // console.log('-------',res)
-      if (res.route.menu) {
-        this.paramsMenu = res.route.menu;
-      }
-      if (res.menu && res.query && res.query.id) {
+      if (res.query && res.query.id) {
+        res.menu = this.RoleService.roleData;
         this.id = res.query.id;
-        this.containerConfig = this.roleService.setRoleEditConfig(true);
-        this.getInit(res.query.id);
-      } else if (res.menu) {
-        this.containerConfig = this.roleService.setRoleEditConfig(false);
-        this.form = this.roleService.setRoleForm(res.menu.data);
+        this.containerConfig = this.RoleService.setRoleEditConfig(true);
+        this.form = this.RoleService.setRoleForm(res.menu, res.query.id);
+        // this.getInit(res.query.id);
+      } else {
+        this.containerConfig = this.RoleService.setRoleEditConfig(false);
+        this.form = this.RoleService.setRoleForm(res.menu.data);
       }
     });
     this.adminName.subscribe(name => {
@@ -75,20 +75,20 @@ export class RoleEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  getInit(id) {
-    this.subscribeDetail = this.roleService.getRole(id)
-      .subscribe(res => {
-        // console.log(res);
-        if (res.code === 0 && res.data) {
-          this.form = this.roleService.setRoleForm(res.data.content, res.data.content, id);
-        } else {
-          HintDialog('初始化数据失败，请刷新重试！', this.dialog);
-        }
-      }, err => {
-        console.log(err);
-        HintDialog('初始化数据失败，请刷新重试！', this.dialog);
-      });
-  }
+  // getInit(id) {
+  //   this.subscribeDetail = this.roleService.getRole(id)
+  //     .subscribe(res => {
+  //       // console.log(res);
+  //       if (res.code === 0 && res.data) {
+  //         this.form = this.roleService.setRoleForm(res.data.content, id);
+  //       } else {
+  //         HintDialog('初始化数据失败，请刷新重试！', this.dialog);
+  //       }
+  //     }, err => {
+  //       console.log(err);
+  //       HintDialog('初始化数据失败，请刷新重试！', this.dialog);
+  //     });
+  // }
 
   getValue(data) {
     // console.log('==================',data);
@@ -97,9 +97,9 @@ export class RoleEditComponent implements OnInit, OnDestroy {
       formData.sysRoleId = this.id;
     }
     // formData.delFlag = 0;
-    if (Array.isArray(data.menuIds)) {
-      formData.menuIds = data.menuIds.join(',');
-    }
+    // if (Array.isArray(data.menuIds)) {
+    //   formData.menuIds = data.menuIds.join(',');
+    // }
     formData.createBy = this.username;
     formData.name = data.name;
     formData.description = data.description;
