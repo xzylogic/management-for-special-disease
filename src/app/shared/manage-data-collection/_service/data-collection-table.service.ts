@@ -391,6 +391,10 @@ export class DataCollectionTableService {
         key: 'inputName'
       }),
       new TableTitle({
+        name: '审核人',
+        key: 'auditorName'
+      }),
+      new TableTitle({
         name: '是否删除',
         key: 'deleted'
       }),
