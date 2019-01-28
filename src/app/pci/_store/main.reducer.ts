@@ -112,9 +112,7 @@ function handleUpdateTagAction(state: IMainState, action: UpdateTagAction): IMai
           (name === '医生账户列表' && key === 'doctoraccount') ||
           (name === '积分商品订单管理' && key === 'integralOrder'))){
           subObj.tag = action.payload.tag;
-          // if (sidebars.key === action.payload.group) {
-          //   sidebars.tag = 1;
-          // }
+          sidebars.tag = 1;
         }
       });
     }
