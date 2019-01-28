@@ -25,6 +25,9 @@
                 {{menu.name}}
                 <mat-icon>chevron_right</mat-icon>
               </span>
+              <mat-chip-list *ngIf="menu.tag">
+                <mat-chip color="accent" selected="true"></mat-chip>
+              </mat-chip-list>
             </div>
           </div>
           <ul class="nav-sub__list" *ngIf="menu.sysSubMenus&&menu.sysSubMenus.length!==0&&menu.sysSubMenus[0].level==2">
@@ -37,6 +40,9 @@
                 >
                   {{subMenu.name}}
                 </a>
+                <mat-chip-list *ngIf="subMenu.tag">
+                  <mat-chip color="accent" selected="true">{{subMenu.tag}}</mat-chip>
+                </mat-chip-list>
               </div>
             </li>
           </ul>
