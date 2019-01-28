@@ -109,6 +109,7 @@ function handleUpdateTagAction(state: IMainState, action: UpdateTagAction): IMai
           (name === '患者订单管理' && key === 'userorder') ||
           (name === '实名认证管理' && key === 'usercertification') ||
           (name === '医生小组管理' && key === 'doctorgroup') ||
+          (name === '医生信息管理' && key === 'doctor') ||
           (name === '医生账户列表' && key === 'doctoraccount') ||
           (name === '积分商品订单管理' && key === 'integralOrder'))){
           subObj.tag = action.payload.tag;
