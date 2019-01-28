@@ -98,13 +98,23 @@ function handleInitNavAction(state: IMainState, action: InitNavAction): IMainSta
 function handleUpdateTagAction(state: IMainState, action: UpdateTagAction): IMainState {
   const stateCopy = __assign(state);
   stateCopy.navigation.map(sidebars => {
-    if (sidebars.subBars) {
-      sidebars.subBars.forEach(subObj => {
-        if (subObj.key === action.payload.key && action.payload.tag !== 0) {
+    if (sidebars.sysSubMenus) {
+      sidebars.sysSubMenus.forEach(subObj => {
+        // if (subObj.key === action.payload.key && action.payload.tag !== 0) {
+        // console.log(action.payload.tag)
+        // console.log(action.payload.key)
+        let key = action.payload.key;
+        let name = subObj.name;
+        if (action.payload.tag !== 0 && (
+          (name === '患者订单管理' && key === 'userorder') ||
+          (name === '实名认证管理' && key === 'usercertification') ||
+          (name === '医生小组管理' && key === 'doctorgroup') ||
+          (name === '医生账户列表' && key === 'doctoraccount') ||
+          (name === '积分商品订单管理' && key === 'integralOrder'))){
           subObj.tag = action.payload.tag;
-          if (sidebars.key === action.payload.group) {
-            sidebars.tag = 1;
-          }
+          // if (sidebars.key === action.payload.group) {
+          //   sidebars.tag = 1;
+          // }
         }
       });
     }
