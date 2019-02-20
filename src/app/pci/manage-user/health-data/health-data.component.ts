@@ -189,9 +189,9 @@ export class HealthDataComponent implements OnInit {
     let exportList;
     this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
-        if (res.data && res.data.heartRate && res.code === 0) {
-          if (res.data.totalPages == 1) {
-            exportList = this.common.toArray(res.data.heartRate.content);
+        if (res.data && res.data.pressure && res.code === 0) {
+          if (res.data.pressure.totalPages == 1) {
+            exportList = this.common.toArray(res.data.pressure.content);
             /* generate worksheet */
             const ws = XLSX.utils.aoa_to_sheet(exportList);
             /* generate workbook and add the worksheet */
@@ -203,14 +203,14 @@ export class HealthDataComponent implements OnInit {
             saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
           } else {
             const getList = [];
-            let dataList = res.data.content;
-            for (let i = 1; i < res.data.totalPages; i++) {
+            let dataList = res.data.pressure.content;
+            for (let i = 1; i < res.data.pressure.totalPages; i++) {
               getList.push(this.healthDataService.getData(i, 2000, this.pressureTable.queryKey, this.queryBind))
             }
             Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
               for (let i = 0; i < getList.length; i++) {
-                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
-                  dataList = [...dataList, ...resList[i].data.content]
+                if (resList[i].code == 0 && resList[i].data.pressure && resList[i].data.pressure.content) {
+                  dataList = [...dataList, ...resList[i].data.pressure.content]
                 }
               }
               exportList = this.common.toArray(dataList);
@@ -236,10 +236,10 @@ export class HealthDataComponent implements OnInit {
 
   exportMmol() {
     let exportList;
-    this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
+    this.healthDataService.getData(0, 2000, this.sugarTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.sugar && res.code === 0) {
-          if (res.data.totalPages == 1) {
+          if (res.data.sugar.totalPages == 1) {
             exportList = this.common.toArray(res.data.sugar.content);
             /* generate worksheet */
             const ws = XLSX.utils.aoa_to_sheet(exportList);
@@ -252,14 +252,14 @@ export class HealthDataComponent implements OnInit {
             saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
           } else {
             const getList = [];
-            let dataList = res.data.content;
-            for (let i = 1; i < res.data.totalPages; i++) {
-              getList.push(this.healthDataService.getData(i, 2000, this.pressureTable.queryKey, this.queryBind))
+            let dataList = res.data.sugar.content;
+            for (let i = 1; i < res.data.sugar.totalPages; i++) {
+              getList.push(this.healthDataService.getData(i, 2000, this.sugarTable.queryKey, this.queryBind))
             }
             Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
               for (let i = 0; i < getList.length; i++) {
-                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
-                  dataList = [...dataList, ...resList[i].data.content]
+                if (resList[i].code == 0 && resList[i].data.sugar && resList[i].data.sugar.content) {
+                  dataList = [...dataList, ...resList[i].data.sugar.content]
                 }
               }
               exportList = this.common.toArray(dataList);
@@ -285,11 +285,11 @@ export class HealthDataComponent implements OnInit {
 
   exportHrrest() {
     let exportList;
-    this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
+    this.healthDataService.getData(0, 2000, this.rateTable.queryKey, this.queryBind)
       .subscribe(res => {
-        if (res.data && res.data.sugar && res.code === 0) {
-          if (res.data.totalPages == 1) {
-            exportList = this.common.toArray(res.data.sugar.content);
+        if (res.data && res.data.heartRate && res.code === 0) {
+          if (res.data.heartRate.totalPages == 1) {
+            exportList = this.common.toArray(res.data.heartRate.content);
             /* generate worksheet */
             const ws = XLSX.utils.aoa_to_sheet(exportList);
             /* generate workbook and add the worksheet */
@@ -301,14 +301,14 @@ export class HealthDataComponent implements OnInit {
             saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
           } else {
             const getList = [];
-            let dataList = res.data.content;
-            for (let i = 1; i < res.data.totalPages; i++) {
-              getList.push(this.healthDataService.getData(i, 2000, this.pressureTable.queryKey, this.queryBind))
+            let dataList = res.data.heartRate.content;
+            for (let i = 1; i < res.data.heartRate.totalPages; i++) {
+              getList.push(this.healthDataService.getData(i, 2000, this.rateTable.queryKey, this.queryBind))
             }
             Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
               for (let i = 0; i < getList.length; i++) {
-                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
-                  dataList = [...dataList, ...resList[i].data.content]
+                if (resList[i].code == 0 && resList[i].data.heartRate && resList[i].data.heartRate.content) {
+                  dataList = [...dataList, ...resList[i].data.heartRate.content]
                 }
               }
               exportList = this.common.toArray(dataList);
@@ -334,10 +334,10 @@ export class HealthDataComponent implements OnInit {
 
   exportWeight() {
     let exportList;
-    this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
+    this.healthDataService.getData(0, 2000, this.weightTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.weight && res.code === 0) {
-          if (res.data.totalPages == 1) {
+          if (res.data.weight.totalPages == 1) {
             exportList = this.common.toArray(res.data.weight.content);
             /* generate worksheet */
             const ws = XLSX.utils.aoa_to_sheet(exportList);
@@ -350,14 +350,14 @@ export class HealthDataComponent implements OnInit {
             saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
           } else {
             const getList = [];
-            let dataList = res.data.content;
-            for (let i = 1; i < res.data.totalPages; i++) {
-              getList.push(this.healthDataService.getData(i, 2000, this.pressureTable.queryKey, this.queryBind))
+            let dataList = res.data.weight.content;
+            for (let i = 1; i < res.data.weight.totalPages; i++) {
+              getList.push(this.healthDataService.getData(i, 2000, this.weightTable.queryKey, this.queryBind))
             }
             Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
               for (let i = 0; i < getList.length; i++) {
-                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
-                  dataList = [...dataList, ...resList[i].data.content]
+                if (resList[i].code == 0 && resList[i].data.weight && resList[i].data.weight.content) {
+                  dataList = [...dataList, ...resList[i].data.weight.content]
                 }
               }
               exportList = this.common.toArray(dataList);
