@@ -190,16 +190,41 @@ export class HealthDataComponent implements OnInit {
     this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.heartRate && res.code === 0) {
-          exportList = this.common.toArray(res.data.heartRate.content);
-          /* generate worksheet */
-          const ws = XLSX.utils.aoa_to_sheet(exportList);
-          /* generate workbook and add the worksheet */
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
-          /* save to file */
-          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-          const fileName = `全程心管家患者体征数据列表--血压--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
-          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          if (res.data.totalPages == 1) {
+            exportList = this.common.toArray(res.data.heartRate.content);
+            /* generate worksheet */
+            const ws = XLSX.utils.aoa_to_sheet(exportList);
+            /* generate workbook and add the worksheet */
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+            /* save to file */
+            const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            const fileName = `全程心管家患者体征数据列表--血压--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+            saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          } else {
+            const getList = [];
+            let dataList = res.data.content;
+            for (let i = 1; i < res.data.totalPages; i++) {
+              getList.push(this.healthDataService.getData(i, 2000, this.pressureTable.queryKey, this.queryBind))
+            }
+            Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
+              for (let i = 0; i < getList.length; i++) {
+                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
+                  dataList = [...dataList, ...resList[i].data.content]
+                }
+              }
+              exportList = this.common.toArray(dataList);
+              /* generate worksheet */
+              const ws = XLSX.utils.aoa_to_sheet(exportList);
+              /* generate workbook and add the worksheet */
+              const wb = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+              /* save to file */
+              const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+              const fileName = `全程心管家患者体征数据列表--血压--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+              saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+            });
+          }
         } else {
           HintDialog('导出数据错误，请重新尝试', this.dialog);
         }
@@ -214,16 +239,41 @@ export class HealthDataComponent implements OnInit {
     this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.sugar && res.code === 0) {
-          exportList = this.common.toArray(res.data.sugar.content);
-          /* generate worksheet */
-          const ws = XLSX.utils.aoa_to_sheet(exportList);
-          /* generate workbook and add the worksheet */
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
-          /* save to file */
-          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-          const fileName = `全程心管家患者体征数据列表--血糖--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
-          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          if (res.data.totalPages == 1) {
+            exportList = this.common.toArray(res.data.sugar.content);
+            /* generate worksheet */
+            const ws = XLSX.utils.aoa_to_sheet(exportList);
+            /* generate workbook and add the worksheet */
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+            /* save to file */
+            const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            const fileName = `全程心管家患者体征数据列表--血糖--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+            saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          } else {
+            const getList = [];
+            let dataList = res.data.content;
+            for (let i = 1; i < res.data.totalPages; i++) {
+              getList.push(this.healthDataService.getData(i, 2000, this.pressureTable.queryKey, this.queryBind))
+            }
+            Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
+              for (let i = 0; i < getList.length; i++) {
+                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
+                  dataList = [...dataList, ...resList[i].data.content]
+                }
+              }
+              exportList = this.common.toArray(dataList);
+              /* generate worksheet */
+              const ws = XLSX.utils.aoa_to_sheet(exportList);
+              /* generate workbook and add the worksheet */
+              const wb = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+              /* save to file */
+              const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+              const fileName = `全程心管家患者体征数据列表--血糖--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+              saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+            });
+          }
         } else {
           HintDialog('导出数据错误，请重新尝试', this.dialog);
         }
@@ -238,16 +288,41 @@ export class HealthDataComponent implements OnInit {
     this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.sugar && res.code === 0) {
-          exportList = this.common.toArray(res.data.sugar.content);
-          /* generate worksheet */
-          const ws = XLSX.utils.aoa_to_sheet(exportList);
-          /* generate workbook and add the worksheet */
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
-          /* save to file */
-          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-          const fileName = `全程心管家患者体征数据列表--心率--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
-          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          if (res.data.totalPages == 1) {
+            exportList = this.common.toArray(res.data.sugar.content);
+            /* generate worksheet */
+            const ws = XLSX.utils.aoa_to_sheet(exportList);
+            /* generate workbook and add the worksheet */
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+            /* save to file */
+            const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            const fileName = `全程心管家患者体征数据列表--心率--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+            saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          } else {
+            const getList = [];
+            let dataList = res.data.content;
+            for (let i = 1; i < res.data.totalPages; i++) {
+              getList.push(this.healthDataService.getData(i, 2000, this.pressureTable.queryKey, this.queryBind))
+            }
+            Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
+              for (let i = 0; i < getList.length; i++) {
+                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
+                  dataList = [...dataList, ...resList[i].data.content]
+                }
+              }
+              exportList = this.common.toArray(dataList);
+              /* generate worksheet */
+              const ws = XLSX.utils.aoa_to_sheet(exportList);
+              /* generate workbook and add the worksheet */
+              const wb = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+              /* save to file */
+              const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+              const fileName = `全程心管家患者体征数据列表--心率--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+              saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+            });
+          }
         } else {
           HintDialog('导出数据错误，请重新尝试', this.dialog);
         }
@@ -262,16 +337,41 @@ export class HealthDataComponent implements OnInit {
     this.healthDataService.getData(0, 2000, this.pressureTable.queryKey, this.queryBind)
       .subscribe(res => {
         if (res.data && res.data.weight && res.code === 0) {
-          exportList = this.common.toArray(res.data.weight.content);
-          /* generate worksheet */
-          const ws = XLSX.utils.aoa_to_sheet(exportList);
-          /* generate workbook and add the worksheet */
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
-          /* save to file */
-          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-          const fileName = `全程心管家患者体征数据列表--体重--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
-          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          if (res.data.totalPages == 1) {
+            exportList = this.common.toArray(res.data.weight.content);
+            /* generate worksheet */
+            const ws = XLSX.utils.aoa_to_sheet(exportList);
+            /* generate workbook and add the worksheet */
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+            /* save to file */
+            const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            const fileName = `全程心管家患者体征数据列表--体重--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+            saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          } else {
+            const getList = [];
+            let dataList = res.data.content;
+            for (let i = 1; i < res.data.totalPages; i++) {
+              getList.push(this.healthDataService.getData(i, 2000, this.pressureTable.queryKey, this.queryBind))
+            }
+            Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
+              for (let i = 0; i < getList.length; i++) {
+                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
+                  dataList = [...dataList, ...resList[i].data.content]
+                }
+              }
+              exportList = this.common.toArray(dataList);
+              /* generate worksheet */
+              const ws = XLSX.utils.aoa_to_sheet(exportList);
+              /* generate workbook and add the worksheet */
+              const wb = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+              /* save to file */
+              const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+              const fileName = `全程心管家患者体征数据列表--体重--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+              saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+            });
+          }
         } else {
           HintDialog('导出数据错误，请重新尝试', this.dialog);
         }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material';
 import { ContainerConfig } from '../../../libs/common/container/container.component';
 import { HintDialog } from '../../../libs/dmodal/dialog.component';
@@ -95,16 +96,41 @@ export class CouponIssueComponent implements OnInit {
     this.couponIssueService.getCoupon(0, 2000, 0)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
-          exportList = this.common.toArray(res.data.content);
-          /* generate worksheet */
-          const ws = XLSX.utils.aoa_to_sheet(exportList);
-          /* generate workbook and add the worksheet */
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
-          /* save to file */
-          const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-          const fileName = `优惠券发放记录列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
-          saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          if (res.data.totalPages == 1) {
+            exportList = this.common.toArray(res.data.content);
+            /* generate worksheet */
+            const ws = XLSX.utils.aoa_to_sheet(exportList);
+            /* generate workbook and add the worksheet */
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+            /* save to file */
+            const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            const fileName = `优惠券发放记录列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+            saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+          } else {
+            const getList = [];
+            let dataList = res.data.content;
+            for (let i = 1; i < res.data.totalPages; i++) {
+              getList.push(this.couponIssueService.getCoupon(i, 2000, 0))
+            }
+            Observable.forkJoin(getList).subscribe((resList: Array<any>) => {
+              for (let i = 0; i < getList.length; i++) {
+                if (resList[i].code == 0 && resList[i].data && resList[i].data.content) {
+                  dataList = [...dataList, ...resList[i].data.content]
+                }
+              }
+              exportList = this.common.toArray(dataList);
+              /* generate worksheet */
+              const ws = XLSX.utils.aoa_to_sheet(exportList);
+              /* generate workbook and add the worksheet */
+              const wb = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(wb, ws, moment(new Date).format('YYYY-MM-DD'));
+              /* save to file */
+              const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+              const fileName = `优惠券发放记录列表--${moment(new Date).format('YYYY-MM-DD')}.xlsx`;
+              saveAs(new Blob([this.common.s2ab(wbout)]), fileName);
+            });
+          }
         } else {
           HintDialog('导出数据错误，请重新尝试', this.dialog);
         }
