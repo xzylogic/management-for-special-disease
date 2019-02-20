@@ -71,7 +71,7 @@ export class CaseCountComponent implements OnInit {
     this.CaseCountService.getData(0, 2000, this.caseCountTable.queryKey)
       .subscribe(res => {
         if (res.code === 0 && res.data && res.data.content && res.data.content.length !== 0) {
-          if (res.date.totalPages == 1) {
+          if (res.data.totalPages == 1) {
             exportList = this.common.toArray(res.data.content);
             /* generate worksheet */
             const ws = XLSX.utils.aoa_to_sheet(exportList);
